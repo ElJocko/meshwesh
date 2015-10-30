@@ -1,5 +1,6 @@
 {
-  "name": "army-lists",
+  "name": "meshwesh",
+  "description": "army list manager",
   "version": "0.1.0",
   "engines": {
     "node": "0.10.x",
@@ -11,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:ElJocko/army-lists.git"
+    "url": "git@github.com:ElJocko/meshwesh.git"
   },
   "author": "Jack Sheriff <jacksheriff@gmail.com>",
   "license": "ISC",

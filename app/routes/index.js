@@ -13,7 +13,6 @@ router.use('/api', bodyParser.urlencoded({ extended: true }));
 
 // Set up the routes
 router.use('/api', thematicCategoryRoutes);
-router.use('/api', personaRoutes);
 
 // Handle errors that haven't otherwise been caught
 router.use(errorHandler.bodyParser);

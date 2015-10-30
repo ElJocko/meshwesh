@@ -21,7 +21,7 @@ module.exports = {
         }
     },
     app: {
-        name: 'army-list',
+        name: 'meshwesh',
         env: process.env.NODE_ENV || 'development'
     },
     security: {

@@ -2,7 +2,7 @@
 
 var logger = require('./app/lib/logger');
 
-logger.info('Army Lists app starting');
+logger.info('Invincible Meshwesh app starting');
 
 var os = require('os');
 logger.info('** hostname = ' + os.hostname());
@@ -45,7 +45,7 @@ app.use(routes);
         var port = server.address().port;
 
         logger.info('Listening at http://%s:%s', host, port);
-        logger.info('Army Lists start up complete');
+        logger.info('Invincible Meshwesh start up complete');
     });
 //});
 

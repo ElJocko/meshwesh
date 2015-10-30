@@ -1,4 +1,6 @@
-# armyLists
+# Invincible Meshwesh
+
+Army list manager.
 
 
 
