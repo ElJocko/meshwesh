@@ -33,6 +33,9 @@ if (config.app.env === 'development') {
     app.use(morgan('dev', { stream : logger.stream }));
 }
 
+// Set up the static routes
+app.use(express.static('public'));
+
 // Set up the api routes
 logger.info('Creating the routes');
 var routes = require('./app/routes');

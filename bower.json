@@ -1,0 +1,21 @@
+{
+  "name": "meshwesh",
+  "description": "Army List Manager",
+  "license": "ISC",
+  "moduleType": "node",
+  "dependencies": {
+    "angular": "^1.4.7",
+    "angular-route": "^1.4.7",
+    "bootstrap": "^3.3.5",
+    "jquery": "^1.11.3"
+  },
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ]
+}
