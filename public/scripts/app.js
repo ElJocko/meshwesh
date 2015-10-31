@@ -1,4 +1,7 @@
-var armyListApp = angular.module('armyListApp', [
+'use strict';
+
+var meshweshApp = angular.module('meshweshApp', [
     'ngRoute',
-    'armyListControllers'
+    'meshweshControllers',
+    'meshweshServices'
 ]);

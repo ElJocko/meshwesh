@@ -1,11 +1,13 @@
-var armyListControllers = angular.module('phonecatControllers', []);
+'use strict';
 
-armyListControllers.controller('sidebarCtrl', ['$scope', '$http',
+var meshweshControllers = angular.module('meshweshControllers', []);
+
+meshweshControllers.controller('sidebarCtrl', ['$scope', '$http',
     function ($scope, $http) {
 
     }]);
 
-armyListControllers.controller('mainWindowCtrl', ['$scope', '$routeParams',
-    function($scope, $routeParams) {
-
+meshweshControllers.controller('mainViewCtrl', ['$scope', '$routeParams', 'ThematicCategory',
+    function($scope, $routeParams, ThematicCategory) {
+        $scope.categories = ThematicCategory.list();
     }]);

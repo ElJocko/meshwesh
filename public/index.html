@@ -1,40 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="armyListApp">
+<html lang="en" ng-app="meshweshApp">
 
 <head>
     <meta charset="UTF-8">
-    <title>Army List Editor</title>
+    <title>Meshwesh</title>
+
+    <link rel="icon" type="image/png" href="images/meshwesh.png">
 
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
 
     <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-resource/angular-resource.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers.js"></script>
+    <script src="scripts/resources.js"></script>
 </head>
 
-<body ng-controller="MainController">
-
+<body>
 <div class="container-fluid">
     <div class="banner row">
         <div class="col-md-12">
-            <h1>Army List Editor</h1>
+            <h1>Invincible Meshwesh</h1>
+            <h4>Army List Manager</h4>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-2">
-
+            <div ng-controller="sidebarCtrl">
+                <div ng-include="'views/sidebar.html'"></div>
+            </div>
         </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-10">
-
+            <div ng-controller="mainViewCtrl">
+                <div ng-include="'views/mainView.html'"></div>
+            </div>
         </div>
     </div>
 </div>
-
-
 </body>
-
 </html>
