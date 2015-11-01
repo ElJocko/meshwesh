@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Meshwesh</title>
 
     <link rel="icon" type="image/png" href="images/meshwesh.png">
@@ -20,25 +21,31 @@
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="banner row">
-        <div class="col-md-12">
+<div>
+    <div id="wrapper">
+        <div class="banner">
             <h1>Invincible Meshwesh</h1>
-            <h4>Army List Manager</h4>
+            <h3>Army List Manager</h3>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-2">
+        <div id="sidebar-wrapper">
             <div ng-controller="sidebarCtrl">
                 <div ng-include="'views/sidebar.html'"></div>
             </div>
         </div>
-        <div class="col-md-10">
-            <div ng-controller="mainViewCtrl">
-                <div ng-include="'views/mainView.html'"></div>
+
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ng-controller="mainViewCtrl">
+                            <div ng-include="'views/mainView.html'"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 </body>
