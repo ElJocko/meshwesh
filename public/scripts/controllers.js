@@ -2,7 +2,7 @@
 
 var meshweshControllers = angular.module('meshweshControllers', []);
 
-meshweshControllers.controller('sidebarCtrl', ['$scope', '$http',
+meshweshControllers.controller('navCtrl', ['$scope', '$http',
     function ($scope, $http) {
 
     }]);

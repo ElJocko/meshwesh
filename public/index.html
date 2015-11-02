@@ -21,33 +21,31 @@
 </head>
 
 <body>
-<div>
-    <div id="wrapper">
-        <div class="banner">
-            <img src="images/meshwesh-banner.png" height="100px" width="100px">
-            <h1>Invincible Meshwesh</h1>
-            <h3>Army List Manager</h3>
-        </div>
 
-        <div id="sidebar-wrapper">
-            <div ng-controller="sidebarCtrl">
-                <div ng-include="'views/sidebar.html'"></div>
-            </div>
-        </div>
+<div class="banner">
+    <img src="images/meshwesh-banner.png" height="70px" width="70px">
+    <h1>Meshwesh</h1>
+    <h3>Army List Manager</h3>
+</div>
 
-        <div id="content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div ng-controller="mainViewCtrl">
-                            <div ng-include="'views/mainView.html'"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container-fluid">
 
+    <div class="collapse navbar-collapse" ng-controller="navCtrl">
+        <ul class="nav navbar-nav">
+            <li ng-class="{ active: isActive('/edit')}"><a href="/edit">Edit</a></li>
+            <li ng-class="{ active: isActive('/report')}"><a href="/report">Report</a></li>
+            <li ng-class="{ active: isActive('/export')}"><a href="/export">Export</a></li>
+        </ul>
     </div>
+
+    <div class="content row">
+        <div class="col-md-12">
+            <div ng-controller="mainViewCtrl">
+                <div ng-include="'views/mainView.html'"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>
