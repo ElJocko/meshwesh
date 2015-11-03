@@ -14,9 +14,17 @@ function($routeProvider) {
             templateUrl:'views/home.html',
             controller:'HomeCtrl'
         })
-        .when('/edit/thematicCategories', {
+        .when('/thematicCategories/edit', {
             templateUrl:'views/editThematicCategories.html',
             controller:'EditThematicCategoriesCtrl'
+        })
+        .when('/thematicCategories/:categoryId/edit', {
+            templateUrl:'views/editAThematicCategory.html',
+            controller:'EditAThematicCategoryCtrl'
+        })
+        .when('/thematicCategories/new', {
+            templateUrl:'views/editAThematicCategory.html',
+            controller:'EditAThematicCategoryCtrl'
         })
         .when('/report', {
             templateUrl:'report.html',
