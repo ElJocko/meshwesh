@@ -14,7 +14,7 @@ var sequelize = new Sequelize(config.database.url, config.database.options);
 
 // load models
 var models = [
-    'ThematicCategoryModel'
+    'thematicCategoryModel'
 ];
 models.forEach(function(model) {
     module.exports[model] = sequelize.import(__dirname + '/' + model);

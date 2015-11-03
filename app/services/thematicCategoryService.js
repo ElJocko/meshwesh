@@ -12,17 +12,17 @@ var errors = {
 };
 exports.errors = errors;
 
-var ThematicCategory = models.ThematicCategoryModel;
+var thematicCategory = models.thematicCategoryModel;
 
 exports.retrieveByQuery = function(query, callback) {
-    ThematicCategory.findAll({ }).then(function(categories) {
+    thematicCategory.findAll({ }).then(function(categories) {
         return callback(null, categories);
     });
 };
 
 exports.retrieveById = function(categoryId, callback) {
     if (categoryId) {
-        ThematicCategory.findById(categoryId).then(function(category) {
+        thematicCategory.findById(categoryId).then(function(category) {
             return callback(null, category);
         });
     }
@@ -35,7 +35,7 @@ exports.retrieveById = function(categoryId, callback) {
 
 exports.create = function(categoryData, callback) {
     // Insert the row
-    ThematicCategory.create({ name: categoryData.name })
+    thematicCategory.create({ name: categoryData.name })
         .then(function(savedCategory) {
             return callback(null, savedCategory);
         })
@@ -46,7 +46,7 @@ exports.create = function(categoryData, callback) {
 
 exports.update = function(categoryId, categoryData, callback) {
     if (categoryId) {
-        ThematicCategory.findById(categoryId)
+        thematicCategory.findById(categoryId)
             .then(function(category) {
                 _.assign(category, categoryData);
                 category.save()
@@ -64,7 +64,7 @@ exports.update = function(categoryId, categoryData, callback) {
 
 exports.deleteById = function(categoryId, callback) {
     if (categoryId) {
-        ThematicCategory.findById(categoryId)
+        thematicCategory.findById(categoryId)
             .then(function(category) {
                 category.destroy().then(function() {
                     return callback(null, category);
