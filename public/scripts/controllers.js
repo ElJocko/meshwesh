@@ -2,12 +2,13 @@
 
 var meshweshControllers = angular.module('meshweshControllers', []);
 
-meshweshControllers.controller('navCtrl', ['$scope', '$http',
-    function ($scope, $http) {
+meshweshControllers.controller('HomeCtrl', ['$scope',
+    function ($scope) {
 
     }]);
 
-meshweshControllers.controller('mainViewCtrl', ['$scope', '$routeParams', 'ThematicCategory',
+meshweshControllers.controller('EditThematicCategoriesCtrl', ['$scope', '$routeParams', 'ThematicCategory',
     function($scope, $routeParams, ThematicCategory) {
         $scope.categories = ThematicCategory.list();
     }]);
+

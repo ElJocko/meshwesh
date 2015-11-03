@@ -15,6 +15,8 @@
     <script src="vendor/angular-resource/angular-resource.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
 
+    <script src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
+
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers.js"></script>
     <script src="scripts/resources.js"></script>
@@ -28,24 +30,47 @@
     <h3>Army List Manager</h3>
 </div>
 
-<div class="container-fluid">
+<div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li><a href="#/home">Home</a></li>
+        <li uib-dropdown on-toggle="toggled(open)">
+            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Edit <span class="caret"></span></a>
+            <ul class="uib-dropdown-menu">
+                <li ng-disabled="true"><a href="#/edit/thematicCategories">Thematic Categories</a></li>
+                <li><a href="#">Grand Army Lists</a></li>
+                <li><a href="#">Army Lists</a></li>
+            </ul>
+        </li>
+        <li uib-dropdown on-toggle="toggled(open)">
+            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Report <span class="caret"></span></a>
+            <ul class="uib-dropdown-menu">
+                <li><a href="#">sample</a></li>
+                <li><a href="#">sample</a></li>
+            </ul>
+        </li>
+        <li uib-dropdown on-toggle="toggled(open)">
+            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Export <span class="caret"></span></a>
+            <ul class="uib-dropdown-menu">
+                <li><a href="#">sample</a></li>
+                <li><a href="#">sample</a></li>
+                <li><a href="#">sample</a></li>
+                <li><a href="#">sample</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">sample</a></li>
+                <li><a href="#">sample</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-    <div class="collapse navbar-collapse" ng-controller="navCtrl">
-        <ul class="nav navbar-nav">
-            <li ng-class="{ active: isActive('/edit')}"><a href="/edit">Edit</a></li>
-            <li ng-class="{ active: isActive('/report')}"><a href="/report">Report</a></li>
-            <li ng-class="{ active: isActive('/export')}"><a href="/export">Export</a></li>
-        </ul>
-    </div>
-
-    <div class="content row">
+<div class="container">
+    <div class="row">
         <div class="col-md-12">
-            <div ng-controller="mainViewCtrl">
-                <div ng-include="'views/mainView.html'"></div>
-            </div>
+            <div ng-view></div>
         </div>
     </div>
-
 </div>
+
 </body>
 </html>

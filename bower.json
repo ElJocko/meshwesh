@@ -5,6 +5,7 @@
   "moduleType": "node",
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-bootstrap": "^0.14.3",
     "angular-resource": "^1.4.7",
     "angular-route": "^1.4.7",
     "bootstrap": "^3.3.5",

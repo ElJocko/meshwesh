@@ -33,6 +33,20 @@
     background: #8c4646;
 }
 
+#navbar {
+    background: #588c7e;
+    color: #ffffff;
+}
+
+#navbar li a {
+    color: #ffffff;
+    background: #588c7e;
+}
+
+#navbar ul {
+    color: #ffffff;
+    background: #588c7e;
+}
 
 /*
 #wrapper {
@@ -106,6 +120,9 @@
 }
 */
 
+.content {
+    margin-top: 40px;
+}
 
 .content-header {
     font-size: 2em;
@@ -117,7 +134,7 @@
 }
 
 .content-btn {
-     margin: 20px;
+    margin: 20px;
     background: #588c7e;
     color: #ffffff;
  }
