@@ -6,11 +6,8 @@ module.exports = {
         hostname: process.env.HOSTNAME
     },
     database: {
-        name: process.env.DATABASE_NAME,
-        username: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
+        url: process.env.DATABASE_URL,
         options: {
-            host: 'localhost',
             dialect: 'postgres',
 
             pool: {
