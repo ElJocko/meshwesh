@@ -2,9 +2,11 @@
 
 angular
     .module('meshweshControllers')
-    .controller('ThematicCategoriesEditController', ['$routeParams', '$location', 'ThematicCategoriesService', thematicCategoriesEditController]);
+    .controller('ThematicCategoriesEditController', ThematicCategoriesEditController);
 
-function thematicCategoriesEditController($routeParams, $location, ThematicCategoriesService) {
+ThematicCategoriesEditController.$inject = ['$routeParams', '$location', 'ThematicCategoriesService'];
+
+function ThematicCategoriesEditController($routeParams, $location, ThematicCategoriesService) {
     var vm = this;
 
     var categoryId = $routeParams.categoryId;

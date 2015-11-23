@@ -2,9 +2,11 @@
 
 angular
     .module('meshweshControllers')
-    .controller('ThematicCategoriesListController', ['$location', 'ThematicCategoriesService', thematicCategoriesListController]);
+    .controller('ThematicCategoriesListController', ThematicCategoriesListController);
 
-function thematicCategoriesListController($location, ThematicCategoriesService) {
+ThematicCategoriesListController.$inject = ['$location', 'ThematicCategoriesService'];
+
+function ThematicCategoriesListController($location, ThematicCategoriesService) {
     var vm = this;
     vm.categories = ThematicCategoriesService.list();
 
