@@ -18,8 +18,13 @@
     <script src="vendor/angular-bootstrap/ui-bootstrap.js"></script>
 
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers.js"></script>
-    <script src="scripts/resources.js"></script>
+    <script src="scripts/routes/routes.js"></script>
+
+    <script src="scripts/controllers/homeController.js"></script>
+    <script src="scripts/controllers/thematicCategoriesListController.js"></script>
+    <script src="scripts/controllers/thematicCategoriesEditController.js"></script>
+
+    <script src="scripts/services/thematicCategoriesService.js"></script>
 </head>
 
 <body>
@@ -36,7 +41,7 @@
         <li uib-dropdown on-toggle="toggled(open)">
             <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Edit <span class="caret"></span></a>
             <ul class="uib-dropdown-menu">
-                <li><a href="#/thematicCategories/edit">Thematic Categories</a></li>
+                <li><a href="#/thematicCategories/list">Thematic Categories</a></li>
                 <li><a href="#">Grand Army Lists</a></li>
                 <li><a href="#">Army Lists</a></li>
             </ul>
