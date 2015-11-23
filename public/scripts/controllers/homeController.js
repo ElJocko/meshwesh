@@ -2,7 +2,8 @@
 
 angular
     .module('meshweshControllers')
-    .controller('HomeController', [
-        function() {
+    .controller('HomeController', [homeController]);
 
-        }]);
+function homeController() {
+
+}
