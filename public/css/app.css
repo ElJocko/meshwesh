@@ -137,4 +137,11 @@
     margin: 20px;
     background: #588c7e;
     color: #ffffff;
- }
+}
+
+.delete-btn {
+    margin: 20px;
+    background: #ffffff;
+    color: #ff0000;
+    border-color: #ff0000;
+}

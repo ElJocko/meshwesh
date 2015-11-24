@@ -13,31 +13,42 @@ function ThematicCategoriesEditController($routeParams, $location, ThematicCateg
     if (categoryId) {
         // Edit an existing thematic category
         vm.category = ThematicCategoriesService.get({ id: categoryId });
-        vm.submit = submitUpdate;
+        vm.submit = updateCategory;
+        vm.delete = deleteCategory;
     }
     else {
         // Edit a new thematic category
         vm.category = { name: "" };
-        vm.submit = submitNew;
+        vm.submit = createCategory;
     }
 
-    function submitUpdate() {
+    function updateCategory() {
         ThematicCategoriesService.update({ id: categoryId }, vm.category,
             function (category) {
-                console.log('Successfully saved changes to ' + category.name);
+                console.log('Successfully updated ' + category.name);
                 $location.path('/thematicCategories/list');
             }, function (res) {
                 console.log(res.data);
             });
     }
 
-    function submitNew() {
+    function createCategory() {
         var newCategory = new ThematicCategoriesService(vm.category);
         newCategory.$save().then(function (category) {
-            console.log('Successfully saved changes to ' + category.name);
+            console.log('Successfully created ' + category.name);
             $location.path('/thematicCategories/list');
         }).catch(function (res) {
             console.log(res.data);
         });
+    }
+
+    function deleteCategory() {
+        ThematicCategoriesService.destroy({ id: categoryId },
+            function(category) {
+                console.log('Successfully deleted ' + category.name);
+                $location.path('/thematicCategories/list');
+            }, function (res) {
+                console.log(res.data);
+            });
     }
 }

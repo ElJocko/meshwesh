@@ -6,7 +6,16 @@
                 <label for="inputName">Name</label>
                 <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.category.name">
             </div>
-            <button type="submit" class="btn content-btn" ng-click="vm.submit()">Submit</button>
         </form>
+    </div>
+</div>
+<div class="content row">
+    <div class="col-md-12">
+        <button type="submit" class="btn content-btn" ng-click="vm.submit()">Submit</button>
+    </div>
+</div>
+<div class="content row">
+    <div class="col-md-12">
+        <button class="btn delete-btn" ng-click="vm.delete()" ng-show="vm.delete">Delete Thematic Category</button>
     </div>
 </div>
