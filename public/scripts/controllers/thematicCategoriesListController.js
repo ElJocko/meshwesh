@@ -8,9 +8,11 @@ ThematicCategoriesListController.$inject = ['$location', 'ThematicCategoriesServ
 
 function ThematicCategoriesListController($location, ThematicCategoriesService) {
     var vm = this;
-    vm.categories = ThematicCategoriesService.list();
 
-    vm.create = function() {
+    vm.categories = ThematicCategoriesService.list();
+    vm.create = gotoNewThematicCategory;
+
+    function gotoNewThematicCategory() {
         $location.path('/thematicCategories/new');
-    };
+    }
 }

@@ -1,7 +1,7 @@
 <div class="content row">
     <div class="col-md-12">
         <div class="content-header">Thematic Categories</div>
-        <div ng-repeat="category in vm.categories">
+        <div ng-repeat="category in vm.categories | orderBy:'name'">
             <div class="content-link">
                 <a ng-href="#/thematicCategories/{{ category.id }}/edit">{{ category.name }}</a>
             </div>
