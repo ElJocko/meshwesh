@@ -10,9 +10,9 @@ function ThematicCategoriesListController($location, ThematicCategoriesService) 
     var vm = this;
 
     vm.categories = ThematicCategoriesService.list();
-    vm.create = gotoNewThematicCategory;
+    vm.create = showNewThematicCategory;
 
-    function gotoNewThematicCategory() {
+    function showNewThematicCategory() {
         $location.path('/thematicCategories/new');
     }
 }
