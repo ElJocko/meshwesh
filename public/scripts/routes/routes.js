@@ -22,7 +22,7 @@ function router($routeProvider) {
             controller:'ThematicCategoriesEditController',
             controllerAs: 'vm'
         })
-        .when('/thematicCategories/new', {
+        .when('/thematicCategories/create', {
             templateUrl:'views/thematicCategoriesEdit.html',
             controller:'ThematicCategoriesEditController',
             controllerAs: 'vm'

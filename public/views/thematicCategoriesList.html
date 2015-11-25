@@ -3,7 +3,7 @@
         <div class="content-header">Thematic Categories</div>
         <div ng-repeat="category in vm.categories | orderBy:'name'">
             <div class="content-link">
-                <a ng-href="#/thematicCategories/{{ category.id }}/edit">{{ category.name }}</a>
+                <a href ng-click="vm.edit(category.id)">{{ category.name }}</a>
             </div>
         </div>
         <div>
