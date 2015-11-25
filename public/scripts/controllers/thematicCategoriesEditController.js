@@ -27,19 +27,21 @@ function ThematicCategoriesEditController($routeParams, $location, ThematicCateg
             function (category) {
                 console.log('Successfully updated ' + category.name);
                 $location.path('/thematicCategories/list');
-            }, function (res) {
+            },
+            function (res) {
                 console.log(res.data);
             });
     }
 
     function createCategory() {
-        var newCategory = new ThematicCategoriesService(vm.category);
-        newCategory.$save().then(function (category) {
-            console.log('Successfully created ' + category.name);
-            $location.path('/thematicCategories/list');
-        }).catch(function (res) {
-            console.log(res.data);
-        });
+        ThematicCategoriesService.create(vm.category,
+            function(category) {
+                console.log('Successfully created ' + category.name);
+                $location.path('/thematicCategories/list');
+            },
+            function (res) {
+                console.log(res.data);
+            });
     }
 
     function deleteCategory() {
@@ -47,7 +49,8 @@ function ThematicCategoriesEditController($routeParams, $location, ThematicCateg
             function(category) {
                 console.log('Successfully deleted ' + category.name);
                 $location.path('/thematicCategories/list');
-            }, function (res) {
+            },
+            function (res) {
                 console.log(res.data);
             });
     }

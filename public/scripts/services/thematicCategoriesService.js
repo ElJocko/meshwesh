@@ -5,9 +5,9 @@ angular
     .factory('ThematicCategoriesService', ['$resource', thematicCategoriesService]);
 
 function thematicCategoriesService ($resource) {
-    return $resource('api/v1/thematicCategories/:id', {
-            id: '@id'
-        },
+    return $resource(
+        'api/v1/thematicCategories/:id',
+        { id: '@id' },
         {
             create: { method: 'POST'},
             list: { method: 'GET', isArray: true },
