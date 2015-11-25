@@ -1,14 +1,7 @@
 describe('ThematicCategoriesListController', function() {
     beforeEach(module('meshweshApp'));
 
-    // Mock service
-    var service = {
-        list: function() {
-            return [
-                { name: 'category1' },
-                { name: 'category2' }
-            ];
-        }};
+    var Service = MockThematicCategoriesService();
 
     // Mock $location
     var location;
@@ -22,7 +15,7 @@ describe('ThematicCategoriesListController', function() {
     beforeEach(inject(function($controller) {
         controller = $controller(
             'ThematicCategoriesListController',
-            { $location: location, ThematicCategoriesService: service }
+            { $location: location, ThematicCategoriesService: Service }
         );
     }));
 

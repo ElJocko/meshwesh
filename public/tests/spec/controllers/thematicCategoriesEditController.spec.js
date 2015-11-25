@@ -1,31 +1,7 @@
 describe('ThematicCategoriesEditController', function() {
     beforeEach(module('meshweshApp'));
 
-    // Mock ThematicCategoriesService
-    var serviceObject = {};
-    var Service = function() {
-        return serviceObject;
-    };
-    Service.get = function(params) {
-        return { id: params.id, name: 'initial name' };
-    };
-    Service.create = function(category, onSuccess, onError) {
-        onSuccess(category);
-    };
-    Service.update = function(params, category, onSuccess, onError) {
-        onSuccess(category);
-    };
-    Service.destroy = function(params, onSuccess, onError) {
-        onSuccess({ id: params.id, name: 'destroyed!!' });
-    };
-
-    // Add spies for the service functions
-    beforeEach(function() {
-        spyOn(Service, 'get').and.callThrough();
-        spyOn(Service, 'create').and.callThrough();
-        spyOn(Service, 'update').and.callThrough();
-        spyOn(Service, 'destroy').and.callThrough();
-    });
+    var Service = MockThematicCategoriesService();
 
     // Mock $location
     var location;
