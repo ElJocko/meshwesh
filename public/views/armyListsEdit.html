@@ -5,6 +5,11 @@
             <div class="form-group">
                 <label for="inputName">Name</label>
                 <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.list.name">
+
+                <label for="inputGrandArmyList">Grand Army List</label>
+                <select class="form-control" id="inputGrandArmyList" ng-options="gal as gal.name for gal in vm.grandArmyLists track by gal.id" ng-model="vm.galSelected">
+                    <option value="">-- choose a grand army list --</option>
+                </select>
             </div>
         </form>
     </div>

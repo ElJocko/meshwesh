@@ -46,7 +46,7 @@ module.exports.retrieveById = function(req, res) {
 
 exports.create = function(req, res) {
     // Get the data from the request
-    var listData = _.pick(req.body, 'name');
+    var listData = _.pick(req.body, ['name', 'gal_id']);
 
     // Validate input
     if (!listData.name) {
@@ -75,7 +75,7 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     // Get the data from the request
-    var listData = _.pick(req.body, 'name');
+    var listData = _.pick(req.body, ['name', 'gal_id']);
 
     armyListService.update(req.params.listId, listData, function(err, list) {
         if (err) {

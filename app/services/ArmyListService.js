@@ -35,7 +35,7 @@ exports.retrieveById = function(listId, callback) {
 
 exports.create = function(listData, callback) {
     // Insert the row
-    armyListModel.create({ name: listData.name })
+    armyListModel.create({ name: listData.name, gal_id: listData.gal_id })
         .then(function(savedList) {
             return callback(null, savedList);
         })

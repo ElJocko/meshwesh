@@ -11,6 +11,14 @@
 </div>
 <div class="content row">
     <div class="col-md-12">
+        <div>Army Lists</div>
+        <div ng-repeat="armyList in vm.armyLists | orderBy:'name'">
+            {{ armyList.name }}
+        </div>
+    </div>
+</div>
+<div class="content row">
+    <div class="col-md-12">
         <button type="submit" class="btn content-btn" ng-click="vm.submit()">Submit</button>
     </div>
 </div>
