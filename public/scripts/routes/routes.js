@@ -27,6 +27,36 @@ function router($routeProvider) {
             controller:'ThematicCategoriesEditController',
             controllerAs: 'vm'
         })
+        .when('/grandArmyLists/list', {
+            templateUrl:'views/grandArmyListsList.html',
+            controller:'GrandArmyListsListController',
+            controllerAs: 'vm'
+        })
+        .when('/grandArmyLists/:listId/edit', {
+            templateUrl:'views/grandArmyListsEdit.html',
+            controller:'GrandArmyListsEditController',
+            controllerAs: 'vm'
+        })
+        .when('/grandArmyLists/create', {
+            templateUrl:'views/grandArmyListsEdit.html',
+            controller:'GrandArmyListsEditController',
+            controllerAs: 'vm'
+        })
+        .when('/armyLists/list', {
+            templateUrl:'views/armyListsList.html',
+            controller:'ArmyListsListController',
+            controllerAs: 'vm'
+        })
+        .when('/armyLists/:listId/edit', {
+            templateUrl:'views/armyListsEdit.html',
+            controller:'ArmyListsEditController',
+            controllerAs: 'vm'
+        })
+        .when('/armyLists/create', {
+            templateUrl:'views/armyListsEdit.html',
+            controller:'ArmyListsEditController',
+            controllerAs: 'vm'
+        })
         .when('/report', {
             templateUrl:'report.html',
             controller:'ReportCtrl'

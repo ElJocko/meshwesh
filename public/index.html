@@ -21,10 +21,17 @@
     <script src="scripts/routes/routes.js"></script>
 
     <script src="scripts/controllers/homeController.js"></script>
+
     <script src="scripts/controllers/thematicCategoriesListController.js"></script>
     <script src="scripts/controllers/thematicCategoriesEditController.js"></script>
+    <script src="scripts/controllers/grandArmyListsListController.js"></script>
+    <script src="scripts/controllers/grandArmyListsEditController.js"></script>
+    <script src="scripts/controllers/armyListsListController.js"></script>
+    <script src="scripts/controllers/armyListsEditController.js"></script>
 
     <script src="scripts/services/thematicCategoriesService.js"></script>
+    <script src="scripts/services/grandArmyListsService.js"></script>
+    <script src="scripts/services/armyListsService.js"></script>
 </head>
 
 <body>
@@ -42,8 +49,8 @@
             <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Edit <span class="caret"></span></a>
             <ul class="uib-dropdown-menu">
                 <li><a href="#/thematicCategories/list">Thematic Categories</a></li>
-                <li><a href="#">Grand Army Lists</a></li>
-                <li><a href="#">Army Lists</a></li>
+                <li><a href="#/grandArmyLists/list">Grand Army Lists</a></li>
+                <li><a href="#/armyLists/list">Army Lists</a></li>
             </ul>
         </li>
         <li uib-dropdown on-toggle="toggled(open)">
