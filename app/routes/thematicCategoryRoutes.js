@@ -8,7 +8,7 @@ var router = express.Router();
 
 router.route('/v1/thematicCategories')
     .get(tokenAuthz.requireAdminToken, thematicCategoryController.retrieveByQuery)
-    .post(tokenAuthz.requireAdminToken, thematicCategoryController.create);+
+    .post(tokenAuthz.requireAdminToken, thematicCategoryController.create);
 
 router.route('/v1/thematicCategories/:categoryId')
     .get(tokenAuthz.requireAdminToken, thematicCategoryController.retrieveById)
