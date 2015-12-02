@@ -1,7 +1,7 @@
-describe('ThematicCategoriesListController', function() {
+describe('ThematicCategorySummaryController', function() {
     beforeEach(module('meshweshApp'));
 
-    var Service = MockThematicCategoriesService();
+    var Service = MockThematicCategoryService();
 
     // Mock $location
     var location;
@@ -14,8 +14,8 @@ describe('ThematicCategoriesListController', function() {
     var controller;
     beforeEach(inject(function($controller) {
         controller = $controller(
-            'ThematicCategoriesListController',
-            { $location: location, ThematicCategoriesService: Service }
+            'ThematicCategorySummaryController',
+            { $location: location, ThematicCategoryService: Service }
         );
     }));
 
@@ -27,12 +27,12 @@ describe('ThematicCategoriesListController', function() {
 
     it('should navigate to the correct path on create()', function() {
         controller.create();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategories/create');
+        expect(location.path).toHaveBeenCalledWith('/thematicCategory/create');
     });
 
     it('should navigate to the correct path on edit()', function() {
         controller.edit(2);
-        expect(location.path).toHaveBeenCalledWith('/thematicCategories/2/edit');
+        expect(location.path).toHaveBeenCalledWith('/thematicCategory/2/edit');
     });
 });
 

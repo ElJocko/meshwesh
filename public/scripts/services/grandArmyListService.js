@@ -2,11 +2,11 @@
 
 angular
     .module('meshweshServices')
-    .factory('ArmyListsService', ['$resource', armyListsService]);
+    .factory('GrandArmyListService', ['$resource', grandArmyListService]);
 
-function armyListsService ($resource) {
+function grandArmyListService ($resource) {
     return $resource(
-        'api/v1/armyLists/:id',
+        'api/v1/grandArmyLists/:id',
         { id: '@id' },
         {
             create: { method: 'POST'},

@@ -2,20 +2,20 @@
 
 angular
     .module('meshweshControllers')
-    .controller('GrandArmyListsEditController', GrandArmyListsEditController);
+    .controller('GrandArmyListEditController', GrandArmyListEditController);
 
-GrandArmyListsEditController.$inject = ['$routeParams', '$location', 'GrandArmyListsService', 'ArmyListsService'];
+GrandArmyListEditController.$inject = ['$routeParams', '$location', 'GrandArmyListService', 'ArmyListService'];
 
-function GrandArmyListsEditController($routeParams, $location, GrandArmyListsService, ArmyListsService) {
+function GrandArmyListEditController($routeParams, $location, GrandArmyListService, ArmyListService) {
     var vm = this;
 
     var listId = $routeParams.listId;
     if (listId) {
         // Edit an existing grand army list
-        GrandArmyListsService.get({ id: listId }, function(list) {
+        GrandArmyListService.get({ id: listId }, function(list) {
             vm.list = list;
 
-            ArmyListsService.list(function(lists) {
+            ArmyListService.list(function(lists) {
                 vm.armyLists = lists.filter(function(element, index, array) {
                     return (element.gal_id == listId);
                 })
@@ -29,13 +29,12 @@ function GrandArmyListsEditController($routeParams, $location, GrandArmyListsSer
         vm.list = { name: "" };
         vm.submit = createList;
     }
-//    vm.armyLists = [ { name: 'not an army' }, { name: 'nope, not this one either' }];
 
     function updateList() {
-        GrandArmyListsService.update({ id: listId }, vm.list,
+        GrandArmyListService.update({ id: listId }, vm.list,
             function (list) {
                 console.log('Successfully updated ' + list.name);
-                $location.path('/grandArmyLists/list');
+                $location.path('/grandArmyList/summary');
             },
             function (res) {
                 console.log(res.data);
@@ -43,10 +42,10 @@ function GrandArmyListsEditController($routeParams, $location, GrandArmyListsSer
     }
 
     function createList() {
-        GrandArmyListsService.create(vm.list,
+        GrandArmyListService.create(vm.list,
             function(list) {
                 console.log('Successfully created ' + list.name);
-                $location.path('/grandArmyLists/list');
+                $location.path('/grandArmyList/summary');
             },
             function (res) {
                 console.log(res.data);
@@ -54,10 +53,10 @@ function GrandArmyListsEditController($routeParams, $location, GrandArmyListsSer
     }
 
     function deleteList() {
-        GrandArmyListsService.destroy({ id: listId },
+        GrandArmyListService.destroy({ id: listId },
             function(list) {
                 console.log('Successfully deleted ' + list.name);
-                $location.path('/grandArmyLists/list');
+                $location.path('/grandArmyList/summary');
             },
             function (res) {
                 console.log(res.data);

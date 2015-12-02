@@ -22,16 +22,16 @@
 
     <script src="scripts/controllers/homeController.js"></script>
 
-    <script src="scripts/controllers/thematicCategoriesListController.js"></script>
-    <script src="scripts/controllers/thematicCategoriesEditController.js"></script>
-    <script src="scripts/controllers/grandArmyListsListController.js"></script>
-    <script src="scripts/controllers/grandArmyListsEditController.js"></script>
-    <script src="scripts/controllers/armyListsListController.js"></script>
-    <script src="scripts/controllers/armyListsEditController.js"></script>
+    <script src="scripts/controllers/thematicCategorySummaryController.js"></script>
+    <script src="scripts/controllers/thematicCategoryEditController.js"></script>
+    <script src="scripts/controllers/grandArmyListSummaryController.js"></script>
+    <script src="scripts/controllers/grandArmyListEditController.js"></script>
+    <script src="scripts/controllers/armyListSummaryController.js"></script>
+    <script src="scripts/controllers/armyListEditController.js"></script>
 
-    <script src="scripts/services/thematicCategoriesService.js"></script>
-    <script src="scripts/services/grandArmyListsService.js"></script>
-    <script src="scripts/services/armyListsService.js"></script>
+    <script src="scripts/services/thematicCategoryService.js"></script>
+    <script src="scripts/services/grandArmyListService.js"></script>
+    <script src="scripts/services/armyListService.js"></script>
 </head>
 
 <body>
@@ -48,9 +48,9 @@
         <li uib-dropdown on-toggle="toggled(open)">
             <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Edit <span class="caret"></span></a>
             <ul class="uib-dropdown-menu">
-                <li><a href="#/thematicCategories/list">Thematic Categories</a></li>
-                <li><a href="#/grandArmyLists/list">Grand Army Lists</a></li>
-                <li><a href="#/armyLists/list">Army Lists</a></li>
+                <li><a href="#/thematicCategory/summary">Thematic Categories</a></li>
+                <li><a href="#/grandArmyList/summary">Grand Army Lists</a></li>
+                <li><a href="#/armyList/summary">Army Lists</a></li>
             </ul>
         </li>
         <li uib-dropdown on-toggle="toggled(open)">

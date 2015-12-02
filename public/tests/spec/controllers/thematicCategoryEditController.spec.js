@@ -1,7 +1,7 @@
-describe('ThematicCategoriesEditController', function() {
+describe('ThematicCategoryEditController', function() {
     beforeEach(module('meshweshApp'));
 
-    var Service = MockThematicCategoriesService();
+    var Service = MockThematicCategoryService();
 
     // Mock $location
     var location;
@@ -21,8 +21,8 @@ describe('ThematicCategoriesEditController', function() {
     function makeController(categoryId) {
         inject(function($controller) {
             controller = $controller(
-                'ThematicCategoriesEditController',
-                { $routeParams: { categoryId: categoryId }, $location: location, ThematicCategoriesService: Service }
+                'ThematicCategoryEditController',
+                { $routeParams: { categoryId: categoryId }, $location: location, ThematicCategoryService: Service }
             );
         })
     }
@@ -51,7 +51,7 @@ describe('ThematicCategoriesEditController', function() {
         controller.submit();
 
         expect(Service.update).toHaveBeenCalled();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategories/list');
+        expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 
     it('should take the correct action on submit() (new category)', function() {
@@ -59,14 +59,14 @@ describe('ThematicCategoriesEditController', function() {
         controller.category.name = 'created name';
         controller.submit();
 
-        expect(location.path).toHaveBeenCalledWith('/thematicCategories/list');
+        expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 
     it('should take the correct action on delete()', function() {
         makeController(2);
         controller.delete(2);
         expect(Service.destroy).toHaveBeenCalled();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategories/list');
+        expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 });
 

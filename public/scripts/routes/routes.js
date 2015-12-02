@@ -12,49 +12,49 @@ function router($routeProvider) {
             templateUrl:'views/home.html',
             controller:'HomeController'
         })
-        .when('/thematicCategories/list', {
-            templateUrl:'views/thematicCategoriesList.html',
-            controller:'ThematicCategoriesListController',
+        .when('/thematicCategory/summary', {
+            templateUrl:'views/thematicCategorySummary.html',
+            controller:'ThematicCategorySummaryController',
             controllerAs: 'vm'
         })
-        .when('/thematicCategories/:categoryId/edit', {
-            templateUrl:'views/thematicCategoriesEdit.html',
-            controller:'ThematicCategoriesEditController',
+        .when('/thematicCategory/:categoryId/edit', {
+            templateUrl:'views/thematicCategoryEdit.html',
+            controller:'ThematicCategoryEditController',
             controllerAs: 'vm'
         })
-        .when('/thematicCategories/create', {
-            templateUrl:'views/thematicCategoriesEdit.html',
-            controller:'ThematicCategoriesEditController',
+        .when('/thematicCategory/create', {
+            templateUrl:'views/thematicCategoryEdit.html',
+            controller:'ThematicCategoryEditController',
             controllerAs: 'vm'
         })
-        .when('/grandArmyLists/list', {
-            templateUrl:'views/grandArmyListsList.html',
-            controller:'GrandArmyListsListController',
+        .when('/grandArmyList/summary', {
+            templateUrl:'views/grandArmyListSummary.html',
+            controller:'GrandArmyListSummaryController',
             controllerAs: 'vm'
         })
-        .when('/grandArmyLists/:listId/edit', {
-            templateUrl:'views/grandArmyListsEdit.html',
-            controller:'GrandArmyListsEditController',
+        .when('/grandArmyList/:listId/edit', {
+            templateUrl:'views/grandArmyListEdit.html',
+            controller:'GrandArmyListEditController',
             controllerAs: 'vm'
         })
-        .when('/grandArmyLists/create', {
-            templateUrl:'views/grandArmyListsEdit.html',
-            controller:'GrandArmyListsEditController',
+        .when('/grandArmyList/create', {
+            templateUrl:'views/grandArmyListEdit.html',
+            controller:'GrandArmyListEditController',
             controllerAs: 'vm'
         })
-        .when('/armyLists/list', {
-            templateUrl:'views/armyListsList.html',
-            controller:'ArmyListsListController',
+        .when('/armyList/summary', {
+            templateUrl:'views/armyListSummary.html',
+            controller:'ArmyListSummaryController',
             controllerAs: 'vm'
         })
-        .when('/armyLists/:listId/edit', {
-            templateUrl:'views/armyListsEdit.html',
-            controller:'ArmyListsEditController',
+        .when('/armyList/:listId/edit', {
+            templateUrl:'views/armyListEdit.html',
+            controller:'ArmyListEditController',
             controllerAs: 'vm'
         })
-        .when('/armyLists/create', {
-            templateUrl:'views/armyListsEdit.html',
-            controller:'ArmyListsEditController',
+        .when('/armyList/create', {
+            templateUrl:'views/armyListEdit.html',
+            controller:'ArmyListEditController',
             controllerAs: 'vm'
         })
         .when('/report', {

@@ -2,17 +2,17 @@
 
 angular
     .module('meshweshControllers')
-    .controller('ThematicCategoriesEditController', ThematicCategoriesEditController);
+    .controller('ThematicCategoryEditController', ThematicCategoryEditController);
 
-ThematicCategoriesEditController.$inject = ['$routeParams', '$location', 'ThematicCategoriesService'];
+ThematicCategoryEditController.$inject = ['$routeParams', '$location', 'ThematicCategoryService'];
 
-function ThematicCategoriesEditController($routeParams, $location, ThematicCategoriesService) {
+function ThematicCategoryEditController($routeParams, $location, ThematicCategoryService) {
     var vm = this;
 
     var categoryId = $routeParams.categoryId;
     if (categoryId) {
         // Edit an existing thematic category
-        vm.category = ThematicCategoriesService.get({ id: categoryId });
+        vm.category = ThematicCategoryService.get({ id: categoryId });
         vm.submit = updateCategory;
         vm.delete = deleteCategory;
     }
@@ -23,10 +23,10 @@ function ThematicCategoriesEditController($routeParams, $location, ThematicCateg
     }
 
     function updateCategory() {
-        ThematicCategoriesService.update({ id: categoryId }, vm.category,
+        ThematicCategoryService.update({ id: categoryId }, vm.category,
             function (category) {
                 console.log('Successfully updated ' + category.name);
-                $location.path('/thematicCategories/list');
+                $location.path('/thematicCategory/summary');
             },
             function (res) {
                 console.log(res.data);
@@ -34,10 +34,10 @@ function ThematicCategoriesEditController($routeParams, $location, ThematicCateg
     }
 
     function createCategory() {
-        ThematicCategoriesService.create(vm.category,
+        ThematicCategoryService.create(vm.category,
             function(category) {
                 console.log('Successfully created ' + category.name);
-                $location.path('/thematicCategories/list');
+                $location.path('/thematicCategory/summary');
             },
             function (res) {
                 console.log(res.data);
@@ -45,10 +45,10 @@ function ThematicCategoriesEditController($routeParams, $location, ThematicCateg
     }
 
     function deleteCategory() {
-        ThematicCategoriesService.destroy({ id: categoryId },
+        ThematicCategoryService.destroy({ id: categoryId },
             function(category) {
                 console.log('Successfully deleted ' + category.name);
-                $location.path('/thematicCategories/list');
+                $location.path('/thematicCategory/summary');
             },
             function (res) {
                 console.log(res.data);

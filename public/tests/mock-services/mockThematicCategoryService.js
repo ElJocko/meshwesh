@@ -1,4 +1,4 @@
-function MockThematicCategoriesService() {
+function MockThematicCategoryService() {
     var serviceObject = {};
     var Service = function() {
         return serviceObject;
