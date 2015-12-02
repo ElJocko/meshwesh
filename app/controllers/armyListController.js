@@ -7,7 +7,7 @@ var _ = require('lodash');
 module.exports.retrieveByQuery = function(req, res) {
     var query = { }; // Default is all
     if (req.query.name) {
-        query.name = req.query.name;
+        query.where = { name: { like: req.query.name }};
     }
     armyListService.retrieveByQuery(query, function(err, lists) {
         if (err) {
@@ -112,20 +112,18 @@ exports.delete = function(req, res) {
                 logger.warn('Badly formatted army list id');
                 return res.status(400).send('Army List id is badly formatted.');
             }
+            else if (err.message === armyListService.errors.notFound) {
+                logger.warn('Army list not found');
+                return res.status(404).send('Army List not found.');
+            }
             else {
                 logger.error('Failed with error: ' + err);
                 return res.status(500).send('Unable to delete Army List. Server error.');
             }
         }
         else {
-            if (!list) {
-                logger.warn('Army list not found');
-                return res.status(404).send('Army List not found.');
-            }
-            else {
-                logger.info("Success: Deleted army list " + list.name);
-                return res.status(200).send(list);
-            }
+            logger.info("Success: Deleted army list " + list.name);
+            return res.status(200).send(list);
         }
     });
 };

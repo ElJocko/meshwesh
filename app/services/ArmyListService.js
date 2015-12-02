@@ -15,7 +15,7 @@ exports.errors = errors;
 var armyListModel = models.armyListModel;
 
 exports.retrieveByQuery = function(query, callback) {
-    armyListModel.findAll({ }).then(function(lists) {
+    armyListModel.findAll(query).then(function(lists) {
         return callback(null, lists);
     });
 };
@@ -66,9 +66,15 @@ exports.deleteById = function(listId, callback) {
     if (listId) {
         armyListModel.findById(listId)
             .then(function(list) {
-                list.destroy().then(function() {
-                    return callback(null, list);
-                });
+                if (list) {
+                    list.destroy().then(function () {
+                        return callback(null, list);
+                    });
+                }
+                else {
+                    var error = new Error(errors.notFound);
+                    return callback(error);
+                }
             });
     }
     else {
