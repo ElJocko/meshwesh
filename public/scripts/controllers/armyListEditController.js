@@ -25,9 +25,12 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
 
     function setSelectedGrandArmyList(grandArmyLists) {
         vm.grandArmyLists = grandArmyLists;
-        var galIndex = vm.grandArmyLists.findIndex(function(element, index, array) {
+        var galIndex = _.findIndex(vm.grandArmyLists, function(element) {
             return (element.id === vm.list.gal_id);
         });
+//        var galIndex = vm.grandArmyLists.findIndex(function(element, index, array) {
+//            return (element.id === vm.list.gal_id);
+//        });
         if (galIndex !== -1) {
             vm.galSelected = grandArmyLists[galIndex];
         }

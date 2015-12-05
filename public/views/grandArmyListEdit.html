@@ -1,28 +1,40 @@
-<div class="content row">
+<div class="row">
     <div class="col-md-12">
         <div class="content-header">Edit a Grand Army List</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <form>
             <div class="form-group">
-                <label for="inputName">Name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.list.name">
+                <div class="row content-input">
+                    <div class="col-md-12">
+                        <label for="inputName">Name</label>
+                        <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.list.name">
+                    </div>
+                </div>
             </div>
         </form>
     </div>
 </div>
-<div class="content row">
+<div class="row">
     <div class="col-md-12">
-        <div>Army Lists</div>
+        <div class="content-subheader">Army Lists</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
         <div ng-repeat="armyList in vm.armyLists | orderBy:'name'">
             {{ armyList.name }}
         </div>
     </div>
 </div>
-<div class="content row">
+<div class="row">
     <div class="col-md-12">
         <button type="submit" class="btn content-btn" ng-click="vm.submit()">Submit</button>
     </div>
 </div>
-<div class="content row">
+<div class="row">
     <div class="col-md-12">
         <button class="btn delete-btn" ng-click="vm.delete()" ng-show="vm.delete">Delete Grand Army List</button>
     </div>
