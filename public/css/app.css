@@ -76,12 +76,6 @@
     color: #fff;
     background: rgba(255,255,255,0.2);
 }
-/*
-#nav li a:active,
-#nav li a:focus {
-    text-decoration: none;
-}
-*/
 
 .content-header {
     margin-top: 40px;
@@ -89,8 +83,7 @@
 }
 
 .content-subheader {
-    margin-top: 10px;
-    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .content-link {
@@ -103,7 +96,7 @@
 }
 
 .content-btn {
-    margin-top: 20px;
+    margin-top: 30px;
     background: #588c7e;
     color: #ffffff;
 }
