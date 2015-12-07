@@ -65,11 +65,11 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         }
         ArmyListService.update({ id: listId }, vm.list,
             function (list) {
-                console.log('Successfully updated ' + list.name);
+                console.info('Successfully updated ' + list.name);
                 $location.path('/armyList/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function (response) {
+                console.error(response.data);
             });
     }
 
@@ -82,22 +82,22 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         }
         ArmyListService.create(vm.list,
             function(list) {
-                console.log('Successfully created ' + list.name);
+                console.info('Successfully created ' + list.name);
                 $location.path('/armyList/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function (response) {
+                console.error(response.data);
             });
     }
 
     function deleteList() {
         ArmyListService.destroy({ id: listId },
             function(list) {
-                console.log('Successfully deleted ' + list.name);
+                console.info('Successfully deleted ' + list.name);
                 $location.path('/armyList/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function (response) {
+                console.error(response.data);
             });
     }
 }

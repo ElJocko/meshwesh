@@ -25,33 +25,33 @@ function ThematicCategoryEditController($routeParams, $location, ThematicCategor
     function updateCategory() {
         ThematicCategoryService.update({ id: categoryId }, vm.category,
             function (category) {
-                console.log('Successfully updated ' + category.name);
+                console.info('Successfully updated ' + category.name);
                 $location.path('/thematicCategory/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function (response) {
+                console.error(response.data);
             });
     }
 
     function createCategory() {
         ThematicCategoryService.create(vm.category,
-            function(category) {
-                console.log('Successfully created ' + category.name);
+            function (category) {
+                console.info('Successfully created ' + category.name);
                 $location.path('/thematicCategory/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function (response) {
+                console.error(response.data);
             });
     }
 
     function deleteCategory() {
         ThematicCategoryService.destroy({ id: categoryId },
-            function(category) {
-                console.log('Successfully deleted ' + category.name);
+            function (category) {
+                console.info('Successfully deleted ' + category.name);
                 $location.path('/thematicCategory/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function (response) {
+                console.error(response.data);
             });
     }
 }

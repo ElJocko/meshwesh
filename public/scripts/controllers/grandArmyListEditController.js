@@ -32,34 +32,34 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
 
     function updateList() {
         GrandArmyListService.update({ id: listId }, vm.list,
-            function (list) {
-                console.log('Successfully updated ' + list.name);
+            function(list) {
+                console.info('Successfully updated ' + list.name);
                 $location.path('/grandArmyList/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function(response) {
+                console.error(response.data);
             });
     }
 
     function createList() {
         GrandArmyListService.create(vm.list,
             function(list) {
-                console.log('Successfully created ' + list.name);
+                console.info('Successfully created ' + list.name);
                 $location.path('/grandArmyList/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function(response) {
+                console.error(response.data);
             });
     }
 
     function deleteList() {
         GrandArmyListService.destroy({ id: listId },
             function(list) {
-                console.log('Successfully deleted ' + list.name);
+                console.info('Successfully deleted ' + list.name);
                 $location.path('/grandArmyList/summary');
             },
-            function (res) {
-                console.log(res.data);
+            function(response) {
+                console.error(response.data);
             });
     }
 }

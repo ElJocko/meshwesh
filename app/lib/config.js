@@ -9,7 +9,7 @@ module.exports = {
         url: process.env.DATABASE_URL,
         options: {
             dialect: 'postgres',
-
+            logging: false,
             pool: {
                 max: 5,
                 min: 0,
