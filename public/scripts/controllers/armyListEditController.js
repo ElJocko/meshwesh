@@ -10,32 +10,49 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     var vm = this;
 
     var listId = $routeParams.listId;
+    initializeData();
     if (listId) {
         // Edit an existing army list
-        vm.list = ArmyListService.get({ id: listId });
         vm.submit = updateList;
         vm.delete = deleteList;
     }
     else {
         // Edit a new army list
-        vm.list = { name: "" };
         vm.submit = createList;
+        vm.delete = null;
     }
-    GrandArmyListService.list(setSelectedGrandArmyList);
 
-    function setSelectedGrandArmyList(grandArmyLists) {
-        vm.grandArmyLists = grandArmyLists;
-        var galIndex = _.findIndex(vm.grandArmyLists, function(element) {
-            return (element.id === vm.list.gal_id);
-        });
-//        var galIndex = vm.grandArmyLists.findIndex(function(element, index, array) {
-//            return (element.id === vm.list.gal_id);
-//        });
-        if (galIndex !== -1) {
-            vm.galSelected = grandArmyLists[galIndex];
+    function initializeData() {
+        if (listId) {
+            // Get the army list data and then get the grand army lists.
+            ArmyListService.get({ id: listId }, handleArmyList);
         }
         else {
-            vm.galSelected = null;
+            // New army list. Create the empty army list and get the grand army lists.
+            vm.list = { name: "" };
+            GrandArmyListService.list(handleGrandArmyLists);
+        }
+    }
+
+    function handleArmyList(list) {
+        // Save the army list and get the grand army lists.
+        vm.list = list;
+        GrandArmyListService.list(handleGrandArmyLists);
+    }
+
+    function handleGrandArmyLists(grandArmyLists) {
+        vm.grandArmyLists = grandArmyLists;
+        if (listId) {
+            var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
+                return (element.id === vm.list.gal_id);
+            });
+
+            if (galIndex !== -1) {
+                vm.galSelected = grandArmyLists[galIndex];
+            }
+            else {
+                vm.galSelected = null;
+            }
         }
     }
 
