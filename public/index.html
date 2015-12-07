@@ -10,7 +10,55 @@
 
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
+</head>
 
+<body>
+
+<!-- Banner -->
+<div class="banner">
+    <img src="images/meshwesh-banner.png" height="70px" width="70px">
+    <h1>Meshwesh</h1>
+    <h3>Army List Manager</h3>
+</div>
+
+<!-- Navbar -->
+<div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li><a href="#/home">Home</a></li>
+        <li uib-dropdown on-toggle="toggled(open)">
+            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Army List Data <span class="caret"></span></a>
+            <ul class="uib-dropdown-menu">
+                <li><a href="#/thematicCategory/summary">Thematic Categories</a></li>
+                <li><a href="#/grandArmyList/summary">Grand Army Lists</a></li>
+                <li><a href="#/armyList/summary">Army Lists</a></li>
+            </ul>
+        </li>
+        <li uib-dropdown on-toggle="toggled(open)">
+            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Report <span class="caret"></span></a>
+            <ul class="uib-dropdown-menu">
+                <li><a href="#">not implemented</a></li>
+            </ul>
+        </li>
+        <li uib-dropdown on-toggle="toggled(open)">
+            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Export <span class="caret"></span></a>
+            <ul class="uib-dropdown-menu">
+                <li><a href="#">not implemented</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<!-- Contents -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div ng-view></div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<div>
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-resource/angular-resource.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
@@ -33,48 +81,6 @@
     <script src="scripts/services/thematicCategoryService.js"></script>
     <script src="scripts/services/grandArmyListService.js"></script>
     <script src="scripts/services/armyListService.js"></script>
-</head>
-
-<body>
-
-<div class="banner">
-    <img src="images/meshwesh-banner.png" height="70px" width="70px">
-    <h1>Meshwesh</h1>
-    <h3>Army List Manager</h3>
-</div>
-
-<div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav">
-        <li><a href="#/home">Home</a></li>
-        <li uib-dropdown on-toggle="toggled(open)">
-            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Edit <span class="caret"></span></a>
-            <ul class="uib-dropdown-menu">
-                <li><a href="#/thematicCategory/summary">Thematic Categories</a></li>
-                <li><a href="#/grandArmyList/summary">Grand Army Lists</a></li>
-                <li><a href="#/armyList/summary">Army Lists</a></li>
-            </ul>
-        </li>
-        <li uib-dropdown on-toggle="toggled(open)">
-            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Report <span class="caret"></span></a>
-            <ul class="uib-dropdown-menu">
-                <li><a href="#">not implemented</a></li>
-            </ul>
-        </li>
-        <li uib-dropdown on-toggle="toggled(open)">
-            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Export <span class="caret"></span></a>
-            <ul class="uib-dropdown-menu">
-                <li><a href="#">not implemented</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div ng-view></div>
-        </div>
-    </div>
 </div>
 
 </body>
