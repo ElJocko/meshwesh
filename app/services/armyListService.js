@@ -13,6 +13,7 @@ var errors = {
 exports.errors = errors;
 
 var armyListModel = models.armyListModel;
+var dateRangeModel = models.armyDateRangeModel;
 
 exports.retrieveByQuery = function(query, callback) {
     armyListModel.findAll(query).then(function(lists) {
@@ -23,7 +24,9 @@ exports.retrieveByQuery = function(query, callback) {
 exports.retrieveById = function(listId, callback) {
     if (listId) {
         armyListModel.findById(listId).then(function(list) {
-            return callback(null, list);
+            addDateRanges(list, function(newList) {
+                return callback(null, newList);
+            });
         });
     }
     else {
@@ -83,3 +86,11 @@ exports.deleteById = function(listId, callback) {
         return callback(error);
     }
 };
+
+function addDateRanges(armyList, cb) {
+    var query = { where: { army_list_id: armyList.id }};
+    dateRangeModel.findAll(query).then(function(dateRanges) {
+        armyList.dateRanges = dataRanges;
+        cb(armyList);
+    });
+}
