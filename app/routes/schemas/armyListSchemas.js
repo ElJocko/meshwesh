@@ -1,7 +1,19 @@
 'use strict';
 
+var dateRangesSubschema = {
+    type: 'array',
+    items: {
+        type: 'object',
+        properties: {
+            start_date: { type: 'number', required: true },
+            end_date: { type: 'number', required: true }
+        },
+        additionalProperties: false
+    }
+};
+
 // Schemas for validating requests
-exports.retrieveByQuerySchema = {
+exports.retrieveArmyListsByQuery = {
     body: { additionalProperties: false },
     query: {
         type: 'object',
@@ -11,37 +23,38 @@ exports.retrieveByQuerySchema = {
         additionalProperties: false }
 };
 
-exports.createArmyListSchema = {
+exports.createArmyList = {
     body: {
         type:'object',
         properties: {
             name: { type: 'string', required: true },
-            gal_id: { type: ['number', 'null'] }
+            gal_id: { type: ['number', 'null'] },
+            date_ranges: dateRangesSubschema
         },
         additionalProperties: false
     },
     query: { additionalProperties: false }
 };
 
-exports.retrieveByIdSchema = {
+exports.retrieveArmyListById = {
     body: { additionalProperties: false },
     query: { additionalProperties: false }
 };
 
-exports.updateArmyListSchema = {
+exports.updateArmyList = {
     body: {
         type: 'object',
         properties: {
-            id: { type: ['number', 'null'] },
-            name: { type: 'string', required: true },
-            gal_id: { type: ['number', 'null'] }
+            name: { type: 'string' },
+            gal_id: { type: ['number', 'null'] },
+            date_ranges: dateRangesSubschema
         },
         additionalProperties: false
     },
     query: { additionalProperties: false }
 };
 
-exports.deleteArmyListSchema = {
+exports.deleteArmyList = {
     body: { additionalProperties: false },
     query: { additionalProperties: false }
 };

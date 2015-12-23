@@ -46,13 +46,7 @@ module.exports.retrieveById = function(req, res) {
 
 exports.create = function(req, res) {
     // Get the data from the request
-    var listData = _.pick(req.body, ['name', 'gal_id']);
-
-    // Validate input
-    if (!listData.name) {
-        logger.warn("Request missing one or more required properties.");
-        return res.status(400).send("Unable to create Army List. Request missing one or more required properties.");
-    }
+    var listData = req.body;
 
     // Create the list
     armyListService.create(listData, function(err, list) {
@@ -60,6 +54,10 @@ exports.create = function(req, res) {
             if (err.message === armyListService.errors.duplicateName) {
                 logger.warn("Duplicate name");
                 return res.status(409).send('Duplicate name');
+            }
+            else if (err.message === armyListService.errors.referenceNotFound) {
+                logger.warn('Reference not found for ' + err.parameterName);
+                return res.status(400).send('Reference not found for ' + err.parameterName);
             }
             else {
                 logger.error("Failed with error: " + err);
@@ -75,13 +73,17 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     // Get the data from the request
-    var listData = _.pick(req.body, ['name', 'gal_id']);
+    var listData = req.body;
 
     armyListService.update(req.params.listId, listData, function(err, list) {
         if (err) {
             if (err.message === armyListService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted army list id');
                 return res.status(400).send('Army List id is badly formatted.');
+            }
+            else if (err.message === armyListService.errors.referenceNotFound) {
+                logger.warn('Reference not found for ' + err.parameterName);
+                return res.status(400).send('Reference not found for ' + err.parameterName);
             }
             else if (err.message === armyListService.errors.duplicateName) {
                 logger.warn("Duplicate name");

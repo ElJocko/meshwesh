@@ -8,7 +8,8 @@ var errors = {
     missingParameter: 'Missing required parameter',
     badlyFormattedParameter: 'Badly formatted parameter',
     duplicateName: 'Duplicate name',
-    notFound: 'Not found'
+    notFound: 'Not found',
+    referenceNotFound: 'Reference not found'
 };
 exports.errors = errors;
 
@@ -23,9 +24,10 @@ exports.retrieveByQuery = function(query, callback) {
 
 exports.retrieveById = function(listId, callback) {
     if (listId) {
-        armyListModel.findById(listId).then(function(list) {
-            addDateRanges(list, function(newList) {
-                return callback(null, newList);
+        armyListModel.findById(listId).then(function(armyList) {
+            armyList = armyList.get({ plain: true });
+            addDateRanges(armyList, function(newArmyList) {
+                return callback(null, newArmyList);
             });
         });
     }
@@ -37,13 +39,34 @@ exports.retrieveById = function(listId, callback) {
 };
 
 exports.create = function(listData, callback) {
-    // Insert the row
+    // Insert a row in the army_list table
     armyListModel.create({ name: listData.name, gal_id: listData.gal_id })
         .then(function(savedList) {
-            return callback(null, savedList);
+            // Add the army id to the date range objects
+            if (listData.date_ranges) {
+                saveDateRanges(listData.date_ranges, savedList.id, function(err) {
+                    if (err) {
+                        callback(err);
+                    }
+                    else {
+                        // And add the date ranges to the army list object
+                        savedList = savedList.get({ plain: true });
+                        addDateRanges(savedList, function(newArmyList) {
+                            return callback(null, newArmyList);
+                        });
+                    }
+                });
+            }
         })
         .catch(function(err) {
-            return callback(err);
+            if (err.name === "SequelizeForeignKeyConstraintError" && err.index === "grand_army_list_fk") {
+                var error = new Error(errors.referenceNotFound);
+                error.parameterName = 'gal_id';
+                return callback(error);
+            }
+            else {
+                return callback(err);
+            }
         });
 };
 
@@ -54,7 +77,30 @@ exports.update = function(listId, listData, callback) {
                 _.assign(list, listData);
                 list.save()
                     .then(function(err) {
-                        return callback(null, list);
+                        if (listData.date_ranges) {
+                            saveDateRanges(listData.date_ranges, list.id, function(err) {
+                                if (err) {
+                                    callback(err);
+                                }
+                                else {
+                                    // And add the date ranges to the army list object
+                                    var plainList = list.get({ plain: true });
+                                    addDateRanges(plainList, function(newArmyList) {
+                                        return callback(null, newArmyList);
+                                    });
+                                }
+                            });
+                        }
+                    })
+                    .catch(function(err) {
+                        if (err.name === "SequelizeForeignKeyConstraintError" && err.index === "grand_army_list_fk") {
+                            var error = new Error(errors.referenceNotFound);
+                            error.parameterName = 'gal_id';
+                            return callback(error);
+                        }
+                        else {
+                            return callback(err);
+                        }
                     });
             });
     }
@@ -87,10 +133,38 @@ exports.deleteById = function(listId, callback) {
     }
 };
 
+function saveDateRanges(dateRanges, armyListId, cb) {
+    // Delete the existing rows for this army list
+    dateRangeModel.destroy({ where: { army_list_id: armyListId }})
+        .then(function(affectedRows) {
+            // Add the army id to the date range objects
+            _.forEach(dateRanges, function(item) {
+                item.army_list_id = armyListId;
+            });
+
+            // Insert rows in the army_date_range table
+            dateRangeModel.bulkCreate(dateRanges)
+                .then(function() {
+                    return cb();
+                })
+                .catch(function(err) {
+                    // TBD: Rollback army_list entry???
+                    return cb(err);
+                });
+        })
+        .catch(function(err) {
+            // TBD: Rollback army_list entry???
+            cb(err);
+        });
+}
+
 function addDateRanges(armyList, cb) {
     var query = { where: { army_list_id: armyList.id }};
     dateRangeModel.findAll(query).then(function(dateRanges) {
-        armyList.dateRanges = dataRanges;
+        armyList.date_ranges = [];
+        _.forEach(dateRanges, function(item) {
+            armyList.date_ranges.push(_.pick(item, ['start_date', 'end_date']));
+        });
         cb(armyList);
     });
 }
