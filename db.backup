@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.4.5
 -- Dumped by pg_dump version 9.4.5
--- Started on 2015-12-23 17:43:44
+-- Started on 2015-12-24 11:45:29
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -14,7 +14,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- TOC entry 180 (class 3079 OID 11855)
+-- TOC entry 178 (class 3079 OID 11855)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,8 +22,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2033 (class 0 OID 0)
--- Dependencies: 180
+-- TOC entry 2023 (class 0 OID 0)
+-- Dependencies: 178
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -37,45 +37,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 179 (class 1259 OID 24654)
--- Name: army_date_range; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE army_date_range (
-    id integer NOT NULL,
-    army_list_id integer NOT NULL,
-    start_date integer NOT NULL,
-    end_date integer NOT NULL
-);
-
-
-ALTER TABLE army_date_range OWNER TO postgres;
-
---
--- TOC entry 178 (class 1259 OID 24652)
--- Name: army_date_range_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE army_date_range_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE army_date_range_id_seq OWNER TO postgres;
-
---
--- TOC entry 2035 (class 0 OID 0)
--- Dependencies: 178
--- Name: army_date_range_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE army_date_range_id_seq OWNED BY army_date_range.id;
-
-
---
 -- TOC entry 177 (class 1259 OID 16474)
 -- Name: army_list; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
@@ -83,7 +44,8 @@ ALTER SEQUENCE army_date_range_id_seq OWNED BY army_date_range.id;
 CREATE TABLE army_list (
     id integer NOT NULL,
     name character varying,
-    gal_id integer
+    gal_id integer,
+    date_ranges int4range[]
 );
 
 
@@ -105,7 +67,7 @@ CREATE SEQUENCE army_list_id_seq
 ALTER TABLE army_list_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2038 (class 0 OID 0)
+-- TOC entry 2025 (class 0 OID 0)
 -- Dependencies: 176
 -- Name: army_list_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -142,7 +104,7 @@ CREATE SEQUENCE grand_army_list_id_seq
 ALTER TABLE grand_army_list_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2041 (class 0 OID 0)
+-- TOC entry 2028 (class 0 OID 0)
 -- Dependencies: 174
 -- Name: grand_army_list_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -179,7 +141,7 @@ CREATE SEQUENCE thematic_category_id_seq
 ALTER TABLE thematic_category_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2044 (class 0 OID 0)
+-- TOC entry 2031 (class 0 OID 0)
 -- Dependencies: 172
 -- Name: thematic_category_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -188,15 +150,7 @@ ALTER SEQUENCE thematic_category_id_seq OWNED BY thematic_category.id;
 
 
 --
--- TOC entry 1905 (class 2604 OID 24657)
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY army_date_range ALTER COLUMN id SET DEFAULT nextval('army_date_range_id_seq'::regclass);
-
-
---
--- TOC entry 1904 (class 2604 OID 16477)
+-- TOC entry 1898 (class 2604 OID 16477)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -204,7 +158,7 @@ ALTER TABLE ONLY army_list ALTER COLUMN id SET DEFAULT nextval('army_list_id_seq
 
 
 --
--- TOC entry 1903 (class 2604 OID 16465)
+-- TOC entry 1897 (class 2604 OID 16465)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -212,7 +166,7 @@ ALTER TABLE ONLY grand_army_list ALTER COLUMN id SET DEFAULT nextval('grand_army
 
 
 --
--- TOC entry 1902 (class 2604 OID 16454)
+-- TOC entry 1896 (class 2604 OID 16454)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -220,16 +174,7 @@ ALTER TABLE ONLY thematic_category ALTER COLUMN id SET DEFAULT nextval('thematic
 
 
 --
--- TOC entry 1914 (class 2606 OID 24659)
--- Name: army_data_range_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY army_date_range
-    ADD CONSTRAINT army_data_range_pk PRIMARY KEY (id);
-
-
---
--- TOC entry 1911 (class 2606 OID 16482)
+-- TOC entry 1904 (class 2606 OID 16482)
 -- Name: army_list_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -238,7 +183,7 @@ ALTER TABLE ONLY army_list
 
 
 --
--- TOC entry 1909 (class 2606 OID 16471)
+-- TOC entry 1902 (class 2606 OID 16471)
 -- Name: grand_army_list_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -247,7 +192,7 @@ ALTER TABLE ONLY grand_army_list
 
 
 --
--- TOC entry 1907 (class 2606 OID 16459)
+-- TOC entry 1900 (class 2606 OID 16459)
 -- Name: thematic_category_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -256,7 +201,7 @@ ALTER TABLE ONLY thematic_category
 
 
 --
--- TOC entry 1912 (class 1259 OID 16493)
+-- TOC entry 1905 (class 1259 OID 16493)
 -- Name: fki_grand_army_list_fk; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -264,16 +209,7 @@ CREATE INDEX fki_grand_army_list_fk ON army_list USING btree (gal_id);
 
 
 --
--- TOC entry 1916 (class 2606 OID 24660)
--- Name: army_list_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY army_date_range
-    ADD CONSTRAINT army_list_fk FOREIGN KEY (army_list_id) REFERENCES army_list(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- TOC entry 1915 (class 2606 OID 16488)
+-- TOC entry 1906 (class 2606 OID 16488)
 -- Name: grand_army_list_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -282,7 +218,7 @@ ALTER TABLE ONLY army_list
 
 
 --
--- TOC entry 2032 (class 0 OID 0)
+-- TOC entry 2022 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -294,31 +230,7 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
--- TOC entry 2034 (class 0 OID 0)
--- Dependencies: 179
--- Name: army_date_range; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON TABLE army_date_range FROM PUBLIC;
-REVOKE ALL ON TABLE army_date_range FROM postgres;
-GRANT ALL ON TABLE army_date_range TO postgres;
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE army_date_range TO meshwesh_admin;
-
-
---
--- TOC entry 2036 (class 0 OID 0)
--- Dependencies: 178
--- Name: army_date_range_id_seq; Type: ACL; Schema: public; Owner: postgres
---
-
-REVOKE ALL ON SEQUENCE army_date_range_id_seq FROM PUBLIC;
-REVOKE ALL ON SEQUENCE army_date_range_id_seq FROM postgres;
-GRANT ALL ON SEQUENCE army_date_range_id_seq TO postgres;
-GRANT ALL ON SEQUENCE army_date_range_id_seq TO meshwesh_admin;
-
-
---
--- TOC entry 2037 (class 0 OID 0)
+-- TOC entry 2024 (class 0 OID 0)
 -- Dependencies: 177
 -- Name: army_list; Type: ACL; Schema: public; Owner: postgres
 --
@@ -330,7 +242,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE army_list TO meshwesh_admin;
 
 
 --
--- TOC entry 2039 (class 0 OID 0)
+-- TOC entry 2026 (class 0 OID 0)
 -- Dependencies: 176
 -- Name: army_list_id_seq; Type: ACL; Schema: public; Owner: postgres
 --
@@ -342,7 +254,7 @@ GRANT ALL ON SEQUENCE army_list_id_seq TO meshwesh_admin;
 
 
 --
--- TOC entry 2040 (class 0 OID 0)
+-- TOC entry 2027 (class 0 OID 0)
 -- Dependencies: 175
 -- Name: grand_army_list; Type: ACL; Schema: public; Owner: postgres
 --
@@ -354,7 +266,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE grand_army_list TO meshwesh_admin;
 
 
 --
--- TOC entry 2042 (class 0 OID 0)
+-- TOC entry 2029 (class 0 OID 0)
 -- Dependencies: 174
 -- Name: grand_army_list_id_seq; Type: ACL; Schema: public; Owner: postgres
 --
@@ -366,7 +278,7 @@ GRANT ALL ON SEQUENCE grand_army_list_id_seq TO meshwesh_admin;
 
 
 --
--- TOC entry 2043 (class 0 OID 0)
+-- TOC entry 2030 (class 0 OID 0)
 -- Dependencies: 173
 -- Name: thematic_category; Type: ACL; Schema: public; Owner: postgres
 --
@@ -378,7 +290,7 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE thematic_category TO meshwesh_admin;
 
 
 --
--- TOC entry 2045 (class 0 OID 0)
+-- TOC entry 2032 (class 0 OID 0)
 -- Dependencies: 172
 -- Name: thematic_category_id_seq; Type: ACL; Schema: public; Owner: postgres
 --
@@ -389,7 +301,7 @@ GRANT ALL ON SEQUENCE thematic_category_id_seq TO postgres;
 GRANT ALL ON SEQUENCE thematic_category_id_seq TO meshwesh_admin;
 
 
--- Completed on 2015-12-23 17:43:45
+-- Completed on 2015-12-24 11:45:29
 
 --
 -- PostgreSQL database dump complete

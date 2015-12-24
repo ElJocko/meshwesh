@@ -1,14 +1,12 @@
 'use strict';
 
 var dateRangesSubschema = {
-    type: 'array',
+    type: ['array', 'null'],
     items: {
-        type: 'object',
-        properties: {
-            start_date: { type: 'number', required: true },
-            end_date: { type: 'number', required: true }
-        },
-        additionalProperties: false
+        type: 'array',
+        items: {
+            type: 'number'
+        }
     }
 };
 

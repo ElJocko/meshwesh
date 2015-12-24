@@ -10,8 +10,7 @@ var sequelize = new Sequelize(config.database.url, config.database.options);
 var models = [
     'thematicCategoryModel',
     'grandArmyListModel',
-    'armyListModel',
-    'armyDateRangeModel'
+    'armyListModel'
 ];
 models.forEach(function(model) {
     module.exports[model] = sequelize.import(__dirname + '/' + model);
