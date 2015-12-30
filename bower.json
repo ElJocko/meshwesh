@@ -9,6 +9,7 @@
     "angular-mocks": "^1.4.8",
     "angular-resource": "^1.4.8",
     "angular-route": "^1.4.8",
+    "angular-smart-table": "^2.1.6",
     "bootstrap": "^3.3.5",
     "jquery": "^1.11.3",
     "lodash": "^3.10.1"

@@ -43,6 +43,7 @@ exports.updateArmyList = {
     body: {
         type: 'object',
         properties: {
+            id: { type: ['number', 'null'] },
             name: { type: 'string' },
             gal_id: { type: ['number', 'null'] },
             date_ranges: dateRangesSubschema

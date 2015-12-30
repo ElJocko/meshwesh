@@ -22,6 +22,8 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         vm.delete = null;
     }
 
+    vm.insertDateRange = insertDateRange;
+
     function initializeData() {
         if (listId) {
             // Get the army list data and then get the grand army lists.
@@ -37,6 +39,11 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     function handleArmyList(list) {
         // Save the army list and get the grand army lists.
         vm.list = list;
+        vm.displayDateRanges = []
+        for (var i = 0; i < list.date_ranges.length; ++i) {
+            var dateRange = { startDate: list.date_ranges[i][0], endDate: list.date_ranges[i][1] };
+            vm.displayDateRanges.push(dateRange);
+        }
         GrandArmyListService.list(handleGrandArmyLists);
     }
 
@@ -63,6 +70,14 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         else {
             vm.list.gal_id = null;
         }
+
+        vm.list.date_ranges = [];
+        for (var i = 0; i < vm.displayDateRanges.length; ++i) {
+            var dateRangeObject = vm.displayDateRanges[i];
+            var dateRangeArray = [ Number(dateRangeObject.startDate), Number(dateRangeObject.endDate) ];
+            vm.list.date_ranges.push(dateRangeArray);
+        }
+
         ArmyListService.update({ id: listId }, vm.list,
             function (list) {
                 console.info('Successfully updated ' + list.name);
@@ -99,5 +114,10 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
             function (response) {
                 console.error(response.data);
             });
+    }
+
+    function insertDateRange() {
+        vm.displayDateRanges.push({ startDate: 0, endDate: 0 });
+        console.info('added date range 0, 0');
     }
 }

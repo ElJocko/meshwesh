@@ -100,10 +100,23 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     margin-top: 10px;
 }
 
-.content-btn {
+.data-table th {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.save-btn {
     margin-top: 30px;
     background: #588c7e;
     color: #ffffff;
+}
+
+.insert-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: #ffffff;
+    color: #588c7e;
+    border-color: #588c7e;
 }
 
 .delete-btn {

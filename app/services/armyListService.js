@@ -61,6 +61,9 @@ exports.update = function(listId, listData, callback) {
     armyListModel.findById(listId)
         .then(function(list) {
             _.assign(list, listData);
+//            for (var i = 0; i < listData.date_ranges.length; ++i) {
+//                listData.date_ranges[i].inclusive = true;
+//            }
             list.save()
                 .then(function (err) {
                     return callback(null, list);
