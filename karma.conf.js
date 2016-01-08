@@ -20,10 +20,12 @@ module.exports = function(config) {
             'vendor/angular-route/angular-route.js',
             'vendor/angular-mocks/angular-mocks.js',
             'vendor/angular-bootstrap/ui-bootstrap.js',
+            'vendor/angular-smart-table/dist/smart-table.js',
+            'vendor/lodash/lodash.js',
 
             'scripts/**/*.js',
-            'tests/mock-services/**/*.js',
-            'tests/spec/**/*.js'
+            'tests/unit/mock-services/**/*.js',
+            'tests/unit/spec/**/*.js'
         ],
 
         // list of files to exclude

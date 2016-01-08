@@ -11,10 +11,10 @@ describe('ThematicCategoryEditController', function() {
     }));
 
     // Mock $routeParams
-    var routeParams;
-    beforeEach(inject(function($routeParams) {
-        routeParams = $routeParams;
-    }));
+//    var routeParams;
+//    beforeEach(inject(function($routeParams) {
+//        routeParams = $routeParams;
+//    }));
 
     // Controller to test
     var controller;
@@ -59,6 +59,7 @@ describe('ThematicCategoryEditController', function() {
         controller.category.name = 'created name';
         controller.submit();
 
+        expect(Service.create).toHaveBeenCalled();
         expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 
