@@ -1,14 +1,13 @@
 'use strict';
 
-module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('GrandArmyList', {
-            id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-            name: DataTypes.STRING
-        },
-        {
-            timestamps: false,
-            tableName: 'grand_army_list'
-        });
-};
+var mongoose = require('mongoose');
 
+// Create the schema
+var GrandArmyListSchema = new mongoose.Schema({
+    name: { type: String, required: true, unique: true }
+});
 
+// Create the model
+var GrandArmyListModel = mongoose.model('GrandArmyList', GrandArmyListSchema);
+
+module.exports = GrandArmyListModel;

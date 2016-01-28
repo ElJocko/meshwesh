@@ -23,8 +23,8 @@ var express = require('express');
 var app = express();
 
 // Establish the database connection
-//logger.info('Setting up the database connection');
-//var dbConnection = require('./app/lib/dbConnection');
+logger.info('Setting up the database connection');
+var dbConnection = require('./app/lib/dbConnection');
 
 // Only use request logger for development environment
 if (config.app.env === 'development') {

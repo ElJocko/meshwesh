@@ -6,16 +6,7 @@ module.exports = {
         hostname: process.env.HOSTNAME
     },
     database: {
-        url: process.env.DATABASE_URL,
-        options: {
-            dialect: 'postgres',
-//            logging: false,
-            pool: {
-                max: 5,
-                min: 0,
-                idle: 10000
-            }
-        }
+        url: process.env.MONGODB_URL
     },
     app: {
         name: 'meshwesh',

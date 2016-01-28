@@ -12,7 +12,7 @@ module.exports.retrieveByQuery = function(req, res) {
     thematicCategoryService.retrieveByQuery(query, function(err, categories) {
         if (err) {
             logger.error('Failed with error: ' + err);
-            return res.status(500).send('Unable to get thematic categories. Server error.');
+            return res.status(500).send('Unable to get Thematic Categories. Server error.');
         }
         else {
             return res.status(200).send(categories);
@@ -29,13 +29,13 @@ module.exports.retrieveById = function(req, res) {
             }
             else {
                 logger.error('Failed with error: ' + err);
-                return res.status(500).send('Unable to get category. Server error.');
+                return res.status(500).send('Unable to get Thematic Category. Server error.');
             }
         }
         else {
             if (!category) {
-                logger.warn('Category not found');
-                return res.status(404).send('Category not found.');
+                logger.warn('Thematic Category not found');
+                return res.status(404).send('Thematic Category not found.');
             }
             else {
                 return res.status(200).send(category);
@@ -51,7 +51,7 @@ exports.create = function(req, res) {
     // Validate input
     if (!categoryData.name) {
         logger.warn("Request missing one or more required properties.");
-        return res.status(400).send("Unable to create category. Request missing one or more required properties.");
+        return res.status(400).send("Unable to create Thematic Category. Request missing one or more required properties.");
     }
 
     // Create the category
@@ -63,11 +63,11 @@ exports.create = function(req, res) {
             }
             else {
                 logger.error("Failed with error: " + err);
-                return res.status(500).send("Unable to create category. Server error.");
+                return res.status(500).send("Unable to create Thematic Category. Server error.");
             }
         }
         else {
-            logger.info("Success: Created category " + category.name);
+            logger.info("Success: Created Thematic Category " + category.name);
             return res.status(201).send(category);
         }
     });
@@ -89,16 +89,16 @@ exports.update = function(req, res) {
             }
             else {
                 logger.error('Failed with error: ' + err);
-                return res.status(500).send('Unable to update category. Server error.');
+                return res.status(500).send('Unable to update Thematic Category. Server error.');
             }
         }
         else {
             if (!category) {
                 logger.warn('Category not found');
-                return res.status(404).send('Category not found.');
+                return res.status(404).send('Thematic Category not found.');
             }
             else {
-                logger.info("Success: Updated category " + category.name);
+                logger.info("Success: Updated Thematic Category " + category.name);
                 return res.status(200).send(category);
             }
         }
@@ -114,16 +114,16 @@ exports.delete = function(req, res) {
             }
             else {
                 logger.error('Failed with error: ' + err);
-                return res.status(500).send('Unable to delete category. Server error.');
+                return res.status(500).send('Unable to delete Thematic Category. Server error.');
             }
         }
         else {
             if (!category) {
                 logger.warn('Category not found');
-                return res.status(404).send('Category not found.');
+                return res.status(404).send('Thematic Category not found.');
             }
             else {
-                logger.info("Success: Deleted category " + category.name);
+                logger.info("Success: Deleted Thematic Category " + category.name);
                 return res.status(200).send(category);
             }
         }

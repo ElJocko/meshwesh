@@ -1,79 +1,157 @@
 'use strict';
 
-var models = require('../models');
-var tokenAuthz = require('../lib/tokenAuthz');
+var ThematicCategory = require('../models/thematicCategoryModel');
 var _ = require('lodash');
 
 var errors = {
     missingParameter: 'Missing required parameter',
     badlyFormattedParameter: 'Badly formatted parameter',
     duplicateName: 'Duplicate name',
-    categoryNotFound: 'Category not found'
+    notFound: 'Document not found'
 };
 exports.errors = errors;
 
-var thematicCategory = models.thematicCategoryModel;
-
 exports.retrieveByQuery = function(query, callback) {
-    thematicCategory.findAll({ }).then(function(categories) {
-        return callback(null, categories);
+    ThematicCategory.find(query, function(err, documents) {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            var objects = [];
+            for (var i = 0; i < documents.length; ++i) {
+                var object = documents[i].toObject();
+                objects.push(object);
+            }
+            return callback(null, objects);
+        }
     });
 };
 
-exports.retrieveById = function(categoryId, callback) {
-    if (categoryId) {
-        thematicCategory.findById(categoryId).then(function(category) {
-            return callback(null, category);
+exports.retrieveById = function(id, callback) {
+    if (id) {
+        ThematicCategory.findById(id, function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                // Note: document is null if not found
+                if (document) {
+                    return callback(null, document.toObject());
+                }
+                else {
+                    return callback();
+                }
+            }
         });
     }
     else {
         var error = new Error(errors.missingParameter);
-        error.parameterName = 'categoryId';
+        error.parameterName = 'id';
         return callback(error);
     }
 };
 
-exports.create = function(categoryData, callback) {
-    // Insert the row
-    thematicCategory.create({ name: categoryData.name })
-        .then(function(savedCategory) {
-            return callback(null, savedCategory);
-        })
-        .catch(function(err) {
-            return callback(err);
-        });
+exports.create = function(data, callback) {
+    // Create the document
+    var document = new ThematicCategory(data);
+
+    // Save the document in the database
+    document.save(function(err, savedDocument) {
+        if (err) {
+            if (err.name === 'MongoError' && err.code === 11000) {
+                // 11000 = Duplicate index
+                var error = new Error(errors.duplicateName);
+                return callback(error);
+            }
+            else {
+                return callback(err);
+            }
+        }
+        else {
+            return callback(null, savedDocument.toObject());
+        }
+    });
 };
 
-exports.update = function(categoryId, categoryData, callback) {
-    if (categoryId) {
-        thematicCategory.findById(categoryId)
-            .then(function(category) {
-                _.assign(category, categoryData);
-                category.save()
-                    .then(function(err) {
-                        return callback(null, category);
-                    });
-            });
-    }
-    else {
-        var error = new Error(errors.missingParameter);
-        error.parameterName = 'categoryId';
-        return callback(error);
-    }
-};
-
-exports.deleteById = function(categoryId, callback) {
-    if (categoryId) {
-        thematicCategory.findById(categoryId)
-            .then(function(category) {
-                category.destroy().then(function() {
-                    return callback(null, category);
+exports.update = function(id, data, callback) {
+    if (id) {
+        ThematicCategory.findById(id, function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else if (!document) {
+                // document not found
+                return callback(null);
+            }
+            else {
+                // Copy data to found document and save
+                _.assign(document, data);
+                document.save(function(err, savedDocument) {
+                    if (err) {
+                        if (err.name === 'MongoError' && err.code === 11000) {
+                            // 11000 = Duplicate index
+                            var error = new Error(errors.duplicateName);
+                            return callback(error);
+                        }
+                        else {
+                            return callback(err);
+                        }
+                    }
+                    else {
+                        return callback(null, savedDocument.toObject());
+                    }
                 });
-            });
+            }
+        });
     }
     else {
         var error = new Error(errors.missingParameter);
-        error.parameterName = 'categoryId';
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
+exports.deleteById = function(id, callback) {
+    if (id) {
+        ThematicCategory.findByIdAndRemove(id, function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                //Note: document is null if not found
+                if (document) {
+                    return callback(null, document.toObject());
+                }
+                else {
+                    return callback();
+                }
+            }
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
         return callback(error);
     }
 };

@@ -1,79 +1,157 @@
 'use strict';
 
-var models = require('../models');
-var tokenAuthz = require('../lib/tokenAuthz');
+var GrandArmyList = require('../models/grandArmyListModel');
 var _ = require('lodash');
 
 var errors = {
     missingParameter: 'Missing required parameter',
     badlyFormattedParameter: 'Badly formatted parameter',
     duplicateName: 'Duplicate name',
-    notFound: 'Not found'
+    notFound: 'Document not found'
 };
 exports.errors = errors;
 
-var grandArmyListModel = models.grandArmyListModel;
-
 exports.retrieveByQuery = function(query, callback) {
-    grandArmyListModel.findAll({ }).then(function(lists) {
-        return callback(null, lists);
+    GrandArmyList.find(query, function(err, documents) {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            var objects = [];
+            for (var i = 0; i < documents.length; ++i) {
+                var object = documents[i].toObject();
+                objects.push(object);
+            }
+            return callback(null, objects);
+        }
     });
 };
 
-exports.retrieveById = function(listId, callback) {
-    if (listId) {
-        grandArmyListModel.findById(listId).then(function(list) {
-            return callback(null, list);
+exports.retrieveById = function(id, callback) {
+    if (id) {
+        GrandArmyList.findById(id, function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                // Note: document is null if not found
+                if (document) {
+                    return callback(null, document.toObject());
+                }
+                else {
+                    return callback();
+                }
+            }
         });
     }
     else {
         var error = new Error(errors.missingParameter);
-        error.parameterName = 'listId';
+        error.parameterName = 'id';
         return callback(error);
     }
 };
 
-exports.create = function(listData, callback) {
-    // Insert the row
-    grandArmyListModel.create({ name: listData.name })
-        .then(function(savedList) {
-            return callback(null, savedList);
-        })
-        .catch(function(err) {
-            return callback(err);
-        });
+exports.create = function(data, callback) {
+    // Create the document
+    var document = new GrandArmyList(data);
+
+    // Save the document in the database
+    document.save(function(err, savedDocument) {
+        if (err) {
+            if (err.name === 'MongoError' && err.code === 11000) {
+                // 11000 = Duplicate index
+                var error = new Error(errors.duplicateName);
+                return callback(error);
+            }
+            else {
+                return callback(err);
+            }
+        }
+        else {
+            return callback(null, savedDocument.toObject());
+        }
+    });
 };
 
-exports.update = function(listId, listData, callback) {
-    if (listId) {
-        grandArmyListModel.findById(listId)
-            .then(function(list) {
-                _.assign(list, listData);
-                list.save()
-                    .then(function(err) {
-                        return callback(null, list);
-                    });
-            });
-    }
-    else {
-        var error = new Error(errors.missingParameter);
-        error.parameterName = 'listId';
-        return callback(error);
-    }
-};
-
-exports.deleteById = function(listId, callback) {
-    if (listId) {
-        grandArmyListModel.findById(listId)
-            .then(function(list) {
-                list.destroy().then(function() {
-                    return callback(null, list);
+exports.update = function(id, data, callback) {
+    if (id) {
+        GrandArmyList.findById(id, function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else if (!document) {
+                // document not found
+                return callback(null);
+            }
+            else {
+                // Copy data to found document and save
+                _.assign(document, data);
+                document.save(function(err, savedDocument) {
+                    if (err) {
+                        if (err.name === 'MongoError' && err.code === 11000) {
+                            // 11000 = Duplicate index
+                            var error = new Error(errors.duplicateName);
+                            return callback(error);
+                        }
+                        else {
+                            return callback(err);
+                        }
+                    }
+                    else {
+                        return callback(null, savedDocument.toObject());
+                    }
                 });
-            });
+            }
+        });
     }
     else {
         var error = new Error(errors.missingParameter);
-        error.parameterName = 'listId';
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
+exports.deleteById = function(id, callback) {
+    if (id) {
+        GrandArmyList.findByIdAndRemove(id, function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                //Note: document is null if not found
+                if (document) {
+                    return callback(null, document.toObject());
+                }
+                else {
+                    return callback();
+                }
+            }
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
         return callback(error);
     }
 };
