@@ -39,12 +39,10 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     function handleArmyList(list) {
         // Save the army list and get the grand army lists.
         vm.list = list;
-        vm.displayDateRanges = [];
-        if (list.date_ranges) {
-            for (var i = 0; i < list.date_ranges.length; ++i) {
-                var dateRange = {startDate: list.date_ranges[i][0], endDate: list.date_ranges[i][1]};
-                vm.displayDateRanges.push(dateRange);
-            }
+        vm.displayDateRanges = []
+        for (var i = 0; i < list.dateRanges.length; ++i) {
+            var dateRange = { startDate: list.dateRanges[i][0], endDate: list.dateRanges[i][1] };
+            vm.displayDateRanges.push(dateRange);
         }
         GrandArmyListService.list(handleGrandArmyLists);
     }
@@ -53,7 +51,7 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         vm.grandArmyLists = grandArmyLists;
         if (listId) {
             var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
-                return (element.id === vm.list.gal_id);
+                return (element.id === vm.list.grandArmyList);
             });
 
             if (galIndex !== -1) {
@@ -67,13 +65,13 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
 
     function updateList() {
         if (vm.galSelected) {
-            vm.list.gal_id = vm.galSelected.id;
+            vm.list.grandArmyList = vm.galSelected.id;
         }
         else {
-            vm.list.gal_id = null;
+            vm.list.grandArmyList = null;
         }
 
-        vm.list.date_ranges = [];
+        vm.list.dateRanges = [];
         for (var i = 0; i < vm.displayDateRanges.length; ++i) {
             var dateRangeObject = vm.displayDateRanges[i];
             var dateRangeArray = [ Number(dateRangeObject.startDate), Number(dateRangeObject.endDate) ];
@@ -92,10 +90,10 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
 
     function createList() {
         if (vm.galSelected) {
-            vm.list.gal_id = vm.galSelected.id;
+            vm.list.grandArmyList = vm.galSelected.id;
         }
         else {
-            vm.list.gal_id = null;
+            vm.list.grandArmyList = null;
         }
         ArmyListService.create(vm.list,
             function(list) {

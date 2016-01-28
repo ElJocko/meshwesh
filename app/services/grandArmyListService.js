@@ -19,7 +19,7 @@ exports.retrieveByQuery = function(query, callback) {
         else {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
-                var object = documents[i].toObject();
+                var object = documents[i].toJSON();
                 objects.push(object);
             }
             return callback(null, objects);
@@ -43,7 +43,7 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toObject());
+                    return callback(null, document.toJSON());
                 }
                 else {
                     return callback();
@@ -75,7 +75,7 @@ exports.create = function(data, callback) {
             }
         }
         else {
-            return callback(null, savedDocument.toObject());
+            return callback(null, savedDocument.toJSON());
         }
     });
 };
@@ -112,7 +112,7 @@ exports.update = function(id, data, callback) {
                         }
                     }
                     else {
-                        return callback(null, savedDocument.toObject());
+                        return callback(null, savedDocument.toJSON());
                     }
                 });
             }
@@ -141,7 +141,7 @@ exports.deleteById = function(id, callback) {
             else {
                 //Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toObject());
+                    return callback(null, document.toJSON());
                 }
                 else {
                     return callback();

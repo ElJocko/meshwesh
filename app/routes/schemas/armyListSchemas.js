@@ -26,8 +26,8 @@ exports.createArmyList = {
         type:'object',
         properties: {
             name: { type: 'string', required: true },
-            gal_id: { type: ['number', 'null'] },
-            date_ranges: dateRangesSubschema
+            grandArmyList: { type: ['string', 'null'] },
+            dateRanges: dateRangesSubschema
         },
         additionalProperties: false
     },
@@ -43,10 +43,10 @@ exports.updateArmyList = {
     body: {
         type: 'object',
         properties: {
-            id: { type: ['number', 'null'] },
+            id: { type: ['string', 'null'] },
             name: { type: 'string' },
-            gal_id: { type: ['number', 'null'] },
-            date_ranges: dateRangesSubschema
+            grandArmyList: { type: ['string', 'null'] },
+            dateRanges: dateRangesSubschema
         },
         additionalProperties: false
     },
