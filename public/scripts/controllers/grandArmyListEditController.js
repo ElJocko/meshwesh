@@ -17,7 +17,7 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
 
             ArmyListService.list(function(lists) {
                 vm.armyLists = lists.filter(function(element, index, array) {
-                    return (element.gal_id == listId);
+                    return (element.grandArmyList == listId);
                 })
             });
         });

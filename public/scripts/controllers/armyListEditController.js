@@ -31,7 +31,11 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         }
         else {
             // New army list. Create the empty army list and get the grand army lists.
-            vm.list = { name: "" };
+            vm.list = {
+                name: "",
+                grandArmyList: null,
+                dateRanges: []
+            };
             GrandArmyListService.list(handleGrandArmyLists);
         }
     }
@@ -39,11 +43,6 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     function handleArmyList(list) {
         // Save the army list and get the grand army lists.
         vm.list = list;
-        vm.displayDateRanges = []
-        for (var i = 0; i < list.dateRanges.length; ++i) {
-            var dateRange = { startDate: list.dateRanges[i][0], endDate: list.dateRanges[i][1] };
-            vm.displayDateRanges.push(dateRange);
-        }
         GrandArmyListService.list(handleGrandArmyLists);
     }
 
@@ -71,13 +70,6 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
             vm.list.grandArmyList = null;
         }
 
-        vm.list.dateRanges = [];
-        for (var i = 0; i < vm.displayDateRanges.length; ++i) {
-            var dateRangeObject = vm.displayDateRanges[i];
-            var dateRangeArray = [ Number(dateRangeObject.startDate), Number(dateRangeObject.endDate) ];
-            vm.list.date_ranges.push(dateRangeArray);
-        }
-
         ArmyListService.update({ id: listId }, vm.list,
             function (list) {
                 console.info('Successfully updated ' + list.name);
@@ -95,6 +87,7 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
         else {
             vm.list.grandArmyList = null;
         }
+
         ArmyListService.create(vm.list,
             function(list) {
                 console.info('Successfully created ' + list.name);
@@ -117,7 +110,7 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     }
 
     function insertDateRange() {
-        vm.displayDateRanges.push({ startDate: 0, endDate: 0 });
-        console.info('added date range 0, 0');
+        vm.list.dateRanges.push({ startDate: 0, endDate: 0 });
+        console.debug('added date range 0, 0');
     }
 }

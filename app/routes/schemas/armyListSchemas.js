@@ -3,9 +3,10 @@
 var dateRangesSubschema = {
     type: ['array', 'null'],
     items: {
-        type: 'array',
-        items: {
-            type: 'number'
+        type: 'object',
+        properties: {
+            startDate: { type: 'number', requred: true },
+            endDate: { type: 'number', requred: true }
         }
     }
 };
