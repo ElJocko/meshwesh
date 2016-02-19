@@ -1,13 +1,14 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('ArmyList', {
+    return sequelize.define('ArmyDateRange', {
             id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-            gal_id: DataTypes.INTEGER,
-            name: DataTypes.STRING
+            army_id: DataTypes.INTEGER,
+            start_date: DataTypes.INTEGER,
+            end_date: DataTypes.INTEGER
         },
         {
             timestamps: false,
-            tableName: 'army_list'
+            tableName: 'army_date_range'
         });
 };

@@ -39,10 +39,12 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     function handleArmyList(list) {
         // Save the army list and get the grand army lists.
         vm.list = list;
-        vm.displayDateRanges = []
-        for (var i = 0; i < list.date_ranges.length; ++i) {
-            var dateRange = { startDate: list.date_ranges[i][0], endDate: list.date_ranges[i][1] };
-            vm.displayDateRanges.push(dateRange);
+        vm.displayDateRanges = [];
+        if (list.date_ranges) {
+            for (var i = 0; i < list.date_ranges.length; ++i) {
+                var dateRange = {startDate: list.date_ranges[i][0], endDate: list.date_ranges[i][1]};
+                vm.displayDateRanges.push(dateRange);
+            }
         }
         GrandArmyListService.list(handleGrandArmyLists);
     }
