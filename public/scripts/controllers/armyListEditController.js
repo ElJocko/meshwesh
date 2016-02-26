@@ -34,26 +34,28 @@ function ArmyListEditController($routeParams, $location, $q, ArmyListService, Gr
         // Get the grand army lists
         var grandArmyListsPromise = GrandArmyListService.list().$promise;
 
-        var serviceCalls = {
+        // Handle the response after the services complete
+        var servicePromises = {
             armyList: armyListPromise,
             grandArmyLists: grandArmyListsPromise
         };
 
-        // Handle the response after the services complete
-        $q.all(serviceCalls).then(handleResponse);
+        $q
+            .all(servicePromises)
+            .then(handleResponse);
     }
 
-    function handleResponse(response) {
+    function handleResponse(results) {
         // Default to no grand army list selected
         vm.galSelected = null;
 
         // We should always get an array of grand army lists
-        vm.grandArmyLists = response.grandArmyLists;
+        vm.grandArmyLists = results.grandArmyLists;
 
         // Handle new or existing army list
         if (listId) {
             // Existing army list
-            vm.list = response.armyList;
+            vm.list = results.armyList;
 
             // Find the grand army list that the army list belongs to
             if (vm.list.grandArmyList) {
