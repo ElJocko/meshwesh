@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListEditController', ArmyListEditController);
 
-ArmyListEditController.$inject = ['$routeParams', '$location', 'ArmyListService', 'GrandArmyListService'];
+ArmyListEditController.$inject = ['$routeParams', '$location', '$q', 'ArmyListService', 'GrandArmyListService'];
 
-function ArmyListEditController($routeParams, $location, ArmyListService, GrandArmyListService) {
+function ArmyListEditController($routeParams, $location, $q, ArmyListService, GrandArmyListService) {
     var vm = this;
 
     var listId = $routeParams.listId;
@@ -25,40 +25,54 @@ function ArmyListEditController($routeParams, $location, ArmyListService, GrandA
     vm.insertDateRange = insertDateRange;
 
     function initializeData() {
+        // Get the army list if it exists
+        var armyListPromise = null;
         if (listId) {
-            // Get the army list data and then get the grand army lists.
-            ArmyListService.get({ id: listId }, handleArmyList);
+            armyListPromise = ArmyListService.get({ id: listId }).$promise;
+        }
+
+        // Get the grand army lists
+        var grandArmyListsPromise = GrandArmyListService.list().$promise;
+
+        var serviceCalls = {
+            armyList: armyListPromise,
+            grandArmyLists: grandArmyListsPromise
+        };
+
+        // Handle the response after the services complete
+        $q.all(serviceCalls).then(handleResponse);
+    }
+
+    function handleResponse(response) {
+        // Default to no grand army list selected
+        vm.galSelected = null;
+
+        // We should always get an array of grand army lists
+        vm.grandArmyLists = response.grandArmyLists;
+
+        // Handle new or existing army list
+        if (listId) {
+            // Existing army list
+            vm.list = response.armyList;
+
+            // Find the grand army list that the army list belongs to
+            if (vm.list.grandArmyList) {
+                var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
+                    return (element.id === vm.list.grandArmyList);
+                });
+
+                if (galIndex !== -1) {
+                    vm.galSelected = vm.grandArmyLists[galIndex];
+                }
+            }
         }
         else {
-            // New army list. Create the empty army list and get the grand army lists.
+            // New army list
             vm.list = {
                 name: "",
                 grandArmyList: null,
                 dateRanges: []
             };
-            GrandArmyListService.list(handleGrandArmyLists);
-        }
-    }
-
-    function handleArmyList(list) {
-        // Save the army list and get the grand army lists.
-        vm.list = list;
-        GrandArmyListService.list(handleGrandArmyLists);
-    }
-
-    function handleGrandArmyLists(grandArmyLists) {
-        vm.grandArmyLists = grandArmyLists;
-        if (listId) {
-            var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
-                return (element.id === vm.list.grandArmyList);
-            });
-
-            if (galIndex !== -1) {
-                vm.galSelected = grandArmyLists[galIndex];
-            }
-            else {
-                vm.galSelected = null;
-            }
         }
     }
 
