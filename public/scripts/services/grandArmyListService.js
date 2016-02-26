@@ -2,9 +2,11 @@
 
 angular
     .module('meshweshServices')
-    .factory('GrandArmyListService', ['$resource', grandArmyListService]);
+    .factory('GrandArmyListService', GrandArmyListService);
 
-function grandArmyListService ($resource) {
+GrandArmyListService.$inject = ['$resource'];
+
+function GrandArmyListService ($resource) {
     return $resource(
         'api/v1/grandArmyLists/:id',
         { id: '@id' },

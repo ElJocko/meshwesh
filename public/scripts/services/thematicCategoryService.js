@@ -2,9 +2,11 @@
 
 angular
     .module('meshweshServices')
-    .factory('ThematicCategoryService', ['$resource', thematicCategoryService]);
+    .factory('ThematicCategoryService', ThematicCategoryService);
 
-function thematicCategoryService ($resource) {
+ThematicCategoryService.$inject = ['$resource'];
+
+function ThematicCategoryService ($resource) {
     return $resource(
         'api/v1/thematicCategories/:id',
         { id: '@id' },
