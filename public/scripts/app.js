@@ -6,10 +6,12 @@ angular.module('meshweshApp', [
     'smart-table',
     'meshweshControllers',
     'meshweshServices',
-    'meshweshDirectives'
+    'meshweshDirectives',
+    'meshweshFilters'
 ]);
 
 angular.module('meshweshServices', ['ngResource']);
 angular.module('meshweshControllers', []);
 angular.module('meshweshDirectives', []);
+angular.module('meshweshFilters', []);
 

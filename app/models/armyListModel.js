@@ -1,13 +1,14 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var DateRange = require('./subschemas/dateRangeSchema');
 var transform = require('./transform');
 
 // Create the schema
 var ArmyListSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
-    dateRanges: [ { startDate: Number, endDate: Number } ]
+    dateRanges: [ DateRange ]
 });
 
 ArmyListSchema.set('toJSON', {

@@ -20,17 +20,23 @@
                 <div class="col-md-4">
                     <div class="content-subheader">Date Ranges</div>
                     <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">Insert Date Range</button>
-                    <table class="table table-bordered" st-table="vm.list.dateRanges">
+                    <table class="table table-bordered" st-table="displayedDateRanges" st-safe-src="vm.list.dateRanges">
                         <thead>
                         <tr>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th st-sort="startDate" st-sort-default="reverse" st-skip-natural="true">Start Date</th>
+                            <th st-sort="endDate" st-skip-natural="true">End Date</th>
+                            <th>Edit</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="dateRange in vm.list.dateRanges">
-                            <td contenteditable='true' ng-model="dateRange.startDate">{{ dateRange.startDate }}</td>
-                            <td contenteditable='true' ng-model="dateRange.endDate">{{ dateRange.endDate }}</td>
+                        <tr ng-repeat="dateRange in displayedDateRanges">
+                            <td>{{ dateRange.startDate | mwDisplayYear }}</td>
+                            <td>{{ dateRange.endDate | mwDisplayYear }}</td>
+                            <td>
+                                <button type="button" ng-click="vm.editDateRange()" class="btn btn-sm btn-warning">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                </button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

@@ -23,6 +23,7 @@ function ArmyListEditController($routeParams, $location, $q, ArmyListService, Gr
     }
 
     vm.insertDateRange = insertDateRange;
+    vm.editDateRange = editDateRange;
 
     function initializeData() {
         // Get the army list if it exists
@@ -126,7 +127,10 @@ function ArmyListEditController($routeParams, $location, $q, ArmyListService, Gr
     }
 
     function insertDateRange() {
-        vm.list.dateRanges.push({ startDate: 0, endDate: 0 });
-        console.debug('added date range 0, 0');
+        vm.list.dateRanges.push({ startDate: 1, endDate: 100 });
+    }
+
+    function editDateRange() {
+
     }
 }
