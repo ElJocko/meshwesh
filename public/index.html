@@ -15,38 +15,10 @@
 <body>
 
 <!-- Banner -->
-<div class="banner">
-    <a href="#/home"><img src="images/meshwesh-banner.png" height="70px" width="70px"></a>
-    <h1><a href="#/home">Meshwesh</a></h1>
-    <h3><a href="#/home">Army List Manager</a></h3>
-</div>
+<div mw-banner></div>
 
 <!-- Navbar -->
-<div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav">
-        <li><a href="#/home">Home</a></li>
-        <li uib-dropdown on-toggle="toggled(open)">
-            <a id="army-list-data-dropdown" href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Army List Data <span class="caret"></span></a>
-            <ul class="uib-dropdown-menu">
-                <li><a id="thematic-category-summary-link" href="#/thematicCategory/summary">Thematic Categories</a></li>
-                <li><a id="grand-army-list-summary-link" href="#/grandArmyList/summary">Grand Army Lists</a></li>
-                <li><a id="army-list-summary-link" href="#/armyList/summary">Army Lists</a></li>
-            </ul>
-        </li>
-        <li uib-dropdown on-toggle="toggled(open)">
-            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Report <span class="caret"></span></a>
-            <ul class="uib-dropdown-menu">
-                <li><a href="#">not implemented</a></li>
-            </ul>
-        </li>
-        <li uib-dropdown on-toggle="toggled(open)">
-            <a href="#" uib-dropdown-toggle data-toggle="dropdown" role="button">Export <span class="caret"></span></a>
-            <ul class="uib-dropdown-menu">
-                <li><a href="#">not implemented</a></li>
-            </ul>
-        </li>
-    </ul>
-</div>
+<div mw-navbar></div>
 
 <!-- Contents -->
 <div class="container">
@@ -82,6 +54,9 @@
     <script src="scripts/services/thematicCategoryService.js"></script>
     <script src="scripts/services/grandArmyListService.js"></script>
     <script src="scripts/services/armyListService.js"></script>
+
+    <script src="scripts/directives/bannerDirective.js"></script>
+    <script src="scripts/directives/navbarDirective.js"></script>
 </div>
 
 </body>
