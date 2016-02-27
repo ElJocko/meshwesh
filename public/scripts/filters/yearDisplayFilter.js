@@ -8,7 +8,7 @@ function YearFilter() {
             return 'invalid value';
         }
         else if (input < 0) {
-            return input + 'BC';
+            return (input * -1) + ' BC';
         }
         else {
             return input + ' AD';
