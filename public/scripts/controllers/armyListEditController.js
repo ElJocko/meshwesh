@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListEditController', ArmyListEditController);
 
-ArmyListEditController.$inject = ['$routeParams', '$location', '$q', 'ArmyListService', 'GrandArmyListService'];
+ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'ArmyListService', 'GrandArmyListService'];
 
-function ArmyListEditController($routeParams, $location, $q, ArmyListService, GrandArmyListService) {
+function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyListService, GrandArmyListService) {
     var vm = this;
 
     var listId = $routeParams.listId;
@@ -130,7 +130,32 @@ function ArmyListEditController($routeParams, $location, $q, ArmyListService, Gr
         vm.list.dateRanges.push({ startDate: 1, endDate: 100 });
     }
 
-    function editDateRange() {
+    function editDateRange(dateRange) {
+        var index = vm.list.dateRanges.indexOf(dateRange);
+        if (index !== -1) {
+            var editDateRange = vm.list.dateRanges[index];
 
+            var modalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'views/modals/dateRangeEdit.html',
+                controller: 'DateRangeEditController',
+                controllerAs: 'vm',
+                size: 'sm',
+                resolve: {
+                    dateRange: function () {
+                        return editDateRange;
+                    }
+                }
+            });
+        }
+
+        modalInstance.result.then(
+            function (updatedDateRange) {
+                editDateRange.startDate = Number(updatedDateRange.startDate);
+                editDateRange.endDate = Number(updatedDateRange.endDate);
+            },
+            function () {
+                // Cancelled
+            });
     }
 }

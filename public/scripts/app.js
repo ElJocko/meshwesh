@@ -11,7 +11,7 @@ angular.module('meshweshApp', [
 ]);
 
 angular.module('meshweshServices', ['ngResource']);
-angular.module('meshweshControllers', []);
+angular.module('meshweshControllers', ['ui.bootstrap']);
 angular.module('meshweshDirectives', []);
 angular.module('meshweshFilters', []);
 
