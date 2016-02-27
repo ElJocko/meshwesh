@@ -24,6 +24,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
 
     vm.insertDateRange = insertDateRange;
     vm.editDateRange = editDateRange;
+    vm.deleteDateRange = deleteDateRange;
 
     function initializeData() {
         // Get the army list if it exists
@@ -157,5 +158,12 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
             function () {
                 // Cancelled
             });
+    }
+
+    function deleteDateRange(dateRange) {
+        var index = vm.list.dateRanges.indexOf(dateRange);
+        if (index !== -1) {
+            vm.list.dateRanges.splice(index, 1);
+        }
     }
 }

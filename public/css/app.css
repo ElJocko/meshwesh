@@ -133,3 +133,7 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 .st-sort-descent:before{
     content: '\25BC';
 }
+
+.td-btn {
+    text-align:center;
+}

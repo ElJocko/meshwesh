@@ -25,16 +25,20 @@
                         <tr>
                             <th st-sort="startDate" st-sort-default="true" st-skip-natural="true">Start Date</th>
                             <th st-sort="endDate" st-skip-natural="true">End Date</th>
-                            <th>Edit</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="dateRange in displayedDateRanges">
                             <td>{{ dateRange.startDate | mwDisplayYear }}</td>
                             <td>{{ dateRange.endDate | mwDisplayYear }}</td>
-                            <td>
+                            <td class="td-btn">
                                 <button type="button" ng-click="vm.editDateRange(dateRange)" class="btn btn-sm btn-warning">
                                     <i class="glyphicon glyphicon-pencil"></i>
+                                </button>
+                            </td>
+                            <td class="td-btn">
+                                <button type="button" ng-click="vm.deleteDateRange(dateRange)" class="btn btn-sm btn-danger">
+                                    <i class="glyphicon glyphicon-remove"></i>
                                 </button>
                             </td>
                         </tr>
