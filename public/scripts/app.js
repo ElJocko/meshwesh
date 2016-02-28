@@ -2,6 +2,7 @@
 
 angular.module('meshweshApp', [
     'ngRoute',
+    'ngMessages',
     'ui.bootstrap',
     'smart-table',
     'meshweshControllers',

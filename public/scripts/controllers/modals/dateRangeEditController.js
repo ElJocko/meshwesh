@@ -7,19 +7,13 @@ angular
 function DateRangeEditController($uibModalInstance, dateRange) {
     var vm = this;
 
-    var startPeriod = "";
-    if (dateRange.startDate > 0) {
-        startPeriod = "AD";
-    }
-    else if (dateRange.startDate < 0) {
+    var startPeriod = "AD";
+    if (dateRange.startDate < 0) {
         startPeriod = "BC";
     }
 
-    var endPeriod = "";
-    if (dateRange.endDate > 0) {
-        endPeriod = "AD";
-    }
-    else if (dateRange.endDate < 0) {
+    var endPeriod = "AD";
+    if (dateRange.endDate < 0) {
         endPeriod = "BC";
     }
 
