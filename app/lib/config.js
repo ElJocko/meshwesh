@@ -6,7 +6,7 @@ module.exports = {
         hostname: process.env.HOSTNAME
     },
     database: {
-        url: process.env.MONGODB_URL
+        url: process.env.MONGOLAB_URI || process.env.MONGODB_URL
     },
     app: {
         name: 'meshwesh',
