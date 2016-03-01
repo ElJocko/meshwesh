@@ -128,7 +128,12 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     }
 
     function insertDateRange() {
-        vm.list.dateRanges.push({ startDate: 1, endDate: 100 });
+        // Add the new date range to the list
+        var newDateRange = { startDate: 1, endDate: 100 };
+        vm.list.dateRanges.push(newDateRange);
+
+        // And let the user immediately edit it.
+        editDateRange(newDateRange);
     }
 
     function editDateRange(dateRange) {
