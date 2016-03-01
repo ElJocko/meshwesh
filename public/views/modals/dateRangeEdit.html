@@ -6,7 +6,7 @@
     <div class="form-group">
         <label for="inputStartDateYear">Start Date</label>
         <div class="input-group">
-            <input type="number" class="form-control" id="inputStartDateYear" name="inputStartDateYear" placeholder="Start Date" ng-model="vm.expandedDateRange.startDateYear" required>
+            <input type="number" class="form-control" id="inputStartDateYear" name="inputStartDateYear" placeholder="Start Date" ng-model="vm.expandedDateRange.startDateYear" required positive-integer>
             <div class="btn-group input-group-btn" uib-dropdown>
                 <button id="inputStartPeriod" type="button" class="btn btn-default" uib-dropdown-toggle>
                     {{ vm.expandedDateRange.startDatePeriod }} <span class="caret"></span>
@@ -17,15 +17,16 @@
                 </ul>
             </div>
         </div>
-        <div ng-messages="editDateRangeForm.inputStartDateYear.$touched && editDateRangeForm.inputStartDateYear.$error">
-            <p class="input-validation-error" ng-message="number">Please enter a number.</p>
+        <div ng-messages="editDateRangeForm.inputStartDateYear.$error">
+            <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
+            <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
             <p class="input-validation-error" ng-message="required">A start date is required.</p>
         </div>
     </div>
     <div class="form-group">
         <label for="inputEndDateYear">End Date</label>
         <div class="input-group">
-            <input type="number" class="form-control" id="inputEndDateYear" name="inputEndDateYear" placeholder="End Date" ng-model="vm.expandedDateRange.endDateYear" required>
+            <input type="number" class="form-control" id="inputEndDateYear" name="inputEndDateYear" placeholder="End Date" ng-model="vm.expandedDateRange.endDateYear" required positive-integer>
             <div class="btn-group input-group-btn" uib-dropdown>
                 <button id="inputEndDatePeriod" type="button" class="btn btn-default" uib-dropdown-toggle>
                     {{ vm.expandedDateRange.endDatePeriod }} <span class="caret"></span>
@@ -36,8 +37,9 @@
                 </ul>
             </div>
         </div>
-        <div ng-messages="editDateRangeForm.inputEndDateYear.$touched && editDateRangeForm.inputEndDateYear.$error">
-            <p class="input-validation-error" ng-message="number">Please enter a number.</p>
+        <div ng-messages="editDateRangeForm.inputEndDateYear.$error">
+            <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
+            <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
             <p class="input-validation-error" ng-message="required">An end date is required.</p>
         </div>
 
