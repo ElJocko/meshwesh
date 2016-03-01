@@ -26,7 +26,7 @@
     <div class="form-group">
         <label for="inputEndDateYear">End Date</label>
         <div class="input-group">
-            <input type="number" class="form-control" id="inputEndDateYear" name="inputEndDateYear" placeholder="End Date" ng-model="vm.expandedDateRange.endDateYear" required positive-integer>
+            <input type="number" class="form-control" id="inputEndDateYear" name="inputEndDateYear" placeholder="End Date" ng-model="vm.expandedDateRange.endDateYear" required positive-integer greater-than="vm.expandedDateRange.startDateYear">
             <div class="btn-group input-group-btn" uib-dropdown>
                 <button id="inputEndDatePeriod" type="button" class="btn btn-default" uib-dropdown-toggle>
                     {{ vm.expandedDateRange.endDatePeriod }} <span class="caret"></span>
@@ -41,6 +41,7 @@
             <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
             <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
             <p class="input-validation-error" ng-message="required">An end date is required.</p>
+            <p class="input-validation-error" ng-message="greaterThan">End date must be after start date.</p>
         </div>
 
     </div>
