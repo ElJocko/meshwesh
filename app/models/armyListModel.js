@@ -6,7 +6,7 @@ var transform = require('./transform');
 
 // Create the schema
 var ArmyListSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
     dateRanges: [ DateRange ]
 });

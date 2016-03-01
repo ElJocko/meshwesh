@@ -3,7 +3,7 @@
         <div class="content-header">Army Lists</div>
         <div ng-repeat="list in vm.lists | orderBy:'name'">
             <div class="content-link">
-                <a href ng-click="vm.edit(list.id)">{{ list.name }}</a>
+                <a href ng-click="vm.edit(list.id)">{{ list.nameWithDateRange }}</a>
             </div>
         </div>
         <div>
