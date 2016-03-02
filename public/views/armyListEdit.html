@@ -20,7 +20,7 @@
                 <div class="col-md-4">
                     <div class="content-subheader">Date Ranges</div>
                     <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">Insert Date Range</button>
-                    <table class="table table-bordered" st-table="displayedDateRanges" st-safe-src="vm.list.dateRanges">
+                    <table class="table table-bordered" st-table="vm.displayedDateRanges" st-safe-src="vm.list.dateRanges">
                         <thead>
                         <tr>
                             <th st-sort="startDate" st-sort-default="true" st-skip-natural="true">Start Date</th>
@@ -28,7 +28,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="dateRange in displayedDateRanges">
+                        <tr ng-repeat="dateRange in vm.displayedDateRanges">
                             <td>{{ dateRange.startDate | mwDisplayYear }}</td>
                             <td>{{ dateRange.endDate | mwDisplayYear }}</td>
                             <td class="td-btn">

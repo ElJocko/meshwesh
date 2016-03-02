@@ -128,37 +128,65 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     }
 
     function insertDateRange() {
-        // Add the new date range to the list
+        // Initialize new date range
         var newDateRange = { startDate: 1, endDate: 100 };
-        vm.list.dateRanges.push(newDateRange);
 
-        // And let the user immediately edit it.
-        editDateRange(newDateRange);
+        // Let the user edit the new date range
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/dateRangeEdit.html',
+            controller: 'DateRangeEditController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                dateRange: function () {
+                    return newDateRange;
+                }
+            }
+        });
+
+        // Insert the edited date range into the army list
+        modalInstance.result.then(
+            function (resultDateRange) {
+                vm.list.dateRanges.push(resultDateRange);
+            },
+            function () {
+                // Cancelled
+            });
     }
 
     function editDateRange(dateRange) {
         var index = vm.list.dateRanges.indexOf(dateRange);
-        if (index !== -1) {
-            var editDateRange = vm.list.dateRanges[index];
-
-            var modalInstance = $uibModal.open({
-                animation: false,
-                templateUrl: 'views/modals/dateRangeEdit.html',
-                controller: 'DateRangeEditController',
-                controllerAs: 'vm',
-                size: 'sm',
-                resolve: {
-                    dateRange: function () {
-                        return editDateRange;
-                    }
-                }
-            });
+        if (index === -1) {
+            // No matching date range!
+            return;
         }
 
+        var originalDateRange = vm.list.dateRanges[index];
+        var editDateRange = {
+            startDate: originalDateRange.startDate,
+            endDate: originalDateRange.endDate
+        };
+
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/dateRangeEdit.html',
+            controller: 'DateRangeEditController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                dateRange: function () {
+                    return editDateRange;
+                }
+            }
+        });
+
         modalInstance.result.then(
-            function (updatedDateRange) {
-                editDateRange.startDate = Number(updatedDateRange.startDate);
-                editDateRange.endDate = Number(updatedDateRange.endDate);
+            function (resultDateRange) {
+                // Replace the old date range with the new date range
+                //   angular.extend is necessary to trigger table update
+                //   TBD: but still doesn't sort after update!?!
+                angular.extend(originalDateRange, resultDateRange);
             },
             function () {
                 // Cancelled

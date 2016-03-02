@@ -35,7 +35,6 @@ function DateRangeEditController($uibModalInstance, dateRange) {
 
 function checkDateOrder(expandedDateRange) {
     var dateRange = unexpandDateRange(expandedDateRange);
-    console.log("check: " + dateRange.startDate + " " + dateRange.endDate);
     if (dateRange.startDate && dateRange.endDate) {
         return (dateRange.endDate > dateRange.startDate);
     }
