@@ -184,9 +184,9 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         modalInstance.result.then(
             function (resultDateRange) {
                 // Replace the old date range with the new date range
-                //   angular.extend is necessary to trigger table update
-                //   TBD: but still doesn't sort after update!?!
-                angular.extend(originalDateRange, resultDateRange);
+                // TBD: Force table sort
+                originalDateRange.startDate = resultDateRange.startDate;
+                originalDateRange.endDate = resultDateRange.endDate;
             },
             function () {
                 // Cancelled
