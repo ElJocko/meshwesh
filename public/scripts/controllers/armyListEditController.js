@@ -187,6 +187,13 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
                 // TBD: Force table sort
                 originalDateRange.startDate = resultDateRange.startDate;
                 originalDateRange.endDate = resultDateRange.endDate;
+
+                // Force refresh of table
+                var dateRangeCopy = {
+                    startDate: vm.armyList.dateRanges[0].startDate,
+                    endDate: vm.armyList.dateRanges[0].endDate
+                };
+                vm.armyList.dateRanges[0] = dateRangeCopy;
             },
             function () {
                 // Cancelled
