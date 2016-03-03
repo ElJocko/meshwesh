@@ -8,7 +8,7 @@
         <form>
             <div class="form-group">
                 <label for="inputName">Name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.list.name">
+                <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.armyList.name">
             </div>
             <div class="form-group">
                 <label for="inputGrandArmyList">Grand Army List</label>
@@ -20,7 +20,7 @@
                 <div class="col-md-4">
                     <div class="content-subheader">Date Ranges</div>
                     <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">Insert Date Range</button>
-                    <table class="table table-bordered" st-table="vm.displayedDateRanges" st-safe-src="vm.list.dateRanges">
+                    <table class="table table-bordered" st-table="vm.displayedDateRanges" st-safe-src="vm.armyList.dateRanges">
                         <thead>
                         <tr>
                             <th st-sort="startDate" st-sort-default="true" st-skip-natural="true">Start Date</th>

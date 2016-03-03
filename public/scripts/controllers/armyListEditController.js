@@ -57,12 +57,12 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         // Handle new or existing army list
         if (listId) {
             // Existing army list
-            vm.list = results.armyList;
+            vm.armyList = results.armyList;
 
             // Find the grand army list that the army list belongs to
-            if (vm.list.grandArmyList) {
+            if (vm.armyList.grandArmyList) {
                 var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
-                    return (element.id === vm.list.grandArmyList);
+                    return (element.id === vm.armyList.grandArmyList);
                 });
 
                 if (galIndex !== -1) {
@@ -72,7 +72,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         }
         else {
             // New army list
-            vm.list = {
+            vm.armyList = {
                 name: "",
                 grandArmyList: null,
                 dateRanges: []
@@ -82,13 +82,13 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
 
     function updateList() {
         if (vm.galSelected) {
-            vm.list.grandArmyList = vm.galSelected.id;
+            vm.armyList.grandArmyList = vm.galSelected.id;
         }
         else {
-            vm.list.grandArmyList = null;
+            vm.armyList.grandArmyList = null;
         }
 
-        ArmyListService.update({ id: listId }, vm.list,
+        ArmyListService.update({ id: listId }, vm.armyList,
             function (list) {
                 console.info('Successfully updated ' + list.name);
                 $location.path('/armyList/summary');
@@ -100,13 +100,13 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
 
     function createList() {
         if (vm.galSelected) {
-            vm.list.grandArmyList = vm.galSelected.id;
+            vm.armyList.grandArmyList = vm.galSelected.id;
         }
         else {
-            vm.list.grandArmyList = null;
+            vm.armyList.grandArmyList = null;
         }
 
-        ArmyListService.create(vm.list,
+        ArmyListService.create(vm.armyList,
             function(list) {
                 console.info('Successfully created ' + list.name);
                 $location.path('/armyList/summary');
@@ -148,7 +148,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         // Insert the edited date range into the army list
         modalInstance.result.then(
             function (resultDateRange) {
-                vm.list.dateRanges.push(resultDateRange);
+                vm.armyList.dateRanges.push(resultDateRange);
             },
             function () {
                 // Cancelled
@@ -156,13 +156,13 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     }
 
     function editDateRange(dateRange) {
-        var index = vm.list.dateRanges.indexOf(dateRange);
+        var index = vm.armyList.dateRanges.indexOf(dateRange);
         if (index === -1) {
             // No matching date range!
             return;
         }
 
-        var originalDateRange = vm.list.dateRanges[index];
+        var originalDateRange = vm.armyList.dateRanges[index];
         var editDateRange = {
             startDate: originalDateRange.startDate,
             endDate: originalDateRange.endDate
@@ -194,9 +194,9 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     }
 
     function deleteDateRange(dateRange) {
-        var index = vm.list.dateRanges.indexOf(dateRange);
+        var index = vm.armyList.dateRanges.indexOf(dateRange);
         if (index !== -1) {
-            vm.list.dateRanges.splice(index, 1);
+            vm.armyList.dateRanges.splice(index, 1);
         }
     }
 }
