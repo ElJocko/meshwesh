@@ -4,7 +4,7 @@ angular.module('meshweshApp', [
     'ngRoute',
     'ngMessages',
     'ui.bootstrap',
-    'smart-table',
+    'ui.grid',
     'meshweshControllers',
     'meshweshServices',
     'meshweshDirectives',

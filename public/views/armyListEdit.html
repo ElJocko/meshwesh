@@ -20,30 +20,7 @@
                 <div class="col-md-4">
                     <div class="content-subheader">Date Ranges</div>
                     <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">Insert Date Range</button>
-                    <table class="table table-bordered" st-table="vm.displayedDateRanges" st-safe-src="vm.armyList.dateRanges">
-                        <thead>
-                        <tr>
-                            <th st-sort="startDate" st-sort-default="true" st-skip-natural="true">Start Date</th>
-                            <th st-sort="endDate" st-skip-natural="true">End Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="dateRange in vm.displayedDateRanges">
-                            <td>{{ dateRange.startDate | mwDisplayYear }}</td>
-                            <td>{{ dateRange.endDate | mwDisplayYear }}</td>
-                            <td class="td-btn">
-                                <button type="button" ng-click="vm.editDateRange(dateRange)" class="btn btn-sm btn-warning">
-                                    <i class="glyphicon glyphicon-pencil"></i>
-                                </button>
-                            </td>
-                            <td class="td-btn">
-                                <button type="button" ng-click="vm.deleteDateRange(dateRange)" class="btn btn-sm btn-danger">
-                                    <i class="glyphicon glyphicon-remove"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="date-range-grid" ui-grid="vm.gridOptions"></div>
                 </div>
             </div>
             <button type="submit" class="btn save-btn" ng-click="vm.submit()">Save Changes</button>

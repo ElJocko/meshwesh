@@ -9,6 +9,23 @@ ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal'
 function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyListService, GrandArmyListService) {
     var vm = this;
 
+    var editTemplate = '<button type="button" ng-click="grid.appScope.editDateRange(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
+    var deleteTemplate = '<button type="button" ng-click="grid.appScope.deleteDateRange(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
+
+    vm.gridOptions = {
+        columnDefs: [
+            { field: 'startDate', displayName: 'Start Date', cellFilter: 'mwDisplayYear', width: 100 },
+            { field: 'endDate', displayName: 'End Date', cellFilter: 'mwDisplayYear', width: 100 },
+            { field: 'edt', displayName: '', cellTemplate: editTemplate, sortable: false, enableColumnMenu: false },
+            { field: 'del', displayName: '', cellTemplate: deleteTemplate, sortable: false, enableColumnMenu: false }
+        ],
+        appScopeProvider: this
+    };
+
+//    vm.editDateRange = function(dateRange) {
+//        alert('Will edit ' + dateRange.startDate + ' to ' + dateRange.endDate);
+//    };
+
     var listId = $routeParams.listId;
     initializeData();
     if (listId) {
@@ -78,6 +95,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
                 dateRanges: []
             };
         }
+
+        vm.gridOptions.data = vm.armyList.dateRanges;
     }
 
     function updateList() {
@@ -156,17 +175,17 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     }
 
     function editDateRange(dateRange) {
-        var index = vm.armyList.dateRanges.indexOf(dateRange);
-        if (index === -1) {
-            // No matching date range!
-            return;
-        }
+//        var index = vm.armyList.dateRanges.indexOf(dateRange);
+//        if (index === -1) {
+//            // No matching date range!
+//            return;
+//        }
 
-        var originalDateRange = vm.armyList.dateRanges[index];
-        var editDateRange = {
-            startDate: originalDateRange.startDate,
-            endDate: originalDateRange.endDate
-        };
+//        var originalDateRange = vm.armyList.dateRanges[index];
+//        var editDateRange = {
+//            startDate: originalDateRange.startDate,
+//            endDate: originalDateRange.endDate
+//        };
 
         var modalInstance = $uibModal.open({
             animation: false,
@@ -176,7 +195,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
             size: 'sm',
             resolve: {
                 dateRange: function () {
-                    return editDateRange;
+                    return dateRange;
                 }
             }
         });
@@ -185,15 +204,17 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
             function (resultDateRange) {
                 // Replace the old date range with the new date range
                 // TBD: Force table sort
-                originalDateRange.startDate = resultDateRange.startDate;
-                originalDateRange.endDate = resultDateRange.endDate;
+                dateRange.startDate = resultDateRange.startDate;
+                dateRange.endDate = resultDateRange.endDate;
+//                originalDateRange.startDate = resultDateRange.startDate;
+//                originalDateRange.endDate = resultDateRange.endDate;
 
                 // Force refresh of table
-                var dateRangeCopy = {
-                    startDate: vm.armyList.dateRanges[0].startDate,
-                    endDate: vm.armyList.dateRanges[0].endDate
-                };
-                vm.armyList.dateRanges[0] = dateRangeCopy;
+//                var dateRangeCopy = {
+//                    startDate: vm.armyList.dateRanges[0].startDate,
+//                    endDate: vm.armyList.dateRanges[0].endDate
+//                };
+//                vm.armyList.dateRanges[0] = dateRangeCopy;
             },
             function () {
                 // Cancelled
