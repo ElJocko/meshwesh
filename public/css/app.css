@@ -126,16 +126,14 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     border-color: #ff0000;
 }
 
-.st-sort-ascent:before{
-    content: '\25B2';
-}
-
-.st-sort-descent:before{
-    content: '\25BC';
+.date-range-grid {
+    width: 320px;
+    height: 2000px;
 }
 
 .td-btn {
     text-align:center;
+    vertical-align: middle;
 }
 
 .input-validation-error {

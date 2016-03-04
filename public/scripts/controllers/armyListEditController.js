@@ -4,30 +4,16 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListEditController', ArmyListEditController);
 
-ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'ArmyListService', 'GrandArmyListService'];
+ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService'];
 
-function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyListService, GrandArmyListService) {
+function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService) {
     var vm = this;
 
-    var editTemplate = '<button type="button" ng-click="grid.appScope.editDateRange(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
-    var deleteTemplate = '<button type="button" ng-click="grid.appScope.deleteDateRange(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
-
-    vm.gridOptions = {
-        columnDefs: [
-            { field: 'startDate', displayName: 'Start Date', cellFilter: 'mwDisplayYear', width: 100 },
-            { field: 'endDate', displayName: 'End Date', cellFilter: 'mwDisplayYear', width: 100 },
-            { field: 'edt', displayName: '', cellTemplate: editTemplate, sortable: false, enableColumnMenu: false },
-            { field: 'del', displayName: '', cellTemplate: deleteTemplate, sortable: false, enableColumnMenu: false }
-        ],
-        appScopeProvider: this
-    };
-
-//    vm.editDateRange = function(dateRange) {
-//        alert('Will edit ' + dateRange.startDate + ' to ' + dateRange.endDate);
-//    };
+    initializeDateRangeGrid();
 
     var listId = $routeParams.listId;
     initializeData();
+
     if (listId) {
         // Edit an existing army list
         vm.submit = updateList;
@@ -42,6 +28,37 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     vm.insertDateRange = insertDateRange;
     vm.editDateRange = editDateRange;
     vm.deleteDateRange = deleteDateRange;
+
+    function initializeDateRangeGrid() {
+        var editTemplate = '<button type="button" ng-click="grid.appScope.vm.editDateRange(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
+        var deleteTemplate = '<button type="button" ng-click="grid.appScope.vm.deleteDateRange(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
+
+        vm.gridOptions = {
+            columnDefs: [
+                { field: 'startDate', displayName: 'Start Date', type: 'number', cellFilter: 'mwDisplayYear', sort: { direction: uiGridConstants.ASC, priority: 0 }, sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'endDate', displayName: 'End Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
+                { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
+            ],
+            rowHeight: 35,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            appScopeProvider: this,
+            onRegisterApi: function(gridApi) {
+                vm.gridApi = gridApi;
+            }
+        };
+    }
+
+    function resetGridHeight() {
+        // TBD: Grid only shows rows for initial height (in .css). Set to 2000px as workaround. Need to
+        // find a way to tell the grid that it has a new size.
+        var gridElement = document.getElementById('date-range-grid');
+        if (gridElement) {
+            var height = (vm.armyList.dateRanges.length * 35) + 32;
+            gridElement.style.height = height + 'px';
+        }
+    }
 
     function initializeData() {
         // Get the army list if it exists
@@ -97,6 +114,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         }
 
         vm.gridOptions.data = vm.armyList.dateRanges;
+        resetGridHeight();
     }
 
     function updateList() {
@@ -167,7 +185,12 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         // Insert the edited date range into the army list
         modalInstance.result.then(
             function (resultDateRange) {
+                // Add the date range
                 vm.armyList.dateRanges.push(resultDateRange);
+
+                // Update the sort
+                vm.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+                resetGridHeight();
             },
             function () {
                 // Cancelled
@@ -175,18 +198,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     }
 
     function editDateRange(dateRange) {
-//        var index = vm.armyList.dateRanges.indexOf(dateRange);
-//        if (index === -1) {
-//            // No matching date range!
-//            return;
-//        }
 
-//        var originalDateRange = vm.armyList.dateRanges[index];
-//        var editDateRange = {
-//            startDate: originalDateRange.startDate,
-//            endDate: originalDateRange.endDate
-//        };
-
+        // Display the Edit Date Range modal
         var modalInstance = $uibModal.open({
             animation: false,
             templateUrl: 'views/modals/dateRangeEdit.html',
@@ -203,18 +216,11 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
         modalInstance.result.then(
             function (resultDateRange) {
                 // Replace the old date range with the new date range
-                // TBD: Force table sort
                 dateRange.startDate = resultDateRange.startDate;
                 dateRange.endDate = resultDateRange.endDate;
-//                originalDateRange.startDate = resultDateRange.startDate;
-//                originalDateRange.endDate = resultDateRange.endDate;
 
-                // Force refresh of table
-//                var dateRangeCopy = {
-//                    startDate: vm.armyList.dateRanges[0].startDate,
-//                    endDate: vm.armyList.dateRanges[0].endDate
-//                };
-//                vm.armyList.dateRanges[0] = dateRangeCopy;
+                // Update the sort
+                vm.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
             },
             function () {
                 // Cancelled
@@ -224,7 +230,9 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, ArmyList
     function deleteDateRange(dateRange) {
         var index = vm.armyList.dateRanges.indexOf(dateRange);
         if (index !== -1) {
+            // Remove the date range
             vm.armyList.dateRanges.splice(index, 1);
+            resetGridHeight();
         }
     }
 }
