@@ -1,12 +1,23 @@
 'use strict';
 
-var dateRangesSubschema = {
+var dateRangeSubschema = {
+    type: 'object',
+    properties: {
+        startDate: { type: 'number', requred: true },
+        endDate: { type: 'number', requred: true }
+    }
+};
+
+var troopOptionSubschema = {
     type: ['array', 'null'],
     items: {
         type: 'object',
         properties: {
-            startDate: { type: 'number', requred: true },
-            endDate: { type: 'number', requred: true }
+            min: { type: 'number', requred: true },
+            max: { type: 'number', requred: true },
+            dateRange: dateRangeSubschema,
+            troopTypes: { type: ['array', null], items: { type: 'string' } },
+            description: { type: 'string' }
         }
     }
 };
@@ -28,7 +39,9 @@ exports.createArmyList = {
         properties: {
             name: { type: 'string', required: true },
             grandArmyList: { type: ['string', 'null'] },
-            dateRanges: dateRangesSubschema
+            dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
+            description: { type: ['string', 'null'] },
+            troopOptions: troopOptionSubschema
         },
         additionalProperties: false
     },
@@ -47,7 +60,9 @@ exports.updateArmyList = {
             id: { type: ['string', 'null'] },
             name: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
-            dateRanges: dateRangesSubschema
+            dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
+            description: { type: ['string', 'null'] },
+            troopOptions: troopOptionSubschema
         },
         additionalProperties: false
     },
