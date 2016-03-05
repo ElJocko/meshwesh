@@ -53,10 +53,17 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     function resetGridHeight() {
         // TBD: Grid only shows rows for initial height (in .css). Set to 2000px as workaround. Need to
         // find a way to tell the grid that it has a new size.
+        var height = (vm.armyList.dateRanges.length * 35) + 32;
+
         var gridElement = document.getElementById('date-range-grid');
         if (gridElement) {
-            var height = (vm.armyList.dateRanges.length * 35) + 32;
-            gridElement.style.height = height + 'px';
+
+            angular.element(gridElement).css('height', height + 'px');
+        }
+
+        var gridViewport = document.getElementsByClassName('ui-grid-viewport');
+        if (gridViewport) {
+            angular.element(gridViewport).css('height', height + 'px');
         }
     }
 
