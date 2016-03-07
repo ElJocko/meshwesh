@@ -10,6 +10,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     var vm = this;
 
     initializeDateRangeGrid();
+    initializeTroopOptionsGrid();
 
     var listId = $routeParams.listId;
     initializeData();
@@ -33,7 +34,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         var editTemplate = '<button type="button" ng-click="grid.appScope.vm.editDateRange(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
         var deleteTemplate = '<button type="button" ng-click="grid.appScope.vm.deleteDateRange(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
 
-        vm.gridOptions = {
+        vm.dateRangeGridOptions = {
             columnDefs: [
                 { field: 'startDate', displayName: 'Start Date', type: 'number', cellFilter: 'mwDisplayYear', sort: { direction: uiGridConstants.ASC, priority: 0 }, sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
                 { field: 'endDate', displayName: 'End Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
@@ -45,7 +46,31 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             enableVerticalScrollbar: 0,
             appScopeProvider: this,
             onRegisterApi: function(gridApi) {
-                vm.gridApi = gridApi;
+                vm.dateRangeGridApi = gridApi;
+            }
+        };
+    }
+
+    function initializeTroopOptionsGrid() {
+        var editTemplate = '<button type="button" ng-click="grid.appScope.vm.editTroopOption(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
+        var deleteTemplate = '<button type="button" ng-click="grid.appScope.vm.deleteTroopOption(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
+
+        vm.troopOptionGridOptions = {
+            columnDefs: [
+                { field: 'min', displayName: 'Min', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'max', displayName: 'Max', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'troopTypes', displayName: 'Troop Types', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'startDate', displayName: 'Start Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'endDate', displayName: 'End Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
+                { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
+            ],
+            rowHeight: 35,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            appScopeProvider: this,
+            onRegisterApi: function(gridApi) {
+                vm.troopOptionsGridApi = gridApi;
             }
         };
     }
@@ -120,7 +145,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             };
         }
 
-        vm.gridOptions.data = vm.armyList.dateRanges;
+        vm.dateRangeGridOptions.data = vm.armyList.dateRanges;
+        vm.troopOptionGridOptions.data = [];
         resetGridHeight();
     }
 
@@ -196,7 +222,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 vm.armyList.dateRanges.push(resultDateRange);
 
                 // Update the sort
-                vm.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+                vm.dateRangeGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
                 resetGridHeight();
             },
             function () {
@@ -227,7 +253,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 dateRange.endDate = resultDateRange.endDate;
 
                 // Update the sort
-                vm.gridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+                vm.dateRangeGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
             },
             function () {
                 // Cancelled
