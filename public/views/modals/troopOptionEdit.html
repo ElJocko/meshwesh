@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit Troop Option</h3>
+</div>
+<div class="modal-body">
+    <form novalidate name="vm.editForm">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="inputMin">Min</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="inputMin" name="inputMin" placeholder="Min" ng-model="vm.min" ng-change="vm.dateChanged()" required integer>
+                    </div>
+                    <div ng-messages="vm.editForm.inputMin.$error">
+                        <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
+                        <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
+                        <p class="input-validation-error" ng-message="required">Min is required.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputMax">Max</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="inputMax" name="inputMax" placeholder="Max" ng-model="vm.max" ng-change="vm.dateChanged()" required integer>
+                    </div>
+                    <div ng-messages="vm.editForm.inputMax.$error">
+                        <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
+                        <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
+                        <p class="input-validation-error" ng-message="required">Max is required.</p>
+                        <p class="input-validation-error" ng-message="dateOrder">Max must be greater than or equal to min.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Troop Types</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <textarea class="form-control" id="inputDescription" placeholder="Troop type description" ng-model="vm.armyList.description"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="vm.editForm.$invalid">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

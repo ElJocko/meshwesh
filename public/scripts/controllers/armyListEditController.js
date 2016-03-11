@@ -30,6 +30,10 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     vm.editDateRange = editDateRange;
     vm.deleteDateRange = deleteDateRange;
 
+    vm.insertTroopOption = insertTroopOption;
+//    vm.editTroopOption = editTroopOption;
+//    vm.deleteTroopOption = deleteTroopOption;
+
     function initializeDateRangeGrid() {
         var editTemplate = '<button type="button" ng-click="grid.appScope.vm.editDateRange(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
         var deleteTemplate = '<button type="button" ng-click="grid.appScope.vm.deleteDateRange(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
@@ -57,11 +61,12 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         vm.troopOptionGridOptions = {
             columnDefs: [
-                { field: 'min', displayName: 'Min', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
-                { field: 'max', displayName: 'Max', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
-                { field: 'troopTypes', displayName: 'Troop Types', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'min', displayName: 'Min', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 80, enableColumnMenu: false },
+                { field: 'max', displayName: 'Max', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 80, enableColumnMenu: false },
+                { field: 'troopTypes', displayName: 'Troop Types', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 130, enableColumnMenu: false },
                 { field: 'startDate', displayName: 'Start Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
                 { field: 'endDate', displayName: 'End Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
+                { field: 'description', displayName: 'Description', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 200, enableColumnMenu: false },
                 { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
                 { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
             ],
@@ -75,7 +80,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         };
     }
 
-    function resetGridHeight() {
+    function resetDateRangeGridHeight() {
         // TBD: Grid only shows rows for initial height (in .css). Set to 2000px as workaround. Need to
         // find a way to tell the grid that it has a new size.
         var height = (vm.armyList.dateRanges.length * 35) + 32;
@@ -147,7 +152,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         vm.dateRangeGridOptions.data = vm.armyList.dateRanges;
         vm.troopOptionGridOptions.data = [];
-        resetGridHeight();
+        resetDateRangeGridHeight();
     }
 
     function updateList() {
@@ -223,7 +228,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
                 // Update the sort
                 vm.dateRangeGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-                resetGridHeight();
+                resetDateRangeGridHeight();
             },
             function () {
                 // Cancelled
@@ -265,7 +270,49 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         if (index !== -1) {
             // Remove the date range
             vm.armyList.dateRanges.splice(index, 1);
-            resetGridHeight();
+            resetDateRangeGridHeight();
         }
+    }
+
+    function insertTroopOption() {
+        // Initialize new troop option
+        var newTroopOption = {
+            min: 0,
+            max: 1,
+            troopTypes: [],
+            dateRange: {
+                startDate: 0,
+                endDate: 0
+            },
+            description: ""
+        };
+
+        // Let the user edit the new troop option
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/troopOptionEdit.html',
+            controller: 'TroopOptionEditController',
+            controllerAs: 'vm',
+//            size: 'sm',
+            resolve: {
+                troopOption: function () {
+                    return newTroopOption;
+                }
+            }
+        });
+
+        // Insert the edited troop option into the army list
+        modalInstance.result.then(
+            function (resultTroopOption) {
+                // Add the date range
+                vm.armyList.troopOptions.push(resultTroopOption);
+
+                // Update the sort
+                vm.troopOptionGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+                resetTroopOptionGridHeight();
+            },
+            function () {
+                // Cancelled
+            });
     }
 }

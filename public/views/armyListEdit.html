@@ -20,18 +20,22 @@
                 <label for="inputDescription">Description</label>
                 <textarea class="form-control" id="inputDescription" placeholder="Description of the army list" ng-model="vm.armyList.description"></textarea>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="content-subheader">Date Ranges</div>
-                    <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">New Date Range</button>
-                    <div id="date-range-grid" class="date-range-grid" ui-grid="vm.dateRangeGridOptions"></div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="content-subheader">Date Ranges</div>
+                        <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">New Date Range</button>
+                        <div id="date-range-grid" class="date-range-grid" ui-grid="vm.dateRangeGridOptions"></div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="content-subheader">Troop Options</div>
-                    <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertTroopOption()">New Troop Option</button>
-                    <div id="troop-option-grid" class="troop-option-grid" ui-grid="vm.troopOptionGridOptions"></div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="content-subheader">Troop Options</div>
+                        <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertTroopOption()">New Troop Option</button>
+                        <div id="troop-option-grid" class="troop-option-grid" ui-grid="vm.troopOptionGridOptions"></div>
+                    </div>
                 </div>
             </div>
             <button type="submit" class="btn save-btn" ng-click="vm.submit()">Save Changes</button>
