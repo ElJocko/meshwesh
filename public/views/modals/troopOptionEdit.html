@@ -8,30 +8,40 @@
                 <div class="form-group">
                     <label for="inputMin">Min</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" id="inputMin" name="inputMin" placeholder="Min" ng-model="vm.min" ng-change="vm.dateChanged()" required integer>
+                        <input type="number" class="form-control" id="inputMin" name="inputMin" placeholder="Min" ng-model="vm.min" ng-change="vm.minMaxChanged()" required nonnegative-integer>
                     </div>
                     <div ng-messages="vm.editForm.inputMin.$error">
-                        <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
-                        <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
+                        <p class="input-validation-error" ng-message="number">Must be a nonnegative integer.</p>
+                        <p class="input-validation-error" ng-message="nonnegativeInteger">Must be a nonnegative integer.</p>
                         <p class="input-validation-error" ng-message="required">Min is required.</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputMax">Max</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" id="inputMax" name="inputMax" placeholder="Max" ng-model="vm.max" ng-change="vm.dateChanged()" required integer>
+                        <input type="number" class="form-control" id="inputMax" name="inputMax" placeholder="Max" ng-model="vm.max" ng-change="vm.minMaxChanged()" required positive-integer>
                     </div>
                     <div ng-messages="vm.editForm.inputMax.$error">
                         <p class="input-validation-error" ng-message="number">Must be a positive integer.</p>
                         <p class="input-validation-error" ng-message="positiveInteger">Must be a positive integer.</p>
                         <p class="input-validation-error" ng-message="required">Max is required.</p>
-                        <p class="input-validation-error" ng-message="dateOrder">Max must be greater than or equal to min.</p>
+                        <p class="input-validation-error" ng-message="minMaxOrder">Max must be greater than or equal to min.</p>
                     </div>
+                </div>
+                <div class="form-group">
+                    <table>
+                        <tr ng-repeat="name in vm.troopTypes">
+                            <td>{{ name }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="form-group">
-                    <label>Troop Types</label>
+                    <label for="troop-type-grid">Troop Types</label>
+                    <div class="form-group">
+                        <div id="troop-type-grid" class="troop-type-grid" ui-grid="vm.troopTypeGridOptions" ui-grid-selection></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,7 +49,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="inputDescription">Description</label>
-                    <textarea class="form-control" id="inputDescription" placeholder="Troop type description" ng-model="vm.armyList.description"></textarea>
+                    <textarea class="form-control" id="inputDescription" placeholder="Troop type description" ng-model="vm.description"></textarea>
                 </div>
             </div>
         </div>

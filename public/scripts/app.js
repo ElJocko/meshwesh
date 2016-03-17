@@ -5,6 +5,7 @@ angular.module('meshweshApp', [
     'ngMessages',
     'ui.bootstrap',
     'ui.grid',
+    'ui.grid.selection',
     'meshweshControllers',
     'meshweshServices',
     'meshweshDirectives',
