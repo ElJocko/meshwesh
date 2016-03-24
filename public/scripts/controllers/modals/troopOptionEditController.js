@@ -4,7 +4,7 @@ angular
     .module('meshweshControllers')
     .controller('TroopOptionEditController', TroopOptionEditController);
 
-function TroopOptionEditController($uibModalInstance, $timeout, troopOption) {
+function TroopOptionEditController($uibModalInstance, $timeout, TroopTypeService, troopOption) {
     var vm = this;
 
     vm.min = troopOption.min;
@@ -13,8 +13,28 @@ function TroopOptionEditController($uibModalInstance, $timeout, troopOption) {
     vm.troopTypes = troopOption.troopTypes;
 
     var enableOnSelect = true;
+
     initializeTroopTypeGrid();
     initializeTroopTypeData();
+
+    function initializeCurrentTroopTypeSelection() {
+
+        $timeout(function() {
+            // Don't act on the rowSelectionChanged event
+            enableOnSelect = false;
+
+            // Select the troop types in the starting data
+            vm.troopTypeGridOptions.data.forEach(function(value) {
+                var index = vm.troopTypes.indexOf(value.permanentCode);
+                if (index >= 0) {
+                    vm.troopTypeGridApi.selection.selectRow(value);
+                }
+            });
+
+            // Enable handling selection events
+            enableOnSelect = true;
+        });
+    }
 
     function initializeTroopTypeGrid() {
         vm.troopTypeGridOptions = {
@@ -38,10 +58,10 @@ function TroopOptionEditController($uibModalInstance, $timeout, troopOption) {
                 gridApi.selection.on.rowSelectionChanged(null, function(row) {
                     if (enableOnSelect) {
                         if (row.isSelected) {
-                            addTroopType(row.entity.displayName);
+                            addTroopType(row.entity.permanentCode);
                         }
                         else {
-                            removeTroopType(row.entity.displayName);
+                            removeTroopType(row.entity.permanentCode);
                         }
                     }
                 });
@@ -50,47 +70,9 @@ function TroopOptionEditController($uibModalInstance, $timeout, troopOption) {
     }
 
     function initializeTroopTypeData() {
-        var masterTroopTypeList = [
-            { displayName: 'Archers', category: 'Foot', cost: 4 },
-            { displayName: 'Bow Levy', category: 'Foot', cost: 2 },
-            { displayName: 'Light Foot', category: 'Foot', cost: 3 },
-            { displayName: 'Light Spear', category: 'Foot', cost: 3 },
-            { displayName: 'Rabble', category: 'Foot', cost: 2 },
-            { displayName: 'Raiders', category: 'Foot', cost: 4 },
-            { displayName: 'Skirmishers', category: 'Foot', cost: 3 },
-            { displayName: 'Warband', category: 'Foot', cost: 4 },
-            { displayName: 'Artillery', category: 'Foot', cost: 4 },
-            { displayName: 'Elite Foot', category: 'Foot', cost: 4 },
-            { displayName: 'Heavy Foot', category: 'Foot', cost: 3 },
-            { displayName: 'Horde', category: 'Foot', cost: 2 },
-            { displayName: 'Pavisiers', category: 'Foot', cost: 4 },
-            { displayName: 'Pikes', category: 'Foot', cost: 3 },
-            { displayName: 'Spear', category: 'Foot', cost: 4 },
-            { displayName: 'War Wagons', category: 'Foot', cost: 4 },
-            { displayName: 'Warriors', category: 'Foot', cost: 4 },
-            { displayName: 'Bad Horse', category: 'Mounted', cost: 3 },
-            { displayName: 'Battle Taxi', category: 'Mounted', cost: 3 },
-            { displayName: 'Camels', category: 'Mounted', cost: 4 },
-            { displayName: 'Chariots', category: 'Mounted', cost: 4 },
-            { displayName: 'Elite Cavalry', category: 'Mounted', cost: 4 },
-            { displayName: 'Horse Bow', category: 'Mounted', cost: 4 },
-            { displayName: 'Javelin Cavalry', category: 'Mounted', cost: 4 },
-            { displayName: 'Knights', category: 'Mounted', cost: 4 },
-            { displayName: 'Cataphracts', category: 'Mounted', cost: 4 },
-            { displayName: 'Elephants', category: 'Mounted', cost: 4 }
-        ];
-
-        vm.troopTypeGridOptions.data = masterTroopTypeList;
-
-        $timeout(function() {
-            enableOnSelect = false;
-            vm.troopTypeGridOptions.data.forEach(function(value) {
-                var index = vm.troopTypes.indexOf(value.displayName);
-                if (index >= 0) {
-                    vm.troopTypeGridApi.selection.selectRow(value);
-                }
-            });
-            enableOnSelect = true;
+        TroopTypeService.list(function(troopTypes) {
+            vm.troopTypeGridOptions.data = troopTypes;
+            initializeCurrentTroopTypeSelection();
         });
     }
 /*
