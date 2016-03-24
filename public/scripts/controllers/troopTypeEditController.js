@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('TroopTypeEditController', TroopTypeEditController);
 
-TroopTypeEditController.$inject = ['$routeParams', '$location', 'TroopTypeService', 'mwDisplayTroopTypesListFilter'];
+TroopTypeEditController.$inject = ['$routeParams', '$location', 'TroopTypeService', 'mwDisplayTroopTypesListFilter', 'mwDisplayTroopTypesFilter'];
 
-function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDisplayTroopTypesListFilter) {
+function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDisplayTroopTypesListFilter, mwDisplayTroopTypesFilter) {
     var vm = this;
 
     var troopTypeId = $routeParams.troopTypeId;
@@ -28,7 +28,7 @@ function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDi
     function updateTroopType() {
         TroopTypeService.update({ id: troopTypeId }, vm.troopType,
             function (troopType) {
-                mwDisplayTroopTypesListFilter.reloadData();
+                reloadFilters();
                 console.info('Successfully updated ' + troopType.displayName);
                 $location.path('/troopType/summary');
             },
@@ -40,7 +40,7 @@ function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDi
     function createTroopType() {
         TroopTypeService.create(vm.troopType,
             function (troopType) {
-                mwDisplayTroopTypesListFilter.reloadData();
+                reloadFilters();
                 console.info('Successfully created ' + troopType.displayName);
                 $location.path('/troopType/summary');
             },
@@ -52,11 +52,17 @@ function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDi
     function deleteTroopType() {
         TroopTypeService.destroy({ id: troopTypeId },
             function (troopType) {
+                reloadFilters();
                 console.info('Successfully deleted ' + troopType.displayName);
                 $location.path('/troopType/summary');
             },
             function (response) {
                 console.error(response.data);
             });
+    }
+
+    function reloadFilters() {
+        mwDisplayTroopTypesListFilter.reloadData();
+        mwDisplayTroopTypesFilter.reloadData();
     }
 }

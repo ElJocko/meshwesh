@@ -5,10 +5,10 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <form>
+        <form name="vm.editTroopTypeForm">
             <fieldset class="form-group">
                 <label for="inputPermanentCode">Permanent Code</label>
-                <input type="text" class="form-control" id="inputPermanentCode" placeholder="Permanent Code" ng-model="vm.troopType.permanentCode">
+                <input type="text" class="form-control" id="inputPermanentCode" placeholder="Permanent Code" ng-model="vm.troopType.permanentCode" required>
             </fieldset>
             <fieldset class="form-group">
                 <label for="inputDisplayName">Display Name</label>
@@ -19,7 +19,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <button type="submit" class="btn save-btn" ng-click="vm.submit()">Save Changes</button>
+        <button type="submit" class="btn save-btn" ng-click="vm.submit()" ng-disabled="vm.editTroopTypeForm.$invalid">Save Changes</button>
     </div>
 </div>
 <div class="row">

@@ -4,7 +4,7 @@ angular
     .module('meshweshControllers')
     .controller('TroopOptionEditController', TroopOptionEditController);
 
-function TroopOptionEditController($uibModalInstance, $timeout, TroopTypeService, troopOption) {
+function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants, TroopTypeService, troopOption) {
     var vm = this;
 
     vm.min = troopOption.min;
@@ -39,7 +39,7 @@ function TroopOptionEditController($uibModalInstance, $timeout, TroopTypeService
     function initializeTroopTypeGrid() {
         vm.troopTypeGridOptions = {
             columnDefs: [
-                { field: 'displayName', displayName: 'Troop Type', type: 'string', enableSorting: false, width: 120, enableColumnMenu: false },
+                { field: 'displayName', displayName: 'Troop Type', type: 'string', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 120, enableColumnMenu: false },
                 { field: 'category', displayName: 'Category', type: 'string', enableSorting: false, width: 80, enableColumnMenu: false },
                 { field: 'cost', displayName: 'Cost', type: 'number', enableSorting: false, width: 60, enableColumnMenu: false }
             ],

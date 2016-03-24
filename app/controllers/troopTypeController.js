@@ -21,7 +21,7 @@ module.exports.retrieveByQuery = function(req, res) {
 };
 
 module.exports.retrieveById = function(req, res) {
-    troopTypeService.retrieveById(req.params.categoryId, function(err, document) {
+    troopTypeService.retrieveById(req.params.troopTypeId, function(err, document) {
         if (err) {
             if (err.message === troopTypeService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted id');
@@ -33,7 +33,7 @@ module.exports.retrieveById = function(req, res) {
             }
         }
         else {
-            if (!category) {
+            if (!document) {
                 logger.warn('Troop Type not found');
                 return res.status(404).send('Troop Type not found.');
             }
@@ -100,7 +100,7 @@ exports.update = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-    troopTypeService.deleteById(req.params.categoryId, function(err, document) {
+    troopTypeService.deleteById(req.params.troopTypeId, function(err, document) {
         if (err) {
             if (err.message === troopTypeService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted troop type id');
