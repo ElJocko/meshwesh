@@ -1,0 +1,13 @@
+<div class="content row">
+    <div class="col-md-12">
+        <div class="content-header">Troop Types</div>
+        <div ng-repeat="troopType in vm.troopTypes | orderBy:'displayName'">
+            <div class="content-link">
+                <a href ng-click="vm.edit(troopType.id)">{{ troopType.displayName }}</a>
+            </div>
+        </div>
+        <div>
+            <button class="btn save-btn" ng-click="vm.create()">Create New</button>
+        </div>
+    </div>
+</div>

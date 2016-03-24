@@ -57,6 +57,21 @@ function router($routeProvider) {
             controller:'ArmyListEditController',
             controllerAs: 'vm'
         })
+        .when('/troopType/summary', {
+            templateUrl:'views/troopTypeSummary.html',
+            controller:'TroopTypeSummaryController',
+            controllerAs: 'vm'
+        })
+        .when('/troopType/:troopTypeId/edit', {
+            templateUrl:'views/troopTypeEdit.html',
+            controller:'TroopTypeEditController',
+            controllerAs: 'vm'
+        })
+        .when('/troopType/create', {
+            templateUrl:'views/troopTypeEdit.html',
+            controller:'TroopTypeEditController',
+            controllerAs: 'vm'
+        })
         .when('/report', {
             templateUrl:'report.html',
             controller:'ReportCtrl'

@@ -9,7 +9,8 @@ var TroopTypeSchema = new mongoose.Schema({
     displayCode: { type: String },
     displayName: { type: String },
     category: { type: String },
-    cost: { type: Number }
+    cost: { type: Number },
+    description: { type: String }
 });
 
 TroopTypeSchema.set('toJSON', {

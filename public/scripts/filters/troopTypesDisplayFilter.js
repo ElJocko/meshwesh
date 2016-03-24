@@ -11,6 +11,11 @@ function TroopTypesFilter(TroopTypeService) {
     var serviceInvoked = false;
     var placeholder = '';
 
+    troopTypesFilter.reloadData = function() {
+        troopTypesData = null;
+        serviceInvoked = false;
+    };
+
     troopTypesFilter.$stateful = true;
     function troopTypesFilter(input) {
         if (!input) {
@@ -51,7 +56,12 @@ function TroopTypesListFilter(TroopTypeService) {
     var serviceInvoked = false;
     var placeholder = '';
 
-    return function(input) {
+    troopTypesListFilter.reloadData = function() {
+        troopTypesData = null;
+        serviceInvoked = false;
+    };
+
+    function troopTypesListFilter(input) {
         if (!input) {
             return '';
         }
@@ -89,6 +99,8 @@ function TroopTypesListFilter(TroopTypeService) {
             var display = troopTypesFilterFunction(input);
             return display;
         }
-    };
+    }
+
+    return troopTypesListFilter;
 }
 
