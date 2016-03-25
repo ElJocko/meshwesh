@@ -93,7 +93,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         // TBD: how to distinguish ui-grid-viewport elements???
         var gridViewport = document.getElementsByClassName('ui-grid-viewport');
         if (gridViewport) {
-            angular.element(gridViewport).css('height', height + 'px');
+            angular.element(gridViewport[0]).css('height', height + 'px');
         }
     }
 
@@ -102,6 +102,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         // find a way to tell the grid that it has a new size.
         var height = (vm.armyList.troopOptions.length * 35) + 32;
 
+
         var gridElement = document.getElementById('troop-options-grid');
         if (gridElement) {
             angular.element(gridElement).css('height', height + 'px');
@@ -109,7 +110,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         var gridViewport = document.getElementsByClassName('ui-grid-viewport');
         if (gridViewport) {
-            angular.element(gridViewport).css('height', height + 'px');
+            angular.element(gridViewport[1]).css('height', height + 'px');
         }
     }
 
@@ -325,7 +326,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
                 // Update the sort
                 vm.troopOptionsGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-                //resetTroopOptionGridHeight();
+                resetTroopOptionsGridHeight();
             },
             function () {
                 // Cancelled
@@ -368,7 +369,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         if (index !== -1) {
             // Remove the date range
             vm.armyList.troopOptions.splice(index, 1);
-//            resetDateRangeGridHeight();
+            resetTroopOptionsGridHeight();
         }
     }
 }
