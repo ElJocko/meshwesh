@@ -102,8 +102,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         // find a way to tell the grid that it has a new size.
         var height = (vm.armyList.troopOptions.length * 35) + 32;
 
-
-        var gridElement = document.getElementById('troop-options-grid');
+        var gridElement = document.getElementById('troop-option-grid');
         if (gridElement) {
             angular.element(gridElement).css('height', height + 'px');
         }
@@ -170,6 +169,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         vm.dateRangeGridOptions.data = vm.armyList.dateRanges;
         vm.troopOptionGridOptions.data = vm.armyList.troopOptions;
         resetDateRangeGridHeight();
+        resetTroopOptionsGridHeight();
     }
 
     function updateList() {
