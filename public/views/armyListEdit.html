@@ -11,6 +11,14 @@
                 <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="vm.armyList.name">
             </div>
             <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="inputUserCode">Code</label>
+                        <input type="text" class="form-control" id="inputUserCode" placeholder="code" ng-model="vm.armyList.userCode">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="inputGrandArmyList">Grand Army List</label>
                 <select class="form-control" id="inputGrandArmyList" ng-options="gal as gal.name for gal in vm.grandArmyLists track by gal.id" ng-model="vm.galSelected">
                     <option value="">-- choose a grand army list --</option>

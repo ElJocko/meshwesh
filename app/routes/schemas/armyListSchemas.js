@@ -38,6 +38,8 @@ exports.createArmyList = {
         type:'object',
         properties: {
             name: { type: 'string', required: true },
+            extendedName: { type: 'string' },
+            userCode: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
@@ -59,6 +61,8 @@ exports.updateArmyList = {
         properties: {
             id: { type: ['string', 'null'] },
             name: { type: 'string' },
+            extendedName: { type: 'string' },
+            userCode: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },

@@ -2,7 +2,8 @@
 
 angular
     .module('meshweshServices')
-    .factory('TroopTypeService', TroopTypeService);
+    .factory('TroopTypeService', TroopTypeService)
+    .factory('TroopTypeImportService', TroopTypeImportService);
 
 TroopTypeService.$inject = ['$resource'];
 
@@ -16,6 +17,18 @@ function TroopTypeService ($resource) {
             get: { method: 'GET', isArray: false },
             update: { method: 'PUT', isArray: false },
             destroy: { method: 'DELETE', isArray: false }
+        }
+    );
+}
+
+TroopTypeImportService.$inject = ['$resource'];
+
+function TroopTypeImportService ($resource) {
+    return $resource(
+        'api/v1/troopTypes/import',
+        null,
+        {
+            import: { method: 'POST'}
         }
     );
 }

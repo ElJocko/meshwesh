@@ -123,3 +123,27 @@ exports.delete = function(req, res) {
         }
     });
 };
+
+exports.import = function(req, res) {
+    // Get the data from the request
+    var troopTypeImportRequest = req.body;
+
+    // Create the troop type
+    troopTypeService.import(troopTypeImportRequest, function(err, importSummary) {
+        if (err) {
+            if (err.message === troopTypeService.errors.duplicateCode) {
+                logger.warn("Duplicate code");
+                return res.status(409).send('Duplicate code');
+            }
+            else {
+                logger.error("Failed with error: " + err);
+                return res.status(500).send("Unable to import Troop Types. Server error.");
+            }
+        }
+        else {
+            logger.info("Success: Created " + importSummary.created + " Troop Types");
+            return res.status(201).send(importSummary);
+        }
+    });
+};
+

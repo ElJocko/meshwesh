@@ -1,9 +1,9 @@
 <div class="content row">
     <div class="col-md-12">
         <div class="content-header">Army Lists</div>
-        <div ng-repeat="list in vm.lists | orderBy:'name'">
+        <div ng-repeat="armyList in vm.armyLists | orderBy:'extendedName'">
             <div class="content-link">
-                <a href ng-click="vm.edit(list.id)">{{ list.nameWithDateRange }}</a>
+                <a href ng-click="vm.edit(armyList.id)">{{ armyList.extendedName }}</a>
             </div>
         </div>
         <div>

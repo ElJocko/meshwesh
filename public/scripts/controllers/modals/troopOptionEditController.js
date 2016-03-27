@@ -39,11 +39,12 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
     function initializeTroopTypeGrid() {
         vm.troopTypeGridOptions = {
             columnDefs: [
-                { field: 'displayName', displayName: 'Troop Type', type: 'string', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 120, enableColumnMenu: false },
-                { field: 'category', displayName: 'Category', type: 'string', enableSorting: false, width: 80, enableColumnMenu: false },
-                { field: 'cost', displayName: 'Cost', type: 'number', enableSorting: false, width: 60, enableColumnMenu: false }
+                { field: 'displayName', displayName: 'Troop Type', type: 'string', sort: { direction: uiGridConstants.ASC, priority: 1 }, enableSorting: false, width: 120 },
+                { field: 'category', displayName: 'Category', type: 'string', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 80 },
+                { field: 'cost', displayName: 'Cost', type: 'number', enableSorting: false, width: 60 }
             ],
             rowHeight: 35,
+            enableColumnMenus: false,
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 1,
             enableRowSelection: true,

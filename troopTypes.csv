@@ -1,0 +1,28 @@
+permanentCode|displayName|displayCode|cost|category|description
+BLV|Bow Levy|BL|2|foot|Bad troops with bows
+RBL|Rabble|Rb|2|foot|Bad troops with javelins
+HRD|Horde|Hd|2|foot|Bad troops packed in tight
+ARC|Archers|Arc|4|foot|Good troops with bows
+LFT|Light Foot|LFt|3|foot|description
+LSP|Light Spear|LSp|3|foot|description
+RDR|Raiders|Rd|4|foot|description
+SKM|Skirmishers|Sk|3|foot|description
+WBD|Warband|Wb|4|foot|description
+ART|Artillery|Art|4|foot|description
+EFT|Elite Foot|EFt|4|foot|description
+HFT|Heavy Foot|HFt|3|foot|description
+PAV|Pavisiers|Pv|4|foot|description
+PIK|Pikes|Pk|3|foot|description
+SPR|Spear|Sp|4|foot|description
+WWG|War Wagons|WWg|4|foot|description
+WRR|Warriors|Wr|4|foot|description
+BAD|Bad Horse|BH|3|mounted|description
+BTX|Battle Taxi|BTx|3|mounted|description
+CML|Camels|Cm|4|mounted|description
+CHT|Chariots|Ch|4|mounted|description
+ECV|Elite Cavalry|ECv|4|mounted|description
+HBW|Horse Bow|HBw|4|mounted|description
+JCV|Javelin Cavalry|JCv|4|mounted|description
+KNT|Knights|Kn|4|mounted|description
+CAT|Cataphracts|Cat|4|mounted|description
+ELE|Elephants|El|4|mounted|Jumbos

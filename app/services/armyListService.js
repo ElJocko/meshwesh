@@ -20,6 +20,7 @@ exports.retrieveByQuery = function(query, callback) {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
                 var object = documents[i].toJSON();
+                object.extendedName = extendedName(object);
                 objects.push(object);
             }
             return callback(null, objects);
@@ -43,6 +44,7 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
+                    document.extendedName = extendedName(document);
                     return callback(null, document.toJSON());
                 }
                 else {
@@ -100,6 +102,7 @@ exports.update = function(id, data, callback) {
             else {
                 // Copy data to found document and save
                 _.assign(document, data);
+
                 document.save(function(err, savedDocument) {
                     if (err) {
                         if (err.name === 'MongoError' && err.code === 11000) {
@@ -155,3 +158,36 @@ exports.deleteById = function(id, callback) {
         return callback(error);
     }
 };
+
+function extendedName(armyList) {
+    var dateRangeString = dateRangeAsString(armyList.dateRanges);
+    var result = armyList.name + "  " + dateRangeString;
+    return result;
+}
+
+function dateRangeAsString(dateRanges) {
+    // Find the earliest start and latest end dates
+    var earliestStart = 9999;
+    var latestEnd = -9999;
+
+    dateRanges.map(function(dateRange) {
+        earliestStart = Math.min(earliestStart, dateRange.startDate);
+        latestEnd = Math.max(latestEnd, dateRange.endDate);
+    });
+
+    var dateRangeString = "";
+    if (earliestStart === 9999 || latestEnd === -9999) {
+        //
+    }
+    else if (earliestStart < 0 && latestEnd < 0) {
+        dateRangeString = Math.abs(earliestStart) + " to " + Math.abs(latestEnd) + " BC";
+    }
+    else if (earliestStart >= 0 && latestEnd >= 0) {
+        dateRangeString = earliestStart + " to " + latestEnd + " AD";
+    }
+    else {
+        dateRangeString = Math.abs(earliestStart) + " BC to " + latestEnd + " AD";
+    }
+
+    return dateRangeString;
+}

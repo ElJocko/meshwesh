@@ -1,6 +1,7 @@
 'use strict';
 
 var TroopType = require('../models/troopTypeModel');
+var async = require('async');
 var _ = require('lodash');
 
 var errors = {
@@ -155,3 +156,51 @@ exports.deleteById = function(id, callback) {
         return callback(error);
     }
 };
+
+exports.import = function(importRequest, callback) {
+    // Delete the existing documents
+    TroopType.remove({}, function(error) {
+        // Import the documents
+        async.mapSeries(
+            importRequest.data,
+            importTroopType,
+            function(err, results) {
+                if (err) {
+                    // TBD: organize results better
+                    return callback(err);
+                }
+                else {
+                    var importSummary = {
+                        created: results.length,
+                        failed: 0
+                    };
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    });
+
+    function importTroopType(troopTypeData, cb) {
+        var document = new TroopType(troopTypeData);
+
+        // Save the document in the database
+        document.save(function(err, savedDocument) {
+            if (err) {
+                if (err.name === 'MongoError' && err.code === 11000) {
+                    // 11000 = Duplicate index
+                    var error = new Error(errors.duplicateCode);
+                    return cb(error);
+                }
+                else {
+                    return cb(err);
+                }
+            }
+            else {
+                return cb(null, savedDocument.toJSON());
+            }
+        });
+    }
+
+
+};
+

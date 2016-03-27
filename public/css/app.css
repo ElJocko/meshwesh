@@ -119,6 +119,16 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     border-color: #588c7e;
 }
 
+.browse-file-btn {
+    background: #ffffff;
+    color: #588c7e;
+    border-color: #588c7e;
+}
+
+.file-text {
+    border-color: #588c7e;
+}
+
 .delete-btn {
     margin-top: 40px;
     background: #ffffff;
@@ -149,3 +159,36 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 .input-validation-error {
     color: #ff0000;
 }
+
+
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
+}
+
+input[readonly] {
+    background-color: white !important;
+    cursor: text !important;
+}
+
+/* Hide the sort priority on the header */
+.ui-grid-sort-priority-number{
+    font-size: 0;
+}
+
