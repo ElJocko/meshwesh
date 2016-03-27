@@ -6,13 +6,47 @@
 <div class="row">
     <div class="col-md-12">
         <form name="vm.editTroopTypeForm">
-            <fieldset class="form-group">
-                <label for="inputPermanentCode">Permanent Code</label>
-                <input type="text" class="form-control" id="inputPermanentCode" placeholder="Permanent Code" ng-model="vm.troopType.permanentCode" required>
-            </fieldset>
+            <div class="row">
+                <div class="col-md-2">
+                    <fieldset class="form-group">
+                        <label for="inputPermanentCode">Permanent Code</label>
+                        <input type="text" class="form-control" id="inputPermanentCode" placeholder="Code used internally" ng-model="vm.troopType.permanentCode" required>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <fieldset class="form-group">
+                        <label for="inputDisplayName">Display Name</label>
+                        <input type="text" class="form-control" id="inputDisplayName" placeholder="Name to display to users" ng-model="vm.troopType.displayName">
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <fieldset class="form-group">
+                        <label for="inputDisplayCode">Display Code</label>
+                        <input type="text" class="form-control" id="inputDisplayCode" placeholder="Code to display to users" ng-model="vm.troopType.displayCode">
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <fieldset class="form-group">
+                        <label for="inputCost">Cost</label>
+                        <input type="text" class="form-control" id="inputCost" placeholder="Point cost" ng-model="vm.troopType.cost">
+                    </fieldset>
+                </div>
+                <div class="col-md-2">
+                    <fieldset class="form-group">
+                        <label for="inputCost">Category</label>
+                        <input type="text" class="form-control" id="inputCategory" placeholder="foot or mounted" ng-model="vm.troopType.category">
+                    </fieldset>
+                </div>
+            </div>
             <fieldset class="form-group">
                 <label for="inputDisplayName">Display Name</label>
-                <input type="text" class="form-control" id="inputDisplayName" placeholder="Display Name" ng-model="vm.troopType.displayName">
+                <textarea class="form-control" id="inputDescription" placeholder="Description" ng-model="vm.troopType.description"></textarea>
             </fieldset>
         </form>
     </div>
