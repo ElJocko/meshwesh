@@ -1,8 +1,8 @@
 permanentCode|displayName|displayCode|cost|category|description
-BLV|Bow Levy|BL|2|foot|Bad troops with bows
-RBL|Rabble|Rb|2|foot|Bad troops with javelins
-HRD|Horde|Hd|2|foot|Bad troops packed in tight
-ARC|Archers|Arc|4|foot|Good troops with bows
+BLV|Bow Levy|BL|2|foot|description
+RBL|Rabble|Rb|2|foot|description
+HRD|Horde|Hd|2|foot|description
+ARC|Archers|Arc|4|foot|description
 LFT|Light Foot|LFt|3|foot|description
 LSP|Light Spear|LSp|3|foot|description
 RDR|Raiders|Rd|4|foot|description
@@ -25,4 +25,4 @@ HBW|Horse Bow|HBw|4|mounted|description
 JCV|Javelin Cavalry|JCv|4|mounted|description
 KNT|Knights|Kn|4|mounted|description
 CAT|Cataphracts|Cat|4|mounted|description
-ELE|Elephants|El|4|mounted|Jumbos
+ELE|Elephants|El|4|mounted|description
