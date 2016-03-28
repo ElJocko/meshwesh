@@ -61,12 +61,14 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         vm.troopOptionGridOptions = {
             columnDefs: [
+                { field: 'general', displayName: 'General?', type: 'boolean', cellClass: 'td-boolean-check', cellFilter: 'mwDisplayBooleanCheck', width: 80, enableColumnMenu: false },
+                { field: 'core', displayName: 'Core?', type: 'boolean', cellClass: 'td-boolean-check', cellFilter: 'mwDisplayBooleanCheck', width: 80, enableColumnMenu: false },
                 { field: 'min', displayName: 'Min', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 80, enableColumnMenu: false },
                 { field: 'max', displayName: 'Max', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 80, enableColumnMenu: false },
                 { field: 'troopTypes', displayName: 'Troop Types', type: 'string', cellFilter: 'mwDisplayTroopTypesList', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 330, enableColumnMenu: false },
+                { field: 'description', displayName: 'Description', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 200, enableColumnMenu: false },
                 { field: 'startDate', displayName: 'Start Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
                 { field: 'endDate', displayName: 'End Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
-                { field: 'description', displayName: 'Description', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 200, enableColumnMenu: false },
                 { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
                 { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
             ],
@@ -297,6 +299,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             min: 0,
             max: 1,
             troopTypes: [],
+            general: false,
+            core: false,
             dateRange: {
                 startDate: 0,
                 endDate: 0
@@ -353,6 +357,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 // Replace the old date range with the new date range
                 troopOption.min = resultTroopOption.min;
                 troopOption.max = resultTroopOption.max;
+                troopOption.general = resultTroopOption.general;
+                troopOption.core = resultTroopOption.core;
                 troopOption.description = resultTroopOption.description;
                 troopOption.troopTypes = resultTroopOption.troopTypes;
 

@@ -142,7 +142,7 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .troop-option-grid {
-    width: 1010px;
+    width: 1170px;
     height: 30px;
 }
 
@@ -152,6 +152,11 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .td-btn {
+    text-align:center;
+    vertical-align: middle;
+}
+
+.td-boolean-check {
     text-align:center;
     vertical-align: middle;
 }

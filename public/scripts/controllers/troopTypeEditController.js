@@ -25,6 +25,9 @@ function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDi
         vm.submit = createTroopType;
     }
 
+    vm.costOptions = [ 2, 3, 4 ];
+    vm.categoryOptions = [ 'foot', 'mounted' ];
+
     function updateTroopType() {
         TroopTypeService.update({ id: troopTypeId }, vm.troopType,
             function (troopType) {

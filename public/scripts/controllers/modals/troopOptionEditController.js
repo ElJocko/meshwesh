@@ -7,10 +7,21 @@ angular
 function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants, TroopTypeService, troopOption) {
     var vm = this;
 
-    vm.min = troopOption.min;
-    vm.max = troopOption.max;
-    vm.description = troopOption.description;
-    vm.troopTypes = troopOption.troopTypes;
+    vm.troopOption = troopOption;
+
+    // Make sure the general and core properties are set
+    if (!vm.troopOption.general) {
+        vm.troopOption.general = false;
+    }
+
+    if (!vm.troopOption.core) {
+        vm.troopOption.core = false;
+    }
+
+    vm.yesNoOptions = [
+        { label: 'yes', value: true },
+        { label: 'no', value: false }
+    ];
 
     var enableOnSelect = true;
 
@@ -25,7 +36,7 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
 
             // Select the troop types in the starting data
             vm.troopTypeGridOptions.data.forEach(function(value) {
-                var index = vm.troopTypes.indexOf(value.permanentCode);
+                var index = vm.troopOption.troopTypes.indexOf(value.permanentCode);
                 if (index >= 0) {
                     vm.troopTypeGridApi.selection.selectRow(value);
                 }
@@ -92,10 +103,12 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
 
     vm.ok = function () {
         var updatedTroopOption = {
-            min: vm.min,
-            max: vm.max,
-            description: vm.description,
-            troopTypes: vm.troopTypes
+            min: vm.troopOption.min,
+            max: vm.troopOption.max,
+            general: vm.troopOption.general,
+            core: vm.troopOption.core,
+            description: vm.troopOption.description,
+            troopTypes: vm.troopOption.troopTypes
         };
         $uibModalInstance.close(updatedTroopOption);
     };
@@ -105,18 +118,18 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
     };
 
     vm.minMaxChanged = function() {
-        vm.editForm.inputMax.$setValidity("minMaxOrder", vm.max >= vm.min);
+        vm.editForm.inputMax.$setValidity("minMaxOrder", vm.troopOption.max >= vm.troopOption.min);
     };
 
     function addTroopType(troopType) {
-        vm.troopTypes.push(troopType);
+        vm.troopOption.troopTypes.push(troopType);
     }
 
     function removeTroopType(troopType) {
-        var index = vm.troopTypes.indexOf(troopType);
+        var index = vm.troopOption.troopTypes.indexOf(troopType);
         if (index !== -1) {
             // Remove the date range
-            vm.troopTypes.splice(index, 1);
+            vm.troopOption.troopTypes.splice(index, 1);
         }
     }
 }

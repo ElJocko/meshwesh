@@ -9,7 +9,9 @@ var TroopOptionSchema = new mongoose.Schema({
     max: { type: Number, required: true },
     dateRange: { type: DateRange },
     troopTypes: [ String ],
-    description: { type: String }
+    description: { type: String },
+    general: { type: Boolean },
+    core: { type: Boolean }
 });
 
 TroopOptionSchema.set('toJSON', {

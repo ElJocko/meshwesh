@@ -17,7 +17,9 @@ var troopOptionSubschema = {
             max: { type: 'number', requred: true },
             dateRange: dateRangeSubschema,
             troopTypes: { type: ['array', null], items: { type: 'string' } },
-            description: { type: 'string' }
+            description: { type: 'string' },
+            general: { type: 'boolean' },
+            core: { type: 'boolean' }
         }
     }
 };
