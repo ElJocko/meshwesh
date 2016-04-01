@@ -159,6 +159,52 @@ exports.deleteById = function(id, callback) {
     }
 };
 
+exports.import = function(importRequest, callback) {
+    // Delete the existing documents
+    ArmyList.remove({}, function(error) {
+        // Import the documents
+        async.mapSeries(
+            importRequest.data,
+            importArmyList,
+            function(err, results) {
+                if (err) {
+                    // TBD: organize results better
+                    return callback(err);
+                }
+                else {
+                    var importSummary = {
+                        imported: results.length,
+                        failed: 0
+                    };
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    });
+
+    function importArmyList(armyListData, cb) {
+        var document = new ArmyList(armyListData);
+
+        // Save the document in the database
+        document.save(function(err, savedDocument) {
+            if (err) {
+                if (err.name === 'MongoError' && err.code === 11000) {
+                    // 11000 = Duplicate index
+                    var error = new Error(errors.duplicateCode);
+                    return cb(error);
+                }
+                else {
+                    return cb(err);
+                }
+            }
+            else {
+                return cb(null, savedDocument.toJSON());
+            }
+        });
+    }
+};
+
+
 function extendedName(armyList) {
     var dateRangeString = dateRangeAsString(armyList.dateRanges);
     var result = armyList.name + "  " + dateRangeString;

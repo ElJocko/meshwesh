@@ -33,4 +33,9 @@ router.route('/v1/armyLists/:listId')
         validator.validate(schemas.deleteArmyList),
         armyListController.delete);
 
+router.route('/v1/armyListsImport')
+    .post(
+        tokenAuthz.requireAdminToken,
+        armyListController.import);
+
 module.exports = router;

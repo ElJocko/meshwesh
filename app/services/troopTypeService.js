@@ -172,7 +172,7 @@ exports.import = function(importRequest, callback) {
                 }
                 else {
                     var importSummary = {
-                        created: results.length,
+                        imported: results.length,
                         failed: 0
                     };
                     return callback(null, importSummary);
@@ -201,7 +201,5 @@ exports.import = function(importRequest, callback) {
             }
         });
     }
-
-
 };
 

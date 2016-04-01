@@ -129,3 +129,30 @@ exports.delete = function(req, res) {
         }
     });
 };
+
+exports.import = function(req, res) {
+    // Get the data from the request
+    var armyListImportRequest = req.body;
+
+    // Create the troop type
+    armyListService.import(armyListImportRequest, function(err, importSummary) {
+        if (err) {
+            if (err.message === armyListService.errors.duplicateCode) {
+                logger.warn("Duplicate code");
+                return res.status(409).send('Duplicate code');
+            }
+            else if (err.message === armyListService.errors.validationError) {
+                logger.warn('Army list failed validation');
+                return res.status(400).send('Unable to import Army Lists. Army list validation failed.');
+            }
+            else {
+                logger.error("Failed with error: " + err);
+                return res.status(500).send("Unable to import Army Lists. Server error.");
+            }
+        }
+        else {
+            logger.info("Success: Imported " + importSummary.imported + " Army Lists");
+            return res.status(201).send(importSummary);
+        }
+    });
+};

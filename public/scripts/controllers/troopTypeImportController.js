@@ -66,8 +66,8 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
             TroopTypeImportService.import(
                 importRequest,
                 function(importSummary) {
-                    console.info('Successfully created ' + importSummary.created + ' troop types.');
-                    vm.statusMessage = 'Created ' + importSummary.created + ' troop types.';
+                    console.info('Successfully imported ' + importSummary.imported + ' troop types.');
+                    vm.statusMessage = 'Imported ' + importSummary.imported + ' troop types.';
                     vm.file = null;
                     vm.importTroopTypes = [];
                 },
