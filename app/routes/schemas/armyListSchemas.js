@@ -9,18 +9,23 @@ var dateRangeSubschema = {
 };
 
 var troopOptionSubschema = {
-    type: ['array', 'null'],
-    items: {
-        type: 'object',
-        properties: {
-            min: { type: 'number', requred: true },
-            max: { type: 'number', requred: true },
-            dateRange: dateRangeSubschema,
-            troopTypes: { type: ['array', null], items: { type: 'string' } },
-            description: { type: 'string' },
-            general: { type: 'boolean' },
-            core: { type: 'boolean' }
-        }
+    type: 'object',
+    properties: {
+        min: { type: 'number', requred: true },
+        max: { type: 'number', requred: true },
+        dateRange: dateRangeSubschema,
+        troopTypes: { type: ['array', null], items: { type: 'string' } },
+        description: { type: 'string' },
+        general: { type: 'boolean' },
+        core: { type: 'boolean' }
+    }
+};
+
+var annotatedRatingSchema = {
+    type: 'object',
+    properties: {
+        rating: { type: 'number', required: true },
+        note: { type: ['string', null] }
     }
 };
 
@@ -43,9 +48,11 @@ exports.createArmyList = {
             extendedName: { type: 'string' },
             userCode: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
+            invasionRating: { type: ['array', 'null'], items: annotatedRatingSchema },
+            maneuverRating: { type: ['array', 'null'], items: annotatedRatingSchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
-            troopOptions: troopOptionSubschema
+            troopOptions: { type: ['array', 'null'], items: troopOptionSubschema }
         },
         additionalProperties: false
     },
@@ -66,9 +73,11 @@ exports.updateArmyList = {
             extendedName: { type: 'string' },
             userCode: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
+            invasionRating: { type: ['array', 'null'], items: annotatedRatingSchema },
+            maneuverRating: { type: ['array', 'null'], items: annotatedRatingSchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
-            troopOptions: troopOptionSubschema
+            troopOptions: { type: ['array', 'null'], items: troopOptionSubschema }
         },
         additionalProperties: false
     },
