@@ -197,3 +197,7 @@ input[readonly] {
     font-size: 0;
 }
 
+.sample-import {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

@@ -8,7 +8,8 @@ var errors = {
     missingParameter: 'Missing required parameter',
     badlyFormattedParameter: 'Badly formatted parameter',
     duplicateCode: 'Duplicate code',
-    notFound: 'Document not found'
+    notFound: 'Document not found',
+    validationError: 'TroopType validation failed'
 };
 exports.errors = errors;
 

@@ -25,7 +25,7 @@ TroopTypeImportService.$inject = ['$resource'];
 
 function TroopTypeImportService ($resource) {
     return $resource(
-        'api/v1/troopTypes/import',
+        'api/v1/troopTypesImport',
         null,
         {
             import: { method: 'POST'}

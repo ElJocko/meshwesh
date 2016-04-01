@@ -15,7 +15,7 @@ router.route('/v1/troopTypes/:troopTypeId')
     .put(tokenAuthz.requireAdminToken, troopTypeController.update)
     .delete(tokenAuthz.requireAdminToken, troopTypeController.delete);
 
-router.route('/v1/troopTypes/import')
+router.route('/v1/troopTypesImport')
     .post(tokenAuthz.requireAdminToken, troopTypeController.import);
 
 module.exports = router;

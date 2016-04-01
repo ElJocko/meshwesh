@@ -135,6 +135,10 @@ exports.import = function(req, res) {
                 logger.warn("Duplicate code");
                 return res.status(409).send('Duplicate code');
             }
+            else if (err.message === troopTypeService.errors.validationError) {
+                logger.warn('Troop type failed validation');
+                return res.status(400).send('Unable to import Troop Types. Troop type validation failed.');
+            }
             else {
                 logger.error("Failed with error: " + err);
                 return res.status(500).send("Unable to import Troop Types. Server error.");

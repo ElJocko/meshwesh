@@ -29,8 +29,27 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
                 delimiter: '|',
                 header: true,
                 complete: function(results) {
-                    vm.importTroopTypes = results.data;
-                    vm.statusMessage = 'Found ' + vm.importTroopTypes.length + ' troop types in the file.';
+                    console.log(results);
+                    vm.statusMessage = '';
+
+                    if (results.data) {
+                        vm.importTroopTypes = results.data;
+                        vm.statusMessage = 'Found ' + vm.importTroopTypes.length + ' troop types in the file. ';
+                    }
+                    else {
+                        vm.statusMessage = 'Found 0 troop types in the file. ';
+                    }
+
+                    if (results.errors) {
+                        vm.statusMessage = vm.statusMessage + 'Encountered ' + results.errors.length + ' errors during parsing.';
+                        results.errors.forEach(function (item) {
+                            console.error(item);
+                        });
+                    }
+                    else {
+                        vm.statusMessage = vm.statusMessage + 'No Errors encountered during parsing.';
+                    }
+
                     $scope.$apply();
             }
         });
@@ -47,11 +66,16 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
             TroopTypeImportService.import(
                 importRequest,
                 function(importSummary) {
-                    console.log('Successfully created ' + importSummary.created + ' troop types.');
+                    console.info('Successfully created ' + importSummary.created + ' troop types.');
                     vm.statusMessage = 'Created ' + importSummary.created + ' troop types.';
+                    vm.file = null;
+                    vm.importTroopTypes = [];
                 },
                 function (response) {
                     console.error(response.data);
+                    vm.statusMessage = 'Unable to import troop types.';
+                    vm.file = null;
+                    vm.importTroopTypes = [];
                 }
             );
         }
