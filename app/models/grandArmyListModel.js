@@ -5,7 +5,8 @@ var transform = require('./transform');
 
 // Create the schema
 var GrandArmyListSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true }
+    name: { type: String, required: true, unique: true },
+    listId: { type: Number }
 });
 
 GrandArmyListSchema.set('toJSON', {

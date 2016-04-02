@@ -2,7 +2,8 @@
 
 angular
     .module('meshweshServices')
-    .factory('GrandArmyListService', GrandArmyListService);
+    .factory('GrandArmyListService', GrandArmyListService)
+    .factory('GrandArmyListImportService', GrandArmyListImportService);
 
 GrandArmyListService.$inject = ['$resource'];
 
@@ -16,6 +17,18 @@ function GrandArmyListService ($resource) {
             get: { method: 'GET', isArray: false },
             update: { method: 'PUT', isArray: false },
             destroy: { method: 'DELETE', isArray: false }
+        }
+    );
+}
+
+GrandArmyListImportService.$inject = ['$resource'];
+
+function GrandArmyListImportService ($resource) {
+    return $resource(
+        'api/v1/grandArmyListsImport',
+        null,
+        {
+            import: { method: 'POST'}
         }
     );
 }

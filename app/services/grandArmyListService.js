@@ -1,6 +1,7 @@
 'use strict';
 
 var GrandArmyList = require('../models/grandArmyListModel');
+var async = require('async');
 var _ = require('lodash');
 
 var errors = {
@@ -153,5 +154,50 @@ exports.deleteById = function(id, callback) {
         var error = new Error(errors.missingParameter);
         error.parameterName = 'id';
         return callback(error);
+    }
+};
+
+exports.import = function(importRequest, callback) {
+    // Delete the existing documents
+    GrandArmyList.remove({}, function(error) {
+        // Import the documents
+        async.mapSeries(
+            importRequest.data,
+            importGrandArmyList,
+            function(err, results) {
+                if (err) {
+                    // TBD: organize results better
+                    return callback(err);
+                }
+                else {
+                    var importSummary = {
+                        imported: results.length,
+                        failed: 0
+                    };
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    });
+
+    function importGrandArmyList(grandArmyListData, cb) {
+        var document = new GrandArmyList(grandArmyListData);
+
+        // Save the document in the database
+        document.save(function(err, savedDocument) {
+            if (err) {
+                if (err.name === 'MongoError' && err.code === 11000) {
+                    // 11000 = Duplicate index
+                    var error = new Error(errors.duplicateCode);
+                    return cb(error);
+                }
+                else {
+                    return cb(err);
+                }
+            }
+            else {
+                return cb(null, savedDocument.toJSON());
+            }
+        });
     }
 };

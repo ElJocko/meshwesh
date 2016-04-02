@@ -15,4 +15,10 @@ router.route('/v1/grandArmyLists')
         .put(tokenAuthz.requireAdminToken, grandArmyListController.update)
         .delete(tokenAuthz.requireAdminToken, grandArmyListController.delete);
 
+    router.route('/v1/grandArmyListsImport')
+        .post(
+            tokenAuthz.requireAdminToken,
+            grandArmyListController.import);
+
+
 module.exports = router;

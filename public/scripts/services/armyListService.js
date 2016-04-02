@@ -19,3 +19,15 @@ function ArmyListService ($resource) {
         }
     );
 }
+
+ArmyListImportService.$inject = ['$resource'];
+
+function ArmyListImportService ($resource) {
+    return $resource(
+        'api/v1/armyListsImport',
+        null,
+        {
+            import: { method: 'POST'}
+        }
+    );
+}

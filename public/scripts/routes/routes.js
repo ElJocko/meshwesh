@@ -76,6 +76,16 @@ function router($routeProvider) {
             templateUrl:'report.html',
             controller:'ReportCtrl'
         })
+        .when('/grandArmyList/import', {
+            templateUrl:'views/grandArmyListImport.html',
+            controller:'GrandArmyListImportController',
+            controllerAs: 'vm'
+        })
+        .when('/armyList/import', {
+            templateUrl:'views/armyListImport.html',
+            controller:'ArmyListImportController',
+            controllerAs: 'vm'
+        })
         .when('/troopType/import', {
             templateUrl:'views/troopTypeImport.html',
             controller:'TroopTypeImportController',
