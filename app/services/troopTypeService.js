@@ -171,10 +171,7 @@ exports.import = function(importRequest, callback) {
                     return callback(err);
                 }
                 else {
-                    var importSummary = {
-                        imported: results.length,
-                        failed: 0
-                    };
+                    var importSummary = summarizeImport(results);
                     return callback(null, importSummary);
                 }
             }
@@ -190,16 +187,34 @@ exports.import = function(importRequest, callback) {
                 if (err.name === 'MongoError' && err.code === 11000) {
                     // 11000 = Duplicate index
                     var error = new Error(errors.duplicateCode);
-                    return cb(error);
+                    return cb(null, { troopType: null, error: error });
                 }
                 else {
-                    return cb(err);
+                    return cb(null, { troopType: null, error: err });
                 }
             }
             else {
-                return cb(null, savedDocument.toJSON());
+                return cb(null, { troopType: savedDocument.toJSON(), error: null });
             }
         });
+    }
+
+    function summarizeImport(results) {
+        var importCount = 0;
+        var errorCount = 0;
+        results.forEach(function(item) {
+            if (item.troopType) {
+                importCount = importCount + 1;
+            }
+            else if (item.error) {
+                errorCount = errorCount + 1;
+            }
+            else {
+                // shouldn't reach here
+            }
+        });
+        var summary = { imported: importCount, failed: errorCount };
+        return summary;
     }
 };
 

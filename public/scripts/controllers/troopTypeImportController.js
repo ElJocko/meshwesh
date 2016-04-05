@@ -11,7 +11,8 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
 
     vm.file = null;
     vm.importTroopTypes = [];
-    vm.statusMessage = 'No file selected';
+    vm.statusMessage1 = 'No file selected';
+    vm.statusMessage2 = '';
 
     vm.importData = importData;
 
@@ -30,24 +31,25 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
                 header: true,
                 complete: function(results) {
                     console.log(results);
-                    vm.statusMessage = '';
+                    vm.statusMessage1 = '';
+                    vm.statusMessage2 = '';
 
                     if (results.data) {
                         vm.importTroopTypes = results.data;
-                        vm.statusMessage = 'Found ' + vm.importTroopTypes.length + ' troop types in the file. ';
+                        vm.statusMessage1 = 'Found ' + vm.importTroopTypes.length + ' troop types in the file.';
                     }
                     else {
-                        vm.statusMessage = 'Found 0 troop types in the file. ';
+                        vm.statusMessage1 = 'Found 0 troop types in the file.';
                     }
 
                     if (results.errors) {
-                        vm.statusMessage = vm.statusMessage + 'Encountered ' + results.errors.length + ' errors during parsing.';
+                        vm.statusMessage2 = 'Encountered ' + results.errors.length + ' errors during parsing.';
                         results.errors.forEach(function (item) {
                             console.error(item);
                         });
                     }
                     else {
-                        vm.statusMessage = vm.statusMessage + 'No Errors encountered during parsing.';
+                        vm.statusMessage2 = 'No Errors encountered during parsing.';
                     }
 
                     $scope.$apply();
@@ -67,13 +69,15 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
                 importRequest,
                 function(importSummary) {
                     console.info('Successfully imported ' + importSummary.imported + ' troop types.');
-                    vm.statusMessage = 'Imported ' + importSummary.imported + ' troop types.';
+                    vm.statusMessage1 = 'Imported ' + importSummary.imported + ' troop types.';
+                    vm.statusMessage2 = importSummary.failed + ' troop types were not imported due to errors.';
                     vm.file = null;
                     vm.importTroopTypes = [];
                 },
                 function (response) {
                     console.error(response.data);
-                    vm.statusMessage = 'Unable to import troop types.';
+                    vm.statusMessage1 = 'Unable to import troop types.';
+                    vm.statusMessage2 = '';
                     vm.file = null;
                     vm.importTroopTypes = [];
                 }

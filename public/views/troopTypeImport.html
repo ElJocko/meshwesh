@@ -30,9 +30,12 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="statusMessage">Import Status</label>
+                <label for="statusMessage1">Import Status</label>
                 <div>
-                    <span id="statusMessage" ng-bind="vm.statusMessage"></span>
+                    <span id="statusMessage1" ng-bind="vm.statusMessage1"></span>
+                </div>
+                <div>
+                    <span id="statusMessage2" ng-bind="vm.statusMessage2"></span>
                 </div>
             </div>
             <button type="submit" class="btn save-btn" ng-click="vm.importData()" ng-disabled="!vm.importTroopTypes.length">Import Data</button>

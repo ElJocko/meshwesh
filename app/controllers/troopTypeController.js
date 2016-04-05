@@ -145,7 +145,7 @@ exports.import = function(req, res) {
             }
         }
         else {
-            logger.info("Success: Imported " + importSummary.imported + " Troop Types");
+            logger.info("Import Troop Types: Imported = " + importSummary.imported + ", Failed = " + importSummary.failed);
             return res.status(201).send(importSummary);
         }
     });

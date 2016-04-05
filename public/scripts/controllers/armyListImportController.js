@@ -70,7 +70,7 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                 function(importSummary) {
                     console.info('Successfully imported ' + importSummary.imported + ' army lists.');
                     vm.statusMessage1 = 'Imported ' + importSummary.imported + ' army lists.';
-                    vm.statusMessage2 = importSummary.failed + ' army lists were unable to be imported.';
+                    vm.statusMessage2 = importSummary.failed + ' army lists were not imported due to errors.';
                     vm.file = null;
                     vm.parsedData = [];
                 },
