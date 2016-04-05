@@ -13,7 +13,7 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
     if (listId) {
         // Edit an existing grand army list
         GrandArmyListService.get({ id: listId }, function(list) {
-            vm.list = list;
+            vm.grandArmyList = list;
 
             ArmyListService.list(function(lists) {
                 vm.armyLists = lists.filter(function(element, index, array) {
@@ -26,12 +26,12 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
     }
     else {
         // Edit a new grand army list
-        vm.list = { name: "" };
+        vm.grandArmyList = { name: "" };
         vm.submit = createList;
     }
 
     function updateList() {
-        GrandArmyListService.update({ id: listId }, vm.list,
+        GrandArmyListService.update({ id: listId }, vm.grandArmyList,
             function(list) {
                 console.info('Successfully updated ' + list.name);
                 $location.path('/grandArmyList/summary');
@@ -42,7 +42,7 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
     }
 
     function createList() {
-        GrandArmyListService.create(vm.list,
+        GrandArmyListService.create(vm.grandArmyList,
             function(list) {
                 console.info('Successfully created ' + list.name);
                 $location.path('/grandArmyList/summary');

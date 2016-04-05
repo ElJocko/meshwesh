@@ -151,7 +151,7 @@ exports.import = function(req, res) {
             }
         }
         else {
-            logger.info("Success: Imported " + importSummary.imported + " Army Lists");
+            logger.info("Import Army Lists: Imported = " + importSummary.imported + ", Failed = " + importSummary.failed);
             return res.status(201).send(importSummary);
         }
     });

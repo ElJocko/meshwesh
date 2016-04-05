@@ -2,16 +2,17 @@
 
 angular
     .module('meshweshControllers')
-    .controller('GrandArmyListImportController', GrandArmyListImportController);
+    .controller('ArmyListImportController', ArmyListImportController);
 
-GrandArmyListImportController.$inject = ['$location', '$scope', 'GrandArmyListImportService'];
+ArmyListImportController.$inject = ['$location', '$scope', 'ArmyListImportService'];
 
-function GrandArmyListImportController($location, $scope, GrandArmyListImportService) {
+function ArmyListImportController($location, $scope, ArmyListImportService) {
     var vm = this;
 
     vm.file = null;
     vm.parsedData = [];
-    vm.statusMessage = 'No file selected';
+    vm.statusMessage1 = 'No file selected';
+    vm.statusMessage2 = '';
 
     vm.importData = importData;
 
@@ -30,24 +31,25 @@ function GrandArmyListImportController($location, $scope, GrandArmyListImportSer
                 header: true,
                 complete: function(results) {
                     console.log(results);
-                    vm.statusMessage = '';
+                    vm.statusMessage1 = '';
+                    vm.statusMessage2 = '';
 
                     if (results.data) {
                         vm.parsedData = results.data;
-                        vm.statusMessage = 'Found ' + vm.parsedData.length + ' grand army lists in the file. ';
+                        vm.statusMessage1 = 'Found ' + vm.parsedData.length + ' army lists in the file.';
                     }
                     else {
-                        vm.statusMessage = 'Found 0 grand army lists in the file. ';
+                        vm.statusMessage1 = 'Found 0 army lists in the file.';
                     }
 
                     if (results.errors) {
-                        vm.statusMessage = vm.statusMessage + 'Encountered ' + results.errors.length + ' errors during parsing.';
+                        vm.statusMessage2 = 'Encountered ' + results.errors.length + ' errors during parsing.';
                         results.errors.forEach(function (item) {
                             console.error(item);
                         });
                     }
                     else {
-                        vm.statusMessage = vm.statusMessage + 'No Errors encountered during parsing.';
+                        vm.statusMessage2 = 'No Errors encountered during parsing.';
                     }
 
                     $scope.$apply();
@@ -63,17 +65,19 @@ function GrandArmyListImportController($location, $scope, GrandArmyListImportSer
             };
 
             // Import the troop types
-            GrandArmyListImportService.import(
+            ArmyListImportService.import(
                 importRequest,
                 function(importSummary) {
-                    console.info('Successfully imported ' + importSummary.imported + ' grand army lists.');
-                    vm.statusMessage = 'Imported ' + importSummary.imported + ' grand army lists.';
+                    console.info('Successfully imported ' + importSummary.imported + ' army lists.');
+                    vm.statusMessage1 = 'Imported ' + importSummary.imported + ' army lists.';
+                    vm.statusMessage2 = importSummary.failed + ' army lists were unable to be imported.';
                     vm.file = null;
                     vm.parsedData = [];
                 },
                 function (response) {
                     console.error(response.data);
-                    vm.statusMessage = 'Unable to import grand army lists.';
+                    vm.statusMessage1 = 'Unable to import army lists.';
+                    vm.statusMessage2 = '';
                     vm.file = null;
                     vm.parsedData = [];
                 }
