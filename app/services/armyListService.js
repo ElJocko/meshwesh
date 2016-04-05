@@ -1,6 +1,7 @@
 'use strict';
 
 var ArmyList = require('../models/armyListModel');
+var GrandArmyList = require('../models/grandArmyListModel');
 var async = require('async');
 var _ = require('lodash');
 
@@ -183,21 +184,54 @@ exports.import = function(importRequest, callback) {
 
     function importArmyList(armyListData, cb) {
         var document = new ArmyList(armyListData);
+        async.waterfall([
+            function(cb) {
+                return cb(null, document);
+            },
+            setGrandArmyList,
+            saveDocument
+        ],
+        function(err, result) {
+            if (err) {
+                return cb(null, { armyList: null, error: err });
+            }
+            else {
+                return cb(null, { armyList: result.toJSON(), error: null });
+            }
+        });
+    }
 
+    function setGrandArmyList(document, cb) {
+        var query= { listId: document.listId };
+        GrandArmyList.find(query, function(err, documents) {
+            if (err) {
+                return cb(err);
+            }
+            else {
+                if (documents.length > 0) {
+                    var grandArmyList = documents[0];
+                    document.grandArmyList = grandArmyList._id;
+                }
+                return cb(null, document);
+            }
+        });
+    }
+
+    function saveDocument(document, cb) {
         // Save the document in the database
         document.save(function(err, savedDocument) {
             if (err) {
                 if (err.name === 'MongoError' && err.code === 11000) {
                     // 11000 = Duplicate index
                     var error = new Error(errors.duplicateCode);
-                    return cb(null, { armyList: null, error: error });
+                    return cb(error);
                 }
                 else {
-                    return cb(null, { armyList: null, error: err });
+                    return cb(err);
                 }
             }
             else {
-                return cb(null, { armyList: savedDocument.toJSON(), error: null });
+                return cb(null, savedDocument);
             }
         });
     }
