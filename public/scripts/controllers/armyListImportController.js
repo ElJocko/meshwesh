@@ -35,6 +35,16 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                     vm.statusMessage2 = '';
 
                     if (results.data) {
+                        // Convert startDate and endDate to dateRanges array
+                        results.data.forEach(function(item) {
+                            item.dateRanges = [];
+                            if (item.startDate && item.endDate) {
+                                var dateRange = { startDate: item.startDate, endDate: item.endDate };
+                                item.dateRanges.push(dateRange);
+                                item.startDate = null;
+                                item.endDate = null;
+                            }
+                        });
                         vm.parsedData = results.data;
                         vm.statusMessage1 = 'Found ' + vm.parsedData.length + ' army lists in the file.';
                     }

@@ -13,8 +13,8 @@ var errorHandler = require('../lib/errorHandler');
 var router = express.Router();
 
 // Parse the request body
-router.use('/api', bodyParser.json());
-router.use('/api', bodyParser.urlencoded({ extended: true }));
+router.use('/api', bodyParser.json({limit: '1mb'}));
+router.use('/api', bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 // Set up the routes
 router.use('/api', thematicCategoryRoutes);
