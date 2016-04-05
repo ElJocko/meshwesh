@@ -29,6 +29,7 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
         vm.grandArmyList = { name: "" };
         vm.submit = createList;
     }
+    vm.editArmyList = showEditArmyList;
 
     function updateList() {
         GrandArmyListService.update({ id: listId }, vm.grandArmyList,
@@ -61,5 +62,9 @@ function GrandArmyListEditController($routeParams, $location, GrandArmyListServi
             function(response) {
                 console.error(response.data);
             });
+    }
+
+    function showEditArmyList(listId) {
+        $location.path('/armyList/' + listId + '/edit');
     }
 }
