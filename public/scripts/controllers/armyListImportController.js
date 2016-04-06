@@ -35,14 +35,31 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                     vm.statusMessage2 = '';
 
                     if (results.data) {
-                        // Convert startDate and endDate to dateRanges array
+                        // Convert some data to arrays
                         results.data.forEach(function(item) {
+                            // Convert dateRanges
                             item.dateRanges = [];
                             if (item.startDate && item.endDate) {
                                 var dateRange = { startDate: item.startDate, endDate: item.endDate };
                                 item.dateRanges.push(dateRange);
                                 item.startDate = null;
                                 item.endDate = null;
+                            }
+
+                            // Convert invasionRatings
+                            var ratingsArray = [];
+                            if (item.invasionRating) {
+                                var annotatedInvasionRating = { rating: item.invasionRating, note: null };
+                                ratingsArray.push(annotatedInvasionRating);
+                                item.invasionRating = ratingsArray;
+                            }
+
+                            // Convert maneuverRatings
+                            ratingsArray = [];
+                            if (item.maneuverRating) {
+                                var annotatedManeuverRating = { rating: item.maneuverRating, note: null };
+                                ratingsArray.push(annotatedManeuverRating);
+                                item.maneuverRating = ratingsArray;
                             }
                         });
                         vm.parsedData = results.data;
