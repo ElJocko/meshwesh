@@ -88,10 +88,12 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 
 .content-header {
     margin-top: 40px;
+    margin-bottom: 20px;
     font-size: 2em;
 }
 
 .content-subheader {
+    margin-top: 15px;
     font-weight: bold;
 }
 
@@ -142,6 +144,11 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 
 .date-range-grid {
     width: 320px;
+    height: 30px;
+}
+
+.rating-grid {
+    width: 350px;
     height: 30px;
 }
 
@@ -204,4 +211,9 @@ input[readonly] {
 .sample-import {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.empty-table-message {
+    margin-top: 15px;
+    font-style: oblique;
 }

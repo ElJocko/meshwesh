@@ -10,6 +10,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     var vm = this;
 
     initializeDateRangeGrid();
+    initializeInvasionRatingGrid();
+    initializeManeuverRatingGrid();
     initializeTroopOptionsGrid();
 
     var listId = $routeParams.listId;
@@ -29,6 +31,14 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     vm.insertDateRange = insertDateRange;
     vm.editDateRange = editDateRange;
     vm.deleteDateRange = deleteDateRange;
+
+//    vm.insertInvasionRating = insertInvasionRating;
+//    vm.editInvasionRating = editInvasionRating;
+//    vm.deleteInvasionRating = deleteInvasionRating;
+
+//    vm.insertManeuverRating = insertManeuverRating;
+//    vm.editManeuverRating = editManeuverRating;
+//    vm.deleteManeuverRating = deleteManeuverRating;
 
     vm.insertTroopOption = insertTroopOption;
     vm.editTroopOption = editTroopOption;
@@ -51,6 +61,48 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             appScopeProvider: this,
             onRegisterApi: function(gridApi) {
                 vm.dateRangeGridApi = gridApi;
+            }
+        };
+    }
+
+    function initializeInvasionRatingGrid() {
+        var editTemplate = '<button type="button" ng-click="grid.appScope.vm.editInvasionRating(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
+        var deleteTemplate = '<button type="button" ng-click="grid.appScope.vm.deleteInvasionRating(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
+
+        vm.invasionRatingGridOptions = {
+            columnDefs: [
+                { field: 'rating', displayName: 'Rating', type: 'number', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 90, enableColumnMenu: false },
+                { field: 'note', displayName: 'Note', type: 'string', enableSorting: false, width: 160, enableColumnMenu: false },
+                { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
+                { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
+            ],
+            rowHeight: 35,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            appScopeProvider: this,
+            onRegisterApi: function(gridApi) {
+                vm.invationRatingGridApi = gridApi;
+            }
+        };
+    }
+
+    function initializeManeuverRatingGrid() {
+        var editTemplate = '<button type="button" ng-click="grid.appScope.vm.editManeuverRating(row.entity)" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-pencil"></i></button>';
+        var deleteTemplate = '<button type="button" ng-click="grid.appScope.vm.deleteManeuverRating(row.entity)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></button>';
+
+        vm.maneuverRatingGridOptions = {
+            columnDefs: [
+                { field: 'rating', displayName: 'Rating', type: 'number', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 90, enableColumnMenu: false },
+                { field: 'note', displayName: 'Note', type: 'string', enableSorting: false, width: 160, enableColumnMenu: false },
+                { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
+                { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
+            ],
+            rowHeight: 35,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 0,
+            appScopeProvider: this,
+            onRegisterApi: function(gridApi) {
+                vm.maneuverRatingGridApi = gridApi;
             }
         };
     }
@@ -82,36 +134,28 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         };
     }
 
-    function resetDateRangeGridHeight() {
+    function resetGridHeight(gridClass, data) {
         // TBD: Grid only shows rows for initial height (in .css). Set to 2000px as workaround. Need to
         // find a way to tell the grid that it has a new size.
-        var height = (vm.armyList.dateRanges.length * 35) + 32;
+        var height = (data.length * 35) + 32;
+        console.log(gridClass + ' has height ' + height);
 
-        var gridElement = document.getElementById('date-range-grid');
+        var gridElement = document.getElementById(gridClass);
         if (gridElement) {
             angular.element(gridElement).css('height', height + 'px');
         }
 
-        // TBD: how to distinguish ui-grid-viewport elements???
+        // TBD: This seems fragile
         var gridViewport = document.getElementsByClassName('ui-grid-viewport');
         if (gridViewport) {
-            angular.element(gridViewport[0]).css('height', height + 'px');
-        }
-    }
-
-    function resetTroopOptionsGridHeight() {
-        // TBD: Grid only shows rows for initial height (in .css). Set to 2000px as workaround. Need to
-        // find a way to tell the grid that it has a new size.
-        var height = (vm.armyList.troopOptions.length * 35) + 32;
-
-        var gridElement = document.getElementById('troop-option-grid');
-        if (gridElement) {
-            angular.element(gridElement).css('height', height + 'px');
-        }
-
-        var gridViewport = document.getElementsByClassName('ui-grid-viewport');
-        if (gridViewport) {
-            angular.element(gridViewport[1]).css('height', height + 'px');
+            for (var index = 0; index < gridViewport.length; ++index) {
+                var viewport = gridViewport[index];
+                var parentClass = viewport.parentNode.parentNode.parentNode.classList[0];
+                if (parentClass === gridClass) {
+                    console.log('found viewport for ' + gridClass);
+                    angular.element(viewport).css('height', height + 'px');
+                }
+            }
         }
     }
 
@@ -164,14 +208,21 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             vm.armyList = {
                 name: "",
                 grandArmyList: null,
-                dateRanges: []
+                dateRanges: [],
+                invasionRating: [],
+                maneuverRating: []
             };
         }
 
         vm.dateRangeGridOptions.data = vm.armyList.dateRanges;
+        vm.invasionRatingGridOptions.data = vm.armyList.invasionRating;
+        vm.maneuverRatingGridOptions.data = vm.armyList.maneuverRating;
         vm.troopOptionGridOptions.data = vm.armyList.troopOptions;
-        resetDateRangeGridHeight();
-        resetTroopOptionsGridHeight();
+
+        resetGridHeight('date-range-grid', vm.armyList.dateRanges);
+        resetGridHeight('invasion-rating-grid', vm.armyList.invasionRating);
+        resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRating);
+        resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
     }
 
     function updateList() {
@@ -247,7 +298,9 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
                 // Update the sort
                 vm.dateRangeGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-                resetDateRangeGridHeight();
+                resetGridHeight('date-range-grid', vm.armyList.dateRanges);
+//        resetDateRangeGridHeight();
+
             },
             function () {
                 // Cancelled
@@ -289,7 +342,9 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         if (index !== -1) {
             // Remove the date range
             vm.armyList.dateRanges.splice(index, 1);
-            resetDateRangeGridHeight();
+            resetGridHeight('date-range-grid', vm.armyList.dateRanges);
+//        resetDateRangeGridHeight();
+
         }
     }
 
@@ -330,7 +385,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
                 // Update the sort
                 vm.troopOptionsGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-                resetTroopOptionsGridHeight();
+                resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
             },
             function () {
                 // Cancelled
@@ -375,7 +430,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         if (index !== -1) {
             // Remove the date range
             vm.armyList.troopOptions.splice(index, 1);
-            resetTroopOptionsGridHeight();
+            resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
         }
     }
 }

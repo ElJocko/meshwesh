@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="content-header">Army List</div>
+        <div class="content-header">Army List: {{ vm.armyList.name }}</div>
     </div>
 </div>
 <div class="row">
@@ -38,6 +38,19 @@
                         <div class="content-subheader">Date Ranges</div>
                         <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertDateRange()">New Date Range</button>
                         <div id="date-range-grid" class="date-range-grid" ui-grid="vm.dateRangeGridOptions"></div>
+                        <div class="empty-table-message" ng-show="vm.armyList.dateRanges.length == 0">No date ranges entered</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content-subheader">Invasion Ratings</div>
+                        <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertInvasionRating()">New Invasion Rating</button>
+                        <div id="invasion-rating-grid" class="invasion-rating-grid rating-grid" ui-grid="vm.invasionRatingGridOptions"></div>
+                        <div class="empty-table-message" ng-show="vm.armyList.invasionRating.length == 0">No invasion ratings entered</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="content-subheader">Maneuver Ratings</div>
+                        <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertManeuverRating()">New Maneuver Rating</button>
+                        <div id="maneuver-rating-grid" class="maneuver-rating-grid rating-grid" ui-grid="vm.maneuverRatingGridOptions"></div>
+                        <div class="empty-table-message" ng-show="vm.armyList.maneuverRating.length == 0">No maneuver ratings entered</div>
                     </div>
                 </div>
             </div>
@@ -47,6 +60,7 @@
                         <div class="content-subheader">Troop Options</div>
                         <button type="button" class="btn btn-sm insert-btn" ng-click="vm.insertTroopOption()">New Troop Option</button>
                         <div id="troop-option-grid" class="troop-option-grid" ui-grid="vm.troopOptionGridOptions"></div>
+                        <div class="empty-table-message" ng-show="vm.armyList.troopOptions.length == 0">No troop options entered</div>
                     </div>
                 </div>
             </div>
