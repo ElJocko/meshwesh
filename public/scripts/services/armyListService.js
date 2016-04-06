@@ -3,7 +3,7 @@
 angular
     .module('meshweshServices')
     .factory('ArmyListService', ArmyListService)
-    .factory('ArmyListImportService', ArmyListImportService)
+    .factory('ArmyListImportService', ArmyListImportService);
 
 ArmyListService.$inject = ['$resource'];
 

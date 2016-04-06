@@ -10,7 +10,7 @@ logger.info('** type = ' + os.type());
 logger.info('** platform = ' + os.platform());
 logger.info('** arch = ' + os.arch());
 logger.info('** release = ' + os.release());
-logger.info('** uptime = ' + os.uptime())
+logger.info('** uptime = ' + os.uptime());
 logger.info('** versions = ' + JSON.stringify(process.versions));
 
 // Configure the app
