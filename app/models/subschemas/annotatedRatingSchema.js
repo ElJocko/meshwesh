@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 // Create the schema
 var AnnotatedRatingSchema = new mongoose.Schema({
-    rating: { type: Number, required: true },
+    value: { type: Number, required: true },
     note: { type: String }
 });
 

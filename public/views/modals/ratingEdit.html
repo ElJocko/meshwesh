@@ -6,7 +6,7 @@
         <div class="form-group">
             <label for="inputValue">Value</label>
             <div class="input-group">
-                <input type="number" class="form-control" id="inputValue" name="inputValue" placeholder="Value" ng-model="vm.rating.rating" required nonnegative-integer>
+                <input type="number" class="form-control" id="inputValue" name="inputValue" placeholder="Value" ng-model="vm.rating.value" required nonnegative-integer>
             </div>
             <div ng-messages="vm.editRatingForm.inputValue.$error">
                 <p class="input-validation-error" ng-message="number">Must be a nonnegative integer.</p>

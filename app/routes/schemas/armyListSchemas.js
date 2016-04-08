@@ -24,7 +24,7 @@ var troopOptionSubschema = {
 var annotatedRatingSchema = {
     type: 'object',
     properties: {
-        rating: { type: 'number', required: true },
+        value: { type: 'number', required: true },
         note: { type: ['string', null] }
     }
 };
@@ -49,8 +49,8 @@ exports.createArmyList = {
             listId: { type: 'number' },
             sublistId: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
-            invasionRating: { type: ['array', 'null'], items: annotatedRatingSchema },
-            maneuverRating: { type: ['array', 'null'], items: annotatedRatingSchema },
+            invasionRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
+            maneuverRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
             troopOptions: { type: ['array', 'null'], items: troopOptionSubschema }
@@ -75,8 +75,8 @@ exports.updateArmyList = {
             listId: { type: 'number' },
             sublistId: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
-            invasionRating: { type: ['array', 'null'], items: annotatedRatingSchema },
-            maneuverRating: { type: ['array', 'null'], items: annotatedRatingSchema },
+            invasionRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
+            maneuverRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
             troopOptions: { type: ['array', 'null'], items: troopOptionSubschema }

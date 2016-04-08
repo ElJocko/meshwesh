@@ -71,7 +71,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         vm.invasionRatingGridOptions = {
             columnDefs: [
-                { field: 'rating', displayName: 'Rating', type: 'number', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 90, enableColumnMenu: false },
+                { field: 'value', displayName: 'Value', type: 'number', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 90, enableColumnMenu: false },
                 { field: 'note', displayName: 'Note', type: 'string', enableSorting: false, width: 160, enableColumnMenu: false },
                 { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
                 { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
@@ -92,7 +92,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         vm.maneuverRatingGridOptions = {
             columnDefs: [
-                { field: 'rating', displayName: 'Rating', type: 'number', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 90, enableColumnMenu: false },
+                { field: 'value', displayName: 'Value', type: 'number', sort: { direction: uiGridConstants.ASC, priority: 0 }, enableSorting: false, width: 90, enableColumnMenu: false },
                 { field: 'note', displayName: 'Note', type: 'string', enableSorting: false, width: 160, enableColumnMenu: false },
                 { field: 'edt', displayName: '', cellClass: 'td-btn', cellTemplate: editTemplate,  enableSorting: false, width: 50, enableColumnMenu: false },
                 { field: 'del', displayName: '', cellClass: 'td-btn', cellTemplate: deleteTemplate,  enableSorting: false, width: 50, enableColumnMenu: false }
@@ -152,7 +152,6 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 var viewport = gridViewport[index];
                 var parentClass = viewport.parentNode.parentNode.parentNode.classList[0];
                 if (parentClass === gridClass) {
-                    console.log('found viewport for ' + gridClass);
                     angular.element(viewport).css('height', height + 'px');
                 }
             }
@@ -215,13 +214,13 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         }
 
         vm.dateRangeGridOptions.data = vm.armyList.dateRanges;
-        vm.invasionRatingGridOptions.data = vm.armyList.invasionRating;
-        vm.maneuverRatingGridOptions.data = vm.armyList.maneuverRating;
+        vm.invasionRatingGridOptions.data = vm.armyList.invasionRatings;
+        vm.maneuverRatingGridOptions.data = vm.armyList.maneuverRatings;
         vm.troopOptionGridOptions.data = vm.armyList.troopOptions;
 
         resetGridHeight('date-range-grid', vm.armyList.dateRanges);
-        resetGridHeight('invasion-rating-grid', vm.armyList.invasionRating);
-        resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRating);
+        resetGridHeight('invasion-rating-grid', vm.armyList.invasionRatings);
+        resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRatings);
         resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
     }
 
@@ -435,10 +434,10 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     }
 
     function insertInvasionRating() {
-        // Initialize invasion rating
-        var newInvasionRating = { rating: 1, note: '' };
+        // Initialize rating
+        var newRating = { value: 1, note: '' };
 
-        // Let the user edit the new invasion rating
+        // Let the user edit the new rating
         var modalInstance = $uibModal.open({
             animation: false,
             templateUrl: 'views/modals/ratingEdit.html',
@@ -447,7 +446,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             size: 'sm',
             resolve: {
                 rating: function () {
-                    return newInvasionRating;
+                    return newRating;
                 },
                 viewHeading: function () {
                     return 'Edit Invasion Rating'
@@ -455,15 +454,15 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             }
         });
 
-        // Insert the edited invasion rating into the army list
+        // Insert the edited rating into the army list
         modalInstance.result.then(
             function (resultRating) {
                 // Add the invasion rating
-                vm.armyList.invasionRating.push(resultRating);
+                vm.armyList.invasionRatings.push(resultRating);
 
                 // Update the sort
                 vm.invationRatingGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-                resetGridHeight('invasion-rating-grid', vm.armyList.invasionRating);
+                resetGridHeight('invasion-rating-grid', vm.armyList.invasionRatings);
             },
             function () {
                 // Cancelled
@@ -491,7 +490,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         modalInstance.result.then(
             function (resultRating) {
                 // Replace the old invasion rating with the new invasion rating
-                rating.rating = resultRating.rating;
+                rating.value = resultRating.value;
                 rating.note = resultRating.note;
 
                 // Update the sort
@@ -503,16 +502,16 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     }
 
     function deleteInvasionRating(rating) {
-        var index = vm.armyList.invasionRating.indexOf(rating);
+        var index = vm.armyList.invasionRatings.indexOf(rating);
         if (index !== -1) {
             // Remove the invasion rating
-            vm.armyList.invasionRating.splice(index, 1);
-            resetGridHeight('invasion-rating-grid', vm.armyList.invasionRating);
+            vm.armyList.invasionRatings.splice(index, 1);
+            resetGridHeight('invasion-rating-grid', vm.armyList.invasionRatings);
         }
     }
 
     function insertManeuverRating() {
-        var newRating = { rating: 1, note: '' };
+        var newRating = { value: 1, note: '' };
 
         // Let the user edit the new rating
         var modalInstance = $uibModal.open({
@@ -535,11 +534,11 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         modalInstance.result.then(
             function (resultRating) {
                 // Add the invasion rating
-                vm.armyList.maneuverRating.push(resultRating);
+                vm.armyList.maneuverRatings.push(resultRating);
 
                 // Update the sort
                 vm.maneuverRatingGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
-                resetGridHeight('invasion-rating-grid', vm.armyList.maneuverRating);
+                resetGridHeight('invasion-rating-grid', vm.armyList.maneuverRatings);
             },
             function () {
                 // Cancelled
@@ -566,8 +565,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         modalInstance.result.then(
             function (resultRating) {
-                // Replace the old invasion rating with the new invasion rating
-                rating.rating = resultRating.rating;
+                // Replace the old rating with the modified rating
+                rating.value = resultRating.value;
                 rating.note = resultRating.note;
 
                 // Update the sort
@@ -579,11 +578,11 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     }
 
     function deleteManeuverRating(rating) {
-        var index = vm.armyList.maneuverRating.indexOf(rating);
+        var index = vm.armyList.maneuverRatings.indexOf(rating);
         if (index !== -1) {
             // Remove the rating
-            vm.armyList.maneuverRating.splice(index, 1);
-            resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRating);
+            vm.armyList.maneuverRatings.splice(index, 1);
+            resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRatings);
         }
     }
 }

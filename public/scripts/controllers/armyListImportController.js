@@ -48,18 +48,20 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
 
                             // Convert invasionRatings
                             var ratingsArray = [];
-                            if (item.invasionRating) {
-                                var annotatedInvasionRating = { rating: item.invasionRating, note: null };
+                            if (item.invasionRatings) {
+                                // TBD: Convert 'x or y' to multiple entries
+                                var annotatedInvasionRating = { value: item.invasionRatings, note: null };
                                 ratingsArray.push(annotatedInvasionRating);
-                                item.invasionRating = ratingsArray;
+                                item.invasionRatings = ratingsArray;
                             }
 
                             // Convert maneuverRatings
+                            // TBD: Convert 'x or y' to multiple entries
                             ratingsArray = [];
-                            if (item.maneuverRating) {
-                                var annotatedManeuverRating = { rating: item.maneuverRating, note: null };
+                            if (item.maneuverRatings) {
+                                var annotatedManeuverRating = { value: item.maneuverRatings, note: null };
                                 ratingsArray.push(annotatedManeuverRating);
-                                item.maneuverRating = ratingsArray;
+                                item.maneuverRatings = ratingsArray;
                             }
                         });
                         vm.parsedData = results.data;

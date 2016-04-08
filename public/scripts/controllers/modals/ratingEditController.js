@@ -8,7 +8,7 @@ function RatingEditController($uibModalInstance, rating, viewHeading) {
     var vm = this;
 
     vm.rating = {
-        rating: rating.rating,
+        value: rating.value,
         note: rating.note
     };
     vm.viewHeading = viewHeading;
