@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" type="text/css" href="vendor/angular-ui-grid/ui-grid.css" />
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.css">
     <link rel="stylesheet" href="css/app.css">
 </head>
 
@@ -22,10 +23,10 @@
 <div mw-navbar></div>
 
 <!-- Contents -->
-<div class="container">
+<div id="main-container" class="container">
     <div class="row">
         <div class="col-md-12">
-            <div ng-view></div>
+            <div id="view-container" ng-view></div>
         </div>
     </div>
 </div>
@@ -33,11 +34,13 @@
 <!-- Scripts -->
 <div>
     <script src="vendor/angular/angular.js"></script>
+    <script src="vendor/angular-animate/angular-animate.js"></script>
     <script src="vendor/angular-messages/angular-messages.js"></script>
     <script src="vendor/angular-resource/angular-resource.js"></script>
     <script src="vendor/angular-route/angular-route.js"></script>
 
     <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="vendor/angular-loading-bar/build/loading-bar.js"></script>
     <script src="vendor/angular-ui-grid/ui-grid.js"></script>
     <script src="vendor/lodash/lodash.js"></script>
     <script src="vendor/papaparse/papaparse.js"></script>

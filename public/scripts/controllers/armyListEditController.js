@@ -138,7 +138,6 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         // TBD: Grid only shows rows for initial height (in .css). Set to 2000px as workaround. Need to
         // find a way to tell the grid that it has a new size.
         var height = (data.length * 35) + 32;
-        console.log(gridClass + ' has height ' + height);
 
         var gridElement = document.getElementById(gridClass);
         if (gridElement) {
@@ -277,7 +276,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         // Let the user edit the new date range
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/dateRangeEdit.html',
             controller: 'DateRangeEditController',
             controllerAs: 'vm',
@@ -298,8 +297,6 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 // Update the sort
                 vm.dateRangeGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
                 resetGridHeight('date-range-grid', vm.armyList.dateRanges);
-//        resetDateRangeGridHeight();
-
             },
             function () {
                 // Cancelled
@@ -310,7 +307,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         // Display the Edit Date Range modal
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/dateRangeEdit.html',
             controller: 'DateRangeEditController',
             controllerAs: 'vm',
@@ -342,8 +339,6 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             // Remove the date range
             vm.armyList.dateRanges.splice(index, 1);
             resetGridHeight('date-range-grid', vm.armyList.dateRanges);
-//        resetDateRangeGridHeight();
-
         }
     }
 
@@ -364,11 +359,10 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         // Let the user edit the new troop option
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/troopOptionEdit.html',
             controller: 'TroopOptionEditController',
             controllerAs: 'vm',
-//            size: 'sm',
             resolve: {
                 troopOption: function () {
                     return newTroopOption;
@@ -395,7 +389,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         // Display the Edit Troop Option modal
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/troopOptionEdit.html',
             controller: 'TroopOptionEditController',
             controllerAs: 'vm',
@@ -439,7 +433,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         // Let the user edit the new rating
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/ratingEdit.html',
             controller: 'RatingEditController',
             controllerAs: 'vm',
@@ -472,7 +466,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     function editInvasionRating(rating) {
         // Display the Edit Rating modal
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/ratingEdit.html',
             controller: 'RatingEditController',
             controllerAs: 'vm',
@@ -515,7 +509,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
 
         // Let the user edit the new rating
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/ratingEdit.html',
             controller: 'RatingEditController',
             controllerAs: 'vm',
@@ -548,7 +542,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     function editManeuverRating(rating) {
         // Display the Edit Rating modal
         var modalInstance = $uibModal.open({
-            animation: false,
+            animation: true,
             templateUrl: 'views/modals/ratingEdit.html',
             controller: 'RatingEditController',
             controllerAs: 'vm',
