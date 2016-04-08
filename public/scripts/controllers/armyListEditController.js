@@ -32,13 +32,13 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     vm.editDateRange = editDateRange;
     vm.deleteDateRange = deleteDateRange;
 
-//    vm.insertInvasionRating = insertInvasionRating;
-//    vm.editInvasionRating = editInvasionRating;
-//    vm.deleteInvasionRating = deleteInvasionRating;
+    vm.insertInvasionRating = insertInvasionRating;
+    vm.editInvasionRating = editInvasionRating;
+    vm.deleteInvasionRating = deleteInvasionRating;
 
-//    vm.insertManeuverRating = insertManeuverRating;
-//    vm.editManeuverRating = editManeuverRating;
-//    vm.deleteManeuverRating = deleteManeuverRating;
+    vm.insertManeuverRating = insertManeuverRating;
+    vm.editManeuverRating = editManeuverRating;
+    vm.deleteManeuverRating = deleteManeuverRating;
 
     vm.insertTroopOption = insertTroopOption;
     vm.editTroopOption = editTroopOption;
@@ -431,6 +431,159 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             // Remove the date range
             vm.armyList.troopOptions.splice(index, 1);
             resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
+        }
+    }
+
+    function insertInvasionRating() {
+        // Initialize invasion rating
+        var newInvasionRating = { rating: 1, note: '' };
+
+        // Let the user edit the new invasion rating
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/ratingEdit.html',
+            controller: 'RatingEditController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                rating: function () {
+                    return newInvasionRating;
+                },
+                viewHeading: function () {
+                    return 'Edit Invasion Rating'
+                }
+            }
+        });
+
+        // Insert the edited invasion rating into the army list
+        modalInstance.result.then(
+            function (resultRating) {
+                // Add the invasion rating
+                vm.armyList.invasionRating.push(resultRating);
+
+                // Update the sort
+                vm.invationRatingGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+                resetGridHeight('invasion-rating-grid', vm.armyList.invasionRating);
+            },
+            function () {
+                // Cancelled
+            });
+    }
+
+    function editInvasionRating(rating) {
+        // Display the Edit Rating modal
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/ratingEdit.html',
+            controller: 'RatingEditController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                rating: function () {
+                    return rating;
+                },
+                viewHeading: function () {
+                    return 'Edit Invasion Rating'
+                }
+            }
+        });
+
+        modalInstance.result.then(
+            function (resultRating) {
+                // Replace the old invasion rating with the new invasion rating
+                rating.rating = resultRating.rating;
+                rating.note = resultRating.note;
+
+                // Update the sort
+                vm.invationRatingGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+            },
+            function () {
+                // Cancelled
+            });
+    }
+
+    function deleteInvasionRating(rating) {
+        var index = vm.armyList.invasionRating.indexOf(rating);
+        if (index !== -1) {
+            // Remove the invasion rating
+            vm.armyList.invasionRating.splice(index, 1);
+            resetGridHeight('invasion-rating-grid', vm.armyList.invasionRating);
+        }
+    }
+
+    function insertManeuverRating() {
+        var newRating = { rating: 1, note: '' };
+
+        // Let the user edit the new rating
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/ratingEdit.html',
+            controller: 'RatingEditController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                rating: function () {
+                    return newRating;
+                },
+                viewHeading: function () {
+                    return 'Edit Maneuver Rating'
+                }
+            }
+        });
+
+        // Insert the edited rating into the army list
+        modalInstance.result.then(
+            function (resultRating) {
+                // Add the invasion rating
+                vm.armyList.maneuverRating.push(resultRating);
+
+                // Update the sort
+                vm.maneuverRatingGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+                resetGridHeight('invasion-rating-grid', vm.armyList.maneuverRating);
+            },
+            function () {
+                // Cancelled
+            });
+    }
+
+    function editManeuverRating(rating) {
+        // Display the Edit Rating modal
+        var modalInstance = $uibModal.open({
+            animation: false,
+            templateUrl: 'views/modals/ratingEdit.html',
+            controller: 'RatingEditController',
+            controllerAs: 'vm',
+            size: 'sm',
+            resolve: {
+                rating: function () {
+                    return rating;
+                },
+                viewHeading: function () {
+                    return 'Edit Maneuver Rating'
+                }
+            }
+        });
+
+        modalInstance.result.then(
+            function (resultRating) {
+                // Replace the old invasion rating with the new invasion rating
+                rating.rating = resultRating.rating;
+                rating.note = resultRating.note;
+
+                // Update the sort
+                vm.maneuverRatingGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
+            },
+            function () {
+                // Cancelled
+            });
+    }
+
+    function deleteManeuverRating(rating) {
+        var index = vm.armyList.maneuverRating.indexOf(rating);
+        if (index !== -1) {
+            // Remove the rating
+            vm.armyList.maneuverRating.splice(index, 1);
+            resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRating);
         }
     }
 }

@@ -1,0 +1,26 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{ vm.viewHeading }}</h3>
+</div>
+<div class="modal-body">
+    <form novalidate name="vm.editRatingForm">
+        <div class="form-group">
+            <label for="inputValue">Value</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="inputValue" name="inputValue" placeholder="Value" ng-model="vm.rating.rating" required nonnegative-integer>
+            </div>
+            <div ng-messages="vm.editRatingForm.inputValue.$error">
+                <p class="input-validation-error" ng-message="number">Must be a nonnegative integer.</p>
+                <p class="input-validation-error" ng-message="nonnegativeInteger">Must be a nonnegative integer.</p>
+                <p class="input-validation-error" ng-message="required">Value is required.</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputNote">Note</label>
+            <input type="text" class="form-control" id="inputNote" placeholder="Note" ng-model="vm.rating.note">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="vm.editRatingForm.$invalid">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>
