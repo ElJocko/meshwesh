@@ -163,13 +163,13 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .td-btn {
-    text-align:center;
-    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .td-boolean-check {
     text-align:center;
-    vertical-align: middle;
 }
 
 .input-validation-error {
