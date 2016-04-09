@@ -37,11 +37,9 @@
                     <select class="form-control" id="inputCore" name="inputCore" ng-options="value.value as value.label for value in vm.yesNoOptions" ng-model="vm.troopOption.core"></select>
                 </div>
                 <div class="form-group">
-                    <table>
-                        <tr ng-repeat="name in vm.troopOption.troopTypes">
-                            <td>{{ name | mwDisplayTroopTypes }}</td>
-                        </tr>
-                    </table>
+                    <label>Total Possible Points</label>
+                    <div>Min: <span ng-bind="vm.minPoints"></span></div>
+                    <div>Max: <span ng-bind="vm.maxPoints"></span></div>
                 </div>
             </div>
             <div class="col-md-8">

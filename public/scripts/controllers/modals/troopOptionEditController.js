@@ -23,6 +23,9 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
         { label: 'no', value: false }
     ];
 
+    vm.minPoints = 0;
+    vm.maxPoints = 0;
+
     var enableOnSelect = true;
 
     initializeTroopTypeGrid();
@@ -41,6 +44,8 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
                     vm.troopTypeGridApi.selection.selectRow(value);
                 }
             });
+
+            calculateMinMaxPoints();
 
             // Enable handling selection events
             enableOnSelect = true;
@@ -82,8 +87,9 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
     }
 
     function initializeTroopTypeData() {
-        TroopTypeService.list(function(troopTypes) {
-            vm.troopTypeGridOptions.data = troopTypes;
+        TroopTypeService.list(function(availableTroopTypes) {
+            vm.troopTypeGridOptions.data = availableTroopTypes;
+            vm.availableTroopTypes = availableTroopTypes;
             initializeCurrentTroopTypeSelection();
         });
     }
@@ -119,10 +125,12 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
 
     vm.minMaxChanged = function() {
         vm.editForm.inputMax.$setValidity("minMaxOrder", vm.troopOption.max >= vm.troopOption.min);
+        calculateMinMaxPoints();
     };
 
     function addTroopType(troopType) {
         vm.troopOption.troopTypes.push(troopType);
+        calculateMinMaxPoints();
     }
 
     function removeTroopType(troopType) {
@@ -130,6 +138,43 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
         if (index !== -1) {
             // Remove the date range
             vm.troopOption.troopTypes.splice(index, 1);
+            calculateMinMaxPoints();
+        }
+    }
+
+    function findTroopTypeByPermanentCode(code) {
+        var troopType = null;
+        vm.availableTroopTypes.forEach(function(item) {
+            if (item.permanentCode === code) {
+                troopType = item;
+            }
+        });
+        return troopType;
+    }
+
+    function calculateMinMaxPoints() {
+        if (vm.troopOption.troopTypes.length === 0) {
+            vm.minPoints = 0;
+            vm.maxPoints = 0;
+        }
+        else {
+            var minCost = 99;
+            var maxCost = 0;
+
+            vm.troopOption.troopTypes.forEach(function(item) {
+                var troopType = findTroopTypeByPermanentCode(item);
+                if (troopType) {
+                    if (troopType.cost < minCost) {
+                        minCost = troopType.cost;
+                    }
+                    if (troopType.cost > maxCost) {
+                        maxCost = troopType.cost;
+                    }
+                }
+            });
+
+            vm.minPoints = minCost * vm.troopOption.min;
+            vm.maxPoints = maxCost * vm.troopOption.max;
         }
     }
 }
