@@ -22,3 +22,6 @@ angular.module('meshweshControllers', ['ui.bootstrap']);
 angular.module('meshweshDirectives', []);
 angular.module('meshweshFilters', []);
 
+angular.module('angular-loading-bar').config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.parentSelector = '#progress-bar';
+}]);

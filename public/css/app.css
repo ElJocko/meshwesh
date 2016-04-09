@@ -87,7 +87,7 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .content-header {
-    margin-top: 40px;
+    margin-top: 16px;
     margin-bottom: 20px;
     font-size: 2em;
 }
@@ -217,3 +217,17 @@ input[readonly] {
     margin-top: 15px;
     font-style: oblique;
 }
+
+#progress-bar {
+    height: 24px;
+}
+
+#loading-bar-spinner {
+    position: relative;
+}
+
+#loading-bar .bar {
+    position: relative;
+    height: 4px;
+}
+
