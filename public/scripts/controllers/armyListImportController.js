@@ -47,21 +47,25 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                             }
 
                             // Convert invasionRatings
-                            var ratingsArray = [];
+                            var tempArray = [];
                             if (item.invasionRatings) {
-                                // TBD: Convert 'x or y' to multiple entries
-                                var annotatedInvasionRating = { value: item.invasionRatings, note: null };
-                                ratingsArray.push(annotatedInvasionRating);
-                                item.invasionRatings = ratingsArray;
+                                var values = item.invasionRatings.split(' or ');
+                                values.forEach(function(value) {
+                                    var annotatedInvasionRating = { value: value, note: null };
+                                    tempArray.push(annotatedInvasionRating);
+                                });
+                                item.invasionRatings = tempArray;
                             }
 
                             // Convert maneuverRatings
-                            // TBD: Convert 'x or y' to multiple entries
-                            ratingsArray = [];
+                            tempArray = [];
                             if (item.maneuverRatings) {
-                                var annotatedManeuverRating = { value: item.maneuverRatings, note: null };
-                                ratingsArray.push(annotatedManeuverRating);
-                                item.maneuverRatings = ratingsArray;
+                                values = item.maneuverRatings.split(' or ');
+                                values.forEach(function(value) {
+                                    var annotatedManeuverRating = { value: value, note: null };
+                                    tempArray.push(annotatedManeuverRating);
+                                });
+                                item.maneuverRatings = tempArray;
                             }
                         });
                         vm.parsedData = results.data;

@@ -221,6 +221,8 @@ exports.import = function(importRequest, callback) {
         // Save the document in the database
         document.save(function(err, savedDocument) {
             if (err) {
+                console.log('failed to import ' + document.name);
+//                console.log(err);
                 if (err.name === 'MongoError' && err.code === 11000) {
                     // 11000 = Duplicate index
                     var error = new Error(errors.duplicateCode);
