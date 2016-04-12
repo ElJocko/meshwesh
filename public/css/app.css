@@ -1,3 +1,14 @@
+/*
+
+green: #588c7e
+yellow: f2e394
+orange: f2ae72
+red: d96459
+darkRed: 8c4646
+
+*/
+
+
 body {
     padding-bottom: 50px;
 }
@@ -138,8 +149,26 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 .delete-btn {
     margin-top: 40px;
     background: #ffffff;
-    color: #ff0000;
-    border-color: #ff0000;
+    color: #d96459;
+    border-color: #d96459;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #588c7e;
+    border-color: #588c7e;
+}
+
+.btn-warning {
+    color: #ffffff;
+    background-color: #f2ae72;
+    border-color: #f2ae72;
+}
+
+.btn-danger {
+    color: #ffffff;
+    background-color: #d96459;
+    border-color: #d96459;
 }
 
 .army-list-grid {
@@ -197,7 +226,7 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .input-validation-error {
-    color: #ff0000;
+    color: #d96459;
 }
 
 .btn-file {
