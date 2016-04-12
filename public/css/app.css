@@ -142,6 +142,11 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     border-color: #ff0000;
 }
 
+.army-list-grid {
+    width: 520px;
+    height: 30px;
+}
+
 .date-range-grid {
     width: 320px;
     height: 30px;
@@ -172,11 +177,28 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     text-align:center;
 }
 
+.td-anchor {
+    padding: 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    white-space: nowrap;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 100%;
+}
+
+.table-search-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-color: #588c7e;
+}
+
 .input-validation-error {
     color: #ff0000;
 }
-
-
 
 .btn-file {
     position: relative;

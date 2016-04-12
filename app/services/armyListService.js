@@ -23,7 +23,7 @@ exports.retrieveByQuery = function(query, callback) {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
                 var object = documents[i].toJSON();
-                object.extendedName = extendedName(object);
+                addDateRangeInfo(object);
                 objects.push(object);
             }
             return callback(null, objects);
@@ -47,7 +47,8 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    document.extendedName = extendedName(document);
+
+                    addDateRangeInfo(document);
                     return callback(null, document.toJSON());
                 }
                 else {
@@ -258,35 +259,58 @@ exports.import = function(importRequest, callback) {
 };
 
 
-function extendedName(armyList) {
-    var dateRangeString = dateRangeAsString(armyList.dateRanges);
-    var result = armyList.name + "  " + dateRangeString;
-    return result;
+function addDateRangeInfo(armyList) {
+    var dateRange = calculateArmyListDateRange(armyList);
+    armyList.listStartDate = dateRange.startDate;
+    armyList.listEndDate = dateRange.endDate;
+
+    var dateRangeString = dateRangeAsString(dateRange);
+    armyList.extendedName = armyList.name + "  " + dateRangeString;
 }
 
-function dateRangeAsString(dateRanges) {
-    // Find the earliest start and latest end dates
-    var earliestStart = 9999;
-    var latestEnd = -9999;
-
-    dateRanges.map(function(dateRange) {
-        earliestStart = Math.min(earliestStart, dateRange.startDate);
-        latestEnd = Math.max(latestEnd, dateRange.endDate);
-    });
-
-    var dateRangeString = "";
-    if (earliestStart === 9999 || latestEnd === -9999) {
+function dateRangeAsString(dateRange) {
+    var dateRangeString = '';
+    if (dateRange.startDate == null || dateRange.endDate == null) {
         //
     }
-    else if (earliestStart < 0 && latestEnd < 0) {
-        dateRangeString = Math.abs(earliestStart) + " to " + Math.abs(latestEnd) + " BC";
+    else if (dateRange.startDate < 0 && dateRange.endDate < 0) {
+        dateRangeString = Math.abs(dateRange.startDate) + " to " + Math.abs(dateRange.endDate) + " BC";
     }
-    else if (earliestStart >= 0 && latestEnd >= 0) {
-        dateRangeString = earliestStart + " to " + latestEnd + " AD";
+    else if (dateRange.startDate >= 0 && dateRange.endDate >= 0) {
+        dateRangeString = dateRange.startDate + " to " + dateRange.endDate + " AD";
     }
     else {
-        dateRangeString = Math.abs(earliestStart) + " BC to " + latestEnd + " AD";
+        dateRangeString = Math.abs(dateRange.startDate) + " BC to " + dateRange.endDate + " AD";
     }
 
     return dateRangeString;
+}
+
+function calculateArmyListDateRange(armyList) {
+    // Find the earliest start and latest end dates
+    var earliestStart = null;
+    var latestEnd = null;
+
+    armyList.dateRanges.map(function(dateRange) {
+        if (earliestStart) {
+            earliestStart = Math.min(earliestStart, dateRange.startDate);
+        }
+        else {
+            earliestStart = dateRange.startDate;
+        }
+
+        if (latestEnd) {
+            latestEnd = Math.max(latestEnd, dateRange.endDate);
+        }
+        else {
+            latestEnd = dateRange.endDate;
+        }
+    });
+
+    var armyListDateRange = {
+        startDate: earliestStart,
+        endDate: latestEnd
+    };
+
+    return armyListDateRange;
 }

@@ -1,13 +1,25 @@
 <div class="content row">
     <div class="col-md-12">
         <div class="content-header">Army Lists</div>
-        <div ng-repeat="armyList in vm.armyLists | orderBy:'extendedName'">
-            <div class="content-link">
-                <a href ng-click="vm.edit(armyList.id)">{{ armyList.extendedName }}</a>
-            </div>
+    </div>
+</div>
+<div class="content row">
+    <div class="col-md-4">
+        <div>
+            <input type="text" class="form-control table-search-box" id="inputSearchName" placeholder="Search by name" ng-model="vm.searchName" ng-change="vm.searchChanged()">
         </div>
+    </div>
+</div>
+<div class="content row">
+    <div class="col-md-12">
+        <div id="army-list-grid" class="army-list-grid" ui-grid="vm.armyListGridOptions"></div>
+    </div>
+</div>
+<div class="content row">
+    <div class="col-md-12">
         <div>
             <button class="btn save-btn" ng-click="vm.create()">Create New</button>
         </div>
     </div>
 </div>
+
