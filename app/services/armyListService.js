@@ -258,6 +258,70 @@ exports.import = function(importRequest, callback) {
     }
 };
 
+exports.importTroopOptions = function(importRequest, callback) {
+    // Import the documents
+    async.mapSeries(
+        importRequest.data,
+        importArmyList,
+        function(err, results) {
+            if (err) {
+                // TBD: organize results better
+                return callback(err);
+            }
+            else {
+                var importSummary = summarizeImport(results);
+                return callback(null, importSummary);
+            }
+        }
+    );
+
+    function importArmyList(armyListData, cb) {
+        // Find the matching army list
+        ArmyList.find({ listId: armyListData.listId, sublistId: armyListData.sublistId }, function(err, documents) {
+            if (err) {
+                return cb(null, { armyList: null, error: err });
+            }
+            else if (documents.length === 1) {
+                // Update the troop options and save
+                var armyList = documents[0];
+                armyList.troopOptions = armyListData.troopOptions;
+                armyList.save(function(err, savedArmyList) {
+                    if (err) {
+                        console.log('failed to update ' + armyList.name);
+                        return cb(null, { armyList: null, error: err });
+                    }
+                    else {
+                        return cb(null, { armyList: savedArmyList.toJSON(), error: null });
+                    }
+                });
+            }
+            else {
+                return cb(null, { armyList: null, error: null });
+            }
+        });
+    }
+
+    function summarizeImport(results) {
+        var importCount = 0;
+        var troopOptionImportCount = 0;
+        var errors = [];
+        results.forEach(function(item) {
+            if (item.armyList) {
+                importCount = importCount + 1;
+                troopOptionImportCount = troopOptionImportCount + item.armyList.troopOptions.length;
+            }
+            else if (item.error) {
+                errors.push(item.error);
+            }
+            else {
+                // shouldn't reach here
+            }
+        });
+        var summary = { importedArmyLists: importCount, importedTroopOptions: troopOptionImportCount, failedArmyLists: errors.length, errors: errors };
+        return summary;
+    }
+};
+
 
 function addDateRangeInfo(armyList) {
     var dateRange = calculateArmyListDateRange(armyList);

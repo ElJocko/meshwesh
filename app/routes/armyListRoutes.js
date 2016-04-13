@@ -38,4 +38,9 @@ router.route('/v1/armyListsImport')
         tokenAuthz.requireAdminToken,
         armyListController.import);
 
+router.route('/v1/troopOptionsImport')
+    .post(
+        tokenAuthz.requireAdminToken,
+        armyListController.importTroopOptions);
+
 module.exports = router;

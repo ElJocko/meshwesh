@@ -86,6 +86,11 @@ function router($routeProvider) {
             controller:'ArmyListImportController',
             controllerAs: 'vm'
         })
+        .when('/troopOptions/import', {
+            templateUrl:'views/troopOptionsImport.html',
+            controller:'TroopOptionsImportController',
+            controllerAs: 'vm'
+        })
         .when('/troopType/import', {
             templateUrl:'views/troopTypeImport.html',
             controller:'TroopTypeImportController',
