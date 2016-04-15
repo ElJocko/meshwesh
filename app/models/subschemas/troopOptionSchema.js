@@ -7,6 +7,8 @@ var DateRange = require('./dateRangeSchema');
 var TroopOptionSchema = new mongoose.Schema({
     min: { type: Number, required: true },
     max: { type: Number, required: true },
+    allyMin: { type: Number, required: true },
+    allyMax: { type: Number, required: true },
     dateRange: { type: DateRange },
     troopTypes: [ String ],
     description: { type: String },

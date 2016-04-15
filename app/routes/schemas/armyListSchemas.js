@@ -13,6 +13,8 @@ var troopOptionSubschema = {
     properties: {
         min: { type: 'number', requred: true },
         max: { type: 'number', requred: true },
+        allyMin: { type: 'number', requred: true },
+        allyMax: { type: 'number', requred: true },
         dateRange: dateRangeSubschema,
         troopTypes: { type: ['array', null], items: { type: 'string' } },
         description: { type: 'string' },
@@ -45,7 +47,6 @@ exports.createArmyList = {
         type:'object',
         properties: {
             name: { type: 'string', required: true },
-            extendedName: { type: 'string' },
             listId: { type: 'number' },
             sublistId: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
@@ -53,7 +54,8 @@ exports.createArmyList = {
             maneuverRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
-            troopOptions: { type: ['array', 'null'], items: troopOptionSubschema }
+            troopOptions: { type: ['array', 'null'], items: troopOptionSubschema },
+            derivedData: { type: 'object' }
         },
         additionalProperties: false
     },
@@ -71,7 +73,6 @@ exports.updateArmyList = {
         properties: {
             id: { type: ['string', 'null'] },
             name: { type: 'string' },
-            extendedName: { type: 'string' },
             listId: { type: 'number' },
             sublistId: { type: 'string' },
             grandArmyList: { type: ['string', 'null'] },
@@ -79,7 +80,8 @@ exports.updateArmyList = {
             maneuverRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
-            troopOptions: { type: ['array', 'null'], items: troopOptionSubschema }
+            troopOptions: { type: ['array', 'null'], items: troopOptionSubschema },
+            derivedData: { }
         },
         additionalProperties: false
     },

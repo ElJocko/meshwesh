@@ -33,7 +33,7 @@
 <div class="row">
     <div class="col-md-12">
         <div ng-repeat="armyList in vm.armyLists | orderBy:'extendedName'">
-            <a href ng-click="vm.editArmyList(armyList.id)">{{ armyList.extendedName }}</a>
+            <a href ng-click="vm.editArmyList(armyList.id)">{{ armyList.derivedData.extendedName }}</a>
         </div>
     </div>
 </div>

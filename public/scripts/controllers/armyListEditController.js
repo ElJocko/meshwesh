@@ -4,10 +4,15 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListEditController', ArmyListEditController);
 
-ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService'];
+ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
 
-function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService) {
+function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
     var vm = this;
+
+    vm.totalMinMax = {
+        minPoints: null,
+        maxPoints: null
+    };
 
     initializeDateRangeGrid();
     initializeInvasionRatingGrid();
@@ -221,6 +226,8 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         resetGridHeight('invasion-rating-grid', vm.armyList.invasionRatings);
         resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRatings);
         resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
+
+        performAnalysis();
     }
 
     function updateList() {
@@ -578,5 +585,9 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
             vm.armyList.maneuverRatings.splice(index, 1);
             resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRatings);
         }
+    }
+
+    function performAnalysis() {
+        vm.totalMinMax = TroopOptionsAnalysisService.calculateTotalMinMaxPoints(vm.armyList.troopOptions);
     }
 }

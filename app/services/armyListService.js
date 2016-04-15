@@ -22,9 +22,7 @@ exports.retrieveByQuery = function(query, callback) {
         else {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
-                var object = documents[i].toJSON();
-                addDateRangeInfo(object);
-                objects.push(object);
+                objects.push(documents[i].toJSON());
             }
             return callback(null, objects);
         }
@@ -47,8 +45,6 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-
-                    addDateRangeInfo(document);
                     return callback(null, document.toJSON());
                 }
                 else {
@@ -321,60 +317,3 @@ exports.importTroopOptions = function(importRequest, callback) {
         return summary;
     }
 };
-
-
-function addDateRangeInfo(armyList) {
-    var dateRange = calculateArmyListDateRange(armyList);
-    armyList.listStartDate = dateRange.startDate;
-    armyList.listEndDate = dateRange.endDate;
-
-    var dateRangeString = dateRangeAsString(dateRange);
-    armyList.extendedName = armyList.name + "  " + dateRangeString;
-}
-
-function dateRangeAsString(dateRange) {
-    var dateRangeString = '';
-    if (dateRange.startDate == null || dateRange.endDate == null) {
-        //
-    }
-    else if (dateRange.startDate < 0 && dateRange.endDate < 0) {
-        dateRangeString = Math.abs(dateRange.startDate) + " to " + Math.abs(dateRange.endDate) + " BC";
-    }
-    else if (dateRange.startDate >= 0 && dateRange.endDate >= 0) {
-        dateRangeString = dateRange.startDate + " to " + dateRange.endDate + " AD";
-    }
-    else {
-        dateRangeString = Math.abs(dateRange.startDate) + " BC to " + dateRange.endDate + " AD";
-    }
-
-    return dateRangeString;
-}
-
-function calculateArmyListDateRange(armyList) {
-    // Find the earliest start and latest end dates
-    var earliestStart = null;
-    var latestEnd = null;
-
-    armyList.dateRanges.map(function(dateRange) {
-        if (earliestStart) {
-            earliestStart = Math.min(earliestStart, dateRange.startDate);
-        }
-        else {
-            earliestStart = dateRange.startDate;
-        }
-
-        if (latestEnd) {
-            latestEnd = Math.max(latestEnd, dateRange.endDate);
-        }
-        else {
-            latestEnd = dateRange.endDate;
-        }
-    });
-
-    var armyListDateRange = {
-        startDate: earliestStart,
-        endDate: latestEnd
-    };
-
-    return armyListDateRange;
-}

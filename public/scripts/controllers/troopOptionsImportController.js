@@ -47,6 +47,8 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                 sublistId: item.sublistId,
                                 min: 0,
                                 max: 0,
+                                allyMin: 0,
+                                allyMax: 0,
                                 troopTypes: [],
                                 description: item.description
                             };
