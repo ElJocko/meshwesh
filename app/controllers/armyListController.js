@@ -9,7 +9,7 @@ module.exports.retrieveByQuery = function(req, res) {
     if (req.query.name) {
         query.where = { name: { like: req.query.name }};
     }
-    armyListService.retrieveByQuery(query, function(err, lists) {
+    armyListService.retrieveByLeanQuery(query, function(err, lists) {
         if (err) {
             logger.error('Failed with error: ' + err);
             return res.status(500).send('Unable to get army lists. Server error.');

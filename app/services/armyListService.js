@@ -14,17 +14,19 @@ var errors = {
 };
 exports.errors = errors;
 
-exports.retrieveByQuery = function(query, callback) {
-    ArmyList.find(query, function(err, documents) {
+exports.retrieveByLeanQuery = function(query, callback) {
+    ArmyList.find(query).lean().exec(function(err, documents) {
         if (err) {
             return callback(err);
         }
         else {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
-                objects.push(documents[i].toJSON());
+                documents[i].id = documents[i]._id.toHexString();
+                delete documents[i]._id;
+                delete documents[i].__v;
             }
-            return callback(null, objects);
+            return callback(null, documents);
         }
     });
 };
