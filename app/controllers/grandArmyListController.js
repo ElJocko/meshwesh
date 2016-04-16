@@ -9,7 +9,7 @@ module.exports.retrieveByQuery = function(req, res) {
     if (req.query.name) {
         query.name = req.query.name;
     }
-    grandArmyListService.retrieveByQuery(query, function(err, lists) {
+    grandArmyListService.retrieveByQueryLean(query, function(err, lists) {
         if (err) {
             logger.error('Failed with error: ' + err);
             return res.status(500).send('Unable to get grand army lists. Server error.');
@@ -21,7 +21,7 @@ module.exports.retrieveByQuery = function(req, res) {
 };
 
 module.exports.retrieveById = function(req, res) {
-    grandArmyListService.retrieveById(req.params.listId, function(err, list) {
+    grandArmyListService.retrieveByIdLean(req.params.listId, function(err, list) {
         if (err) {
             if (err.message === grandArmyListService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted grand army list id');

@@ -9,7 +9,7 @@ module.exports.retrieveByQuery = function(req, res) {
     if (req.query.name) {
         query.where = { name: { like: req.query.name }};
     }
-    armyListService.retrieveByLeanQuery(query, function(err, lists) {
+    armyListService.retrieveByQueryLean(query, function(err, lists) {
         if (err) {
             logger.error('Failed with error: ' + err);
             return res.status(500).send('Unable to get army lists. Server error.');
@@ -21,7 +21,7 @@ module.exports.retrieveByQuery = function(req, res) {
 };
 
 module.exports.retrieveById = function(req, res) {
-    armyListService.retrieveById(req.params.listId, function(err, list) {
+    armyListService.retrieveByIdLean(req.params.listId, function(err, list) {
         if (err) {
             if (err.message === armyListService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted army list id');

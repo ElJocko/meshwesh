@@ -2,6 +2,7 @@
 
 var ArmyList = require('../models/armyListModel');
 var GrandArmyList = require('../models/grandArmyListModel');
+var transform = require('../models/transform');
 var async = require('async');
 var _ = require('lodash');
 
@@ -14,7 +15,7 @@ var errors = {
 };
 exports.errors = errors;
 
-exports.retrieveByLeanQuery = function(query, callback) {
+exports.retrieveByQueryLean = function(query, callback) {
     ArmyList.find(query).lean().exec(function(err, documents) {
         if (err) {
             return callback(err);
@@ -22,18 +23,16 @@ exports.retrieveByLeanQuery = function(query, callback) {
         else {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
-                documents[i].id = documents[i]._id.toHexString();
-                delete documents[i]._id;
-                delete documents[i].__v;
+                transform.removeDatabaseArtifacts(documents[i]);
             }
             return callback(null, documents);
         }
     });
 };
 
-exports.retrieveById = function(id, callback) {
+exports.retrieveByIdLean = function(id, callback) {
     if (id) {
-        ArmyList.findById(id, function(err, document) {
+        ArmyList.findById(id).lean().exec(function(err, document) {
             if (err) {
                 if (err.name === 'CastError') {
                     var error = new Error(errors.badlyFormattedParameter);
@@ -47,7 +46,8 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toJSON());
+                    transform.removeDatabaseArtifacts(document);
+                    return callback(null, document);
                 }
                 else {
                     return callback();

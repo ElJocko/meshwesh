@@ -1,6 +1,7 @@
 'use strict';
 
 var GrandArmyList = require('../models/grandArmyListModel');
+var transform = require('../models/transform');
 var async = require('async');
 var _ = require('lodash');
 
@@ -12,25 +13,24 @@ var errors = {
 };
 exports.errors = errors;
 
-exports.retrieveByQuery = function(query, callback) {
-    GrandArmyList.find(query, function(err, documents) {
+exports.retrieveByQueryLean = function(query, callback) {
+    GrandArmyList.find(query).lean().exec(function(err, documents) {
         if (err) {
             return callback(err);
         }
         else {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
-                var object = documents[i].toJSON();
-                objects.push(object);
+                transform.removeDatabaseArtifacts(documents[i]);
             }
-            return callback(null, objects);
+            return callback(null, documents);
         }
     });
 };
 
-exports.retrieveById = function(id, callback) {
+exports.retrieveByIdLean = function(id, callback) {
     if (id) {
-        GrandArmyList.findById(id, function(err, document) {
+        GrandArmyList.findById(id).lean().exec(function(err, document) {
             if (err) {
                 if (err.name === 'CastError') {
                     var error = new Error(errors.badlyFormattedParameter);
@@ -44,7 +44,8 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toJSON());
+                    transform.removeDatabaseArtifacts(document);
+                    return callback(null, document);
                 }
                 else {
                     return callback();
