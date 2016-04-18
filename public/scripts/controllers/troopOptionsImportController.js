@@ -39,47 +39,58 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                     vm.parsedData = [];
 
                     if (results.data) {
+                        console.log('Read ' + results.data.length + ' rows from file.');
                         // Convert the data to a flat array of troop options
                         var flatArray = [];
+                        var errorRows = 0;
                         results.data.forEach(function(item) {
-                            var troopOption = {
-                                listId: item.listId,
-                                sublistId: item.sublistId,
-                                min: 0,
-                                max: 0,
-                                allyMin: 0,
-                                allyMax: 0,
-                                troopTypes: [],
-                                description: item.description
-                            };
+                            if (item.troopOptionOrder && item.troopOptionOrder !== 0) {
+                                var troopOption = {
+                                    listId: item.listId,
+                                    sublistId: item.sublistId,
+                                    min: 0,
+                                    max: 0,
+                                    allyMin: 0,
+                                    allyMax: 0,
+                                    troopTypes: [],
+                                    description: item.description
+                                };
 
-                            // Convert minMax
-                            var minMaxValues = item.minMax.split('-');
-                            if (minMaxValues.length === 1) {
-                                troopOption.min = minMaxValues[0];
-                                troopOption.max = minMaxValues[0];
-                            }
-                            else if (minMaxValues.length === 2) {
-                                troopOption.min = minMaxValues[0];
-                                troopOption.max = minMaxValues[1];
-                            }
+                                // Convert minMax
+                                var minMaxValues = item.minMax.split('-');
+                                if (minMaxValues.length === 1) {
+                                    troopOption.min = minMaxValues[0];
+                                    troopOption.max = minMaxValues[0];
+                                }
+                                else if (minMaxValues.length === 2) {
+                                    troopOption.min = minMaxValues[0];
+                                    troopOption.max = minMaxValues[1];
+                                }
 
-                            // Convert troop types
-                            var troopValues = item.troopTypes.split(' or ');
-                            troopValues.forEach(function (value) {
-                                if (troopTypes[value]) {
-                                    troopOption.troopTypes.push(troopTypes[value]);
+                                // Convert troop types
+                                var troopValues = item.troopTypes.split(' or ');
+                                troopValues.forEach(function (value) {
+                                    var trimmedValue = value.trim();
+                                    if (troopTypes[trimmedValue]) {
+                                        troopOption.troopTypes.push(troopTypes[trimmedValue]);
+                                    }
+                                    else {
+                                        console.warn('Did not find troop type for ' + trimmedValue + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                    }
+                                });
+
+                                // If the troop option is valid, add it to the parsde data
+                                if (troopOption.max > 0 && troopOption.troopTypes.length > 0) {
+                                    flatArray.push(troopOption);
                                 }
                                 else {
-                                    console.warn('Did not find troop type for ' + value);
+                                    errorRows = errorRows + 1;
                                 }
-                            });
-
-                            // If the troop option is valid, add it to the parsde data
-                            if (troopOption.max > 0 && troopOption.troopTypes.length > 0) {
-                                flatArray.push(troopOption);
                             }
                         });
+
+                        console.log('Converted ' + flatArray.length + ' troop option rows.')
+                        console.log('Unable to convert ' + errorRows + ' troop option rows.');
 
                         // Convert the flat array of troop options into an array of army lists with troop options
                         vm.parsedData = [];

@@ -30,7 +30,6 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                 delimiter: ',',
                 header: true,
                 complete: function(results) {
-                    console.log(results);
                     vm.statusMessage1 = '';
                     vm.statusMessage2 = '';
 
