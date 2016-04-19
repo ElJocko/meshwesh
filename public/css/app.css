@@ -1,10 +1,10 @@
 /*
 
 green: #588c7e
-yellow: f2e394
-orange: f2ae72
-red: d96459
-darkRed: 8c4646
+yellow: #f2e394
+orange: #f2ae72
+red: #d96459
+darkRed: #8c4646
 
 */
 
@@ -176,6 +176,11 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     height: 30px;
 }
 
+.army-list-report-grid {
+    width: 740px;
+    height: 30px;
+}
+
 .date-range-grid {
     width: 320px;
     height: 30px;
@@ -217,6 +222,14 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     text-overflow: ellipsis;
     overflow: hidden;
     height: 100%;
+}
+
+.td-number {
+    text-align: right;
+}
+
+.td-warn {
+    background-color: #f2e394 !important;
 }
 
 .table-search-box {

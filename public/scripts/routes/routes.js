@@ -72,9 +72,10 @@ function router($routeProvider) {
             controller:'TroopTypeEditController',
             controllerAs: 'vm'
         })
-        .when('/report', {
-            templateUrl:'report.html',
-            controller:'ReportCtrl'
+        .when('/report/armyListMinMax', {
+            templateUrl:'views/armyListMinMaxReport.html',
+            controller:'ArmyListMinMaxReportController',
+            controllerAs: 'vm'
         })
         .when('/grandArmyList/import', {
             templateUrl:'views/grandArmyListImport.html',
