@@ -289,11 +289,19 @@ exports.importTroopOptions = function(importRequest, callback) {
                         return cb(null, { armyList: null, error: err });
                     }
                     else {
+                        if (armyListData.troopOptions.length !== savedArmyList.troopOptions.length) {
+                            console.log('failed to import all troop options for ' + savedArmyList.name + '. Input = ' + armyListData.troopOptions.length + ', Saved = ' + savedArmyList.troopOptions.length);
+                        }
                         return cb(null, { armyList: savedArmyList.toJSON(), error: null });
                     }
                 });
             }
+            else if (documents.length === 0) {
+                console.log('found no documents for ' + armyListData.listId + '/' + armyListData.sublistId);
+                return cb(null, { armyList: null, error: null });
+            }
             else {
+                console.log('found multiple documents for ' + armyListData.listId + '/' + armyListData.sublistId);
                 return cb(null, { armyList: null, error: null });
             }
         });

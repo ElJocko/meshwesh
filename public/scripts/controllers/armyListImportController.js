@@ -36,6 +36,12 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                     if (results.data) {
                         // Convert some data to arrays
                         results.data.forEach(function(item) {
+                            // Fix sublist ids
+                            if (item.sublistId === '') {
+                                console.log('list ' + item.listId + ' has empty sublistId');
+                                item.sublistId = 'a';
+                            }
+
                             // Convert dateRanges
                             item.dateRanges = [];
                             if (item.startDate && item.endDate) {

@@ -70,12 +70,16 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                 // Convert troop types
                                 var troopValues = item.troopTypes.split(' or ');
                                 troopValues.forEach(function (value) {
-                                    var trimmedValue = value.trim();
-                                    if (troopTypes[trimmedValue]) {
-                                        troopOption.troopTypes.push(troopTypes[trimmedValue]);
+                                    value = value.trim();
+                                    // Remove any trailing 's'
+                                    if (value.endsWith('s')) {
+                                        value = value.slice(0, -1);
+                                    }
+                                    if (troopTypes[value]) {
+                                        troopOption.troopTypes.push(troopTypes[value]);
                                     }
                                     else {
-                                        console.warn('Did not find troop type for ' + trimmedValue + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                        console.warn('Did not find troop type for ' + value + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
                                     }
                                 });
 
