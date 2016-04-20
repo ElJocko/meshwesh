@@ -97,6 +97,25 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     background: rgba(255,255,255,0.2);
 }
 
+.title-image {
+    margin-top: 30px;
+}
+
+.summary-number {
+    font-size: 80px;
+    margin-bottom: -20px;
+}
+
+.summary-text {
+    font-size: 20px;
+    margin-top: 0px;
+}
+
+.content {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .content-header {
     margin-top: 16px;
     margin-bottom: 20px;
@@ -106,6 +125,10 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 .content-subheader {
     margin-top: 15px;
     font-weight: bold;
+}
+
+.content-text {
+    font-size: 1.2em;
 }
 
 .content-link {
