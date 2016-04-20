@@ -3,6 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
+var bookRoutes = require('./bookRoutes');
 var thematicCategoryRoutes = require('./thematicCategoryRoutes');
 var grandArmyListRoutes = require('./grandArmyListRoutes');
 var armyListRoutes = require('./armyListRoutes');
@@ -17,6 +18,7 @@ router.use('/api', bodyParser.json({limit: '1mb'}));
 router.use('/api', bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 // Set up the routes
+router.use('/api', bookRoutes);
 router.use('/api', thematicCategoryRoutes);
 router.use('/api', grandArmyListRoutes);
 router.use('/api', armyListRoutes);
