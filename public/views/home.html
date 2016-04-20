@@ -20,16 +20,16 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-4">
-        <div class="summary-number">32</div>
+    <div class="col-sm-4" ng-click="vm.showThematicCategorySummary()">
+        <div class="summary-number">{{ vm.book.thematicCategoryCount }}</div>
         <div class="summary-text">Thematic Categories</div>
     </div>
-    <div class="col-sm-4">
-        <div class="summary-number">221</div>
+    <div class="col-sm-4" ng-click="vm.showGrandArmyListSummary()">
+        <div class="summary-number">{{ vm.book.grandArmyListCount }}</div>
         <div class="summary-text">Grand Army Lists</div>
     </div>
-    <div class="col-sm-4">
-        <div class="summary-number">934</div>
+    <div class="col-sm-4" ng-click="vm.showArmyListSummary()">
+        <div class="summary-number">{{ vm.book.armyListCount }}</div>
         <div class="summary-text">Army Lists</div>
     </div>
 </div>

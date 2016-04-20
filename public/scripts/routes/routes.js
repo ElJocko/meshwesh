@@ -10,7 +10,8 @@ function router($routeProvider) {
     $routeProvider
         .when('/home', {
             templateUrl:'views/home.html',
-            controller:'HomeController'
+            controller:'HomeController',
+            controllerAs: 'vm'
         })
         .when('/thematicCategory/summary', {
             templateUrl:'views/thematicCategorySummary.html',
