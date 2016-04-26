@@ -4,13 +4,20 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListSummaryController', ArmyListSummaryController);
 
-ArmyListSummaryController.$inject = ['$location', 'uiGridConstants', 'ArmyListService'];
+ArmyListSummaryController.$inject = ['$location', 'uiGridConstants', 'ArmyListService', 'mode'];
 
-function ArmyListSummaryController($location, uiGridConstants, ArmyListService) {
+function ArmyListSummaryController($location, uiGridConstants, ArmyListService, mode) {
     var vm = this;
 
-    vm.create = showCreateArmyList;
-    vm.edit = showEditArmyList;
+    if (mode === 'edit') {
+        vm.create = showCreateArmyList;
+        vm.onClickArmyList = showEditArmyList;
+    }
+    else {
+        vm.create = null;
+        vm.onClickArmyList = showExploreArmyList;
+    }
+
     vm.searchChanged = searchChanged;
 
     initializeArmyListGrid();
@@ -25,6 +32,10 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService) 
 
     function showEditArmyList(listId) {
         $location.path('/armyList/' + listId + '/edit');
+    }
+
+    function showExploreArmyList(listId) {
+        $location.path('/armyList/' + listId + '/explore');
     }
 
     function searchChanged() {
@@ -43,7 +54,7 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService) 
             }
         };
 
-        var nameTemplate = '<div class="td-anchor"><a href ng-click="grid.appScope.vm.edit(row.entity.id)">{{ row.entity.name }}</a></div>';
+        var nameTemplate = '<div class="td-anchor"><a href ng-click="grid.appScope.vm.onClickArmyList(row.entity.id)">{{ row.entity.name }}</a></div>';
         vm.armyListGridOptions = {
             columnDefs: [
                 { field: 'name', displayName: 'Army List Name', cellTemplate: nameTemplate, sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 300, enableColumnMenu: false, enableFiltering: false, filter: nameFilter },

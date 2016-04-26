@@ -46,11 +46,23 @@ function router($routeProvider) {
         .when('/armyList/summary', {
             templateUrl:'views/armyListSummary.html',
             controller:'ArmyListSummaryController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            resolve: { mode: function() { return 'explore' } }
+        })
+        .when('/armyList/summaryEdit', {
+            templateUrl:'views/armyListSummary.html',
+            controller:'ArmyListSummaryController',
+            controllerAs: 'vm',
+            resolve: { mode: function() { return 'edit' } }
         })
         .when('/armyList/:listId/edit', {
             templateUrl:'views/armyListEdit.html',
             controller:'ArmyListEditController',
+            controllerAs: 'vm'
+        })
+        .when('/armyList/:listId/explore', {
+            templateUrl:'views/armyListExplore.html',
+            controller:'ArmyListExploreController',
             controllerAs: 'vm'
         })
         .when('/armyList/create', {

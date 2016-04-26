@@ -15,7 +15,7 @@
         <div id="army-list-grid" class="army-list-grid" ui-grid="vm.armyListGridOptions"></div>
     </div>
 </div>
-<div class="content row">
+<div class="content row" ng-show="vm.create">
     <div class="col-md-12">
         <div>
             <button class="btn save-btn" ng-click="vm.create()">Create New</button>
