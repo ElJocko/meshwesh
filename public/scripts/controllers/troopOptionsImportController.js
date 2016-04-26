@@ -68,18 +68,42 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                 }
 
                                 // Convert troop types
-                                var troopValues = item.troopEntries.split(' or ');
-                                troopValues.forEach(function (value) {
-                                    value = value.trim();
+                                var troopEntryList = item.troopEntries.split(' or ');
+                                troopEntryList.forEach(function (entry) {
+                                    entry = entry.trim();
                                     // Remove any trailing 's'
-                                    if (value.endsWith('s')) {
-                                        value = value.slice(0, -1);
+                                    if (entry.endsWith('s')) {
+                                        entry = entry.slice(0, -1);
                                     }
-                                    if (troopTypes[value]) {
-                                        troopOption.troopEntries.push({ troopTypeCode: troopTypes[value], dismountTypeCode: null });
+
+                                    // Check for dismounting type
+                                    var dismountIndex = entry.indexOf('//');
+                                    var mainEntry = null;
+                                    var dismountEntry = null;
+                                    if (dismountIndex === -1) {
+                                        mainEntry = entry;
                                     }
                                     else {
-                                        console.warn('Did not find troop type for ' + value + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                        mainEntry = entry.slice(0, dismountIndex);
+                                        dismountEntry = entry.slice(dismountIndex + 2);
+                                    }
+
+                                    // Lookup the codes
+                                    var mainCode = troopTypes[mainEntry];
+                                    var dismountCode = troopTypes[dismountEntry];
+
+                                    // Issue warnings for unknown names
+                                    if (mainCode === null) {
+                                        console.warn('Did not find troop type for ' + mainEntry + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                    }
+
+                                    if (dismountEntry && dismountCode === null) {
+                                        console.warn('Did not find troop type for dismount entry ' + dismountEntry + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                    }
+
+                                    // Add the troop entry
+                                    if (mainCode) {
+                                        troopOption.troopEntries.push({ troopTypeCode: mainCode, dismountTypeCode: dismountCode });
                                     }
                                 });
 

@@ -84,8 +84,12 @@ function TroopTypeEntriesListFilter(TroopTypeService) {
             var display = '';
             var firstValue = true;
 
-            input.forEach(function(value) {
-                var troopType = _.find(troopTypesData, { 'permanentCode': value.troopTypeCode });
+            input.forEach(function(entry) {
+                var troopType = _.find(troopTypesData, { 'permanentCode': entry.troopTypeCode });
+                var dismountType = null;
+                if (entry.dismountTypeCode) {
+                    dismountType = _.find(troopTypesData, { 'permanentCode': entry.dismountTypeCode });
+                }
                 if (troopType) {
                     if (firstValue) {
                         display = troopType.displayName;
@@ -93,6 +97,10 @@ function TroopTypeEntriesListFilter(TroopTypeService) {
                     }
                     else {
                         display = display + ' or ' + troopType.displayName;
+                    }
+
+                    if (dismountType) {
+                        display = display + '//' + dismountType.displayName;
                     }
                 }
             });
