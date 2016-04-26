@@ -52,7 +52,7 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                     max: 0,
                                     allyMin: 0,
                                     allyMax: 0,
-                                    troopTypes: [],
+                                    troopEntries: [],
                                     description: item.description
                                 };
 
@@ -68,7 +68,7 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                 }
 
                                 // Convert troop types
-                                var troopValues = item.troopTypes.split(' or ');
+                                var troopValues = item.troopEntries.split(' or ');
                                 troopValues.forEach(function (value) {
                                     value = value.trim();
                                     // Remove any trailing 's'
@@ -76,15 +76,15 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                         value = value.slice(0, -1);
                                     }
                                     if (troopTypes[value]) {
-                                        troopOption.troopTypes.push(troopTypes[value]);
+                                        troopOption.troopEntries.push({ troopTypeCode: troopTypes[value], dismountTypeCode: null });
                                     }
                                     else {
                                         console.warn('Did not find troop type for ' + value + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
                                     }
                                 });
 
-                                // If the troop option is valid, add it to the parsde data
-                                if (troopOption.max > 0 && troopOption.troopTypes.length > 0) {
+                                // If the troop option is valid, add it to the parsed data
+                                if (troopOption.max > 0 && troopOption.troopEntries.length > 0) {
                                     flatArray.push(troopOption);
                                 }
                                 else {
@@ -141,31 +141,78 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
 
     function importData() {
         if (vm.parsedData.length) {
-            // Prepare the request
-            var importRequest = {
-                data: vm.parsedData
-            };
 
-            // Import the troop options
-            TroopOptionsImportService.import(
-                importRequest,
-                function(importSummary) {
+            // Only send a slice of data in each request
+
+            // Slice the data
+            var slicedData = [];
+            var sliceSize = 100;
+            var index = 0;
+            var done = false;
+            while (!done) {
+                var start = index;
+                var end = index + sliceSize;
+                if (end > vm.parsedData.length) {
+                    end = vm.parsedData.length;
+                    if (end > start) {
+                        var slice = vm.parsedData.slice(start, end);
+                        slicedData.push(slice);
+                    }
+                    done = true;
+                }
+                else {
+                    var slice = vm.parsedData.slice(start, end);
+                    slicedData.push(slice);
+                    index = end;
+                }
+            }
+
+            // Send the each slice
+            async.mapSeries(slicedData, importSlice, function(err, sliceSummary) {
+                if (err) {
+                    vm.statusMessage1 = 'Unable to import troop options.';
+                    vm.statusMessage2 = '';
+                    vm.file = null;
+                    vm.parsedData = [];
+                }
+                else {
+                    // Sum the summary data from each slice
+                    var importSummary = sliceSummary.reduce(function (previous, current) {
+                        return {
+                            importedTroopOptions: previous.importedTroopOptions + current.importedTroopOptions,
+                            importedArmyLists: previous.importedArmyLists + current.importedArmyLists,
+                            failedArmyLists: previous.failedArmyLists + current.failedArmyLists
+                        }
+                    });
+
+                    // Report the results
                     console.info('Successfully imported ' + importSummary.importedTroopOptions + ' troop options for ' + importSummary.importedArmyLists + ' army lists.');
                     console.warn(importSummary.errors);
                     vm.statusMessage1 = 'Imported ' + importSummary.importedTroopOptions + ' troop options for ' + importSummary.importedArmyLists + ' army lists.';
                     vm.statusMessage2 = importSummary.failedArmyLists + ' army lists were not imported due to errors.';
                     vm.file = null;
                     vm.parsedData = [];
-                },
-                function (response) {
-                    console.error(response.data);
-                    vm.statusMessage1 = 'Unable to import troop options.';
-                    vm.statusMessage2 = '';
-                    vm.file = null;
-                    vm.parsedData = [];
                 }
-            );
+            });
         }
+    }
+
+    function importSlice(slice, cb) {
+        var importRequest = {
+            data: slice
+        };
+
+        // Import the troop options
+        TroopOptionsImportService.import(
+            importRequest,
+            function(importSummary) {
+                return cb(null, importSummary);
+            },
+            function (response) {
+                console.error(response.data);
+                return cb(response.data);
+            }
+        );
     }
 
     function initializeTroopTypeData() {

@@ -49,7 +49,7 @@ function TroopOptionsAnalysisService(TroopTypeService) {
     }
 
     function calculateMinMaxPoints(troopOption) {
-        if (troopOption.troopTypes.length === 0) {
+        if (troopOption.troopEntries.length === 0) {
             return {
                 minPoints: 0,
                 maxPoints: 0
@@ -59,8 +59,8 @@ function TroopOptionsAnalysisService(TroopTypeService) {
             var minCost = 99;
             var maxCost = 0;
 
-            troopOption.troopTypes.forEach(function (item) {
-                var troopType = findTroopTypeByPermanentCode(item);
+            troopOption.troopEntries.forEach(function (item) {
+                var troopType = findTroopTypeByPermanentCode(item.troopTypeCode);
                 if (troopType) {
                     if (troopType.cost < minCost) {
                         minCost = troopType.cost;

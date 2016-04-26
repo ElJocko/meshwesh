@@ -122,7 +122,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 { field: 'core', displayName: 'Core?', type: 'boolean', cellClass: 'td-boolean-check', cellFilter: 'mwDisplayBooleanCheck', width: 80, enableColumnMenu: false },
                 { field: 'min', displayName: 'Min', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 80, enableColumnMenu: false },
                 { field: 'max', displayName: 'Max', type: 'number', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 80, enableColumnMenu: false },
-                { field: 'troopTypes', displayName: 'Troop Types', type: 'string', cellFilter: 'mwDisplayTroopTypesList', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 330, enableColumnMenu: false },
+                { field: 'troopEntries', displayName: 'Troop Entries', type: 'string', cellFilter: 'mwDisplayTroopTypeEntriesList', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 330, enableColumnMenu: false },
                 { field: 'description', displayName: 'Description', type: 'string', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 200, enableColumnMenu: false },
                 { field: 'startDate', displayName: 'Start Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
                 { field: 'endDate', displayName: 'End Date', type: 'number', cellFilter: 'mwDisplayYear', sortDirectionCycle: [uiGridConstants.ASC, uiGridConstants.DESC], width: 110, enableColumnMenu: false },
@@ -354,7 +354,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
         var newTroopOption = {
             min: 0,
             max: 1,
-            troopTypes: [],
+            troopEntries: [],
             general: false,
             core: false,
             dateRange: {
@@ -415,7 +415,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
                 troopOption.general = resultTroopOption.general;
                 troopOption.core = resultTroopOption.core;
                 troopOption.description = resultTroopOption.description;
-                troopOption.troopTypes = resultTroopOption.troopTypes;
+                troopOption.troopEntries = resultTroopOption.troopEntries;
 
                 // Update the sort
                 vm.troopOptionsGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);

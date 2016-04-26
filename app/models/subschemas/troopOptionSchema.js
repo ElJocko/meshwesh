@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var DateRange = require('./dateRangeSchema');
+var TroopEntry = require('./troopEntrySchema');
 
 // Create the schema
 var TroopOptionSchema = new mongoose.Schema({
@@ -10,7 +11,7 @@ var TroopOptionSchema = new mongoose.Schema({
     allyMin: { type: Number, required: true },
     allyMax: { type: Number, required: true },
     dateRange: { type: DateRange },
-    troopTypes: [ String ],
+    troopEntries: [ TroopEntry ],
     description: { type: String },
     general: { type: Boolean },
     core: { type: Boolean }

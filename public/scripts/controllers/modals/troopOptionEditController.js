@@ -39,7 +39,10 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
 
             // Select the troop types in the starting data
             vm.troopTypeGridOptions.data.forEach(function(value) {
-                var index = vm.troopOption.troopTypes.indexOf(value.permanentCode);
+                var index = vm.troopOption.troopEntries.findIndex(function(element) {
+                    return (element.troopTypeCode === value.permanentCode);
+                });
+
                 if (index >= 0) {
                     vm.troopTypeGridApi.selection.selectRow(value);
                 }
@@ -114,7 +117,7 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
             general: vm.troopOption.general,
             core: vm.troopOption.core,
             description: vm.troopOption.description,
-            troopTypes: vm.troopOption.troopTypes
+            troopEntries: vm.troopOption.troopEntries
         };
         $uibModalInstance.close(updatedTroopOption);
     };
@@ -129,15 +132,18 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
     };
 
     function addTroopType(troopType) {
-        vm.troopOption.troopTypes.push(troopType);
+        vm.troopOption.troopEntries.push({ troopTypeCode: troopType, dismountTypeCode: null });
         calculateMinMaxPoints();
     }
 
     function removeTroopType(troopType) {
-        var index = vm.troopOption.troopTypes.indexOf(troopType);
+        var index = vm.troopOption.troopEntries.findIndex(function(element) {
+            return (element.troopTypeCode === troopType);
+        });
+
         if (index !== -1) {
             // Remove the date range
-            vm.troopOption.troopTypes.splice(index, 1);
+            vm.troopOption.troopEntries.splice(index, 1);
             calculateMinMaxPoints();
         }
     }
@@ -153,7 +159,7 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
     }
 
     function calculateMinMaxPoints() {
-        if (vm.troopOption.troopTypes.length === 0) {
+        if (vm.troopOption.troopEntries.length === 0) {
             vm.minPoints = 0;
             vm.maxPoints = 0;
         }
@@ -161,8 +167,8 @@ function TroopOptionEditController($uibModalInstance, $timeout, uiGridConstants,
             var minCost = 99;
             var maxCost = 0;
 
-            vm.troopOption.troopTypes.forEach(function(item) {
-                var troopType = findTroopTypeByPermanentCode(item);
+            vm.troopOption.troopEntries.forEach(function(item) {
+                var troopType = findTroopTypeByPermanentCode(item.troopTypeCode);
                 if (troopType) {
                     if (troopType.cost < minCost) {
                         minCost = troopType.cost;

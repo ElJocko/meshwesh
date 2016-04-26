@@ -8,6 +8,14 @@ var dateRangeSubschema = {
     }
 };
 
+var troopEntrySubschema = {
+    type: 'object',
+    properties: {
+        troopTypeCode: { type: 'string', requred: true },
+        dismountTypeCode: { type: ['string', null] }
+    }
+};
+
 var troopOptionSubschema = {
     type: 'object',
     properties: {
@@ -16,7 +24,7 @@ var troopOptionSubschema = {
         allyMin: { type: 'number', requred: true },
         allyMax: { type: 'number', requred: true },
         dateRange: dateRangeSubschema,
-        troopTypes: { type: ['array', null], items: { type: 'string' } },
+        troopEntries: { type: ['array', null], items: troopEntrySubschema },
         description: { type: 'string' },
         general: { type: 'boolean' },
         core: { type: 'boolean' }
