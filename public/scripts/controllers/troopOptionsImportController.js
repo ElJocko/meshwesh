@@ -50,7 +50,8 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                         var flatArray = [];
                         var errorRows = 0;
                         results.data.forEach(function(item) {
-                            if (item.troopOptionOrder && item.troopOptionOrder !== '0') {
+                            // TBD: z troops are internal ally
+                            if (item.troopOptionOrder && item.troopOptionOrder !== '0' && item.sublistId !== 'w' && item.sublistId !== 'x' && item.sublistId !== 'y' && item.sublistId !== 'z') {
                                 var troopOption = {
                                     listId: item.listId,
                                     sublistId: item.sublistId,
@@ -95,8 +96,11 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     }
 
                                     // Lookup the codes
-                                    var mainCode = troopTypes[mainEntry];
-                                    var dismountCode = troopTypes[dismountEntry];
+                                    var mainCode = troopTypes[mainEntry.toUpperCase()];
+                                    var dismountCode = null;
+                                    if (dismountEntry) {
+                                        dismountCode = troopTypes[dismountEntry.toUpperCase()];
+                                    }
 
                                     // Issue warnings for unknown names
                                     if (mainCode === null) {
@@ -263,7 +267,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
     function initializeTroopTypeData() {
         TroopTypeService.list(function(availableTroopTypes) {
             availableTroopTypes.forEach(function (item) {
-                troopTypes[item.displayName] = item.permanentCode;
+                troopTypes[item.displayName.toUpperCase()] = item.permanentCode;
             });
         });
     }
