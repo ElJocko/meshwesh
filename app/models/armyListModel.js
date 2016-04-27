@@ -11,6 +11,7 @@ var ArmyListSchema = new mongoose.Schema({
     name: { type: String, required: true },
     listId: { type: Number },
     sublistId: { type: String },
+    uniqueId: { type: String },
     grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
     invasionRatings: [ AnnotatedRating ],
     maneuverRatings: [ AnnotatedRating ],

@@ -44,7 +44,7 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                         var flatArray = [];
                         var errorRows = 0;
                         results.data.forEach(function(item) {
-                            if (item.troopOptionOrder && item.troopOptionOrder !== 0) {
+                            if (item.troopOptionOrder && item.troopOptionOrder !== '0') {
                                 var troopOption = {
                                     listId: item.listId,
                                     sublistId: item.sublistId,
@@ -112,6 +112,9 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                                     flatArray.push(troopOption);
                                 }
                                 else {
+                                    var itemString = JSON.stringify(item);
+                                    console.log('Unable to convert item: ' + itemString);
+
                                     errorRows = errorRows + 1;
                                 }
                             }
