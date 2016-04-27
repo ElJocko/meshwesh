@@ -4,15 +4,21 @@ angular
     .module('meshweshControllers')
     .controller('TroopOptionsImportController', TroopOptionsImportController);
 
-TroopOptionsImportController.$inject = ['$location', '$scope', 'TroopTypeService', 'TroopOptionsImportService'];
+TroopOptionsImportController.$inject = ['$location', '$scope', '$interval', 'TroopTypeService', 'TroopOptionsImportService'];
 
-function TroopOptionsImportController($location, $scope, TroopTypeService, TroopOptionsImportService) {
+function TroopOptionsImportController($location, $scope, $interval, TroopTypeService, TroopOptionsImportService) {
     var vm = this;
 
     vm.file = null;
     vm.parsedData = [];
     vm.statusMessage1 = 'No file selected';
     vm.statusMessage2 = '';
+
+    vm.importProgress = {
+        running: false,
+        numberTotal: 0,
+        numberDone: 0
+    };
 
     var troopTypes = {};
     initializeTroopTypeData();
@@ -171,6 +177,11 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
 
             // Only send a slice of data in each request
 
+            // Initialize the progress bar
+            vm.importProgress.numberTotal = vm.parsedData.length;
+            vm.importProgress.numberDone = 0;
+            vm.importProgress.running = true;
+
             // Slice the data
             var slicedData = [];
             var sliceSize = 100;
@@ -201,6 +212,8 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                     vm.statusMessage2 = '';
                     vm.file = null;
                     vm.parsedData = [];
+
+                    removeProgressBarAfterDelay();
                 }
                 else {
                     // Sum the summary data from each slice
@@ -219,6 +232,8 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                     vm.statusMessage2 = importSummary.failedArmyLists + ' army lists were not imported due to errors.';
                     vm.file = null;
                     vm.parsedData = [];
+
+                    removeProgressBarAfterDelay();
                 }
             });
         }
@@ -233,6 +248,9 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
         TroopOptionsImportService.import(
             importRequest,
             function(importSummary) {
+                // Update the progress bar
+                vm.importProgress.numberDone = vm.importProgress.numberDone + slice.length;
+
                 return cb(null, importSummary);
             },
             function (response) {
@@ -248,5 +266,14 @@ function TroopOptionsImportController($location, $scope, TroopTypeService, Troop
                 troopTypes[item.displayName] = item.permanentCode;
             });
         });
+    }
+
+    function removeProgressBarAfterDelay() {
+        var timer = $interval(
+            function() {
+                vm.importProgress.running = false;
+            },
+            1000,
+            1);
     }
 }

@@ -39,7 +39,12 @@
                     <span id="statusMessage2" ng-bind="vm.statusMessage2"></span>
                 </div>
             </div>
-            <button type="submit" class="btn save-btn" ng-click="vm.importData()" ng-disabled="!vm.parsedData.length">Import Data</button>
+            <div class="form-group">
+                <button type="submit" class="btn save-btn" ng-click="vm.importData()" ng-disabled="!vm.parsedData.length">Import Data</button>
+            </div>
+            <div class="form-group" ng-show="vm.importProgress.running">
+                <uib-progressbar class="progress-striped active" max="vm.importProgress.numberTotal" value="vm.importProgress.numberDone"><span style="color:white; white-space:nowrap;">{{ vm.importProgress.numberDone }} / {{ vm.importProgress.numberTotal }}</span></uib-progressbar>
+            </div>
         </form>
     </div>
 </div>
