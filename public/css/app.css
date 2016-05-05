@@ -124,6 +124,11 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     font-size: 2em;
 }
 
+.content-header2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
 .content-subheader {
     margin-top: 15px;
     font-weight: bold;
