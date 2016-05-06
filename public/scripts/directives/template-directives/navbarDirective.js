@@ -1,9 +1,16 @@
 angular
     .module('meshweshDirectives')
-    .directive('mwNavbar', NavBarDirective);
+    .directive('navbarAdmin', NavBarAdminDirective)
+    .directive('navbarVisitor', NavBarVisitorDirective);
 
-function NavBarDirective() {
+function NavBarAdminDirective() {
     return {
-        templateUrl: 'views/app-partials/navbar.html'
+        templateUrl: 'views/app-partials/navbarAdmin.html'
+    };
+}
+
+function NavBarVisitorDirective() {
+    return {
+        templateUrl: 'views/app-partials/navbarVisitor.html'
     };
 }

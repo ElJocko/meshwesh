@@ -1,49 +1,68 @@
 <div class="row">
     <div class="col-xs-12">
-        <div class="content-header">
+        <h1>
             <span ng-bind="vm.armyList.name"></span>
-        </div>
-        <div ng-repeat="dateRange in vm.armyList.dateRanges">
-            <div class="content-header2">
-                {{ dateRange.startDate | mwDisplayYear }}
-                <span ng-hide="dateRange.startDate === dateRange.endDate">to {{ dateRange.endDate | mwDisplayYear }}</span>
+            <div ng-repeat="dateRange in vm.armyList.dateRanges">
+                <small>
+                    {{ dateRange.startDate | mwDisplayYear }}
+                    <span ng-hide="dateRange.startDate === dateRange.endDate">to {{ dateRange.endDate | mwDisplayYear }}</span>
+                </small>
             </div>
-        </div>
+        </h1>
         <div class="empty-table-message" ng-show="vm.armyList.dateRanges.length == 0">No date ranges entered</div>
     </div>
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div>
+        <h2 class="warning-text">
+            DRAFT
+        </h2>
+        <div ng-hide="!vm.armyList.description">
+            <div class="content-subheader">Description</div>
             <div>
                 <span ng-bind="vm.armyList.description"></span>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="content-subheader">Invasion Ratings</div>
-                <div ng-repeat="rating in vm.armyList.invasionRatings">
-                    <div>
-                        {{ rating.value }}
-                        <span ng-show="rating.note">({{ rating.note }})</span>
+                <div class="content-subheader">Invasion Rating</div>
+                <dl class="dl-horizontal-rating">
+                    <div class="content-text" ng-repeat="rating in vm.armyList.invasionRatings">
+                        <dt>{{ rating.value }}</dt>
+                        <dd>{{ rating.note }}</dd>
                     </div>
-                </div>
+                </dl>
                 <div class="empty-table-message" ng-show="vm.armyList.invasionRatings.length == 0">No invasion ratings entered</div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="content-subheader">Maneuver Ratings</div>
-                <div ng-repeat="rating in vm.armyList.maneuverRatings">
-                    <div>
-                        {{ rating.value }}
-                        <span ng-show="rating.note">({{ rating.note }})</span>
+                <div class="content-subheader">Maneuver Rating</div>
+                <dl class="dl-horizontal-rating">
+                    <div class="content-text" ng-repeat="rating in vm.armyList.maneuverRatings">
+                        <dt>{{ rating.value }}</dt>
+                        <dd>{{ rating.note }}</dd>
                     </div>
-                </div>
+                </dl>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length == 0">No maneuver ratings entered</div>
             </div>
         </div>
         <div>
-            <div class="content-subheader">Troop Options</div>
-            <div id="troop-option-grid" class="troop-option-grid" ui-grid="vm.troopOptionGridOptions"></div>
+            <div class="content-subheader table-subheader">Troop Options</div>
+            <table class="table">
+                <tr>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Core?</th>
+                    <th>Troops</th>
+                </tr>
+                <tbody ng-repeat="troopOption in vm.armyList.troopOptions">
+                    <tr>
+                        <td>{{ troopOption.min }}</td>
+                        <td>{{ troopOption.max }}</td>
+                        <td>{{ troopOption.core }}</td>
+                        <td>{{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}</br><em>{{ troopOption.description }}</em></td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="empty-table-message" ng-show="vm.armyList.troopOptions.length == 0">No troop options entered</div>
         </div>
     </div>

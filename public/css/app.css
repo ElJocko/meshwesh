@@ -130,12 +130,24 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .content-subheader {
-    margin-top: 15px;
+    margin-top: 10px;
     font-weight: bold;
+}
+
+.table-subheader {
+    margin-bottom: 15px;
 }
 
 .content-text {
     font-size: 1.2em;
+}
+
+.warning-text {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    background: #d96459;
+    color: #ffffff;
 }
 
 .content-link {
@@ -325,3 +337,15 @@ input[readonly] {
     height: 4px;
 }
 
+.dl-horizontal-rating dt {
+    float: left;
+    width: 25px;
+    overflow: hidden;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dl-horizontal-rating dd {
+    margin-left: 45px;
+}
