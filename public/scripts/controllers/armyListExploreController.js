@@ -148,6 +148,9 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             // Existing army list
             vm.armyList = results.armyList;
 
+            // Add in the default status
+            vm.armyList.status = 'Early Draft';
+
             // Find the grand army list that the army list belongs to
             if (vm.armyList.grandArmyList) {
                 var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
