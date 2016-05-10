@@ -8,13 +8,23 @@ darkRed: #8c4646
 
 */
 
+/*
+
+dark blue: #152737
+medium blue: #2b4e69
+light blue: #799aa5
+off white: #fffff0
+red brown: #682321
+
+*/
+
 
 body {
     padding-bottom: 50px;
 }
 
 .banner {
-    background: #8c4646;
+    background: #2b4e69;
     color: #ffffff;
     top: 0;
     left: 0;
@@ -37,7 +47,7 @@ body {
     top: -10px;
     left: 115px;
     font-size: 3em;
-    background: #8c4646;
+    background: #2b4e69;
 }
 
 .banner h3 {
@@ -45,7 +55,7 @@ body {
     top: 35px;
     left: 115px;
     font-size: 1.2em;
-    background: #8c4646;
+    background: #2b4e69;
 }
 
 h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
@@ -60,12 +70,12 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 
 #navbar li a {
     color: #ffffff;
-    background: #588c7e;
+    background: #2b4e69;
 }
 
 #navbar ul {
     color: #ffffff;
-    background: #588c7e;
+    background: #2b4e69;
 }
 
 #navbar-nav {
@@ -75,20 +85,20 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     margin: 0;
     padding: 0;
     list-style: none;
-    background: #d96459;
+    background: #152737;
 }
 
 #navbar-nav li {
     text-indent: 20px;
     line-height: 40px;
-    background: #d96459;
+    background: #152737;
 }
 
 #navbar-nav li a {
     display: block;
     text-decoration: none;
     color: #ffffff;
-    background: #d96459;
+    background: #152737;
 }
 
 #navbar-nav li a:hover {
@@ -166,7 +176,7 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 
 .save-btn {
     margin-top: 30px;
-    background: #588c7e;
+    background: #2b4e69;
     color: #ffffff;
 }
 
@@ -181,11 +191,11 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 .browse-file-btn {
     background: #ffffff;
     color: #588c7e;
-    border-color: #588c7e;
+    border-color: #2b4e69;
 }
 
 .file-text {
-    border-color: #588c7e;
+    border-color: #2b4e69;
 }
 
 .delete-btn {
@@ -197,8 +207,8 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 
 .btn-primary {
     color: #ffffff;
-    background-color: #588c7e;
-    border-color: #588c7e;
+    background-color: #2b4e69;
+    border-color: #2b4e69;
 }
 
 .btn-warning {
@@ -277,7 +287,7 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 .table-search-box {
     margin-top: 10px;
     margin-bottom: 10px;
-    border-color: #588c7e;
+    border-color: #2b4e69;
 }
 
 .input-validation-error {
