@@ -4,8 +4,6 @@ var config = require('./config');
 var logger = require('./logger');
 
 exports.requireAdminToken = function(request, response, next) {
-    return next();
-
     // request must include the admin token
     var token = request.get('PRIVATE-TOKEN');
 
@@ -20,5 +18,9 @@ exports.requireAdminToken = function(request, response, next) {
     else {
         return next();
     }
+};
+
+exports.authenticateUser = function(password, encryptedPassword, salt) {
+
 };
 

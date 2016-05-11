@@ -7,18 +7,17 @@ var grandArmyListController = require('../controllers/grandArmyListController');
 var router = express.Router();
 
 router.route('/v1/grandArmyLists')
-    .get(tokenAuthz.requireAdminToken, grandArmyListController.retrieveByQuery)
+    .get(grandArmyListController.retrieveByQuery)
     .post(tokenAuthz.requireAdminToken, grandArmyListController.create);
 
     router.route('/v1/grandArmyLists/:listId')
-        .get(tokenAuthz.requireAdminToken, grandArmyListController.retrieveById)
+        .get(grandArmyListController.retrieveById)
         .put(tokenAuthz.requireAdminToken, grandArmyListController.update)
         .delete(tokenAuthz.requireAdminToken, grandArmyListController.delete);
 
     router.route('/v1/grandArmyListsImport')
         .post(
-            tokenAuthz.requireAdminToken,
-            grandArmyListController.import);
+            tokenAuthz.requireAdminToken, grandArmyListController.import);
 
 
 module.exports = router;

@@ -11,7 +11,6 @@ var router = express.Router();
 // Routes
 router.route('/v1/armyLists')
     .get(
-        tokenAuthz.requireAdminToken,
         validator.validate(schemas.retrieveArmyListsByQuery),
         armyListController.retrieveByQuery)
     .post(
@@ -21,7 +20,6 @@ router.route('/v1/armyLists')
 
 router.route('/v1/armyLists/:listId')
     .get(
-        tokenAuthz.requireAdminToken,
         validator.validate(schemas.retrieveArmyListById),
         armyListController.retrieveById)
     .put(

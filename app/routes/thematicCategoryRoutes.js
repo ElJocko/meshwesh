@@ -7,11 +7,11 @@ var thematicCategoryController = require('../controllers/thematicCategoryControl
 var router = express.Router();
 
 router.route('/v1/thematicCategories')
-    .get(tokenAuthz.requireAdminToken, thematicCategoryController.retrieveByQuery)
+    .get(thematicCategoryController.retrieveByQuery)
     .post(tokenAuthz.requireAdminToken, thematicCategoryController.create);
 
 router.route('/v1/thematicCategories/:categoryId')
-    .get(tokenAuthz.requireAdminToken, thematicCategoryController.retrieveById)
+    .get(thematicCategoryController.retrieveById)
     .put(tokenAuthz.requireAdminToken, thematicCategoryController.update)
     .delete(tokenAuthz.requireAdminToken, thematicCategoryController.delete);
 

@@ -10,5 +10,9 @@ module.exports = {
         document.id = document._id.toHexString();
         delete document._id;
         delete document.__v;
+    },
+    sanitizeUser: function(document) {
+        delete document.passwordHash;
+        delete document.salt;
     }
 };
