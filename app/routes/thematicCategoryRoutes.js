@@ -8,11 +8,11 @@ var router = express.Router();
 
 router.route('/v1/thematicCategories')
     .get(thematicCategoryController.retrieveByQuery)
-    .post(tokenAuthz.requireAdminToken, thematicCategoryController.create);
+    .post(tokenAuthz.requireEditor, thematicCategoryController.create);
 
 router.route('/v1/thematicCategories/:categoryId')
     .get(thematicCategoryController.retrieveById)
-    .put(tokenAuthz.requireAdminToken, thematicCategoryController.update)
-    .delete(tokenAuthz.requireAdminToken, thematicCategoryController.delete);
+    .put(tokenAuthz.requireEditor, thematicCategoryController.update)
+    .delete(tokenAuthz.requireEditor, thematicCategoryController.delete);
 
 module.exports = router;

@@ -2,7 +2,9 @@
 
 var User = require('../models/userModel');
 var transform = require('../models/transform');
+var config = require('../lib/config');
 var crypto = require('crypto');
+var jwt = require('jwt-simple');
 
 var errors = {
     missingParameter: 'Missing required parameter',
@@ -199,8 +201,19 @@ exports.signIn = function(credentials, callback) {
                     // Check for a match with the stored hash (passwordHash)
                     var hash = key.toString('hex');
                     if (hash === document.passwordHash) {
-                        var jwt = {};
-                        return callback(null, jwt);
+                        var payload = {
+                            emailAddress: document.emailAddress,
+                            role: document.role
+                        };
+                        var token = jwt.encode(payload, config.security.jwtSecret);
+
+                        var userInfo = {
+                            emailAddress: document.emailAddress,
+                            role: document.role,
+                            token: token
+                        };
+
+                        return callback(null, userInfo);
                     }
                     else {
                         var error = new Error(errors.incorrectPassword);

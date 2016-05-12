@@ -7,15 +7,15 @@ var userController = require('../controllers/userController');
 var router = express.Router();
 
 router.route('/v1/users')
-    .get(tokenAuthz.requireAdminToken, userController.retrieveByQuery)
-    .post(tokenAuthz.requireAdminToken, userController.create);
+    .get(tokenAuthz.requireAdmin, userController.retrieveByQuery)
+    .post(tokenAuthz.requireAdmin, userController.create);
 
 router.route('/v1/users/:userId')
-    .get(tokenAuthz.requireAdminToken, userController.retrieveById)
-    .put(tokenAuthz.requireAdminToken, userController.update)
-    .delete(tokenAuthz.requireAdminToken, userController.delete);
+    .get(tokenAuthz.requireAdmin, userController.retrieveById)
+    .put(tokenAuthz.requireAdmin, userController.update)
+    .delete(tokenAuthz.requireAdmin, userController.delete);
 
-router.route('/v1/userToken')
+router.route('/v1/userCredentials')
     .post(userController.signIn);
 
 module.exports = router;
