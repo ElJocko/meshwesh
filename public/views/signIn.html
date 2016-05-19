@@ -1,0 +1,14 @@
+<div class="content row">
+    <div class="col-sm-4">
+        <h2>Sign In</h2>
+        <form>
+            <fieldset class="form-group">
+                <label for="emailAddress">Email Address</label>
+                <input type="text" class="form-control" id="emailAddress" ng-model="vm.emailAddress">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" ng-model="vm.password">
+            </fieldset>
+            <button type="submit" class="btn save-btn" ng-click="vm.submit()">Sign In</button>
+        </form>
+    </div>
+</div>

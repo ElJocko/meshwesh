@@ -34,7 +34,7 @@ body {
 }
 
 .banner img {
-    border-width: 0px;
+    border-width: 0;
     position: absolute;
     top:5px;
     left: 30px;
@@ -42,7 +42,7 @@ body {
     height: 70px;
 }
 
-.banner h1 {
+.banner-header {
     position: absolute;
     top: -10px;
     left: 115px;
@@ -50,12 +50,31 @@ body {
     background: #2b4e69;
 }
 
-.banner h3 {
+.banner-subheader {
     position: absolute;
-    top: 35px;
+    color: #ffffff;
+    top: 52px;
     left: 115px;
     font-size: 1.2em;
     background: #2b4e69;
+}
+
+.banner-subheader:hover {
+    color:#ffffff;
+    text-decoration: none;
+}
+
+.banner-sign-in {
+    position: absolute;
+    color: #ffffff;
+    top: 35px;
+    right: 35px;
+    font-size: 1.2em;
+    background: #2b4e69;
+}
+
+.banner-sign-in:hover {
+    color:#799aa5;
 }
 
 h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {

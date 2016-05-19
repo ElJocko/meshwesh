@@ -10,13 +10,13 @@
             particular game) and an army gallery submitted by players.
         </p>
     </div>
-    <div class="col-sm-8 col-md-6">
+    <div class="col-sm-8 col-md-6 col-lg-5">
         <img class="img-responsive" src="images/game-image-500.png">
     </div>
 </div>
 <div class="row">
     <div class="col-sm-8 col-md-6">
-        <img class="title-image img-responsive" src="images/triumph-title.png">
+        <img class="title-image img-responsive" src="images/triumph-title.png" alt="Triumph Rules">
     </div>
 </div>
 <div class="row">
@@ -27,7 +27,7 @@
     </div>
 -->
     <div class="col-sm-4" ng-click="vm.showArmyListSummary()">
-        <div class="summary-number">{{ vm.book.armyListCount }}</div>
+        <div class="summary-number" ng-bind="vm.book.armyListCount"> </div>
         <div class="summary-text">Army Lists</div>
     </div>
 </div>

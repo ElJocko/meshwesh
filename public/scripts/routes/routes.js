@@ -13,6 +13,11 @@ function router($routeProvider) {
             controller:'HomeController',
             controllerAs: 'vm'
         })
+        .when('/signIn', {
+            templateUrl:'views/signIn.html',
+            controller:'SignInController',
+            controllerAs: 'vm'
+        })
         .when('/thematicCategory/summary', {
             templateUrl:'views/thematicCategorySummary.html',
             controller:'ThematicCategorySummaryController',
