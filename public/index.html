@@ -18,11 +18,10 @@
 <body>
 
 <!-- Banner -->
-<div id="mw-banner" mw-banner></div>
+<div id="app-banner" app-banner></div>
 
 <!-- Navbar -->
-<div id="mw-navbar" navbar-visitor></div>
-
+<div id="app-navbar" app-navbar></div>
 <div id="progress-bar"></div>
 
 <!-- Contents -->
@@ -52,8 +51,9 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/routes/routes.js"></script>
 
-    <script src="scripts/controllers/homeController.js"></script>
-    <script src="scripts/controllers/signInController.js"></script>
+    <script src="scripts/controllers/app/homeController.js"></script>
+    <script src="scripts/controllers/app/signInController.js"></script>
+    <script src="scripts/controllers/app/navbarController.js"></script>
 
     <script src="scripts/controllers/thematicCategorySummaryController.js"></script>
     <script src="scripts/controllers/thematicCategoryEditController.js"></script>
@@ -75,6 +75,8 @@
     <script src="scripts/controllers/armyListImportController.js"></script>
     <script src="scripts/controllers/troopOptionsImportController.js"></script>
     <script src="scripts/controllers/troopTypeImportController.js"></script>
+
+    <script src="scripts/services/currentUserService.js"></script>
 
     <script src="scripts/services/bookService.js"></script>
     <script src="scripts/services/thematicCategoryService.js"></script>

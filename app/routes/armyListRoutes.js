@@ -33,12 +33,12 @@ router.route('/v1/armyLists/:listId')
 
 router.route('/v1/armyListsImport')
     .post(
-        tokenAuthz.requireAdmin,
+//        tokenAuthz.requireAdmin,
         armyListController.import);
 
 router.route('/v1/troopOptionsImport')
     .post(
-        tokenAuthz.requireAdmin,
+//        tokenAuthz.requireAdmin,
         armyListController.importTroopOptions);
 
 module.exports = router;

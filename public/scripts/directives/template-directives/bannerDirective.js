@@ -1,6 +1,6 @@
 angular
     .module('meshweshDirectives')
-    .directive('mwBanner', BannerDirective);
+    .directive('appBanner', BannerDirective);
 
 function BannerDirective() {
     return {

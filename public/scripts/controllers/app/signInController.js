@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('SignInController', SignInController);
 
-SignInController.$inject = ['$location', 'SignInService'];
+SignInController.$inject = ['$location', 'SignInService', 'CurrentUserService'];
 
-function SignInController($location, SignInService) {
+function SignInController($location, SignInService, CurrentUserService) {
     var vm = this;
 
     vm.submit = signIn;
@@ -20,8 +20,9 @@ function SignInController($location, SignInService) {
 
         SignInService.signIn(credentials,
             function(response) {
-                var user = JSON.stringify(response);
-                sessionStorage.setItem('meshweshUser', user);
+                var user = response;
+                CurrentUserService.setRole(user.role);
+
                 $location.path('/home');
             },
             function(response) {
