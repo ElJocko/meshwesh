@@ -4,8 +4,25 @@ var config = require('./config');
 var logger = require('./logger');
 var jwt = require('jwt-simple');
 
-exports.requireAdmin = function(request, response, next) {
+exports.requireAdminToken = function(request, response, next) {
     // request must include the admin token
+    var token = request.get('ADMIN-TOKEN');
+
+    if (!token) {
+        logger.warn('tokenAuthz.requireAdminToken: Missing token');
+        return response.status(401).send('Not authorized');
+    }
+    else if (token !== config.security.adminToken) {
+        logger.warn('tokenAuthz.requireAdminToken: Incorrect token');
+        return response.status(401).send('Not authorized');
+    }
+    else {
+        return next();
+    }
+};
+
+exports.requireAdminRole = function(request, response, next) {
+    // request must include the jwt token
     var token = request.get('PRIVATE-TOKEN');
 
     if (!token) {
@@ -24,8 +41,8 @@ exports.requireAdmin = function(request, response, next) {
     }
 };
 
-exports.requireEditor = function(request, response, next) {
-    // request must include the admin token
+exports.requireEditorRole = function(request, response, next) {
+    // request must include the jwt token
     var token = request.get('PRIVATE-TOKEN');
 
     if (!token) {

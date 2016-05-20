@@ -8,14 +8,14 @@ var router = express.Router();
 
 router.route('/v1/troopTypes')
     .get(troopTypeController.retrieveByQuery)
-    .post(tokenAuthz.requireEditor, troopTypeController.create);
+    .post(tokenAuthz.requireEditorRole, troopTypeController.create);
 
 router.route('/v1/troopTypes/:troopTypeId')
     .get(troopTypeController.retrieveById)
-    .put(tokenAuthz.requireEditor, troopTypeController.update)
-    .delete(tokenAuthz.requireEditor, troopTypeController.delete);
+    .put(tokenAuthz.requireEditorRole, troopTypeController.update)
+    .delete(tokenAuthz.requireEditorRole, troopTypeController.delete);
 
 router.route('/v1/troopTypesImport')
-    .post(tokenAuthz.requireAdmin, troopTypeController.import);
+    .post(tokenAuthz.requireAdminRole, troopTypeController.import);
 
 module.exports = router;

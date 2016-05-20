@@ -14,7 +14,7 @@ router.route('/v1/armyLists')
         validator.validate(schemas.retrieveArmyListsByQuery),
         armyListController.retrieveByQuery)
     .post(
-        tokenAuthz.requireEditor,
+        tokenAuthz.requireEditorRole,
         validator.validate(schemas.createArmyList),
         armyListController.create);
 
@@ -23,22 +23,22 @@ router.route('/v1/armyLists/:listId')
         validator.validate(schemas.retrieveArmyListById),
         armyListController.retrieveById)
     .put(
-        tokenAuthz.requireEditor,
+        tokenAuthz.requireEditorRole,
         validator.validate(schemas.updateArmyList),
         armyListController.update)
     .delete(
-        tokenAuthz.requireEditor,
+        tokenAuthz.requireEditorRole,
         validator.validate(schemas.deleteArmyList),
         armyListController.delete);
 
 router.route('/v1/armyListsImport')
     .post(
-//        tokenAuthz.requireAdmin,
+        tokenAuthz.requireAdminRole,
         armyListController.import);
 
 router.route('/v1/troopOptionsImport')
     .post(
-//        tokenAuthz.requireAdmin,
+        tokenAuthz.requireAdminRole,
         armyListController.importTroopOptions);
 
 module.exports = router;

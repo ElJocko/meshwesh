@@ -45,10 +45,10 @@ module.exports.retrieveById = function(req, res) {
 
 exports.create = function(req, res) {
     // Get the data from the request
-    var troopTypeData = req.body;
+    var userData = req.body;
 
     // Create the troop type
-    userService.create(troopTypeData, function(err, document) {
+    userService.create(userData, function(err, document) {
         if (err) {
             if (err.message === userService.errors.duplicateCode) {
                 logger.warn("Duplicate code");
@@ -70,7 +70,7 @@ exports.update = function(req, res) {
     // Get the data from the request
     var troopTypeData = req.body;
 
-    userService.update(req.params.troopTypeId, troopTypeData, function(err, document) {
+    userService.update(req.params.userId, troopTypeData, function(err, document) {
         if (err) {
             if (err.message === userService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted user id');
@@ -99,7 +99,7 @@ exports.update = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-    userService.deleteById(req.params.troopTypeId, function(err, document) {
+    userService.deleteById(req.params.userId, function(err, document) {
         if (err) {
             if (err.message === userService.errors.badlyFormattedParameter) {
                 logger.warn('Badly formatted user id');
