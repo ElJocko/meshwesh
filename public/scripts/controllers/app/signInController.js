@@ -22,6 +22,7 @@ function SignInController($location, SignInService, CurrentUserService) {
             function(response) {
                 var user = response;
                 CurrentUserService.setRole(user.role);
+                CurrentUserService.setToken(user.token);
 
                 $location.path('/home');
             },

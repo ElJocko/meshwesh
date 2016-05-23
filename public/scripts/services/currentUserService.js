@@ -9,7 +9,8 @@ angular
 function CurrentUserService() {
     // Default user is visitor
     var currentUser = {
-        role: 'visitor'
+        role: 'visitor',
+        token: null
     };
 
     return {
@@ -18,6 +19,9 @@ function CurrentUserService() {
         },
         setRole: function(role) {
             currentUser.role = role;
+        },
+        setToken: function(token) {
+            currentUser.token  = token;
         }
     };
 }
