@@ -73,8 +73,14 @@ body {
     background: #2b4e69;
 }
 
-.banner-sign-in:hover {
-    color:#799aa5;
+.banner-sign-in:hover, .banner-sign-in:focus {
+    color: #f0f0f0;
+}
+
+@media only screen and (max-width: 500px) {
+    .banner-sign-in {
+        display: none;
+    }
 }
 
 h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
