@@ -13,36 +13,38 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService, 
         vm.create = showCreateArmyList;
         vm.onClickArmyList = showEditArmyList;
     }
-    else {
+    else if (mode === 'explore') {
         vm.create = null;
         vm.onClickArmyList = showExploreArmyList;
     }
 
-    vm.searchName = sessionStorage.getItem('armyListSummaryLastSearch');
-
-    vm.searchChanged = searchChanged;
-
     initializeArmyListGrid();
+
     ArmyListService.list(function(armyLists) {
         vm.armyLists = armyLists;
         vm.armyListGridOptions.data = vm.armyLists;
     });
 
+    restoreGridState();
+
     function showCreateArmyList() {
         $location.path('/armyList/create');
+        clearGridState();
     }
 
     function showEditArmyList(listId) {
-        sessionStorage.setItem('armyListSummaryLastSearch', vm.searchName);
         $location.path('/armyList/' + listId + '/edit');
+        clearGridState();
     }
 
     function showExploreArmyList(listId) {
-        sessionStorage.setItem('armyListSummaryLastSearch', vm.searchName);
         $location.path('/armyList/' + listId + '/explore');
+        clearGridState();
     }
 
+    vm.searchChanged = searchChanged;
     function searchChanged() {
+        saveGridState();
         vm.armyListGridApi.core.notifyDataChange(uiGridConstants.dataChange.EDIT);
     }
 
@@ -67,8 +69,8 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService, 
             ],
             rowHeight: 35,
             enableFiltering: true,
-            enableHorizontalScrollbar: 0,
-//            enableVerticalScrollbar: 0,
+            enableHorizontalScrollbar: uiGridConstants.scrollbars.NEVER,
+            enableVerticalScrollbar: uiGridConstants.scrollbars.ALWAYS,
             appScopeProvider: this,
             onRegisterApi: function(gridApi) {
                 vm.armyListGridApi = gridApi;
@@ -76,4 +78,22 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService, 
         };
     }
 
+    function saveGridState() {
+        $location.replace();
+        if (vm.searchName) {
+            $location.search('searchText', vm.searchName);
+        }
+        else {
+            $location.search('searchText', null);
+        }
+    }
+
+    function restoreGridState() {
+        var search = $location.search();
+        vm.searchName = search.searchText
+    }
+
+    function clearGridState() {
+        $location.search('searchText', null);
+    }
 }

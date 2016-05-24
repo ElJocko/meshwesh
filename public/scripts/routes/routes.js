@@ -52,12 +52,14 @@ function router($routeProvider) {
             templateUrl:'views/armyListSummary.html',
             controller:'ArmyListSummaryController',
             controllerAs: 'vm',
+            reloadOnSearch: false,
             resolve: { mode: function() { return 'explore' } }
         })
         .when('/armyList/summaryEdit', {
             templateUrl:'views/armyListSummary.html',
             controller:'ArmyListSummaryController',
             controllerAs: 'vm',
+            reloadOnSearch: false,
             resolve: { mode: function() { return 'edit' } }
         })
         .when('/armyList/:listId/edit', {
