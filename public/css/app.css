@@ -336,6 +336,46 @@ input[readonly] {
     font-size: 0;
 }
 
+.ui-grid {
+    border-top: 2px solid #dddddd;
+    border-bottom: 2px solid #dddddd;
+    border-left: none;
+    border-right: none;
+}
+
+.ui-grid-header {
+    border-bottom: 2px solid #dddddd;
+}
+
+.ui-grid-header-cell {
+    border-right: none;
+}
+
+.ui-grid-top-panel {
+    background: #ffffff;
+}
+
+.ui-grid-row:nth-child(odd) .ui-grid-cell {
+    border-top: 1px solid #dddddd;
+    border-right: none;
+    background-color: #ffffff;
+}
+
+.ui-grid-row:nth-child(even) .ui-grid-cell {
+    border-top: 1px solid #ddd;
+    border-right: none;
+    background-color: #ffffff;
+}
+
+.ui-grid-row:first-child .ui-grid-cell {
+    border-top: none;
+    background-color: #ffffff;
+}
+
+.ui-grid-vertical-bar {
+    background-color: #0000FF;
+}
+
 .sample-import {
     margin-top: 20px;
     margin-bottom: 20px;

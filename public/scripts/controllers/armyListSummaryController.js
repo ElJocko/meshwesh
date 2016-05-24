@@ -18,6 +18,8 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService, 
         vm.onClickArmyList = showExploreArmyList;
     }
 
+    vm.searchName = sessionStorage.getItem('armyListSummaryLastSearch');
+
     vm.searchChanged = searchChanged;
 
     initializeArmyListGrid();
@@ -31,10 +33,12 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService, 
     }
 
     function showEditArmyList(listId) {
+        sessionStorage.setItem('armyListSummaryLastSearch', vm.searchName);
         $location.path('/armyList/' + listId + '/edit');
     }
 
     function showExploreArmyList(listId) {
+        sessionStorage.setItem('armyListSummaryLastSearch', vm.searchName);
         $location.path('/armyList/' + listId + '/explore');
     }
 
