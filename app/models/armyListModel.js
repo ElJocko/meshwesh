@@ -18,7 +18,6 @@ var ArmyListSchema = new mongoose.Schema({
     dateRanges: [ DateRange ],
     description: { type : String },
     troopOptions: [ TroopOption ],
-//    topography: [ string ],
     derivedData: {
         extendedName: { type: String },
         listStartDate: { type: Number },

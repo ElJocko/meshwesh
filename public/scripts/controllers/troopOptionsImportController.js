@@ -39,7 +39,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                 delimiter: ',',
                 header: true,
                 complete: function(results) {
-                    console.log(results);
+                    //console.log(results);
                     vm.statusMessage1 = '';
                     vm.statusMessage2 = '';
                     vm.parsedData = [];
