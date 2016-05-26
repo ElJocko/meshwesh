@@ -34,12 +34,20 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                     vm.statusMessage2 = '';
 
                     if (results.data) {
-                        // Convert some data to arrays
+                        // Convert some data columns to arrays
                         results.data.forEach(function(item) {
-                            // Fix sublist ids
-                            if (item.sublistId === '') {
-                                console.log('list ' + item.listId + ' has empty sublistId');
-                                item.sublistId = 'a';
+                            // sortId,sublistId,name,uniqueId,startDate,endDate,invasionRatings,maneuverRatings
+
+                            // Add listIds
+                            var uniqueIdLength = item.uniqueId.length;
+                            if (uniqueIdLength > 0 && item.uniqueId[uniqueIdLength - 1] === item.sublistId) {
+                                // Last character of uniqueId is the sublistId
+                                item.listId = item.uniqueId.slice(0, uniqueIdLength - 1);
+                            }
+                            else {
+                                // uniqueId is missing the sublist id
+                                item.listId = item.uniqueId;
+                                item.uniqueId = item.uniqueId + item.sublistId;
                             }
 
                             // Convert dateRanges
@@ -72,6 +80,7 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                                 });
                                 item.maneuverRatings = tempArray;
                             }
+
                         });
                         vm.parsedData = results.data;
                         vm.statusMessage1 = 'Found ' + vm.parsedData.length + ' army lists in the file.';
