@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('TroopTypeEditController', TroopTypeEditController);
 
-TroopTypeEditController.$inject = ['$routeParams', '$location', 'TroopTypeService', 'mwDisplayTroopTypesListFilter', 'mwDisplayTroopTypesFilter'];
+TroopTypeEditController.$inject = ['$routeParams', '$location', 'TroopTypeService', 'mwDisplayTroopTypeEntriesList', 'mwDisplayTroopTypes'];
 
-function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDisplayTroopTypesListFilter, mwDisplayTroopTypesFilter) {
+function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDisplayTroopTypeEntriesList, mwDisplayTroopTypes) {
     var vm = this;
 
     var troopTypeId = $routeParams.troopTypeId;
@@ -65,7 +65,7 @@ function TroopTypeEditController($routeParams, $location, TroopTypeService, mwDi
     }
 
     function reloadFilters() {
-        mwDisplayTroopTypesListFilter.reloadData();
-        mwDisplayTroopTypesFilter.reloadData();
+        mwDisplayTroopTypeEntriesList.reloadData();
+        mwDisplayTroopTypes.reloadData();
     }
 }
