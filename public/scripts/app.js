@@ -25,3 +25,9 @@ angular.module('meshweshFilters', []);
 angular.module('angular-loading-bar').config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.parentSelector = '#progress-bar';
 }]);
+
+app.run(function($rootScope, $window, $location) {
+    $rootScope.$on("$routeChangeSuccess", function(event, next, current) {
+        $window.ga('send', 'pageview', $location.path());
+    });
+});
