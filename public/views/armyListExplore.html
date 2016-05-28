@@ -9,7 +9,7 @@
                 </small>
             </div>
         </h1>
-        <div class="empty-table-message" ng-show="vm.armyList.dateRanges.length == 0">No date ranges entered</div>
+        <div class="empty-table-message" ng-show="vm.armyList.dateRanges.length === 0">No date ranges entered</div>
     </div>
 </div>
 <div class="row">
@@ -32,7 +32,7 @@
                         <dd>{{ rating.note }}</dd>
                     </div>
                 </dl>
-                <div class="empty-table-message" ng-show="vm.armyList.invasionRatings.length == 0">No invasion ratings entered</div>
+                <div class="empty-table-message" ng-show="vm.armyList.invasionRatings.length === 0">No invasion ratings entered</div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="content-subheader">Maneuver Rating</div>
@@ -42,7 +42,7 @@
                         <dd>{{ rating.note }}</dd>
                     </div>
                 </dl>
-                <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length == 0">No maneuver ratings entered</div>
+                <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No maneuver ratings entered</div>
             </div>
         </div>
         <div>
@@ -63,7 +63,20 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="empty-table-message" ng-show="vm.armyList.troopOptions.length == 0">No troop options entered</div>
+            <div class="empty-table-message" ng-show="vm.armyList.troopOptions.length === 0">No troop options entered</div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h2>
+            Related Army Lists
+            <div ng-repeat="associatedArmyList in vm.associatedArmyLists">
+                <small>
+                    <a href ng-click="vm.onClickAssociatedArmyList(associatedArmyList.id)">{{ associatedArmyList.derivedData.extendedName }}</a>
+                </small>
+            </div>
+        </h2>
+        <div class="empty-table-message" ng-show="vm.associatedArmyLists.length === 0">No associated army lists found</div>
     </div>
 </div>

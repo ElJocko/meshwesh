@@ -22,6 +22,11 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
     var listId = $routeParams.listId;
     initializeData();
 
+    vm.onClickAssociatedArmyList = onClickAssociatedArmyList;
+    function onClickAssociatedArmyList(id) {
+        $location.path('/armyList/' + id + '/explore');
+    }
+
     function initializeDateRangeGrid() {
         vm.dateRangeGridOptions = {
             columnDefs: [
@@ -118,8 +123,10 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
     function initializeData() {
         // Get the army list if it exists
         var armyListPromise = null;
+        var associatedArmyListsPromise = null;
         if (listId) {
             armyListPromise = ArmyListService.get({ id: listId }).$promise;
+            associatedArmyListsPromise = ArmyListService.associatedArmyLists.list({ id: listId }).$promise;
         }
 
         // Get the grand army lists
@@ -128,6 +135,7 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         // Handle the response after the services complete
         var servicePromises = {
             armyList: armyListPromise,
+            associatedArmyLists: associatedArmyListsPromise,
             grandArmyLists: grandArmyListsPromise
         };
 
@@ -150,6 +158,9 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
 
             // Add in the default status
             vm.armyList.status = 'Early Draft';
+
+            vm.associatedArmyLists = results.associatedArmyLists;
+            console.log(vm.associatedArmyLists);
 
             // Find the grand army list that the army list belongs to
             if (vm.armyList.grandArmyList) {

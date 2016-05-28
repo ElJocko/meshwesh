@@ -8,7 +8,7 @@ angular
 ArmyListService.$inject = ['$resource'];
 
 function ArmyListService ($resource) {
-    return $resource(
+    var armyListRoutes = $resource(
         'api/v1/armyLists/:id',
         { id: '@id' },
         {
@@ -19,6 +19,16 @@ function ArmyListService ($resource) {
             destroy: { method: 'DELETE', isArray: false }
         }
     );
+
+    armyListRoutes.associatedArmyLists = $resource(
+        'api/v1/armyLists/:id/associatedArmyLists',
+        { id: '@id' },
+        {
+            list: { method: 'GET', isArray: true }
+        }
+    );
+
+    return armyListRoutes;
 }
 
 ArmyListImportService.$inject = ['$resource'];

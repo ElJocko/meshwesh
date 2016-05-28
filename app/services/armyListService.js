@@ -21,7 +21,6 @@ exports.retrieveByQueryLean = function(query, callback) {
             return callback(err);
         }
         else {
-            var objects = [];
             for (var i = 0; i < documents.length; ++i) {
                 transform.removeDatabaseArtifacts(documents[i]);
             }
@@ -51,6 +50,58 @@ exports.retrieveByIdLean = function(id, callback) {
                 }
                 else {
                     return callback();
+                }
+            }
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
+exports.retrieveAssociatedArmyLists = function(id, callback) {
+    if (id) {
+        ArmyList.findById(id).lean().exec(function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                // Note: document is null if not found
+                if (document) {
+                    var query = { listId: document.listId };
+                    ArmyList.find(query).lean().exec(function(err, documents) {
+                        if (err) {
+                            return callback(err);
+                        }
+                        else {
+                            var searchListIndex = -1;
+                            for (var i = 0; i < documents.length; ++i) {
+                                if (documents[i]._id.equals(document._id)) {
+                                    searchListIndex = i;
+                                }
+                                transform.removeDatabaseArtifacts(documents[i]);
+                            }
+
+                            // Remove the list that we're seaching on
+                            if (searchListIndex >= 0) {
+                                var removedArmyList = documents.splice(searchListIndex, 1);
+                                console.log(removedArmyList.name);
+                            }
+                            return callback(null, documents);
+                        }
+                    });
+                }
+                else {
+                    return callback(null, []);
                 }
             }
         });
