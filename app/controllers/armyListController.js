@@ -44,6 +44,20 @@ module.exports.retrieveById = function(req, res) {
     });
 };
 
+exports.retrieveAssociatedArmyLists = function(req, res) {
+    // Note conflicting meanings for listId
+    var query = { listId: req.params.listId };
+    armyListService.retrieveByQueryLean(query, function(err, lists) {
+        if (err) {
+            logger.error('Failed with error: ' + err);
+            return res.status(500).send('Unable to get army lists. Server error.');
+        }
+        else {
+            return res.status(200).send(lists);
+        }
+    });
+};
+
 exports.create = function(req, res) {
     // Get the data from the request
     var listData = req.body;
