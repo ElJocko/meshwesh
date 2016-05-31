@@ -13,7 +13,6 @@ var TroopOptionSchema = new mongoose.Schema({
     dateRange: { type: DateRange },
     troopEntries: [ TroopEntry ],
     description: { type: String },
-    general: { type: Boolean },
     core: { type: Boolean }
 });
 

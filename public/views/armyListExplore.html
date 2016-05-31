@@ -58,7 +58,7 @@
                     <tr>
                         <td>{{ troopOption.min }}</td>
                         <td>{{ troopOption.max }}</td>
-                        <td>{{ troopOption.core }}</td>
+                        <td>{{ troopOption.core | mwDisplayBooleanCheck }}</td>
                         <td>{{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}</br><em>{{ troopOption.description }}</em></td>
                     </tr>
                 </tbody>

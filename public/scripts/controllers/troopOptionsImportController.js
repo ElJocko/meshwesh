@@ -60,7 +60,8 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     allyMin: 0,
                                     allyMax: 0,
                                     troopEntries: [],
-                                    description: item.description
+                                    description: item.description,
+                                    core: false
                                 };
 
                                 // Convert minMax
@@ -114,6 +115,14 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     // Add the troop entry
                                     if (mainCode) {
                                         troopOption.troopEntries.push({ troopTypeCode: mainCode, dismountTypeCode: dismountCode });
+                                    }
+
+                                    // Check for core
+                                    if (item.core.toLowerCase() === 'core') {
+                                        troopOption.core = true;
+                                    }
+                                    else if (item.core.length > 0) {
+                                        console.warn('Core contained unexpected text: ' + item.core);
                                     }
                                 });
 
