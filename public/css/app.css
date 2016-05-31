@@ -121,18 +121,27 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 
 .title-image {
     margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.summary {
+    cursor: pointer;
+    color: #35589d;
+}
+
+.summary:hover {
+    color: #799aa5;
 }
 
 .summary-number {
     font-size: 80px;
+    font-weight: 500;
     margin-bottom: -20px;
-    cursor: pointer;
 }
 
 .summary-text {
     font-size: 20px;
     margin-top: 0px;
-    cursor: pointer;
 }
 
 .content {
