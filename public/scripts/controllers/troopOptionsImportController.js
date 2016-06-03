@@ -276,7 +276,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
     function initializeTroopTypeData() {
         TroopTypeService.list(function(availableTroopTypes) {
             availableTroopTypes.forEach(function (item) {
-                troopTypes[item.displayName.toUpperCase()] = item.permanentCode;
+                troopTypes[item.importName.toUpperCase()] = item.permanentCode;
             });
         });
     }

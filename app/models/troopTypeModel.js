@@ -8,6 +8,7 @@ var TroopTypeSchema = new mongoose.Schema({
     permanentCode: { type: String, required: true, unique: true },
     displayCode: { type: String },
     displayName: { type: String },
+    importName: { type: String },
     category: { type: String },
     cost: { type: Number },
     description: { type: String }
