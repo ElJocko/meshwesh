@@ -20,9 +20,9 @@ function HomeController($location, BookService) {
         $location.path('/thematicCategory/summary');
     }
 
-    vm.showGrandArmyListSummary = showGrandArmyListSummary;
-    function showGrandArmyListSummary () {
-        $location.path('/grandArmyList/summary');
+    vm.showTroopTypeSummary = showTroopTypeSummary;
+    function showTroopTypeSummary () {
+        $location.path('/troopType/description');
     }
 
     vm.showArmyListSummary = showArmyListSummary;

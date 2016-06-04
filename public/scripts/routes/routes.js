@@ -82,6 +82,11 @@ function router($routeProvider) {
             controller:'TroopTypeSummaryController',
             controllerAs: 'vm'
         })
+        .when('/troopType/description', {
+            templateUrl:'views/troopTypeDescription.html',
+            controller:'TroopTypeDescriptionController',
+            controllerAs: 'vm'
+        })
         .when('/troopType/:troopTypeId/edit', {
             templateUrl:'views/troopTypeEdit.html',
             controller:'TroopTypeEditController',

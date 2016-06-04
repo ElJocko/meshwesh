@@ -1,7 +1,7 @@
 'use strict';
 
 var ThematicCategory = require('../models/thematicCategoryModel');
-var GrandArmyList = require('../models/grandArmyListModel');
+var TroopType = require('../models/troopTypeModel');
 var ArmyList = require('../models/armyListModel');
 var async = require('async');
 var _ = require('lodash');
@@ -23,8 +23,8 @@ exports.retrieveByQuery = function(query, callback) {
 
     ThematicCategory.count({ }, function(err, count) {
         book.thematicCategoryCount = count;
-        GrandArmyList.count({ }, function(err, count) {
-            book.grandArmyListCount = count;
+        TroopType.count({ }, function(err, count) {
+            book.troopTypeCount = count;
             ArmyList.count({ }, function(err, count) {
                 book.armyListCount = count;
                 books.push(book);

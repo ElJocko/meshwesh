@@ -1,17 +1,17 @@
 permanentCode|displayName|displayCode|cost|category|description|importName
-BLV|Bow Levy|BL|2|foot|description|Bow Levy
+BLV|Bow Levy|BL|2|foot|More poorly trained infantry with long-distance missile weapons, untrained in volley fire, and with much smaller supplies of ammunition.  As such their long-range fire would be weak and ineffective, and they would only use their relatively scarce supply of arrows when an enemy was quite close (essentially in close combat, on the scale of a whole element).  Examples are Elamite massed bowmen, Sicilio-Norman Saracen foot bow, and a wide variety of Biblical and Medieval massed archers without confidence or much training.|Bow Levy
 RBL|Rabble|Rb|2|foot|description|Rabble
 HRD|Horde|Hd|2|foot|description|Horde
-ARC|Archers|Arc|4|foot|description|Archer
+ARC|Archers|Arc|4|foot|Infantry armed with long-distance missile weapons, trained in volley fire, and supplied with large numbers of arrows, quarrels or darts.  Examples include Medieval bow and crossbowmen, English longbow, Nabataean archers, Chinese crossbow, Japanese samurai before the Sengoku-jidai, and many others.|Archer
 LFT|Light Foot|LFt|3|foot|description|Light Foot
 LSP|Light Spear|LSp|3|foot|description|Light Spear
 RDR|Raiders|Rd|4|foot|description|Raider
-SKM|Skirmishers|Sk|3|foot|description|Skirmisher
+SKM|Skirmishers|Sk|3|foot|Loose order troops with long-range missile weapons, but used as individuals (not volley fire) and at short ranges (as close as can be done without personal risk), and with relatively limited ammo supplies.  Effective irritants against enemy heavy foot and similar melee-focused infantry where their response of fleeing when overmatched and then regrouping and returning makes for a frustrating battle without good result for the heavy foot. Examples are Balearic slingers, Cretan archers, Medieval handgunners, and so on.|Skirmisher
 WBD|Warband|Wb|4|foot|description|Warband
 ART|Artillery|Art|4|foot|description|Artillery
 EFT|Elite Foot|EFt|4|foot|description|Elite Foot
 HFT|Heavy Foot|HFt|3|foot|description|Heavy Foot
-PAV|Pavisiers|Pv|4|foot|description|Pavise
+PAV|Pavisiers|Pv|4|foot|A combination formation where a large body of long-distance missile troops are stiffened with a few front ranks of spear or pike, often with the large shield called (in the Middle Ages) a pavise, or similar.  As such the formation retained the long-range missile capability of Archers, but with greater ability to hold off enemy mounted and foot.  These formations were effective in good going, but performed poorly when the thin front ranks were unable to maintain close formation in bad terrain.  Examples are Byzantine kontaratoi, Achaemenid Persian sparabara and the Babylonian formations they inherited from, many formations of the Chinese Warring States period, and Italian Medieval pavisiers.|Pavise
 PIK|Pikes|Pk|3|foot|description|Pike
 SPR|Spear|Sp|4|foot|description|Spear
 WWG|War Wagons|WWg|4|foot|description|Warwagon
