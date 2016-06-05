@@ -3,9 +3,6 @@ angular
     .filter('mwDisplayBooleanCheck', BooleanCheckFilter);
 
 function BooleanCheckFilter() {
-    var troopTypesData = null;
-    var serviceInvoked = false;
-    var placeholder = '';
 
     function booleanCheckFilter(input) {
         if (input) {
@@ -18,4 +15,3 @@ function BooleanCheckFilter() {
 
     return booleanCheckFilter;
 }
-

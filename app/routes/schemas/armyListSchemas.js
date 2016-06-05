@@ -27,7 +27,7 @@ var troopOptionSubschema = {
         troopEntries: { type: ['array', null], items: troopEntrySubschema },
         description: { type: 'string' },
         general: { type: 'boolean' },
-        core: { type: 'boolean' }
+        core: { type: 'string' }
     }
 };
 

@@ -61,7 +61,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     allyMax: 0,
                                     troopEntries: [],
                                     description: item.description,
-                                    core: false
+                                    core: ''
                                 };
 
                                 // Convert minMax
@@ -119,7 +119,10 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
 
                                     // Check for core
                                     if (item.core.toLowerCase() === 'core') {
-                                        troopOption.core = true;
+                                        troopOption.core = 'all';
+                                    }
+                                    else if (item.core.toLowerCase() === 'half core') {
+                                        troopOption.core = 'half'
                                     }
                                     else if (item.core.length > 0) {
                                         console.warn('Core contained unexpected text: ' + item.core);
