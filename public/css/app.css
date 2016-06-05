@@ -420,3 +420,26 @@ input[readonly] {
 .dl-horizontal-rating dd {
     margin-left: 45px;
 }
+
+.troop-description h2 {
+    font-style: italic;
+}
+
+.troop-description h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.troop-description-stat {
+    font-size: 1.5em;
+    margin-bottom: 0;
+}
+
+.troop-description img {
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.troop-description-text {
+    text-align: justify;
+}
