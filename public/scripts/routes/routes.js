@@ -102,14 +102,19 @@ function router($routeProvider) {
             controller:'ArmyListMinMaxReportController',
             controllerAs: 'vm'
         })
-        .when('/grandArmyList/import', {
-            templateUrl:'views/grandArmyListImport.html',
-            controller:'GrandArmyListImportController',
+        .when('/thematicCategory/import', {
+            templateUrl:'views/thematicCategoryImport.html',
+            controller:'ThematicCategoryImportController',
             controllerAs: 'vm'
         })
         .when('/armyList/import', {
             templateUrl:'views/armyListImport.html',
             controller:'ArmyListImportController',
+            controllerAs: 'vm'
+        })
+        .when('/grandArmyList/import', {
+            templateUrl:'views/grandArmyListImport.html',
+            controller:'GrandArmyListImportController',
             controllerAs: 'vm'
         })
         .when('/troopOptions/import', {

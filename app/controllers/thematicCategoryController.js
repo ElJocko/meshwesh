@@ -129,3 +129,29 @@ exports.delete = function(req, res) {
         }
     });
 };
+
+exports.import = function(req, res) {
+    // Get the data from the request
+    var thematicCategoryImportRequest = req.body;
+
+    thematicCategoryService.import(thematicCategoryImportRequest, function(err, importSummary) {
+        if (err) {
+            if (err.message === thematicCategoryService.errors.duplicateCode) {
+                logger.warn("Duplicate code");
+                return res.status(409).send('Duplicate code');
+            }
+            else if (err.message === thematicCategoryService.errors.validationError) {
+                logger.warn('Thematic Category failed validation');
+                return res.status(400).send('Unable to import Thematic Categories. Thematic Category validation failed.');
+            }
+            else {
+                logger.error("Failed with error: " + err);
+                return res.status(500).send("Unable to import Thematic Categories. Server error.");
+            }
+        }
+        else {
+            logger.info("Import Thematic Categories: Imported = " + importSummary.imported + ", Failed = " + importSummary.failed);
+            return res.status(201).send(importSummary);
+        }
+    });
+};

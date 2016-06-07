@@ -15,4 +15,7 @@ router.route('/v1/thematicCategories/:categoryId')
     .put(tokenAuthz.requireEditorRole, thematicCategoryController.update)
     .delete(tokenAuthz.requireEditorRole, thematicCategoryController.delete);
 
+router.route('/v1/thematicCategoriesImport')
+    .post(tokenAuthz.requireAdminRole, thematicCategoryController.import);
+
 module.exports = router;

@@ -1,6 +1,7 @@
 'use strict';
 
 var ThematicCategory = require('../models/thematicCategoryModel');
+var async = require('async');
 var _ = require('lodash');
 
 var errors = {
@@ -155,3 +156,66 @@ exports.deleteById = function(id, callback) {
         return callback(error);
     }
 };
+
+exports.import = function(importRequest, callback) {
+    // Delete the existing documents
+    ThematicCategory.remove({}, function(error) {
+        // Import the documents
+        async.mapSeries(
+            importRequest.data,
+            importThematicCategory,
+            function(err, results) {
+                if (err) {
+                    // TBD: organize results better
+                    return callback(err);
+                }
+                else {
+                    var importSummary = summarizeImport(results);
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    });
+
+    function importThematicCategory(thematicCategoryData, cb) {
+        var document = new ThematicCategory(thematicCategoryData);
+
+        // Save the document in the database
+        document.save(function(err, savedDocument) {
+            if (err) {
+                if (err.name === 'MongoError' && err.code === 11000) {
+                    // 11000 = Duplicate index
+                    var error = new Error(errors.duplicateCode);
+                    return cb(null, { thematicCategory: null, error: error });
+                }
+                else {
+                    return cb(null, { thematicCategory: null, error: err });
+                }
+            }
+            else {
+                return cb(null, { thematicCategory: savedDocument.toJSON(), error: null });
+            }
+        });
+    }
+
+    function summarizeImport(results) {
+        var importCount = 0;
+        var errorCount = 0;
+        results.forEach(function(item) {
+            if (item.thematicCategory) {
+                importCount = importCount + 1;
+            }
+            else if (item.error) {
+                errorCount = errorCount + 1;
+            }
+            else {
+                // shouldn't reach here
+            }
+        });
+        var summary = { imported: importCount, failed: errorCount };
+        return summary;
+    }
+};
+
+
+
