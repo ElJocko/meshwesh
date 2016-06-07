@@ -21,6 +21,18 @@ function router($routeProvider) {
         .when('/thematicCategory/summary', {
             templateUrl:'views/thematicCategorySummary.html',
             controller:'ThematicCategorySummaryController',
+            controllerAs: 'vm',
+            resolve: { mode: function() { return 'explore' } }
+        })
+        .when('/thematicCategory/summaryEdit', {
+            templateUrl:'views/thematicCategorySummary.html',
+            controller:'ThematicCategorySummaryController',
+            controllerAs: 'vm',
+            resolve: { mode: function() { return 'edit' } }
+        })
+        .when('/thematicCategory/:categoryId/explore', {
+            templateUrl:'views/thematicCategoryExplore.html',
+            controller:'ThematicCategoryExploreController',
             controllerAs: 'vm'
         })
         .when('/thematicCategory/:categoryId/edit', {

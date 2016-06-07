@@ -6,6 +6,10 @@
                 <a href ng-click="vm.edit(category.id)">{{ category.name }}</a>
             </div>
         </div>
+    </div>
+</div>
+<div class="content row" ng-show="vm.create">
+    <div class="col-md-12">
         <div>
             <button class="btn save-btn" ng-click="vm.create()">Create New</button>
         </div>
