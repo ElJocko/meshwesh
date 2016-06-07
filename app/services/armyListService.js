@@ -276,6 +276,7 @@ exports.import = function(importRequest, callback) {
         var document = new ArmyList(armyListData);
         async.waterfall([
             function(cb) {
+                // initialize the waterfall
                 return cb(null, document);
             },
             setGrandArmyList,

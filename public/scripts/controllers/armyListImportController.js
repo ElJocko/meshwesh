@@ -81,6 +81,23 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
                                 item.maneuverRatings = tempArray;
                             }
 
+                            // Convert Thematic Categories
+                            item.thematicCategories = [];
+                            if (item.category1 && item.category1.length > 0) {
+                                item.thematicCategories.push(item.category1);
+                            }
+                            if (item.category2 && item.category2.length > 0) {
+                                item.thematicCategories.push(item.category2);
+                            }
+                            if (item.category3 && item.category3.length > 0) {
+                                item.thematicCategories.push(item.category3);
+                            }
+                            if (item.category4 && item.category4.length > 0) {
+                                item.thematicCategories.push(item.category4);
+                            }
+                            if (item.category5 && item.category5.length > 0) {
+                                item.thematicCategories.push(item.category5);
+                            }
                         });
                         vm.parsedData = results.data;
                         vm.statusMessage1 = 'Found ' + vm.parsedData.length + ' army lists in the file.';
