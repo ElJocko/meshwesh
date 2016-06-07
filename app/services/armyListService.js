@@ -2,6 +2,7 @@
 
 var ArmyList = require('../models/armyListModel');
 var GrandArmyList = require('../models/grandArmyListModel');
+var EnemyXref = require('../models/enemyXrefModel');
 var transform = require('../models/transform');
 var async = require('async');
 var _ = require('lodash');
@@ -29,7 +30,7 @@ exports.retrieveByQueryLean = function(query, callback) {
     });
 };
 
-exports.retrieveByIdLean = function(id, callback) {
+function retrieveByIdLean(id, callback) {
     if (id) {
         ArmyList.findById(id).lean().exec(function(err, document) {
             if (err) {
@@ -59,7 +60,8 @@ exports.retrieveByIdLean = function(id, callback) {
         error.parameterName = 'id';
         return callback(error);
     }
-};
+}
+exports.retrieveByIdLean = retrieveByIdLean;
 
 exports.retrieveAssociatedArmyLists = function(id, callback) {
     if (id) {
@@ -104,6 +106,44 @@ exports.retrieveAssociatedArmyLists = function(id, callback) {
                     return callback(null, []);
                 }
             }
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
+exports.retrieveEnemyArmyLists = function(id, callback) {
+    if (id) {
+        var query1 = { armyList1: id };
+        EnemyXref.find(query1).lean().exec(function(err, documents1) {
+            var query2 = { armyList2: id };
+            EnemyXref.find(query2).lean().exec(function(err, documents2) {
+                // Extract the full list of army list ids
+                var armyListIds = [];
+                documents1.forEach(function(item) {
+                    armyListIds.push(item.armyList2);
+                });
+                documents2.forEach(function(item) {
+                    armyListIds.push(item.armyList1);
+                });
+
+                async.mapSeries(
+                    armyListIds,
+                    retrieveByIdLean,
+                    function(err, results) {
+                        if (err) {
+                            return callback(err);
+                        }
+                        else {
+                            return callback(null, results);
+                        }
+                    }
+                );
+
+            });
         });
     }
     else {

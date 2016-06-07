@@ -3,7 +3,8 @@
 angular
     .module('meshweshServices')
     .factory('ArmyListService', ArmyListService)
-    .factory('ArmyListImportService', ArmyListImportService);
+    .factory('ArmyListImportService', ArmyListImportService)
+    .factory('ArmyListEnemiesImportService', ArmyListEnemiesImportService);
 
 ArmyListService.$inject = ['$resource'];
 
@@ -28,6 +29,14 @@ function ArmyListService ($resource) {
         }
     );
 
+    armyListRoutes.enemyArmyLists = $resource(
+        'api/v1/armyLists/:id/enemyArmyLists',
+        { id: '@id' },
+        {
+            list: { method: 'GET', isArray: true }
+        }
+    );
+
     return armyListRoutes;
 }
 
@@ -38,7 +47,19 @@ function ArmyListImportService ($resource) {
         'api/v1/armyListsImport',
         null,
         {
-            import: { method: 'POST'}
+            import: { method: 'POST' }
+        }
+    );
+}
+
+ArmyListEnemiesImportService.$inject = ['$resource'];
+
+function ArmyListEnemiesImportService ($resource) {
+    return $resource(
+        'api/v1/enemyXrefImport',
+        null,
+        {
+            import: { method: 'POST' }
         }
     );
 }

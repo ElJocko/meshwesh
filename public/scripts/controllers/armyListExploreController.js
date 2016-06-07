@@ -124,9 +124,11 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         // Get the army list if it exists
         var armyListPromise = null;
         var associatedArmyListsPromise = null;
+        var enemyArmyListsPromise = null;
         if (listId) {
             armyListPromise = ArmyListService.get({ id: listId }).$promise;
             associatedArmyListsPromise = ArmyListService.associatedArmyLists.list({ id: listId }).$promise;
+            enemyArmyListsPromise = ArmyListService.enemyArmyLists.list({ id: listId }).$promise;
         }
 
         // Get the grand army lists
@@ -136,6 +138,7 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         var servicePromises = {
             armyList: armyListPromise,
             associatedArmyLists: associatedArmyListsPromise,
+            enemyArmyLists: enemyArmyListsPromise,
             grandArmyLists: grandArmyListsPromise
         };
 
@@ -161,6 +164,9 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
 
             vm.associatedArmyLists = results.associatedArmyLists;
             console.log(vm.associatedArmyLists);
+
+            vm.enemyArmyLists = results.enemyArmyLists;
+            console.log(vm.enemyArmyLists);
 
             // Find the grand army list that the army list belongs to
             if (vm.armyList.grandArmyList) {

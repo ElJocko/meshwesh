@@ -70,6 +70,19 @@
 <div class="row">
     <div class="col-xs-12">
         <h2>
+            Enemies
+            <div ng-repeat="enemyArmyList in vm.enemyArmyLists">
+                <small>
+                    <a href ng-click="vm.onClickAssociatedArmyList(enemyArmyList.id)">{{ enemyArmyList.derivedData.extendedName }}</a>
+                </small>
+            </div>
+        </h2>
+        <div class="empty-table-message" ng-show="vm.enemyArmyLists.length === 0">No enemies found</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h2>
             Related Army Lists
             <div ng-repeat="associatedArmyList in vm.associatedArmyLists">
                 <small>
