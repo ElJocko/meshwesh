@@ -1,6 +1,12 @@
 <div class="content row">
     <div class="col-md-12">
         <div class="content-header">Thematic Categories</div>
+        <div>
+            <p>
+                Thematic categories groups army lists that fit a common period and broad geographic region.
+                Many army lists belong to more than one thematic category.
+            </p>
+        </div>
         <div ng-repeat="category in vm.categories | orderBy:'name'">
             <div class="content-link">
                 <a href ng-click="vm.edit(category.id)">{{ category.name }}</a>
