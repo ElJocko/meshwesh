@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListImportController', ArmyListImportController);
 
-ArmyListImportController.$inject = ['$location', '$scope', 'ArmyListImportService'];
+ArmyListImportController.$inject = ['$location', '$scope', '$interval', 'ArmyListImportService'];
 
-function ArmyListImportController($location, $scope, ArmyListImportService) {
+function ArmyListImportController($location, $scope, $interval, ArmyListImportService) {
     var vm = this;
 
     vm.file = null;
@@ -123,29 +123,103 @@ function ArmyListImportController($location, $scope, ArmyListImportService) {
 
     function importData() {
         if (vm.parsedData.length) {
-            // Prepare the request
-            var importRequest = {
-                data: vm.parsedData
-            };
 
-            // Import the troop types
-            ArmyListImportService.import(
-                importRequest,
-                function(importSummary) {
+            // Only send a slice of data in each request
+
+            // Initialize the progress bar
+            vm.importProgress.numberTotal = vm.parsedData.length;
+            vm.importProgress.numberDone = 0;
+            vm.importProgress.running = true;
+
+            // Slice the data
+            var slicedData = [];
+            var sliceSize = 50;
+            var index = 0;
+            var done = false;
+            while (!done) {
+                var start = index;
+                var end = index + sliceSize;
+                if (end > vm.parsedData.length) {
+                    end = vm.parsedData.length;
+                    if (end > start) {
+                        var slice = vm.parsedData.slice(start, end);
+                        slicedData.push(slice);
+                    }
+                    done = true;
+                }
+                else {
+                    var slice = vm.parsedData.slice(start, end);
+                    slicedData.push(slice);
+                    index = end;
+                }
+            }
+
+            // Send each slice
+            var deleteArmyLists = true;
+            async.mapSeries(slicedData, importSlice, function (err, sliceSummary) {
+                if (err) {
+                    vm.statusMessage1 = 'Unable to import army lists.';
+                    vm.statusMessage2 = '';
+                    vm.file = null;
+                    vm.parsedData = [];
+
+                    removeProgressBarAfterDelay();
+                }
+                else {
+                    // Sum the summary data from each slice
+                    var importSummary = sliceSummary.reduce(function (previous, current) {
+                        return {
+                            imported: previous.imported + current.imported,
+                            failed: previous.failed + current.failed
+                        }
+                    });
+
+                    // Report the results
                     console.info('Successfully imported ' + importSummary.imported + ' army lists.');
                     vm.statusMessage1 = 'Imported ' + importSummary.imported + ' army lists.';
                     vm.statusMessage2 = importSummary.failed + ' army lists were not imported due to errors.';
                     vm.file = null;
                     vm.parsedData = [];
+
+                    removeProgressBarAfterDelay();
+                }
+            });
+        }
+
+        function importSlice(slice, cb) {
+            var importRequest = {
+                options: {
+                    deleteAll: deleteArmyLists
+                },
+                data: slice
+            };
+
+            // Import the army lists
+            ArmyListImportService.import(
+                importRequest,
+                function (importSummary) {
+                    // Only delete on the first slice
+                    deleteArmyLists = false;
+
+                    // Update the progress bar
+                    vm.importProgress.numberDone = vm.importProgress.numberDone + slice.length;
+
+                    return cb(null, importSummary);
                 },
                 function (response) {
                     console.error(response.data);
-                    vm.statusMessage1 = 'Unable to import army lists.';
-                    vm.statusMessage2 = '';
-                    vm.file = null;
-                    vm.parsedData = [];
+                    return cb(response.data);
                 }
             );
         }
+    }
+
+    function removeProgressBarAfterDelay() {
+        var timer = $interval(
+            function() {
+                vm.importProgress.running = false;
+            },
+            1000,
+            1);
     }
 }

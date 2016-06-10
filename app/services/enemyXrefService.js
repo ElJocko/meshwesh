@@ -39,7 +39,6 @@ exports.import = function(importRequest, callback) {
         // 2. Lookup army list 2
         // 3. Make sure pair doesn't exist already (TBD)
         // 4. Insert pair
-        console.log(JSON.stringify(enemyXrefData));
 
         var query = {
             listId: enemyXrefData.armyList1.listId,
@@ -50,6 +49,10 @@ exports.import = function(importRequest, callback) {
                 return cb(err);
             }
             else {
+                if (!armyList1) {
+                    console.log('Army list 1 not found: ' + enemyXrefData.armyList1.listId + '/' + enemyXrefData.armyList1.sublistId);
+                    return cb(null, { enemyXref: null, error: 'Army List 1 Not found' });
+                }
                 query = {
                     listId: enemyXrefData.armyList2.listId,
                     sublistId: enemyXrefData.armyList2.sublistId
@@ -58,9 +61,9 @@ exports.import = function(importRequest, callback) {
                     if (err) {
                         return cb(err);
                     }
-                    else if (!armyList1 || !armyList2) {
-                        console.log('Not found');
-                        return cb(null, { enemyXref: null, error: 'Not found' });
+                    else if (!armyList2) {
+                        console.log('Army list 2 not found: ' + enemyXrefData.armyList2.listId + '/' + enemyXrefData.armyList2.sublistId);
+                        return cb(null, { enemyXref: null, error: 'Army List 2 Not found' });
                     }
                     else {
                         var document = new EnemyXref({ armyList1: armyList1._id, armyList2: armyList2._id });

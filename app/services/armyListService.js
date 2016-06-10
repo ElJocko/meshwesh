@@ -290,27 +290,46 @@ exports.deleteById = function(id, callback) {
 };
 
 exports.import = function(importRequest, callback) {
-    // Delete the existing documents
-    ArmyList.remove({}, function(error) {
-        // Delete the ThematicCategory - ArmyList Xref records
-        ThematicCategoryToArmyListXref.remove({}, function(error) {
-            // Import the documents
-            async.mapSeries(
-                importRequest.data,
-                importArmyList,
-                function(err, results) {
-                    if (err) {
-                        // TBD: organize results better
-                        return callback(err);
+    if (importRequest.options && importRequest.options.deleteAll ) {
+        // Delete the existing documents
+        ArmyList.remove({}, function (error) {
+            // Delete the ThematicCategory - ArmyList Xref records
+            ThematicCategoryToArmyListXref.remove({}, function (error) {
+                // Import the documents
+                async.mapSeries(
+                    importRequest.data,
+                    importArmyList,
+                    function (err, results) {
+                        if (err) {
+                            // TBD: organize results better
+                            return callback(err);
+                        }
+                        else {
+                            var importSummary = summarizeImport(results);
+                            return callback(null, importSummary);
+                        }
                     }
-                    else {
-                        var importSummary = summarizeImport(results);
-                        return callback(null, importSummary);
-                    }
-                }
-            );
+                );
+            });
         });
-    });
+    }
+    else {
+        // Import the documents without deleting first
+        async.mapSeries(
+            importRequest.data,
+            importArmyList,
+            function (err, results) {
+                if (err) {
+                    // TBD: organize results better
+                    return callback(err);
+                }
+                else {
+                    var importSummary = summarizeImport(results);
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    }
 
     function importArmyList(armyListData, cb) {
         var document = new ArmyList(armyListData);

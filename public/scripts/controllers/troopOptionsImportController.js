@@ -221,7 +221,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                 }
             }
 
-            // Send the each slice
+            // Send each slice
             async.mapSeries(slicedData, importSlice, function(err, sliceSummary) {
                 if (err) {
                     vm.statusMessage1 = 'Unable to import troop options.';
