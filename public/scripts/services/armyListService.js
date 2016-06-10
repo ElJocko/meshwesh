@@ -37,6 +37,14 @@ function ArmyListService ($resource) {
         }
     );
 
+    armyListRoutes.thematicCategories = $resource(
+        'api/v1/armyLists/:id/thematicCategories',
+        { id: '@id' },
+        {
+            list: { method: 'GET', isArray: true }
+        }
+    );
+
     return armyListRoutes;
 }
 

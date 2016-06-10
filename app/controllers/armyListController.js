@@ -82,6 +82,25 @@ exports.retrieveEnemyArmyLists = function(req, res) {
     });
 };
 
+exports.retrieveThematicCategories = function(req, res) {
+    // Note conflicting meanings for listId
+    armyListService.retrieveThematicCategories(req.params.listId, function(err, thematicCategories) {
+        if (err) {
+            if (err.message === armyListService.errors.badlyFormattedParameter) {
+                logger.warn('Badly formatted army list id');
+                return res.status(400).send('Army List id is badly formatted.');
+            }
+            else {
+                logger.error('Failed with error: ' + err);
+                return res.status(500).send('Unable to get thematic categories. Server error.');
+            }
+        }
+        else {
+            return res.status(200).send(thematicCategories);
+        }
+    });
+};
+
 exports.create = function(req, res) {
     // Get the data from the request
     var listData = req.body;

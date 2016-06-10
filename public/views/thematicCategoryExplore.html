@@ -6,3 +6,16 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-xs-12">
+        <h2>
+            Army Lists
+            <div ng-repeat="armyList in vm.armyLists">
+                <small>
+                    <a href ng-click="vm.onClickArmyList(armyList.id)">{{ armyList.derivedData.extendedName }}</a>
+                </small>
+            </div>
+        </h2>
+        <div class="empty-table-message" ng-show="vm.armyLists.length === 0">No army lists found</div>
+    </div>
+</div>

@@ -1,6 +1,8 @@
 'use strict';
 
 var ThematicCategory = require('../models/thematicCategoryModel');
+var ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
+var armyListService = require('./armyListService');
 var async = require('async');
 var _ = require('lodash');
 
@@ -50,6 +52,40 @@ exports.retrieveById = function(id, callback) {
                     return callback();
                 }
             }
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
+exports.retrieveArmyLists = function(id, callback) {
+    if (id) {
+        var query = { thematicCategory: id };
+        ThematicCategoryToArmyListXref.find(query).lean().exec(function(err, documents) {
+            async.mapSeries(
+                documents,
+                function(xref, cb) {
+                    armyListService.retrieveByIdLean(xref.armyList, function(err, armyList) {
+                        if (err) {
+                            return cb(err);
+                        }
+                        else {
+                            return cb(null, armyList);
+                        }
+                    })
+                },
+                function(err, results) {
+                    if (err) {
+                        return callback(err);
+                    }
+                    else {
+                        return callback(null, results);
+                    }
+                }
+            );
         });
     }
     else {

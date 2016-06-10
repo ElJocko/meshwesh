@@ -13,4 +13,12 @@ function ThematicCategoryExploreController($routeParams, $location, ThematicCate
 
     vm.category = ThematicCategoryService.get({ id: categoryId });
 
+    vm.armyLists = ThematicCategoryService.armyLists.list({ id: categoryId });
+    console.log(vm.armyLists);
+
+    vm.onClickArmyList = onClickArmyList;
+    function onClickArmyList(id) {
+        $location.path('/armyList/' + id + '/explore');
+    }
+
 }

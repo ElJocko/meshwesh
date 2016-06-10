@@ -37,6 +37,9 @@ router.route('/v1/armyLists/:listId/associatedArmyLists')
 router.route('/v1/armyLists/:listId/enemyArmyLists')
     .get(armyListController.retrieveEnemyArmyLists);
 
+router.route('/v1/armyLists/:listId/thematicCategories')
+    .get(armyListController.retrieveThematicCategories);
+
 router.route('/v1/armyListsImport')
     .post(
         tokenAuthz.requireAdminRole,

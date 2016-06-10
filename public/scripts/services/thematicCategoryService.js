@@ -8,7 +8,7 @@ angular
 ThematicCategoryService.$inject = ['$resource'];
 
 function ThematicCategoryService ($resource) {
-    return $resource(
+    var thematicCategoryRoutes = $resource(
         'api/v1/thematicCategories/:id',
         { id: '@id' },
         {
@@ -19,6 +19,16 @@ function ThematicCategoryService ($resource) {
             destroy: { method: 'DELETE', isArray: false }
         }
     );
+
+    thematicCategoryRoutes.armyLists = $resource(
+        'api/v1/thematicCategories/:id/armyLists',
+        { id: '@id' },
+        {
+            list: { method: 'GET', isArray: true }
+        }
+    );
+
+    return thematicCategoryRoutes;
 }
 
 

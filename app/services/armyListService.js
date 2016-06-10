@@ -1,8 +1,11 @@
 'use strict';
 
+var thematicCategoryService = require('./thematicCategoryService');
 var ArmyList = require('../models/armyListModel');
+var ThematicCategory = require('../models/thematicCategoryModel');
 var GrandArmyList = require('../models/grandArmyListModel');
 var EnemyXref = require('../models/enemyXrefModel');
+var ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
 var transform = require('../models/transform');
 var async = require('async');
 var _ = require('lodash');
@@ -153,6 +156,40 @@ exports.retrieveEnemyArmyLists = function(id, callback) {
     }
 };
 
+exports.retrieveThematicCategories = function(id, callback) {
+    if (id) {
+        var query = { armyList: id };
+        ThematicCategoryToArmyListXref.find(query).lean().exec(function(err, documents) {
+                async.mapSeries(
+                    documents,
+                    function(xref, cb) {
+                        thematicCategoryService.retrieveById(xref.thematicCategory, function(err, thematicCategory) {
+                            if (err) {
+                                return cb(err);
+                            }
+                            else {
+                                return cb(null, thematicCategory);
+                            }
+                        })
+                    },
+                    function(err, results) {
+                        if (err) {
+                            return callback(err);
+                        }
+                        else {
+                            return callback(null, results);
+                        }
+                    }
+                );
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
 exports.create = function(data, callback) {
     // Create the document
     var document = new ArmyList(data);
@@ -255,21 +292,24 @@ exports.deleteById = function(id, callback) {
 exports.import = function(importRequest, callback) {
     // Delete the existing documents
     ArmyList.remove({}, function(error) {
-        // Import the documents
-        async.mapSeries(
-            importRequest.data,
-            importArmyList,
-            function(err, results) {
-                if (err) {
-                    // TBD: organize results better
-                    return callback(err);
+        // Delete the ThematicCategory - ArmyList Xref records
+        ThematicCategoryToArmyListXref.remove({}, function(error) {
+            // Import the documents
+            async.mapSeries(
+                importRequest.data,
+                importArmyList,
+                function(err, results) {
+                    if (err) {
+                        // TBD: organize results better
+                        return callback(err);
+                    }
+                    else {
+                        var importSummary = summarizeImport(results);
+                        return callback(null, importSummary);
+                    }
                 }
-                else {
-                    var importSummary = summarizeImport(results);
-                    return callback(null, importSummary);
-                }
-            }
-        );
+            );
+        });
     });
 
     function importArmyList(armyListData, cb) {
@@ -277,8 +317,9 @@ exports.import = function(importRequest, callback) {
         async.waterfall([
             function(cb) {
                 // initialize the waterfall
-                return cb(null, document);
+                return cb(null, document, armyListData.thematicCategories);
             },
+            setThematicCategories,
             setGrandArmyList,
             saveDocument
         ],
@@ -292,8 +333,53 @@ exports.import = function(importRequest, callback) {
         });
     }
 
+    function setThematicCategories(armyList, thematicCategories, cb) {
+        async.eachSeries(
+            thematicCategories,
+            function(item, cb) {
+                var query = { name: item };
+                ThematicCategory.findOne(query, function(err, thematicCategory) {
+                    if (err) {
+                        return cb(err);
+                    }
+                    else {
+                        if (thematicCategory) {
+                            var xrefData = {
+                                thematicCategory: thematicCategory.id,
+                                armyList: armyList.id
+                            };
+                            var xrefDocument = new ThematicCategoryToArmyListXref(xrefData);
+                            xrefDocument.save(function(err, savedDocument) {
+                                if (err) {
+                                    if (err.name === 'MongoError' && err.code === 11000) {
+                                        // 11000 = Duplicate index
+                                        var error = new Error(errors.duplicateCode);
+                                        return cb(error);
+                                    }
+                                    else {
+                                        return cb(err);
+                                    }
+                                }
+                                else {
+                                    return cb(null);
+                                }
+                            });
+                        }
+                        else {
+                            console.log('thematic category not found: ' + item);
+                            return cb(null);
+                        }
+                    }
+                });
+
+            },
+            function(err) {
+                cb(err, armyList);
+            });
+    }
+
     function setGrandArmyList(document, cb) {
-        var query= { listId: document.listId };
+        var query = { listId: document.listId };
         GrandArmyList.find(query, function(err, documents) {
             if (err) {
                 return cb(err);

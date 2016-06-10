@@ -22,9 +22,14 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
     var listId = $routeParams.listId;
     initializeData();
 
-    vm.onClickAssociatedArmyList = onClickAssociatedArmyList;
-    function onClickAssociatedArmyList(id) {
+    vm.onClickArmyList = onClickArmyList;
+    function onClickArmyList(id) {
         $location.path('/armyList/' + id + '/explore');
+    }
+
+    vm.onClickThematicCategory = onClickThematicCategory;
+    function onClickThematicCategory(id) {
+        $location.path('/thematicCategory/' + id + '/explore');
     }
 
     function initializeDateRangeGrid() {
@@ -125,10 +130,12 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         var armyListPromise = null;
         var associatedArmyListsPromise = null;
         var enemyArmyListsPromise = null;
+        var thematicCategoriesPromise = null;
         if (listId) {
             armyListPromise = ArmyListService.get({ id: listId }).$promise;
             associatedArmyListsPromise = ArmyListService.associatedArmyLists.list({ id: listId }).$promise;
             enemyArmyListsPromise = ArmyListService.enemyArmyLists.list({ id: listId }).$promise;
+            thematicCategoriesPromise = ArmyListService.thematicCategories.list({ id: listId }).$promise;
         }
 
         // Get the grand army lists
@@ -139,6 +146,7 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             armyList: armyListPromise,
             associatedArmyLists: associatedArmyListsPromise,
             enemyArmyLists: enemyArmyListsPromise,
+            thematicCategories: thematicCategoriesPromise,
             grandArmyLists: grandArmyListsPromise
         };
 
@@ -167,6 +175,9 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
 
             vm.enemyArmyLists = results.enemyArmyLists;
             console.log(vm.enemyArmyLists);
+
+            vm.thematicCategories = results.thematicCategories;
+            console.log(vm.thematicCategories);
 
             // Find the grand army list that the army list belongs to
             if (vm.armyList.grandArmyList) {

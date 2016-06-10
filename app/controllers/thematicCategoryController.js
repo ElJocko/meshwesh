@@ -44,6 +44,24 @@ module.exports.retrieveById = function(req, res) {
     });
 };
 
+exports.retrieveArmyLists = function(req, res) {
+    thematicCategoryService.retrieveArmyLists(req.params.categoryId, function(err, armyLists) {
+        if (err) {
+            if (err.message === thematicCategoryService.errors.badlyFormattedParameter) {
+                logger.warn('Badly formatted category id');
+                return res.status(400).send('Category id is badly formatted.');
+            }
+            else {
+                logger.error('Failed with error: ' + err);
+                return res.status(500).send('Unable to get army lists. Server error.');
+            }
+        }
+        else {
+            return res.status(200).send(armyLists);
+        }
+    });
+};
+
 exports.create = function(req, res) {
     // Get the data from the request
     var categoryData = _.pick(req.body, 'name');
