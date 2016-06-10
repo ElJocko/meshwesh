@@ -17,21 +17,22 @@
 
 <body>
 
+<div class="outer-container">
+
 <!-- Banner -->
-<div id="app-banner" app-banner></div>
+<header role="banner" app-banner></header>
 
 <!-- Navbar -->
-<div id="app-navbar" app-navbar></div>
-<div id="progress-bar"></div>
+<nav role="navigation" app-navbar></nav>
+
+<div role="progressbar" class="main-progress-bar"></div>
 
 <!-- Contents -->
-<div id="main-container" class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="view-container" ng-view></div>
-        </div>
-    </div>
-</div>
+<main id="main-container" class="container">
+    <div role="main" ng-view></div>
+</main>
+
+<footer role="contentinfo" app-footer></footer>
 
 <!-- Scripts -->
 <div>
@@ -105,6 +106,7 @@
 
     <script src="scripts/directives/template-directives/bannerDirective.js"></script>
     <script src="scripts/directives/template-directives/navbarDirective.js"></script>
+    <script src="scripts/directives/template-directives/footerDirective.js"></script>
 
     <script src="scripts/directives/validation-directives/positiveInteger.js"></script>
     <script src="scripts/directives/validation-directives/nonnegativeInteger.js"></script>
@@ -113,6 +115,8 @@
     <script src="scripts/filters/troopTypesDisplayFilter.js"></script>
     <script src="scripts/filters/booleanCheckDisplayFilter.js"></script>
     <script src="scripts/filters/coreDisplayFilter.js"></script>
+</div>
+
 </div>
 
 </body>
