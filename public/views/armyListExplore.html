@@ -14,8 +14,8 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <h2 class="warning-text">
-            <span ng-bind="vm.armyList.status"></span>
+        <h2 ng-class="vm.armyList.statusType">
+            <span ng-bind="vm.armyList.statusDisplayText"></span>
         </h2>
         <div ng-hide="!vm.armyList.description">
             <div class="content-subheader">Description</div>

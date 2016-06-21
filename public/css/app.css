@@ -177,11 +177,19 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     font-size: 1.2em;
 }
 
-.warning-text {
+.status-warning {
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
     background: #d96459;
+    color: #ffffff;
+}
+
+.status-ready {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    background: #799aa5;
     color: #ffffff;
 }
 

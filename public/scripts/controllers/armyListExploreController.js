@@ -168,7 +168,28 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             vm.armyList = results.armyList;
 
             // Add in the default status
-            vm.armyList.status = 'Early Draft';
+            if (vm.armyList.status.toUpperCase() === 'DRAFT') {
+                vm.armyList.statusDisplayText = 'Status: Draft';
+                vm.armyList.statusType = 'status-warning';
+            }
+            else if (vm.armyList.status.toUpperCase() === 'REVISED') {
+                vm.armyList.statusDisplayText = 'Status: Revised';
+                vm.armyList.statusType = 'status-warning';
+            }
+            else if (vm.armyList.status.toUpperCase() === 'READY') {
+                vm.armyList.statusDisplayText = 'Status: Ready for Playtest';
+                vm.armyList.statusType = 'status-ready';
+            }
+            else if (vm.armyList.status.toUpperCase() === 'FINAL') {
+                vm.armyList.statusDisplayText = 'Status: Final';
+                vm.armyList.statusType = 'status-ready';
+            }
+            else {
+                vm.armyList.statusDisplayText = 'Status: Unknown';
+                vm.armyList.statusType = 'status-warning';
+            }
+
+            //vm.armyList.status = 'Early Draft';
 
             vm.associatedArmyLists = results.associatedArmyLists;
             console.log(vm.associatedArmyLists);

@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var DateRange = require('./subschemas/dateRangeSchema');
 var TroopOption = require('./subschemas/troopOptionSchema');
+var TroopEntry = require('./subschemas/troopEntrySchema');
 var AnnotatedRating = require('./subschemas/annotatedRatingSchema');
 var transform = require('./transform');
 
@@ -16,8 +17,10 @@ var ArmyListSchema = new mongoose.Schema({
     invasionRatings: [ AnnotatedRating ],
     maneuverRatings: [ AnnotatedRating ],
     dateRanges: [ DateRange ],
-    description: { type : String },
+    description: { type: String },
     troopOptions: [ TroopOption ],
+    troopEntriesForGeneral: [ TroopEntry ],
+    status: { type: String },
     derivedData: {
         extendedName: { type: String },
         listStartDate: { type: Number },

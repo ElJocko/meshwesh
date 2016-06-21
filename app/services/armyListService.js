@@ -480,6 +480,8 @@ exports.importTroopOptions = function(importRequest, callback) {
                 // Update the troop options and save
                 var armyList = documents[0];
                 armyList.troopOptions = armyListData.troopOptions;
+                armyList.troopEntriesForGeneral = armyListData.troopEntriesForGeneral;
+                armyList.status = armyListData.status;
                 armyList.save(function(err, savedArmyList) {
                     if (err) {
                         console.log('failed to update ' + armyList.name);
