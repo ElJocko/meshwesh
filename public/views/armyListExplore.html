@@ -44,6 +44,11 @@
                 </dl>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No maneuver ratings entered</div>
             </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="content-subheader">General</div>
+                {{ vm.armyList.troopEntriesForGeneral | mwDisplayTroopTypeEntriesList }}
+                <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
+            </div>
         </div>
         <div>
             <div class="content-subheader table-subheader">Troop Options</div>
@@ -52,7 +57,7 @@
                     <th>Min</th>
                     <th>Max</th>
                     <th>Battle Line?</th>
-                    <th>Troops</th>
+                    <th>Troop Types</th>
                 </tr>
                 <tbody ng-repeat="troopOption in vm.armyList.troopOptions">
                     <tr>
