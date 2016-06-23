@@ -15,24 +15,58 @@ var errors = {
 exports.errors = errors;
 
 exports.import = function(importRequest, callback) {
-    // Delete the existing documents
-    EnemyXref.remove({}, function(error) {
-        // Import the documents
+
+    if (importRequest.options && importRequest.options.deleteAll ) {
+        async.series(
+            [
+                removeDocuments,
+                importDocuments
+            ],
+            function (err, results) {
+                if (err) {
+                    return callback(err);
+                }
+                else {
+                    var importSummary = results[1];
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    }
+    else {
+        importDocuments(function(err, importSummary) {
+            if (err) {
+                return callback(err);
+            }
+            else {
+                return callback(null, importSummary);
+            }
+        });
+    }
+
+
+    function removeDocuments(cb) {
+        EnemyXref.remove({}, function(err) {
+            cb(err, null);
+        });
+    }
+
+    function importDocuments(cb) {
         async.mapSeries(
             importRequest.data,
             importEnemyXref,
             function(err, results) {
                 if (err) {
                     // TBD: organize results better
-                    return callback(err);
+                    return cb(err, null);
                 }
                 else {
                     var importSummary = summarizeImport(results);
-                    return callback(null, importSummary);
+                    return cb(null, importSummary);
                 }
             }
         );
-    });
+    }
 
     function importEnemyXref(enemyXrefData, cb) {
         // 1. Lookup army list 1 from list id and sublist id to get object id

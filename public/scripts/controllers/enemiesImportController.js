@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('EnemiesImportController', EnemiesImportController);
 
-EnemiesImportController.$inject = ['$location', '$scope', 'ArmyListEnemiesImportService'];
+EnemiesImportController.$inject = ['$location', '$scope', '$interval', 'ArmyListEnemiesImportService'];
 
-function EnemiesImportController($location, $scope, ArmyListEnemiesImportService) {
+function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesImportService) {
     var vm = this;
 
     vm.file = null;
@@ -102,29 +102,103 @@ function EnemiesImportController($location, $scope, ArmyListEnemiesImportService
 
     function importData() {
         if (vm.parsedData.length) {
-            // Prepare the request
+
+            // Only send a slice of data in each request
+
+            // Initialize the progress bar
+            vm.importProgress.numberTotal = vm.parsedData.length;
+            vm.importProgress.numberDone = 0;
+            vm.importProgress.running = true;
+
+            // Slice the data
+            var slicedData = [];
+            var sliceSize = 50;
+            var index = 0;
+            var done = false;
+            while (!done) {
+                var start = index;
+                var end = index + sliceSize;
+                if (end > vm.parsedData.length) {
+                    end = vm.parsedData.length;
+                    if (end > start) {
+                        var slice = vm.parsedData.slice(start, end);
+                        slicedData.push(slice);
+                    }
+                    done = true;
+                }
+                else {
+                    var slice = vm.parsedData.slice(start, end);
+                    slicedData.push(slice);
+                    index = end;
+                }
+            }
+
+            // Send each slice
+            var deleteEnemyXrefs = true;
+            async.mapSeries(slicedData, importSlice, function (err, sliceSummary) {
+                if (err) {
+                    vm.statusMessage1 = 'Unable to import enemy data.';
+                    vm.statusMessage2 = '';
+                    vm.file = null;
+                    vm.parsedData = [];
+
+                    removeProgressBarAfterDelay();
+                }
+                else {
+                    // Sum the summary data from each slice
+                    var importSummary = sliceSummary.reduce(function (previous, current) {
+                        return {
+                            imported: previous.imported + current.imported,
+                            failed: previous.failed + current.failed
+                        }
+                    });
+
+                    // Report the results
+                    console.info('Successfully imported ' + importSummary.imported + ' enemy pairs.');
+                    vm.statusMessage1 = 'Imported ' + importSummary.imported + ' enemy pairs.';
+                    vm.statusMessage2 = importSummary.failed + ' enemy pairs were not imported due to errors.';
+                    vm.file = null;
+                    vm.parsedData = [];
+
+                    removeProgressBarAfterDelay();
+                }
+            });
+        }
+
+        function importSlice(slice, cb) {
             var importRequest = {
-                data: vm.parsedData
+                options: {
+                    deleteAll: deleteEnemyXrefs
+                },
+                data: slice
             };
 
             // Import the troop types
             ArmyListEnemiesImportService.import(
                 importRequest,
                 function(importSummary) {
-                    console.info('Successfully imported ' + importSummary.imported + ' army lists pairs.');
-                    vm.statusMessage1 = 'Imported ' + importSummary.imported + ' army list pairs.';
-                    vm.statusMessage2 = importSummary.failed + ' army list pairs were not imported due to errors.';
-                    vm.file = null;
-                    vm.parsedData = [];
+                    // Only delete on the first slice
+                    deleteEnemyXrefs = false;
+
+                    // Update the progress bar
+                    vm.importProgress.numberDone = vm.importProgress.numberDone + slice.length;
+
+                    return cb(null, importSummary);
                 },
                 function (response) {
                     console.error(response.data);
-                    vm.statusMessage1 = 'Unable to import enemy data.';
-                    vm.statusMessage2 = '';
-                    vm.file = null;
-                    vm.parsedData = [];
+                    return cb(response.data);
                 }
             );
         }
+    }
+
+    function removeProgressBarAfterDelay() {
+        var timer = $interval(
+            function() {
+                vm.importProgress.running = false;
+            },
+            1000,
+            1);
     }
 }
