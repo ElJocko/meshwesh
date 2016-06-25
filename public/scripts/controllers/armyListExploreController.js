@@ -168,7 +168,11 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             vm.armyList = results.armyList;
 
             // Add in the default status
-            if (vm.armyList.status.toUpperCase() === 'DRAFT') {
+            if (!vm.armyList.status) {
+                vm.armyList.statusDisplayText = 'Status: Unknown';
+                vm.armyList.statusType = 'status-warning';
+            }
+            else if (vm.armyList.status.toUpperCase() === 'DRAFT') {
                 vm.armyList.statusDisplayText = 'Status: Draft';
                 vm.armyList.statusType = 'status-warning';
             }
@@ -188,8 +192,6 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                 vm.armyList.statusDisplayText = 'Status: Unknown';
                 vm.armyList.statusType = 'status-warning';
             }
-
-            //vm.armyList.status = 'Early Draft';
 
             vm.associatedArmyLists = results.associatedArmyLists;
             console.log(vm.associatedArmyLists);

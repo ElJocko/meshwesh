@@ -35,7 +35,7 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
 
                     if (results.data) {
                         // Convert some data columns to arrays
-                        results.data.forEach(function(item) {
+                        results.data.forEach(function(item, index) {
                             // uniqueId1,uniqueId2
 
                             // Convert to listIds and sublistIds
@@ -76,6 +76,8 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
                             // Make sure the listIds are numbers
                             data.armyList1.listId = Number(data.armyList1.listId);
                             data.armyList2.listId = Number(data.armyList2.listId);
+
+                            data.index = index + 1;
 
                             vm.parsedData.push(data);
                         });

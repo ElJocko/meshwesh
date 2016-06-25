@@ -76,7 +76,7 @@
     <div class="col-xs-12">
         <h2>
             Enemies
-            <div ng-repeat="enemyArmyList in vm.enemyArmyLists">
+            <div ng-repeat="enemyArmyList in vm.enemyArmyLists | orderBy:['sortId', 'sublistId']">
                 <small>
                     <a href ng-click="vm.onClickArmyList(enemyArmyList.id)">{{ enemyArmyList.derivedData.extendedName }}</a>
                 </small>
@@ -89,13 +89,13 @@
     <div class="col-xs-12">
         <h2>
             Related Army Lists
-            <div ng-repeat="associatedArmyList in vm.associatedArmyLists">
+            <div ng-repeat="associatedArmyList in vm.associatedArmyLists | orderBy:['sortId', 'sublistId']">
                 <small>
                     <a href ng-click="vm.onClickArmyList(associatedArmyList.id)">{{ associatedArmyList.derivedData.extendedName }}</a>
                 </small>
             </div>
         </h2>
-        <div class="empty-table-message" ng-show="vm.associatedArmyLists.length === 0">No associated army lists found</div>
+        <div class="empty-table-message" ng-show="vm.associatedArmyLists.length === 0">No related army lists found</div>
     </div>
 </div>
 <div class="row">

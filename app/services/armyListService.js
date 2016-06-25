@@ -130,7 +130,12 @@ exports.retrieveEnemyArmyLists = function(id, callback) {
                     armyListIds.push(item.armyList2);
                 });
                 documents2.forEach(function(item) {
-                    armyListIds.push(item.armyList1);
+                    if (item.armyList1.equals(id) && item.armyList2.equals(id)) {
+                        // self-enemy, already added from documents1, ignore here
+                    }
+                    else {
+                        armyListIds.push(item.armyList1);
+                    }
                 });
 
                 async.mapSeries(
@@ -332,7 +337,14 @@ exports.import = function(importRequest, callback) {
     }
 
     function importArmyList(armyListData, cb) {
+        // Create the army list document
         var document = new ArmyList(armyListData);
+        if (!document) {
+            console.log('Unable to create ArmyList document for ' + armyListData.name);
+            return cb(null, { armyList: null, error: 'Unable to create ArmyList document' });
+        }
+
+        // Add thematic categories and grand army list and save
         async.waterfall([
             function(cb) {
                 // initialize the waterfall
@@ -368,6 +380,12 @@ exports.import = function(importRequest, callback) {
                                 armyList: armyList.id
                             };
                             var xrefDocument = new ThematicCategoryToArmyListXref(xrefData);
+                            if (!xrefDocument) {
+                                console.log('Unable to create ThematicCategoryToArmyListXref document');
+                                var error = new Error('Unable to create ThematicCategoryToArmyListXref document');
+                                return cb(error);
+                            }
+
                             xrefDocument.save(function(err, savedDocument) {
                                 if (err) {
                                     if (err.name === 'MongoError' && err.code === 11000) {
@@ -418,7 +436,7 @@ exports.import = function(importRequest, callback) {
         document.save(function(err, savedDocument) {
             if (err) {
                 console.log('failed to import ' + document.name);
-//                console.log(err);
+                console.log(err);
                 if (err.name === 'MongoError' && err.code === 11000) {
                     // 11000 = Duplicate index
                     var error = new Error(errors.duplicateCode);

@@ -36,7 +36,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                     if (results.data) {
                         // Convert some data columns to arrays
                         results.data.forEach(function(item) {
-                            // sortId,sublistId,name,uniqueId,startDate,endDate,invasionRatings,maneuverRatings
+                            // sortId,sublistId,name,uniqueId,startDate,endDate,invasionRatings,maneuverRatings,category1,category2,category3,category4,category5
 
                             // Add listIds
                             var uniqueIdLength = item.uniqueId.length;
@@ -82,6 +82,58 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                             }
 
                             // Convert Thematic Categories
+                            // Cleanup the thematic category data
+                            if (item.category1) {
+                                item.category1 = item.category1.trim();
+                                if (item.category1 === '99: Andes and Amazon') {
+                                    item.category1 = 'Andes and Amazon';
+                                }
+                                else if (item.category1 === '999: New World') {
+                                    item.category1 = 'New World';
+                                }
+                            }
+
+                            if (item.category2) {
+                                item.category2 = item.category2.trim();
+                                if (item.category2 === '99: Andes and Amazon') {
+                                    item.category2 = 'Andes and Amazon';
+                                }
+                                else if (item.category2 === '999: New World') {
+                                    item.category2 = 'New World';
+                                }
+                            }
+
+                            if (item.category3) {
+                                item.category3 = item.category3.trim();
+                                if (item.category3 === '99: Andes and Amazon') {
+                                    item.category3 = 'Andes and Amazon';
+                                }
+                                else if (item.category3 === '999: New World') {
+                                    item.category3 = 'New World';
+                                }
+                            }
+
+                            if (item.category4) {
+                                item.category4 = item.category4.trim();
+                                if (item.category4 === '99: Andes and Amazon') {
+                                    item.category4 = 'Andes and Amazon';
+                                }
+                                else if (item.category4 === '999: New World') {
+                                    item.category4 = 'New World';
+                                }
+                            }
+
+                            if (item.category5) {
+                                item.category5 = item.category5.trim();
+                                if (item.category5 === '99: Andes and Amazon') {
+                                    item.category5 = 'Andes and Amazon';
+                                }
+                                else if (item.category5 === '999: New World') {
+                                    item.category5 = 'New World';
+                                }
+                            }
+
+
                             item.thematicCategories = [];
                             if (item.category1 && item.category1.length > 0) {
                                 item.thematicCategories.push(item.category1);

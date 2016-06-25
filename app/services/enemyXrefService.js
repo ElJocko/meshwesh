@@ -84,7 +84,7 @@ exports.import = function(importRequest, callback) {
             }
             else {
                 if (!armyList1) {
-                    console.log('Army list 1 not found: ' + enemyXrefData.armyList1.listId + '/' + enemyXrefData.armyList1.sublistId);
+                    console.log('Army list 1 not found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' at row ' + enemyXrefData.index);
                     return cb(null, { enemyXref: null, error: 'Army List 1 Not found' });
                 }
                 query = {
@@ -96,24 +96,56 @@ exports.import = function(importRequest, callback) {
                         return cb(err);
                     }
                     else if (!armyList2) {
-                        console.log('Army list 2 not found: ' + enemyXrefData.armyList2.listId + '/' + enemyXrefData.armyList2.sublistId);
+                        console.log('Army list 2 not found: ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
                         return cb(null, { enemyXref: null, error: 'Army List 2 Not found' });
                     }
                     else {
-                        var document = new EnemyXref({ armyList1: armyList1._id, armyList2: armyList2._id });
-
-                        // Save the document in the database
-                        document.save(function(err, savedDocument) {
+                        // Check to make sure the combination doesn't already exist
+                        query = {
+                            armyList1: armyList1._id,
+                            armyList2: armyList2._id
+                        };
+                        EnemyXref.findOne(query).lean().exec(function(err, xref1) {
                             if (err) {
-                                console.log('save error');
-                                console.log(err);
-                                return cb(null, { enemyXref: null, error: err });
+                                return cb(err);
+                            }
+                            else if (xref1) {
+                                console.log('Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                                return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
                             }
                             else {
-                                return cb(null, { enemyXref: savedDocument.toJSON(), error: null });
+                                query = {
+                                    armyList1: armyList2._id,
+                                    armyList2: armyList1._id
+                                };
+                                EnemyXref.findOne(query).lean().exec(function(err, xref1) {
+                                    if (err) {
+                                        return cb(err);
+                                    }
+                                    else if (xref1) {
+                                        console.log('Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                                        return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
+                                    }
+                                    else {
+                                        // Everything is set. Create the enemyXref...
+                                        var document = new EnemyXref({ armyList1: armyList1._id, armyList2: armyList2._id });
+
+                                        // Save the document in the database
+                                        document.save(function(err, savedDocument) {
+                                            if (err) {
+                                                console.log('save error');
+                                                console.log(err);
+                                                return cb(null, { enemyXref: null, error: err });
+                                            }
+                                            else {
+                                                return cb(null, { enemyXref: savedDocument.toJSON(), error: null });
+                                            }
+                                        });
+                                    }
+                                });
+
                             }
                         });
-
                     }
                 });
 
