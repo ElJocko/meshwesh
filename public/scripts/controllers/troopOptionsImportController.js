@@ -327,6 +327,19 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
             entryText = entryText.slice(0, -1);
         }
 
+        // Check for an annotation: [note]
+        var note = null;
+        var startBracketIndex = entryText.indexOf('[');
+        if (startBracketIndex >= 0) {
+            var endBracketIndex = entryText.indexOf(']');
+            if (endBracketIndex >= 0) {
+                note = entryText.slice(startBracketIndex + 1, endBracketIndex);
+                entryText = entryText.slice(endBracketIndex + 1);
+                entryText = entryText.trim();
+                console.log('found note: ' + note + ' leaving ' + entryText);
+            }
+        }
+
         // Check for dismounting type
         var dismountIndex = entryText.indexOf('//');
         var mainText = null;
@@ -348,7 +361,8 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
 
         var troopEntry = {
             troopTypeCode: mainCode,
-            dismountTypeCode: dismountCode
+            dismountTypeCode: dismountCode,
+            note: note
         };
 
         var result = {
