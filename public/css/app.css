@@ -461,3 +461,10 @@ input[readonly] {
     text-align: justify;
     margin-bottom: 20px;
 }
+
+.troop-image-display {
+    color: #ffffff;
+    background-color: #555555;
+    border-bottom: 1px solid #888888;
+}
+

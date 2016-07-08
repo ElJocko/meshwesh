@@ -6,433 +6,65 @@
             <div class="col-sm-12">
                 <h2>Bow Armed Infantry</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['ARC'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['ARC'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/archers.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['ARC'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['PAV'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['PAV'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/pavisiers.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['PAV'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['SKM'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['SKM'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/skirmishers.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['SKM'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['BLV'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['BLV'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/bow-levy.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['BLV'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['ARC']" show-image="vm.showImage('ARC')"></troop-description>
+                    <troop-description troop="vm.troopTypes['PAV']" show-image="vm.showImage('PAV')"></troop-description>
+                </div>
+                <div class="row">
+                    <troop-description troop="vm.troopTypes['SKM']" show-image="vm.showImage('SKM')"></troop-description>
+                    <troop-description troop="vm.troopTypes['BLV']" show-image="vm.showImage('BLV')"></troop-description>
                 </div>
                 <h2>Open Order Infantry</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['LFT'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['LFT'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['LFT'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['LSP'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['LSP'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['LSP'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['RDR'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['RDR'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['RDR'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['WBD'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['WBD'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['WBD'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['LFT']" show-image="vm.showImage('LFT')"></troop-description>
+                    <troop-description troop="vm.troopTypes['LSP']" show-image="vm.showImage('LSP')"></troop-description>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['RBL'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['RBL'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['RBL'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['RDR']" show-image="vm.showImage('RDR')"></troop-description>
+                    <troop-description troop="vm.troopTypes['WBD']" show-image="vm.showImage('WBD')"></troop-description>
+                </div>
+                <div class="row">
+                    <troop-description troop="vm.troopTypes['RBL']" show-image="vm.showImage('RBL')"></troop-description>
                 </div>
                 <h2>Close Order Infantry</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['EFT'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['EFT'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/elitefoot.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['EFT'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['SPR'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['SPR'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['SPR'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['WRR'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['WRR'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['WRR'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['HFT'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['HFT'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['HFT'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['EFT']" show-image="vm.showImage('EFT')"></troop-description>
+                    <troop-description troop="vm.troopTypes['SPR']" show-image="vm.showImage('SPR')"></troop-description>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['PIK'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['PIK'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['PIK'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['HRD'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['HRD'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['HRD'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['WRR']" show-image="vm.showImage('WRR')"></troop-description>
+                    <troop-description troop="vm.troopTypes['HFT']" show-image="vm.showImage('HFT')"></troop-description>
+                </div>
+                <div class="row">
+                    <troop-description troop="vm.troopTypes['PIK']" show-image="vm.showImage('PIK')"></troop-description>
+                    <troop-description troop="vm.troopTypes['HRD']" show-image="vm.showImage('HRD')"></troop-description>
                 </div>
                 <h2>Mounted</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['ECV'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['ECV'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['ECV'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['HBW'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['HBW'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['HBW'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['JCV'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['JCV'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/javcav.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['JCV'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['BAD'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['BAD'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['BAD'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['ECV']" show-image="vm.showImage('ECV')"></troop-description>
+                    <troop-description troop="vm.troopTypes['HBW']" show-image="vm.showImage('HBW')"></troop-description>
+                </div>
+                <div class="row">
+                    <troop-description troop="vm.troopTypes['JCV']" show-image="vm.showImage('JCV')"></troop-description>
+                    <troop-description troop="vm.troopTypes['BAD']" show-image="vm.showImage('BAD')"></troop-description>
                 </div>
                 <h2>Heavy Mounted</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['KNT'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['KNT'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/knights.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['KNT'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['CAT'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['CAT'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['CAT'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['KNT']" show-image="vm.showImage('KNT')"></troop-description>
+                    <troop-description troop="vm.troopTypes['CAT']" show-image="vm.showImage('CAT')"></troop-description>
                 </div>
                 <h2>Chariots</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['CHT'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['CHT'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['CHT'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['BTX'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['BTX'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['BTX'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['CHT']" show-image="vm.showImage('CHT')"></troop-description>
+                    <troop-description troop="vm.troopTypes['BTX']" show-image="vm.showImage('BTX')"></troop-description>
                 </div>
                 <h2>Specialty Troops</h2>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['WWG'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['WWG'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/warwagon.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['WWG'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['ART'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['ART'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/artillery.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['ART'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['ELE'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['ELE'].cost }} Points</div>
-                                <div class="troop-description-stat">Close Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['ELE'].description }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <h3>{{ vm.troopTypes['CML'].displayName }}</h3>
-                                <div class="troop-description-stat">{{ vm.troopTypes['CML'].cost }} Points</div>
-                                <div class="troop-description-stat">Open Order</div>
-                            </div>
-                            <div class="col-xs-6">
-                                <img class="img-responsive" src="images/troopTypes/noimage.png">
-                            </div>
-                            <div class="col-sm-12 troop-description-text">
-                                {{ vm.troopTypes['CML'].description }}
-                            </div>
-                        </div>
-                    </div>
+                    <troop-description troop="vm.troopTypes['WWG']" show-image="vm.showImage('WWG')"></troop-description>
+                    <troop-description troop="vm.troopTypes['ART']" show-image="vm.showImage('ART')"></troop-description>
+                </div>
+                <div class="row">
+                    <troop-description troop="vm.troopTypes['ELE']" show-image="vm.showImage('ELE')"></troop-description>
+                    <troop-description troop="vm.troopTypes['CML']" show-image="vm.showImage('CML')"></troop-description>
                 </div>
             </div>
         </div>

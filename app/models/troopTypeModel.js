@@ -11,7 +11,8 @@ var TroopTypeSchema = new mongoose.Schema({
     importName: { type: String },
     category: { type: String },
     cost: { type: Number },
-    description: { type: String }
+    description: { type: String },
+    order: { type: String }
 });
 
 TroopTypeSchema.set('toJSON', {
