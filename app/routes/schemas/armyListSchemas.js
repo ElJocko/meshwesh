@@ -39,6 +39,14 @@ var annotatedRatingSchema = {
     }
 };
 
+var annotatedTopographySchema = {
+    type: 'object',
+    properties: {
+        value: { type: 'string', required: true },
+        note: { type: ['string', null] }
+    }
+};
+
 // Schemas for validating requests
 exports.retrieveArmyListsByQuery = {
     body: { additionalProperties: false },
@@ -61,6 +69,7 @@ exports.createArmyList = {
             grandArmyList: { type: ['string', 'null'] },
             invasionRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
             maneuverRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
+            homeTopographies: { type: ['array', 'null'], items: annotatedTopographySchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
             troopOptions: { type: ['array', 'null'], items: troopOptionSubschema },
@@ -88,6 +97,7 @@ exports.updateArmyList = {
             grandArmyList: { type: ['string', 'null'] },
             invasionRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
             maneuverRatings: { type: ['array', 'null'], items: annotatedRatingSchema },
+            homeTopographies: { type: ['array', 'null'], items: annotatedTopographySchema },
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
             troopOptions: { type: ['array', 'null'], items: troopOptionSubschema },

@@ -16,6 +16,8 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
 
     vm.importData = importData;
 
+    var validHomeTopographies = ['Arable', 'Delta', 'Hilly', 'Dry', 'Forest', 'Steppe', 'Marsh'];
+
     document.getElementById('inputFileInput').addEventListener('change', fileSelected, false);
 
     function fileSelected(event) {
@@ -79,6 +81,23 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                                     tempArray.push(annotatedManeuverRating);
                                 });
                                 item.maneuverRatings = tempArray;
+                            }
+
+                            // Convert homeTopographies
+                            tempArray = [];
+                            if (item.homeTopographies) {
+                                values = item.homeTopographies.split(',');
+                                values.forEach(function(value) {
+                                    value = value.trim();
+                                    var homeTopography = { value: value, note: null };
+                                    if (validHomeTopographies.includes(homeTopography.value)) {
+                                        tempArray.push(homeTopography);
+                                    }
+                                    else {
+                                        console.log('Home Topography: ' + homeTopography.value + ' is invalid');
+                                    }
+                                });
+                                item.homeTopographies = tempArray;
                             }
 
                             // Convert Thematic Categories

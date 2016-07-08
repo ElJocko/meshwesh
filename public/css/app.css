@@ -175,11 +175,18 @@ h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
 }
 
 .table-subheader {
+    margin-top: 20px;
     margin-bottom: 15px;
 }
 
 .content-text {
     font-size: 1.2em;
+}
+
+.content-text-special {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-left: 15px;
 }
 
 .status-warning {
@@ -436,6 +443,18 @@ input[readonly] {
 }
 .dl-horizontal-rating dd {
     margin-left: 45px;
+}
+
+.dl-horizontal-topo dt {
+    float: left;
+    width: 60px;
+    overflow: hidden;
+    clear: left;
+    white-space: nowrap;
+    margin-left: 15px;
+}
+.dl-horizontal-topo dd {
+    margin-left: 90px;
 }
 
 .troop-description h2 {

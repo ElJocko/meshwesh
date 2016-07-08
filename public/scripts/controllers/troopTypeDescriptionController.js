@@ -45,6 +45,9 @@ function TroopTypeDescriptionController($location, $uibModal, TroopTypeService) 
             vm.troopTypes['KNT'].imageSource = 'images/troopTypes/knights.png';
             vm.troopTypes['CAT'].imageSource = 'images/troopTypes/noimage.png';
 
+            vm.troopTypes['CHT'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['BTX'].imageSource = 'images/troopTypes/noimage.png';
+
             vm.troopTypes['WWG'].imageSource = 'images/troopTypes/war-wagon.png';
             vm.troopTypes['ART'].imageSource = 'images/troopTypes/artillery.png';
             vm.troopTypes['ELE'].imageSource = 'images/troopTypes/noimage.png';

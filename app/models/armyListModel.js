@@ -5,6 +5,7 @@ var DateRange = require('./subschemas/dateRangeSchema');
 var TroopOption = require('./subschemas/troopOptionSchema');
 var TroopEntry = require('./subschemas/troopEntrySchema');
 var AnnotatedRating = require('./subschemas/annotatedRatingSchema');
+var AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
 var transform = require('./transform');
 
 // Create the schema
@@ -16,6 +17,7 @@ var ArmyListSchema = new mongoose.Schema({
     grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
     invasionRatings: [ AnnotatedRating ],
     maneuverRatings: [ AnnotatedRating ],
+    homeTopographies: [ AnnotatedTopography ],
     dateRanges: [ DateRange ],
     description: { type: String },
     troopOptions: [ TroopOption ],

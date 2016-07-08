@@ -45,8 +45,18 @@
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No maneuver ratings entered</div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="content-subheader">General</div>
-                {{ vm.armyList.troopEntriesForGeneral | mwDisplayTroopTypeEntriesList }}
+                <div class="content-subheader">Home Topography</div>
+                <dl class="dl-horizontal-topo">
+                    <div class="content-text" ng-repeat="topography in vm.armyList.homeTopographies">
+                        <dt>{{ topography.value }}</dt>
+                        <dd>{{ topography.note }}</dd>
+                    </div>
+                </dl>
+                <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No topographies entered</div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="content-subheader">General's Troop Type</div>
+                <span class="content-text-special">{{ vm.armyList.troopEntriesForGeneral | mwDisplayTroopTypeEntriesList }}</span>
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
         </div>
