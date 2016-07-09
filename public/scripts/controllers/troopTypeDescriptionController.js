@@ -24,33 +24,33 @@ function TroopTypeDescriptionController($location, $uibModal, TroopTypeService) 
             vm.troopTypes['SKM'].imageSource = 'images/troopTypes/skirmishers.png';
             vm.troopTypes['BLV'].imageSource = 'images/troopTypes/bow-levy.png';
 
-            vm.troopTypes['LFT'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['LFT'].imageSource = 'images/troopTypes/light-foot.png';
             vm.troopTypes['LSP'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['RDR'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['WBD'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['RBL'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['RDR'].imageSource = 'images/troopTypes/raiders.png';
+            vm.troopTypes['WBD'].imageSource = 'images/troopTypes/warband.png';
+            vm.troopTypes['RBL'].imageSource = 'images/troopTypes/rabble.png';
 
             vm.troopTypes['EFT'].imageSource = 'images/troopTypes/elite-foot.png';
-            vm.troopTypes['SPR'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['SPR'].imageSource = 'images/troopTypes/spears.png';
             vm.troopTypes['WRR'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['HFT'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['HFT'].imageSource = 'images/troopTypes/heavy-foot.png';
             vm.troopTypes['PIK'].imageSource = 'images/troopTypes/noimage.png';
             vm.troopTypes['HRD'].imageSource = 'images/troopTypes/noimage.png';
 
-            vm.troopTypes['ECV'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['HBW'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['ECV'].imageSource = 'images/troopTypes/elite-cavalry.png';
+            vm.troopTypes['HBW'].imageSource = 'images/troopTypes/horse-bow.png';
             vm.troopTypes['JCV'].imageSource = 'images/troopTypes/javelin-cavalry.png';
             vm.troopTypes['BAD'].imageSource = 'images/troopTypes/noimage.png';
 
             vm.troopTypes['KNT'].imageSource = 'images/troopTypes/knights.png';
-            vm.troopTypes['CAT'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['CAT'].imageSource = 'images/troopTypes/cataphracts.png';
 
-            vm.troopTypes['CHT'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['BTX'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['CHT'].imageSource = 'images/troopTypes/chariots.png';
+            vm.troopTypes['BTX'].imageSource = 'images/troopTypes/battle-taxi.png';
 
             vm.troopTypes['WWG'].imageSource = 'images/troopTypes/war-wagon.png';
             vm.troopTypes['ART'].imageSource = 'images/troopTypes/artillery.png';
-            vm.troopTypes['ELE'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['ELE'].imageSource = 'images/troopTypes/elephants.png';
             vm.troopTypes['CML'].imageSource = 'images/troopTypes/noimage.png';
         });
     }
