@@ -96,6 +96,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     max: 0,
                                     allyMin: 0,
                                     allyMax: 0,
+                                    dateRange: { startDate: item.startDate, endDate: item.endDate },
                                     troopEntries: [],
                                     description: item.description,
                                     core: ''
@@ -140,6 +141,18 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 }
                                 else if (item.core.length > 0) {
                                     console.warn('Core contained unexpected text: ' + item.core);
+                                }
+
+                                // Check date ranges
+                                if (troopOption.dateRange.startDate) {
+                                    if (!troopOption.dateRange.endDate) {
+                                        // No end date. Copy the start date.
+                                        troopOption.dateRange.endDate = troopOption.dateRange.startDate;
+                                    }
+                                }
+                                else {
+                                    // No start date. Don't use a dateRange at all.
+                                    troopOption.dateRange = null;
                                 }
 
                                 // If the troop option is valid, add it to the parsed data

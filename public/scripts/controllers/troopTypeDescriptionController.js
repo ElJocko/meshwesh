@@ -25,7 +25,7 @@ function TroopTypeDescriptionController($location, $uibModal, TroopTypeService) 
             vm.troopTypes['BLV'].imageSource = 'images/troopTypes/bow-levy.png';
 
             vm.troopTypes['LFT'].imageSource = 'images/troopTypes/light-foot.png';
-            vm.troopTypes['LSP'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['LSP'].imageSource = 'images/troopTypes/light-spear.png';
             vm.troopTypes['RDR'].imageSource = 'images/troopTypes/raiders.png';
             vm.troopTypes['WBD'].imageSource = 'images/troopTypes/warband.png';
             vm.troopTypes['RBL'].imageSource = 'images/troopTypes/rabble.png';
@@ -35,12 +35,12 @@ function TroopTypeDescriptionController($location, $uibModal, TroopTypeService) 
             vm.troopTypes['WRR'].imageSource = 'images/troopTypes/noimage.png';
             vm.troopTypes['HFT'].imageSource = 'images/troopTypes/heavy-foot.png';
             vm.troopTypes['PIK'].imageSource = 'images/troopTypes/noimage.png';
-            vm.troopTypes['HRD'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['HRD'].imageSource = 'images/troopTypes/horde.png';
 
             vm.troopTypes['ECV'].imageSource = 'images/troopTypes/elite-cavalry.png';
             vm.troopTypes['HBW'].imageSource = 'images/troopTypes/horse-bow.png';
             vm.troopTypes['JCV'].imageSource = 'images/troopTypes/javelin-cavalry.png';
-            vm.troopTypes['BAD'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['BAD'].imageSource = 'images/troopTypes/bad-horse.png';
 
             vm.troopTypes['KNT'].imageSource = 'images/troopTypes/knights.png';
             vm.troopTypes['CAT'].imageSource = 'images/troopTypes/cataphracts.png';
