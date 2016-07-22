@@ -113,6 +113,19 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     troopOption.max = minMaxValues[1];
                                 }
 
+                                // Convert allyMinMax
+                                if (item.allyMinMax) {
+                                    var allyMinMaxValues = item.allyMinMax.split('-');
+                                    if (allyMinMaxValues.length === 1) {
+                                        troopOption.allyMin = allyMinMaxValues[0];
+                                        troopOption.allyMax = allyMinMaxValues[0];
+                                    }
+                                    else if (allyMinMaxValues.length === 2) {
+                                        troopOption.allyMin = allyMinMaxValues[0];
+                                        troopOption.allyMax = allyMinMaxValues[1];
+                                    }
+                                }
+
                                 // Convert troop types
                                 var textTroopEntries = item.troopEntries.split(' or ');
                                 var conversionResults = _.map(textTroopEntries, convertTextToTroopEntry);
