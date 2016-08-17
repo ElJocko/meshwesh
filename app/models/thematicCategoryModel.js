@@ -1,15 +1,15 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var transform = require('./transform');
+var transform = require('./lib/transform');
 
 // Create the schema
 var ThematicCategorySchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true }
 });
 
-ThematicCategorySchema.set('toJSON', {
-    transform: transform.toJSON
+ThematicCategorySchema.set('toObject', {
+    transform: transform.removeDatabaseArtifacts
 });
 
 // Create the model

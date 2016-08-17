@@ -1,7 +1,6 @@
 'use strict';
 
 var User = require('../models/userModel');
-var transform = require('../models/transform');
 var config = require('../lib/config');
 var crypto = require('crypto');
 var jwt = require('jwt-simple');
@@ -24,8 +23,7 @@ exports.retrieveByQuery = function(query, callback) {
         else {
             var objects = [];
             for (var i = 0; i < documents.length; ++i) {
-                var object = documents[i].toJSON();
-                transform.sanitizeUser(object);
+                var object = documents[i].toObject();
                 objects.push(object);
             }
             return callback(null, objects);
@@ -49,9 +47,7 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    var flatDocument = document.toJSON();
-                    transform.sanitizeUser(flatDocument);
-                    return callback(null, flatDocument);
+                    return callback(null, document.toObject());
                 }
                 else {
                     return callback();
@@ -95,9 +91,7 @@ exports.create = function(data, callback) {
                     }
                 }
                 else {
-                    var flatDocument = savedDocument.toJSON();
-                    transform.sanitizeUser(flatDocument);
-                    return callback(null, flatDocument);
+                    return callback(null, document.toObject());
                 }
             });
         }
@@ -136,7 +130,7 @@ exports.update = function(id, data, callback) {
                         }
                     }
                     else {
-                        return callback(null, savedDocument.toJSON());
+                        return callback(null, savedDocument.toObject());
                     }
                 });
             }
@@ -165,7 +159,7 @@ exports.deleteById = function(id, callback) {
             else {
                 //Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toJSON());
+                    return callback(null, document.toObject());
                 }
                 else {
                     return callback();

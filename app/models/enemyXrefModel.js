@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var transform = require('./transform');
+var transform = require('./lib/transform');
 
 // Create the schema
 var EnemyXrefSchema = new mongoose.Schema({
@@ -9,8 +9,8 @@ var EnemyXrefSchema = new mongoose.Schema({
     armyList2: { type: mongoose.Schema.Types.ObjectId, required: true }
 });
 
-EnemyXrefSchema.set('toJSON', {
-    transform: transform.toJSON
+EnemyXrefSchema.set('toObject', {
+    transform: transform.removeDatabaseArtifacts
 });
 
 // Create the model

@@ -6,7 +6,7 @@ var DateRangeSchema = new mongoose.Schema({
     endDate: { type: Number, required: true }
 });
 
-DateRangeSchema.set('toJSON', {
+DateRangeSchema.set('toObject', {
     transform: function (doc, ret, options) {
         ret.id = ret._id.toHexString();
         delete ret._id;

@@ -10,7 +10,7 @@ var AllyEntrySchema = new mongoose.Schema({
     allyArmyList: { type: mongoose.Schema.Types.ObjectId, required: true }
 });
 
-AllyEntrySchema.set('toJSON', {
+AllyEntrySchema.set('toObject', {
     transform: function (doc, ret, options) {
         ret.id = ret._id.toHexString();
         delete ret._id;

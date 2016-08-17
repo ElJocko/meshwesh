@@ -9,7 +9,7 @@ var TroopEntrySchema = new mongoose.Schema({
     note: { type: String }
 });
 
-TroopEntrySchema.set('toJSON', {
+TroopEntrySchema.set('toObject', {
     transform: function (doc, ret, options) {
         ret.id = ret._id.toHexString();
         delete ret._id;

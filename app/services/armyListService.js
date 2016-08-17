@@ -6,7 +6,7 @@ var ThematicCategory = require('../models/thematicCategoryModel');
 var GrandArmyList = require('../models/grandArmyListModel');
 var EnemyXref = require('../models/enemyXrefModel');
 var ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
-var transform = require('../models/transform');
+var transform = require('../models/lib/transform');
 var async = require('async');
 var _ = require('lodash');
 
@@ -20,22 +20,22 @@ var errors = {
 exports.errors = errors;
 
 exports.retrieveByQueryLean = function(query, callback) {
-    ArmyList.find(query).lean().exec(function(err, documents) {
+    ArmyList.find(query).lean().exec(function(err, leanDocs) {
         if (err) {
             return callback(err);
         }
         else {
-            for (var i = 0; i < documents.length; ++i) {
-                transform.removeDatabaseArtifacts(documents[i]);
-            }
-            return callback(null, documents);
+            leanDocs.forEach(function(o) {
+                transform.removeDatabaseArtifactsFromObject(o);
+            });
+            return callback(null, leanDocs);
         }
     });
 };
 
 function retrieveByIdLean(id, callback) {
     if (id) {
-        ArmyList.findById(id).lean().exec(function(err, document) {
+        ArmyList.findById(id).lean().exec(function(err, leanDoc) {
             if (err) {
                 if (err.name === 'CastError') {
                     var error = new Error(errors.badlyFormattedParameter);
@@ -47,10 +47,10 @@ function retrieveByIdLean(id, callback) {
                 }
             }
             else {
-                // Note: document is null if not found
-                if (document) {
-                    transform.removeDatabaseArtifacts(document);
-                    return callback(null, document);
+                // Note: object is null if not found
+                if (leanDoc) {
+                    transform.removeDatabaseArtifactsFromObject(leanDoc);
+                    return callback(null, leanDoc);
                 }
                 else {
                     return callback();
@@ -83,25 +83,25 @@ exports.retrieveAssociatedArmyLists = function(id, callback) {
                 // Note: document is null if not found
                 if (document) {
                     var query = { listId: document.listId };
-                    ArmyList.find(query).lean().exec(function(err, documents) {
+                    ArmyList.find(query).lean().exec(function(err, leanDocs) {
                         if (err) {
                             return callback(err);
                         }
                         else {
-                            var searchListIndex = -1;
-                            for (var i = 0; i < documents.length; ++i) {
-                                if (documents[i]._id.equals(document._id)) {
-                                    searchListIndex = i;
-                                }
-                                transform.removeDatabaseArtifacts(documents[i]);
-                            }
+                            leanDocs.forEach(function(o) {
+                                transform.removeDatabaseArtifactsFromObject(o);
+                            });
 
-                            // Remove the list that we're seaching on
+                            // Find the army list that was in the request
+                            var searchListIndex = _.findIndex(leanDocs, function(o) {
+                                return (o.id === id);
+                            });
+
+                            // Remove the army list
                             if (searchListIndex >= 0) {
-                                var removedArmyList = documents.splice(searchListIndex, 1);
-                                console.log(removedArmyList.name);
+                                leanDocs.splice(searchListIndex, 1);
                             }
-                            return callback(null, documents);
+                            return callback(null, leanDocs);
                         }
                     });
                 }
@@ -212,7 +212,7 @@ exports.create = function(data, callback) {
             }
         }
         else {
-            return callback(null, savedDocument.toJSON());
+            return callback(null, savedDocument.toObject());
         }
     });
 };
@@ -250,7 +250,7 @@ exports.update = function(id, data, callback) {
                         }
                     }
                     else {
-                        return callback(null, savedDocument.toJSON());
+                        return callback(null, savedDocument.toObject());
                     }
                 });
             }
@@ -279,7 +279,7 @@ exports.deleteById = function(id, callback) {
             else {
                 //Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toJSON());
+                    return callback(null, document.toObject());
                 }
                 else {
                     return callback();
@@ -359,7 +359,7 @@ exports.import = function(importRequest, callback) {
                 return cb(null, { armyList: null, error: err });
             }
             else {
-                return cb(null, { armyList: result.toJSON(), error: null });
+                return cb(null, { armyList: result.toObject(), error: null });
             }
         });
     }
@@ -509,7 +509,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                         if (armyListData.troopOptions.length !== savedArmyList.troopOptions.length) {
                             console.log('failed to import all troop options for ' + savedArmyList.name + '. Input = ' + armyListData.troopOptions.length + ', Saved = ' + savedArmyList.troopOptions.length);
                         }
-                        return cb(null, { armyList: savedArmyList.toJSON(), error: null });
+                        return cb(null, { armyList: savedArmyList.toObject(), error: null });
                     }
                 });
             }

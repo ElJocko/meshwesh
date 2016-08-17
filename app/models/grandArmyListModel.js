@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var transform = require('./transform');
+var transform = require('./lib/transform');
 
 // Create the schema
 var GrandArmyListSchema = new mongoose.Schema({
@@ -9,8 +9,8 @@ var GrandArmyListSchema = new mongoose.Schema({
     listId: { type: Number }
 });
 
-GrandArmyListSchema.set('toJSON', {
-    transform: transform.toJSON
+GrandArmyListSchema.set('toObject', {
+    transform: transform.removeDatabaseArtifacts
 });
 
 // Create the model

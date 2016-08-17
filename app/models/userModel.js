@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var transform = require('./transform');
+var transform = require('./lib/transform');
 
 // Create the schema
 var UserSchema = new mongoose.Schema({
@@ -11,8 +11,8 @@ var UserSchema = new mongoose.Schema({
     salt: { type: String, required: true }
 });
 
-UserSchema.set('toJSON', {
-    transform: transform.toJSON
+UserSchema.set('toObject', {
+    transform: transform.removeDatabaseArtifactsAndSanitizeUser
 });
 
 // Create the model

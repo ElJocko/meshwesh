@@ -1,7 +1,7 @@
 'use strict';
 
 var GrandArmyList = require('../models/grandArmyListModel');
-var transform = require('../models/transform');
+var transform = require('../models/lib/transform');
 var async = require('async');
 var _ = require('lodash');
 
@@ -14,16 +14,15 @@ var errors = {
 exports.errors = errors;
 
 exports.retrieveByQueryLean = function(query, callback) {
-    GrandArmyList.find(query).lean().exec(function(err, documents) {
+    GrandArmyList.find(query).lean().exec(function(err, leanDocs) {
         if (err) {
             return callback(err);
         }
         else {
-            var objects = [];
-            for (var i = 0; i < documents.length; ++i) {
-                transform.removeDatabaseArtifacts(documents[i]);
-            }
-            return callback(null, documents);
+            leanDocs.forEach(function(o) {
+                transform.removeDatabaseArtifactsFromObject(o);
+            });
+            return callback(null, leanDocs);
         }
     });
 };
@@ -44,8 +43,7 @@ exports.retrieveByIdLean = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    transform.removeDatabaseArtifacts(document);
-                    return callback(null, document);
+                    return callback(null, document.toObject());
                 }
                 else {
                     return callback();
@@ -77,7 +75,7 @@ exports.create = function(data, callback) {
             }
         }
         else {
-            return callback(null, savedDocument.toJSON());
+            return callback(null, savedDocument.toObject());
         }
     });
 };
@@ -114,7 +112,7 @@ exports.update = function(id, data, callback) {
                         }
                     }
                     else {
-                        return callback(null, savedDocument.toJSON());
+                        return callback(null, savedDocument.toObject());
                     }
                 });
             }
@@ -143,7 +141,7 @@ exports.deleteById = function(id, callback) {
             else {
                 //Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toJSON());
+                    return callback(null, document.toObject());
                 }
                 else {
                     return callback();
@@ -194,7 +192,7 @@ exports.import = function(importRequest, callback) {
                 }
             }
             else {
-                return cb(null, { grandArmyList: savedDocument.toJSON(), error: null });
+                return cb(null, { grandArmyList: savedDocument.toObject(), error: null });
             }
         });
     }

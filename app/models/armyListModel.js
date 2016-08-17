@@ -7,7 +7,7 @@ var TroopEntry = require('./subschemas/troopEntrySchema');
 var AnnotatedRating = require('./subschemas/annotatedRatingSchema');
 var AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
 var AllyEntry = require('./subschemas/allyEntrySchema');
-var transform = require('./transform');
+var transform = require('./lib/transform');
 
 // Create the schema
 var ArmyListSchema = new mongoose.Schema({
@@ -32,8 +32,8 @@ var ArmyListSchema = new mongoose.Schema({
     }
 });
 
-ArmyListSchema.set('toJSON', {
-    transform: transform.toJSON
+ArmyListSchema.set('toObject', {
+    transform: transform.removeDatabaseArtifacts
 });
 
 ArmyListSchema.pre('save', function(next) {

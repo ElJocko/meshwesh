@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var transform = require('./transform');
+var transform = require('./lib/transform');
 
 // Create the schema
 var TroopTypeSchema = new mongoose.Schema({
@@ -15,8 +15,8 @@ var TroopTypeSchema = new mongoose.Schema({
     order: { type: String }
 });
 
-TroopTypeSchema.set('toJSON', {
-    transform: transform.toJSON
+TroopTypeSchema.set('toObject', {
+    transform: transform.removeDatabaseArtifacts
 });
 
 // Create the model

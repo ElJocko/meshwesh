@@ -138,7 +138,7 @@ exports.import = function(importRequest, callback) {
                                                 return cb(null, { enemyXref: null, error: err });
                                             }
                                             else {
-                                                return cb(null, { enemyXref: savedDocument.toJSON(), error: null });
+                                                return cb(null, { enemyXref: savedDocument.toObject(), error: null });
                                             }
                                         });
                                     }

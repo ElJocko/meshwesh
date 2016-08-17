@@ -6,7 +6,7 @@ var AnnotatedRatingSchema = new mongoose.Schema({
     note: { type: String }
 });
 
-AnnotatedRatingSchema.set('toJSON', {
+AnnotatedRatingSchema.set('toObject', {
     transform: function (doc, ret, options) {
         ret.id = ret._id.toHexString();
         delete ret._id;
