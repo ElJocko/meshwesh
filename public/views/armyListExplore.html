@@ -48,8 +48,7 @@
                 <div class="content-subheader">Home Topography</div>
                 <dl class="dl-horizontal-topo">
                     <div class="content-text" ng-repeat="topography in vm.armyList.homeTopographies">
-                        <dt>{{ topography.value }}</dt>
-                        <dd>{{ topography.note }}</dd>
+                        <div>{{ topography | mwDisplayTopography }}</div>
                     </div>
                 </dl>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No topographies entered</div>

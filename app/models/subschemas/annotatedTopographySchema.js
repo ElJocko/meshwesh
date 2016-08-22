@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 
 // Create the schema
 var AnnotatedTopographySchema = new mongoose.Schema({
-    value: { type: String, required: true },
-    note: { type: String }
+    note: { type: String },
+    values: [ String ]
 });
 
 AnnotatedTopographySchema.set('toObject', {

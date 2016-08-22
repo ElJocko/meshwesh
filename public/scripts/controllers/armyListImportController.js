@@ -86,17 +86,36 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                             // Convert homeTopographies
                             tempArray = [];
                             if (item.homeTopographies) {
-                                values = item.homeTopographies.split(',');
-                                values.forEach(function(value) {
-                                    value = value.trim();
-                                    var homeTopography = { value: value, note: null };
-                                    if (validHomeTopographies.includes(homeTopography.value)) {
-                                        tempArray.push(homeTopography);
+                                var groups = item.homeTopographies.split(';');
+                                groups.forEach(function(group) {
+                                    var parts = group.split(':');
+                                    var note = null;
+                                    if (parts.length === 1) {
+                                        note = '';
+                                        values = parts[0].split(',');
+                                    }
+                                    else if (parts.length === 2) {
+                                        note = parts[0].trim();
+                                        values = parts[1].split(',');
                                     }
                                     else {
-                                        console.log('Home Topography: ' + homeTopography.value + ' is invalid');
+                                        console.log('Home Topography: ' + group + ' is invalid');
+                                        values = [];
                                     }
+
+                                    // Validate the topography values
+                                    values.forEach(function(value) {
+                                        value = value.trim();
+                                        if (!validHomeTopographies.includes(value)) {
+                                            console.log('Home Topography: ' + value + ' is not a legal topography');
+                                        }
+                                    });
+
+                                    var homeTopography = { note: note, values: values };
+                                    tempArray.push(homeTopography);
+
                                 });
+
                                 item.homeTopographies = tempArray;
                             }
 
