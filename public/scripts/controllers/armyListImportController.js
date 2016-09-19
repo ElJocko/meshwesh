@@ -99,7 +99,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                                         values = parts[1].split(',');
                                     }
                                     else {
-                                        console.log('Home Topography: ' + group + ' is invalid');
+                                        console.log('Home Topography: ' + group + ' is invalid (' + item.uniqueId + ')');
                                         values = [];
                                     }
 
@@ -107,7 +107,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                                     values.forEach(function(value) {
                                         value = value.trim();
                                         if (!validHomeTopographies.includes(value)) {
-                                            console.log('Home Topography: ' + value + ' is not a legal topography');
+                                            console.log('Home Topography: ' + value + ' is not a legal topography (' + item.uniqueId + ')');
                                         }
                                     });
 
