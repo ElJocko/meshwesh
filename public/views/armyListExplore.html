@@ -66,7 +66,7 @@
                     <th>Min</th>
                     <th>Max</th>
                     <th>Battleline?</th>
-                    <th>Date Range</th>
+                    <th>Restrictions</th>
                     <th>Troop Types</th>
                 </tr>
                 <tbody ng-repeat="troopOption in vm.armyList.troopOptions">
@@ -74,8 +74,16 @@
                         <td>{{ troopOption.min }}</td>
                         <td>{{ troopOption.max }}</td>
                         <td>{{ troopOption.core | mwDisplayCore }}</td>
-                        <td>{{ troopOption.dateRange | mwDisplayDateRange }}</td>
-                        <td>{{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}</br><em>{{ troopOption.description }}</em></td>
+                        <td>
+                            {{ troopOption.dateRange | mwDisplayDateRange }}
+                            <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
+                            {{ troopOption.note }}
+                        </td>
+                        <td>
+                            {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
+                            </br>
+                            <em>{{ troopOption.description }}</em>
+                        </td>
                     </tr>
                 </tbody>
             </table>

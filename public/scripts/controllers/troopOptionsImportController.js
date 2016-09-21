@@ -66,11 +66,11 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 conversionResults.forEach(function(result) {
                                     // Issue warnings for unknown names
                                     if (result.troopEntry.troopTypeCode === null) {
-                                        console.warn('Did not find troop type for general ' + result.mainText + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                        console.log('Did not find troop type for general ' + result.mainText + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
                                     }
 
                                     if (result.dismountText && result.troopEntry.dismountTypeCode === null) {
-                                        console.warn('Did not find troop type for general dismount entry ' + result.dismountText + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
+                                        console.log('Did not find troop type for general dismount entry ' + result.dismountText + ' (' + troopOption.listId + '/' + troopOption.sublistId + '/' + item.troopOptionOrder + ')');
                                     }
 
                                     // Save the troop entry
@@ -79,7 +79,9 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     }
                                 });
 
-
+                                if (armyListData.troopEntriesForGeneral.length === 0) {
+                                    console.log('No general found: ' + item.general);
+                                }
 
                                 if (!armyListData.status) {
                                     armyListData.status = 'Draft';
@@ -99,8 +101,21 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     dateRange: { startDate: item.startDate, endDate: item.endDate },
                                     troopEntries: [],
                                     description: item.description,
+                                    note: '',
                                     core: ''
                                 };
+
+                                // Extract a note from the description
+                                if (item.description.length > 0 && item.description.charAt(0) === '(') {
+                                    var end = item.description.indexOf(')');
+                                    if (end === -1) {
+                                        console.log('Could not parse description, no end of note delimiter found:' + item.description);
+                                    }
+                                    else {
+                                        troopOption.note = item.description.slice(1, end).trim();
+                                        troopOption.description = item.description.slice(end + 1).trim();
+                                    }
+                                }
 
                                 // Convert minMax
                                 var minMaxValues = item.minMax.split('-');

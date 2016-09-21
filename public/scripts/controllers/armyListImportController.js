@@ -196,7 +196,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                         vm.statusMessage1 = 'Found 0 army lists in the file.';
                     }
 
-                    if (results.errors) {
+                    if (results.errors && results.errors.length) {
                         vm.statusMessage2 = 'Encountered ' + results.errors.length + ' errors during parsing.';
                         results.errors.forEach(function (item) {
                             console.error(item);
@@ -204,6 +204,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                     }
                     else {
                         vm.statusMessage2 = 'No Errors encountered during parsing.';
+                        console.log('No errors during parsing.');
                     }
 
                     $scope.$apply();
