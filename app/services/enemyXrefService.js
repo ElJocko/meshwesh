@@ -71,8 +71,9 @@ exports.import = function(importRequest, callback) {
     function importEnemyXref(enemyXrefData, cb) {
         // 1. Lookup army list 1 from list id and sublist id to get object id
         // 2. Lookup army list 2
-        // 3. Make sure pair doesn't exist already (TBD)
-        // 4. Insert pair
+        // 3. Make sure pair doesn't exist already
+        // 4. Make sure the pair overlap in time (warning only)
+        // 5. Insert pair
 
         var query = {
             listId: enemyXrefData.armyList1.listId,
@@ -127,6 +128,11 @@ exports.import = function(importRequest, callback) {
                                         return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
                                     }
                                     else {
+                                        // Issue a warning if the army lists don't overlap in time
+                                        if (!dateRangesOverlap(armyList1.dateRanges, armyList2.dateRanges)) {
+                                            console.log('Enemies do not overlap in time: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                                        }
+
                                         // Everything is set. Create the enemyXref...
                                         var document = new EnemyXref({ armyList1: armyList1._id, armyList2: armyList2._id });
 
@@ -169,5 +175,20 @@ exports.import = function(importRequest, callback) {
         });
         var summary = { imported: importCount, failed: errorCount };
         return summary;
+    }
+
+    function dateRangesOverlap(dateRange1, dateRange2) {
+        // There must be at least one range in each array
+        if (dateRange1.length === 0 || dateRange2.length === 0) {
+            return false;
+        }
+
+        // Treat each set of ranges as a single span--ignore gaps
+        var start1 = _.minBy(dateRange1, function(o) { return o.startDate; }).startDate;
+        var end1 = _.maxBy(dateRange1, function(o) { return o.endDate; }).endDate;
+        var start2 = _.minBy(dateRange2, function(o) { return o.startDate; }).startDate;
+        var end2 = _.maxBy(dateRange2, function(o) { return o.endDate; }).endDate;
+
+        return (start1 <= end2 && start2 <= end1);
     }
 };

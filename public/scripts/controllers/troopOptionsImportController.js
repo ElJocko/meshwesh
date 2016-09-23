@@ -62,6 +62,10 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
 
                                 // Convert troop types
                                 var generalEntryList = item.general.split(',');
+                                if (generalEntryList.length === 1) {
+                                    // Try splitting on ' or '
+                                    generalEntryList = item.general.split(' or ');
+                                }
                                 var conversionResults = _.map(generalEntryList, convertTextToTroopEntry);
                                 conversionResults.forEach(function(result) {
                                     // Issue warnings for unknown names
@@ -80,7 +84,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 });
 
                                 if (armyListData.troopEntriesForGeneral.length === 0) {
-                                    console.log('No general found: ' + item.general);
+                                    console.log('No general found: ' + item.general + ' in list ' + item.listId + '/' + item.sublistId );
                                 }
 
                                 if (!armyListData.status) {
@@ -377,7 +381,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                 note = entryText.slice(startBracketIndex + 1, endBracketIndex);
                 entryText = entryText.slice(endBracketIndex + 1);
                 entryText = entryText.trim();
-                console.log('found note: ' + note + ' leaving ' + entryText);
+//                console.log('found note: ' + note + ' for entry ' + entryText);
             }
         }
 
@@ -389,8 +393,8 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
             mainText = entryText;
         }
         else {
-            mainText = entryText.slice(0, dismountIndex);
-            dismountText = entryText.slice(dismountIndex + 2);
+            mainText = entryText.slice(0, dismountIndex).trim();
+            dismountText = entryText.slice(dismountIndex + 2).trim();
         }
 
         // Lookup the codes
