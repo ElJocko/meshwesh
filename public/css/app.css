@@ -487,3 +487,16 @@ input[readonly] {
     border-bottom: 1px solid #888888;
 }
 
+@media print {
+    header {
+        display: none;
+    }
+
+    nav {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+}
