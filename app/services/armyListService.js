@@ -503,6 +503,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                 armyList.save(function(err, savedArmyList) {
                     if (err) {
                         console.log('failed to update ' + armyList.name);
+                        console.log(err);
                         return cb(null, { armyList: null, error: err });
                     }
                     else {

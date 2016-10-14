@@ -75,10 +75,21 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                             // Convert maneuverRatings
                             tempArray = [];
                             if (item.maneuverRatings) {
-                                values = item.maneuverRatings.split(' or ');
-                                values.forEach(function(value) {
-                                    var annotatedManeuverRating = { value: value, note: null };
-                                    tempArray.push(annotatedManeuverRating);
+                                var ratings = item.maneuverRatings.split(';');
+                                ratings.forEach(function(rating) {
+                                    var parts = rating.split(':');
+                                    var note = null;
+                                    if (parts.length === 1) {
+                                        var annotatedManeuverRating = { value: parts[0].trim(), note: null };
+                                        tempArray.push(annotatedManeuverRating);
+                                    }
+                                    else if (parts.length === 2) {
+                                        annotatedManeuverRating = { value: parts[1].trim(), note: parts[0].trim() };
+                                        tempArray.push(annotatedManeuverRating);
+                                    }
+                                    else {
+                                        console.log('Maneuver Rating: ' + rating + ' is invalid (' + item.uniqueId + ')');
+                                    }
                                 });
                                 item.maneuverRatings = tempArray;
                             }
