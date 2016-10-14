@@ -36,51 +36,25 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
                     if (results.data) {
                         // Convert some data columns to arrays
                         results.data.forEach(function(item, index) {
-                            // uniqueId1,uniqueId2
+                            // x1,x2,y1,y2
 
-                            // Convert to listIds and sublistIds
-                            // Default to missing sublistId, then fix
-                            var data = {
-                                armyList1: {
-                                    listId: item.uniqueId1,
-                                    sublistId: 'a'
-                                },
-                                armyList2: {
-                                    listId: item.uniqueId2,
-                                    sublistId: 'a'
-                                }
-                            };
-
-                            // Split the uniqueId1 if necessary
-                            var uniqueId1Length = item.uniqueId1.length;
-                            if (uniqueId1Length > 0) {
-                                var sublistId = item.uniqueId1[uniqueId1Length - 1];
-                                if (sublistId >= 'a' && sublistId <= 'z') {
-                                    // Replace the listId and sublistId
-                                    data.armyList1.listId = item.uniqueId1.slice(0, uniqueId1Length - 1);
-                                    data.armyList1.sublistId = sublistId;
-                                }
+                            if (item.x1.length && item.y1.length) {
+                                addEnemyPair(item.x1, item.y1, index);
                             }
 
-                            // Split the uniqueId2 if necessary
-                            var uniqueId2Length = item.uniqueId2.length;
-                            if (uniqueId2Length > 0) {
-                                var sublistId = item.uniqueId2[uniqueId2Length - 1];
-                                if (sublistId >= 'a' && sublistId <= 'z') {
-                                    // Replace the listId and sublistId
-                                    data.armyList2.listId = item.uniqueId2.slice(0, uniqueId2Length - 1);
-                                    data.armyList2.sublistId = sublistId;
-                                }
+                            if (item.x1.length && item.y2.length) {
+                                addEnemyPair(item.x1, item.y2, index);
                             }
 
-                            // Make sure the listIds are numbers
-                            data.armyList1.listId = Number(data.armyList1.listId);
-                            data.armyList2.listId = Number(data.armyList2.listId);
+                            if (item.x2.length && item.y1.length) {
+                                addEnemyPair(item.x2, item.y1, index);
+                            }
 
-                            data.index = index + 1;
-
-                            vm.parsedData.push(data);
+                            if (item.x2.length && item.y2.length) {
+                                addEnemyPair(item.x2, item.y2, index);
+                            }
                         });
+
                         vm.statusMessage1 = 'Found ' + vm.parsedData.length + ' enemy pairs in the file.';
                     }
                     else {
@@ -202,5 +176,51 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
             },
             1000,
             1);
+    }
+
+    function addEnemyPair(x, y, index) {
+        // Convert to listIds and sublistIds
+        // Default to missing sublistId, then fix
+
+        var data = {
+            armyList1: {
+                listId: x,
+                sublistId: 'a'
+            },
+            armyList2: {
+                listId: y,
+                sublistId: 'a'
+            }
+        };
+
+        // Split x if necessary
+        var xLength = x.length;
+        if (xLength > 0) {
+            var sublistId = x[xLength - 1];
+            if (sublistId >= 'a' && sublistId <= 'z') {
+                // Replace the listId and sublistId
+                data.armyList1.listId = x.slice(0, xLength - 1);
+                data.armyList1.sublistId = sublistId;
+            }
+        }
+
+        // Split y if necessary
+        var yLength = y.length;
+        if (yLength > 0) {
+            var sublistId = y[yLength - 1];
+            if (sublistId >= 'a' && sublistId <= 'z') {
+                // Replace the listId and sublistId
+                data.armyList2.listId = y.slice(0, yLength - 1);
+                data.armyList2.sublistId = sublistId;
+            }
+        }
+
+        // Make sure the listIds are numbers
+        data.armyList1.listId = Number(data.armyList1.listId);
+        data.armyList2.listId = Number(data.armyList2.listId);
+
+        data.index = index + 2;
+
+        vm.parsedData.push(data);
     }
 }
