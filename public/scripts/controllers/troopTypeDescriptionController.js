@@ -51,7 +51,6 @@ function TroopTypeDescriptionController($location, $uibModal, TroopTypeService) 
             vm.troopTypes['WWG'].imageSource = 'images/troopTypes/war-wagon.png';
             vm.troopTypes['ART'].imageSource = 'images/troopTypes/artillery.png';
             vm.troopTypes['ELE'].imageSource = 'images/troopTypes/elephants.png';
-            vm.troopTypes['CML'].imageSource = 'images/troopTypes/noimage.png';
         });
     }
 
