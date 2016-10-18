@@ -64,11 +64,23 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                             // Convert invasionRatings
                             var tempArray = [];
                             if (item.invasionRatings) {
-                                var values = item.invasionRatings.split(' or ');
-                                values.forEach(function(value) {
-                                    var annotatedInvasionRating = { value: value, note: null };
-                                    tempArray.push(annotatedInvasionRating);
+                                var ratings = item.invasionRatings.split(';');
+                                ratings.forEach(function(rating) {
+                                    var parts = rating.split(':');
+                                    var note = null;
+                                    if (parts.length === 1) {
+                                        var annotatedInvasionRating = { value: parts[0].trim(), note: null };
+                                        tempArray.push(annotatedInvasionRating);
+                                    }
+                                    else if (parts.length === 2) {
+                                        annotatedInvasionRating = { value: parts[1].trim(), note: parts[0].trim() };
+                                        tempArray.push(annotatedInvasionRating);
+                                    }
+                                    else {
+                                        console.log('Invasion Rating: ' + rating + ' is invalid (' + item.uniqueId + ')');
+                                    }
                                 });
+
                                 item.invasionRatings = tempArray;
                             }
 
@@ -101,6 +113,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                                 groups.forEach(function(group) {
                                     var parts = group.split(':');
                                     var note = null;
+                                    var values = null;
                                     if (parts.length === 1) {
                                         note = '';
                                         values = parts[0].split(',');

@@ -38,6 +38,11 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
                         results.data.forEach(function(item, index) {
                             // x1,x2,y1,y2
 
+                            item.x1 = item.x1.trim();
+                            item.x2 = item.x2.trim();
+                            item.y1 = item.y1.trim();
+                            item.y2 = item.y2.trim();
+
                             if (item.x1.length && item.y1.length) {
                                 addEnemyPair(item.x1, item.y1, index);
                             }
