@@ -7,6 +7,7 @@ var DateRange = require('./dateRangeSchema');
 var AllyEntrySchema = new mongoose.Schema({
     name: { type: String, required: true },
     dateRange: { type: DateRange },
+    note: { type: String },
     allyArmyList: { type: mongoose.Schema.Types.ObjectId, required: true }
 });
 
