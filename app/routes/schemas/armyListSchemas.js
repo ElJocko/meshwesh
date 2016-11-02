@@ -73,6 +73,7 @@ exports.createArmyList = {
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
             troopOptions: { type: ['array', 'null'], items: troopOptionSubschema },
+            showTroopOptionDescriptions: { type: 'boolean' },
             derivedData: { type: 'object' }
         },
         additionalProperties: false
@@ -101,6 +102,7 @@ exports.updateArmyList = {
             dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
             description: { type: ['string', 'null'] },
             troopOptions: { type: ['array', 'null'], items: troopOptionSubschema },
+            showTroopOptionDescriptions: { type: 'boolean' },
             derivedData: { }
         },
         additionalProperties: false

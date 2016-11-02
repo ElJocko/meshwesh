@@ -57,7 +57,8 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     listId: item.listId,
                                     sublistId: item.sublistId,
                                     troopEntriesForGeneral: [],
-                                    status: item.description
+                                    status: item.description,
+                                    showTroopOptionDescriptions: false
                                 };
 
                                 // Convert troop types
@@ -87,8 +88,14 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     console.log('No general found: ' + item.general + ' in list ' + item.listId + '/' + item.sublistId );
                                 }
 
+                                // Fix status if necessary
                                 if (!armyListData.status) {
                                     armyListData.status = 'Draft';
+                                }
+
+                                // Show troop option descriptions?
+                                if (item.troopEntries && item.troopEntries.trim().toUpperCase() == 'S') {
+                                    armyListData.showTroopOptionDescriptions = true;
                                 }
 
                                 armyListArray.push(armyListData);

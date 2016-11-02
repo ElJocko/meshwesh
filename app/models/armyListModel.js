@@ -22,6 +22,7 @@ var ArmyListSchema = new mongoose.Schema({
     dateRanges: [ DateRange ],
     description: { type: String },
     troopOptions: [ TroopOption ],
+    showTroopOptionDescriptions: { type: Boolean },
     troopEntriesForGeneral: [ TroopEntry ],
     status: { type: String },
     allies: [ AllyEntry ],

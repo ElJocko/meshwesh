@@ -82,7 +82,7 @@
                         <td>
                             {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
                             </br>
-                            <em>{{ troopOption.description }}</em>
+                            <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
                         </td>
                     </tr>
                 </tbody>
