@@ -91,6 +91,10 @@ body {
     margin-left: 100px;
 }
 
+.copyright-text a {
+    color: #FFFFFF;
+}
+
 h1 a:link, h1 a:visited, h3 a:link, h3 a:visited {
     color: #ffffff;
     text-decoration: none;

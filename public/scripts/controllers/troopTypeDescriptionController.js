@@ -32,9 +32,9 @@ function TroopTypeDescriptionController($location, $uibModal, TroopTypeService) 
 
             vm.troopTypes['EFT'].imageSource = 'images/troopTypes/elite-foot.png';
             vm.troopTypes['SPR'].imageSource = 'images/troopTypes/spears.png';
-            vm.troopTypes['WRR'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['WRR'].imageSource = 'images/troopTypes/warriors.png';
             vm.troopTypes['HFT'].imageSource = 'images/troopTypes/heavy-foot.png';
-            vm.troopTypes['PIK'].imageSource = 'images/troopTypes/noimage.png';
+            vm.troopTypes['PIK'].imageSource = 'images/troopTypes/pike.png';
             vm.troopTypes['HRD'].imageSource = 'images/troopTypes/horde.png';
 
             vm.troopTypes['ECV'].imageSource = 'images/troopTypes/elite-cavalry.png';

@@ -173,11 +173,11 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                 vm.armyList.statusType = 'status-warning';
             }
             else if (vm.armyList.status.toUpperCase() === 'DRAFT') {
-                vm.armyList.statusDisplayText = 'Status: Draft';
+                vm.armyList.statusDisplayText = 'Status: Rough Draft';
                 vm.armyList.statusType = 'status-warning';
             }
             else if (vm.armyList.status.toUpperCase() === 'REVISED') {
-                vm.armyList.statusDisplayText = 'Status: Revised';
+                vm.armyList.statusDisplayText = 'Status: Draft';
                 vm.armyList.statusType = 'status-warning';
             }
             else if (vm.armyList.status.toUpperCase() === 'READY') {
