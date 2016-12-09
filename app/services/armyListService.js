@@ -499,6 +499,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                 var armyList = documents[0];
                 armyList.troopOptions = armyListData.troopOptions;
                 armyList.troopEntriesForGeneral = armyListData.troopEntriesForGeneral;
+                armyList.showTroopOptionDescriptions = armyListData.showTroopOptionDescriptions;
                 armyList.status = armyListData.status;
                 armyList.save(function(err, savedArmyList) {
                     if (err) {

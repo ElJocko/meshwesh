@@ -94,7 +94,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 }
 
                                 // Show troop option descriptions?
-                                if (item.troopEntries && item.troopEntries.trim().toUpperCase() == 'S') {
+                                if (item.troopEntries && item.troopEntries.trim().toUpperCase() === 'S') {
                                     armyListData.showTroopOptionDescriptions = true;
                                 }
 

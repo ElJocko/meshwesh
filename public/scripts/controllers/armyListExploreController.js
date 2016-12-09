@@ -174,22 +174,27 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             }
             else if (vm.armyList.status.toUpperCase() === 'DRAFT') {
                 vm.armyList.statusDisplayText = 'Status: Rough Draft';
+                vm.armyList.statusDisplaySubtext = '';
                 vm.armyList.statusType = 'status-warning';
             }
             else if (vm.armyList.status.toUpperCase() === 'REVISED') {
-                vm.armyList.statusDisplayText = 'Status: Draft';
+                vm.armyList.statusDisplayText = 'Status: Ready';
+                vm.armyList.statusDisplaySubtext = '(Final Review Pending)';
                 vm.armyList.statusType = 'status-warning';
             }
             else if (vm.armyList.status.toUpperCase() === 'READY') {
-                vm.armyList.statusDisplayText = 'Status: Ready for Playtest';
+                vm.armyList.statusDisplayText = 'Status: Ready';
+                vm.armyList.statusDisplaySubtext = '';
                 vm.armyList.statusType = 'status-ready';
             }
             else if (vm.armyList.status.toUpperCase() === 'FINAL') {
                 vm.armyList.statusDisplayText = 'Status: Final';
+                vm.armyList.statusDisplaySubtext = '';
                 vm.armyList.statusType = 'status-ready';
             }
             else {
                 vm.armyList.statusDisplayText = 'Status: Unknown';
+                vm.armyList.statusDisplaySubtext = '';
                 vm.armyList.statusType = 'status-warning';
             }
 
