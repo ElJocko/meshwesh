@@ -13,6 +13,11 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
     vm.parsedData = [];
     vm.statusMessage1 = 'No file selected';
     vm.statusMessage2 = '';
+    vm.importProgress = {
+        numberTotal: 0,
+        numberDone: 0,
+        running: false
+    };
 
     vm.importData = importData;
 

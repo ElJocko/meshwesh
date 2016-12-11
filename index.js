@@ -41,6 +41,11 @@ logger.info('Creating the routes');
 var routes = require('./app/routes');
 app.use(routes);
 
+// Rewrite all other routes to make angular work
+app.use(function(req, res) {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
 // When the database connection is ready, listen for requests
 //dbConnection.on('ready', function() {
     var server = app.listen(config.server.port, function () {
