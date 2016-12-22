@@ -15,6 +15,7 @@ var ArmyListSchema = new mongoose.Schema({
     listId: { type: Number },
     sublistId: { type: String },
     sortId: { type: Number },
+    allyOnly: { type: Boolean },
     grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
     invasionRatings: [ AnnotatedRating ],
     maneuverRatings: [ AnnotatedRating ],

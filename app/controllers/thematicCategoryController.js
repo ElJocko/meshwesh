@@ -4,7 +4,7 @@ var thematicCategoryService = require('../services/thematicCategoryService');
 var logger = require('../lib/logger');
 var _ = require('lodash');
 
-module.exports.retrieveByQuery = function(req, res) {
+exports.retrieveByQuery = function(req, res) {
     var query = { }; // Default is all
     if (req.query.name) {
         query.name = req.query.name;
@@ -20,7 +20,7 @@ module.exports.retrieveByQuery = function(req, res) {
     });
 };
 
-module.exports.retrieveById = function(req, res) {
+exports.retrieveById = function(req, res) {
     thematicCategoryService.retrieveById(req.params.categoryId, function(err, category) {
         if (err) {
             if (err.message === thematicCategoryService.errors.badlyFormattedParameter) {

@@ -14,20 +14,12 @@ module.exports = function(grunt) {
                 src: [
                     'test/api/testThematicCategoryApi.js'
                 ]
-            },
-            testServices: {
-                options: {
-                    reporter: 'spec'
-                },
-                src: [
-                    'test/services/testThematicCategoryService.js'
-                ]
             }
         },
 
         env: {
             mochaTest: {
-                src: 'test/config/env/test.env'
+                src: 'test/config/local-test.env'
             }
         }
     });
@@ -37,7 +29,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
 
     // Api and Service Tests
-    grunt.registerTask('testApi', ['env:mochaTest', 'mochaTest:testApi']);
-    grunt.registerTask('testServices', ['env:mochaTest', 'mochaTest:testServices']);
-    grunt.registerTask('test-server', ['env:mochaTest', 'mochaTest:testServices']);
+    grunt.registerTask('test-api', ['env:mochaTest', 'mochaTest:testApi']);
 };

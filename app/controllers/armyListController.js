@@ -4,7 +4,7 @@ var armyListService = require('../services/armyListService');
 var logger = require('../lib/logger');
 var _ = require('lodash');
 
-module.exports.retrieveByQuery = function(req, res) {
+exports.retrieveByQuery = function(req, res) {
     var query = { }; // Default is all
     if (req.query.name) {
         query.where = { name: { like: req.query.name }};
@@ -20,7 +20,7 @@ module.exports.retrieveByQuery = function(req, res) {
     });
 };
 
-module.exports.retrieveById = function(req, res) {
+exports.retrieveById = function(req, res) {
     armyListService.retrieveByIdLean(req.params.listId, function(err, list) {
         if (err) {
             if (err.message === armyListService.errors.badlyFormattedParameter) {
