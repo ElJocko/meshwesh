@@ -109,8 +109,6 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     sublistId: item.sublistId,
                                     min: 0,
                                     max: 0,
-                                    allyMin: 0,
-                                    allyMax: 0,
                                     dateRange: { startDate: item.startDate, endDate: item.endDate },
                                     troopEntries: [],
                                     description: item.description,
@@ -141,6 +139,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     troopOption.max = minMaxValues[1];
                                 }
 
+/*
                                 // Convert allyMinMax
                                 if (item.allyMinMax) {
                                     var allyMinMaxValues = item.allyMinMax.split('-');
@@ -153,6 +152,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                         troopOption.allyMax = allyMinMaxValues[1];
                                     }
                                 }
+*/
 
                                 // Convert troop types
                                 var textTroopEntries = item.troopEntries.split(' or ');

@@ -8,8 +8,6 @@ var TroopEntry = require('./troopEntrySchema');
 var TroopOptionSchema = new mongoose.Schema({
     min: { type: Number, required: true },
     max: { type: Number, required: true },
-    allyMin: { type: Number, required: true },
-    allyMax: { type: Number, required: true },
     dateRange: { type: DateRange },
     troopEntries: [ TroopEntry ],
     description: { type: String },

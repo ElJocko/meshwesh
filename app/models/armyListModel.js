@@ -6,7 +6,7 @@ var TroopOption = require('./subschemas/troopOptionSchema');
 var TroopEntry = require('./subschemas/troopEntrySchema');
 var AnnotatedRating = require('./subschemas/annotatedRatingSchema');
 var AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
-var AllyEntry = require('./subschemas/allyEntrySchema');
+var AllyOption = require('./subschemas/allyOptionSchema');
 var transform = require('./lib/transform');
 
 // Create the schema
@@ -15,7 +15,6 @@ var ArmyListSchema = new mongoose.Schema({
     listId: { type: Number },
     sublistId: { type: String },
     sortId: { type: Number },
-    allyOnly: { type: Boolean },
     grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
     invasionRatings: [ AnnotatedRating ],
     maneuverRatings: [ AnnotatedRating ],
@@ -26,7 +25,7 @@ var ArmyListSchema = new mongoose.Schema({
     showTroopOptionDescriptions: { type: Boolean },
     troopEntriesForGeneral: [ TroopEntry ],
     status: { type: String },
-    allies: [ AllyEntry ],
+    allyOptions: [ AllyOption ],
     derivedData: {
         extendedName: { type: String },
         listStartDate: { type: Number },

@@ -1,14 +1,11 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var DateRange = require('./dateRangeSchema');
 
 // Create the schema
 var AllyEntrySchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    dateRange: { type: DateRange },
-    note: { type: String },
-    allyArmyList: { type: mongoose.Schema.Types.ObjectId, required: true }
+    name: { type: String },
+    allyArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'AllyArmyList' }
 });
 
 AllyEntrySchema.set('toObject', {
