@@ -209,6 +209,23 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                             }
                             else if (item.allyId && item.allyId !== 0) {
                                 // This row has ally information
+                                var tempAllyOptions = [];
+                                var allyOptions = [];
+
+                                var optionDateRange = { startDate: item.startDate, endDate: item.endDate };
+                                // Check date ranges
+                                if (optionDateRange.startDate) {
+                                    if (!optionDateRange.endDate) {
+                                        // No end date. Copy the start date.
+                                        optionDateRange.endDate = optionDateRange.startDate;
+                                    }
+                                }
+                                else {
+                                    // No start date. Don't use a dateRange at all.
+                                    optionDateRange = null;
+                                }
+
+                                // First entry (or entries)
                                 if (item.ally1Name && item.ally1Name.length > 0) {
                                     var allyIds = item.ally1Id.split(' ');
                                     allyIds.forEach(function(allyId) {
@@ -216,38 +233,25 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                         var allyListId = allyId.slice(0, allyId.length - 1);
                                         var allySublistId = allyId.slice(allyId.length - 1);
 
-                                        var ally = {
-                                            listId: item.listId,
-                                            sublistId: item.sublistId,
+                                        var allyEntry = {
                                             name: item.ally1Name,
                                             allyListId: allyListId,
-                                            allySublistId: allySublistId,
-                                            dateRange: { startDate: item.startDate, endDate: item.endDate }
+                                            allySublistId: allySublistId
                                         };
 
-                                        // Check date ranges
-                                        if (ally.dateRange.startDate) {
-                                            if (!ally.dateRange.endDate) {
-                                                // No end date. Copy the start date.
-                                                ally.dateRange.endDate = ally.dateRange.startDate;
-                                            }
-                                        }
-                                        else {
-                                            // No start date. Don't use a dateRange at all.
-                                            ally.dateRange = null;
-                                        }
+                                        var allyOption = {
+                                            armyListId: item.listId,
+                                            armyListSublistId: item.sublistId,
+                                            dataRange: optionDateRange,
+                                            note: null,
+                                            allyEntries: [ allyEntry ]
+                                        };
 
-                                        allyArray.push(ally);
-
-                                        if (ally.dateRange) {
-                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + '[' + ally.dateRange.startDate + ' to ' + ally.dateRange.endDate + '] (' + ally.allyListId + ally.allySublistId + ')');
-                                        }
-                                        else {
-                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + ' (' + ally.allyListId + ally.allySublistId + ')');
-                                        }
+                                        tempAllyOptions.push(allyOption);
                                     });
                                 }
 
+                                // Second entry (or entries)
                                 if (item.ally2Name && item.ally2Name.length > 0) {
                                     var allyIds = item.ally2Id.split(' ');
                                     allyIds.forEach(function(allyId) {
@@ -255,37 +259,40 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                         var allyListId = allyId.slice(0, allyId.length - 1);
                                         var allySublistId = allyId.slice(allyId.length - 1);
 
-                                        var ally = {
-                                            listId: item.listId,
-                                            sublistId: item.sublistId,
+                                        var allyEntry = {
                                             name: item.ally2Name,
                                             allyListId: allyListId,
-                                            allySublistId: allySublistId,
-                                            dateRange: { startDate: item.startDate, endDate: item.endDate }
+                                            allySublistId: allySublistId
                                         };
 
-                                        // Check date ranges
-                                        if (ally.dateRange.startDate) {
-                                            if (!ally.dateRange.endDate) {
-                                                // No end date. Copy the start date.
-                                                ally.dateRange.endDate = ally.dateRange.startDate;
-                                            }
-                                        }
-                                        else {
-                                            // No start date. Don't use a dateRange at all.
-                                            ally.dateRange = null;
-                                        }
-
-                                        allyArray.push(ally);
-
-                                        if (ally.dateRange) {
-                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + '[' + ally.dateRange.startDate + ' to ' + ally.dateRange.endDate + '] (' + ally.allyListId + ally.allySublistId + ')');
-                                        }
-                                        else {
-                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + ' (' + ally.allyListId + ally.allySublistId + ')');
-                                        }
+                                        // For each option created from the first entry, copy the option and add the new entry
+                                        tempAllyOptions.forEach(function (tempOption) {
+                                            var newAllyOption = _.cloneDeep(tempOption);
+                                            newAllyOption.allyEntries.push(allyEntry);
+                                            allyOptions.push(newAllyOption);
+                                        });
                                     });
                                 }
+                                else {
+                                    // Not copied while parsing second entry, copy now
+                                    allyOptions = tempAllyOptions;
+                                }
+
+                                allyOptions.forEach(function(allyOption) {
+                                    var text = 'Ally option found. Army list: ' + allyOption.armyListId + allyOption.armyListSublistId;
+                                    if (allyOption.dateRange) {
+                                        text = text + ' [' + allyOption.dateRange.startDate + ' to ' + allyOption.dateRange.endDate + ']';
+                                    }
+                                    text = text + ' with Allies: ';
+                                    allyOption.allyEntries.forEach(function(allyEntry, index) {
+                                        if (index > 0) {
+                                            text = text + ' AND '
+                                        }
+                                        text = text + allyEntry.name + ' (' + allyEntry.allyListId + allyEntry.allySublistId + ')';
+                                    });
+
+                                    console.log(text);
+                                });
                             }
                         });
 

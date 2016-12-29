@@ -6,7 +6,6 @@ var AllyEntry = require('./allyEntrySchema');
 
 // Create the schema
 var AllyOptionSchema = new mongoose.Schema({
-    name: { type: String, required: true },
     dateRange: { type: DateRange },
     note: { type: String },
     allyEntries: [ AllyEntry ]
