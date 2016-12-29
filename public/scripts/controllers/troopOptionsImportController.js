@@ -49,10 +49,11 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                         // Convert the data to a flat array of troop options
                         var flatArray = [];
                         var armyListArray = [];
+                        var allyArray = [];
                         var errorRows = 0;
                         results.data.forEach(function(item) {
-                            // Check for an army list line
                             if (item.general && item.general.length > 0) {
+                                // This row has army list information
                                 var armyListData = {
                                     listId: item.listId,
                                     sublistId: item.sublistId,
@@ -102,6 +103,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                             }
                             // TBD: z troops are internal ally
                             else if (item.troopOptionOrder && item.troopOptionOrder !== '0' && item.sublistId !== 'w' && item.sublistId !== 'x' && item.sublistId !== 'y' && item.sublistId !== 'z') {
+                                // This row has troop option information
                                 var troopOption = {
                                     listId: item.listId,
                                     sublistId: item.sublistId,
@@ -205,11 +207,92 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     errorRows = errorRows + 1;
                                 }
                             }
+                            else if (item.allyId && item.allyId !== 0) {
+                                // This row has ally information
+                                if (item.ally1Name && item.ally1Name.length > 0) {
+                                    var allyIds = item.ally1Id.split(' ');
+                                    allyIds.forEach(function(allyId) {
+                                        allyId = allyId.trim();
+                                        var allyListId = allyId.slice(0, allyId.length - 1);
+                                        var allySublistId = allyId.slice(allyId.length - 1);
+
+                                        var ally = {
+                                            listId: item.listId,
+                                            sublistId: item.sublistId,
+                                            name: item.ally1Name,
+                                            allyListId: allyListId,
+                                            allySublistId: allySublistId,
+                                            dateRange: { startDate: item.startDate, endDate: item.endDate }
+                                        };
+
+                                        // Check date ranges
+                                        if (ally.dateRange.startDate) {
+                                            if (!ally.dateRange.endDate) {
+                                                // No end date. Copy the start date.
+                                                ally.dateRange.endDate = ally.dateRange.startDate;
+                                            }
+                                        }
+                                        else {
+                                            // No start date. Don't use a dateRange at all.
+                                            ally.dateRange = null;
+                                        }
+
+                                        allyArray.push(ally);
+
+                                        if (ally.dateRange) {
+                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + '[' + ally.dateRange.startDate + ' to ' + ally.dateRange.endDate + '] (' + ally.allyListId + ally.allySublistId + ')');
+                                        }
+                                        else {
+                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + ' (' + ally.allyListId + ally.allySublistId + ')');
+                                        }
+                                    });
+                                }
+
+                                if (item.ally2Name && item.ally2Name.length > 0) {
+                                    var allyIds = item.ally2Id.split(' ');
+                                    allyIds.forEach(function(allyId) {
+                                        allyId = allyId.trim();
+                                        var allyListId = allyId.slice(0, allyId.length - 1);
+                                        var allySublistId = allyId.slice(allyId.length - 1);
+
+                                        var ally = {
+                                            listId: item.listId,
+                                            sublistId: item.sublistId,
+                                            name: item.ally2Name,
+                                            allyListId: allyListId,
+                                            allySublistId: allySublistId,
+                                            dateRange: { startDate: item.startDate, endDate: item.endDate }
+                                        };
+
+                                        // Check date ranges
+                                        if (ally.dateRange.startDate) {
+                                            if (!ally.dateRange.endDate) {
+                                                // No end date. Copy the start date.
+                                                ally.dateRange.endDate = ally.dateRange.startDate;
+                                            }
+                                        }
+                                        else {
+                                            // No start date. Don't use a dateRange at all.
+                                            ally.dateRange = null;
+                                        }
+
+                                        allyArray.push(ally);
+
+                                        if (ally.dateRange) {
+                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + '[' + ally.dateRange.startDate + ' to ' + ally.dateRange.endDate + '] (' + ally.allyListId + ally.allySublistId + ')');
+                                        }
+                                        else {
+                                            console.log('Ally found. Army list: ' + ally.listId + ally.sublistId + ', ' + ally.name + ' (' + ally.allyListId + ally.allySublistId + ')');
+                                        }
+                                    });
+                                }
+                            }
                         });
 
                         console.log('Converted ' + armyListArray.length + ' army rows.');
-                        console.log('Converted ' + flatArray.length + ' troop option rows.')
+                        console.log('Converted ' + flatArray.length + ' troop option rows.');
                         console.log('Unable to convert ' + errorRows + ' troop option rows.');
+                        console.log('Found ' + allyArray.length + ' allies.');
 
                         // Convert the flat array of troop options into an array of army lists with troop options
 
