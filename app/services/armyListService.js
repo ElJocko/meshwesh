@@ -2,6 +2,7 @@
 
 var thematicCategoryService = require('./thematicCategoryService');
 var ArmyList = require('../models/armyListModel');
+var AllyArmyList = require('../models/allyArmyListModel');
 var ThematicCategory = require('../models/thematicCategoryModel');
 var GrandArmyList = require('../models/grandArmyListModel');
 var EnemyXref = require('../models/enemyXrefModel');
@@ -165,27 +166,97 @@ exports.retrieveThematicCategories = function(id, callback) {
     if (id) {
         var query = { armyList: id };
         ThematicCategoryToArmyListXref.find(query).lean().exec(function(err, documents) {
-                async.mapSeries(
-                    documents,
-                    function(xref, cb) {
-                        thematicCategoryService.retrieveById(xref.thematicCategory, function(err, thematicCategory) {
-                            if (err) {
-                                return cb(err);
-                            }
-                            else {
-                                return cb(null, thematicCategory);
-                            }
-                        })
-                    },
-                    function(err, results) {
+            async.mapSeries(
+                documents,
+                function(xref, cb) {
+                    thematicCategoryService.retrieveById(xref.thematicCategory, function(err, thematicCategory) {
                         if (err) {
-                            return callback(err);
+                            return cb(err);
                         }
                         else {
-                            return callback(null, results);
+                            return cb(null, thematicCategory);
                         }
+                    })
+                },
+                function(err, results) {
+                    if (err) {
+                        return callback(err);
                     }
-                );
+                    else {
+                        return callback(null, results);
+                    }
+                }
+            );
+        });
+    }
+    else {
+        var error = new Error(errors.missingParameter);
+        error.parameterName = 'id';
+        return callback(error);
+    }
+};
+
+exports.retrieveAllyOptions = function(id, callback) {
+    if (id) {
+        ArmyList.findById(id).lean().exec(function(err, document) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                // Note: document is null if not found
+                if (document) {
+                    var allyOptions = [];
+                    async.eachSeries(
+                        document.allyOptions,
+                        function(allyOption, cb) {
+                            async.eachSeries(
+                                allyOption.allyEntries,
+                                function(allyEntry, cb) {
+                                    AllyArmyList.findById(allyEntry.allyArmyList).lean().exec(function(err, leanDoc) {
+                                        if (err) {
+                                            return cb(err);
+                                        }
+                                        else if (!leanDoc) {
+                                            console.log('unable to find ally army list for army list ' + document.listId + '/' + document.sublistId);
+                                            return cb('unable to find ally army list for ally entry');
+                                        }
+                                        else {
+                                            // Replace the object id with the actual data
+                                            allyEntry.allyArmyList = leanDoc;
+                                            return cb();
+                                        }
+                                    });
+                                },
+                                function(err) {
+                                    if (err) {
+                                        return cb(err);
+                                    }
+                                    else {
+                                        return cb();
+                                    }
+                                }
+                            )
+                        },
+                        function(err) {
+                            if (err) {
+                                return callback(err);
+                            }
+                            else {
+                                return callback(null, document.allyOptions);
+                            }
+                        });
+                }
+                else {
+                    return callback();
+                }
+            }
         });
     }
     else {
@@ -489,41 +560,105 @@ exports.importTroopOptions = function(importRequest, callback) {
     );
 
     function importArmyList(armyListData, cb) {
-        // Find the matching army list
-        ArmyList.find({ listId: armyListData.listId, sublistId: armyListData.sublistId }, function(err, documents) {
+        addAllyOptionData(armyListData, function(err, armyListData) {
             if (err) {
                 return cb(null, { armyList: null, error: err });
             }
-            else if (documents.length === 1) {
-                // Update the troop options and save
-                var armyList = documents[0];
-                armyList.troopOptions = armyListData.troopOptions;
-                armyList.troopEntriesForGeneral = armyListData.troopEntriesForGeneral;
-                armyList.showTroopOptionDescriptions = armyListData.showTroopOptionDescriptions;
-                armyList.status = armyListData.status;
-                armyList.save(function(err, savedArmyList) {
+            else {
+                // Find the matching army list
+                ArmyList.find({ listId: armyListData.listId, sublistId: armyListData.sublistId }, function(err, documents) {
                     if (err) {
-                        console.log('failed to update ' + armyList.name);
-                        console.log(err);
                         return cb(null, { armyList: null, error: err });
                     }
+                    else if (documents.length === 1) {
+                        // Update the troop options and save
+                        var armyList = documents[0];
+                        armyList.troopOptions = armyListData.troopOptions;
+                        armyList.troopEntriesForGeneral = armyListData.troopEntriesForGeneral;
+                        armyList.showTroopOptionDescriptions = armyListData.showTroopOptionDescriptions;
+                        armyList.status = armyListData.status;
+                        armyList.allyOptions = armyListData.allyOptions;
+                        armyList.save(function(err, savedArmyList) {
+                            if (err) {
+                                console.log('failed to update ' + armyList.name);
+                                console.log(err);
+                                return cb(null, { armyList: null, error: err });
+                            }
+                            else {
+                                if (armyListData.troopOptions.length !== savedArmyList.troopOptions.length) {
+                                    console.log('failed to import all troop options for ' + savedArmyList.name + '. Input = ' + armyListData.troopOptions.length + ', Saved = ' + savedArmyList.troopOptions.length);
+                                }
+                                return cb(null, { armyList: savedArmyList.toObject(), error: null });
+                            }
+                        });
+                    }
+                    else if (documents.length === 0) {
+                        console.log('found no documents for ' + armyListData.listId + '/' + armyListData.sublistId);
+                        return cb(null, { armyList: null, error: null });
+                    }
                     else {
-                        if (armyListData.troopOptions.length !== savedArmyList.troopOptions.length) {
-                            console.log('failed to import all troop options for ' + savedArmyList.name + '. Input = ' + armyListData.troopOptions.length + ', Saved = ' + savedArmyList.troopOptions.length);
-                        }
-                        return cb(null, { armyList: savedArmyList.toObject(), error: null });
+                        console.log('found multiple documents for ' + armyListData.listId + '/' + armyListData.sublistId);
+                        return cb(null, { armyList: null, error: null });
                     }
                 });
             }
-            else if (documents.length === 0) {
-                console.log('found no documents for ' + armyListData.listId + '/' + armyListData.sublistId);
-                return cb(null, { armyList: null, error: null });
-            }
-            else {
-                console.log('found multiple documents for ' + armyListData.listId + '/' + armyListData.sublistId);
-                return cb(null, { armyList: null, error: null });
-            }
         });
+    }
+
+    function addAllyOptionData(armyListData, cb) {
+        var newAllyOptions = [];
+        async.eachSeries(
+            armyListData.allyOptions,
+            function(allyOption, cb) {
+                var newAllyOption = {
+                    dateRange: allyOption.dateRange,
+                    note: allyOption.note,
+                    allyEntries: []
+                };
+
+                async.eachSeries(
+                    allyOption.allyEntries,
+                    function(allyEntry, cb) {
+                        var newAllyEntry = {
+                            name: allyEntry.name
+                        };
+
+                        var query = { listId: allyEntry.allyListId, sublistId: allyEntry.allySublistId };
+                        AllyArmyList.find(query).lean().exec(function(err, leanDocs) {
+                            if (err) {
+                                return cb(err);
+                            }
+                            else if (leanDocs.length === 0) {
+                                console.log('unable to find ally army list ' + allyEntry.allyListId + '/' + allyEntry.allySublistId + ' for army list ' + armyListData.listId + '/' + armyListData.sublistId);
+                                return cb('unable to find ally army list for ally entry');
+                            }
+                            else {
+                                newAllyEntry.allyArmyList = leanDocs[0]._id;
+                                newAllyOption.allyEntries.push(newAllyEntry);
+                                return cb();
+                            }
+                        });
+                    },
+                    function(err) {
+                        if (err) {
+                            return cb(err);
+                        }
+                        else {
+                            newAllyOptions.push(newAllyOption);
+                            return cb();
+                        }
+                    }
+                )
+            },
+            function(err) {
+                if (err) {
+                    return cb(err);
+                }
+                else {
+                    armyListData.allyOptions = newAllyOptions;
+                    return cb(null, armyListData);
+                }
+            });
     }
 
     function summarizeImport(results) {

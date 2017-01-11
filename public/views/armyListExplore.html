@@ -61,7 +61,7 @@
             </div>
         </div>
         <div>
-            <div class="content-subheader table-subheader">Troop Options</div>
+            <h2>Troop Options</h2>
             <table class="table">
                 <tr>
                     <th>Min</th>
@@ -90,6 +90,57 @@
             </table>
             <div class="empty-table-message" ng-show="vm.armyList.troopOptions.length === 0">No troop options entered</div>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Ally Troop Options</h2>
+        <uib-accordion close-others="true">
+            <div uib-accordion-group class="panel-default" ng-repeat="allyOption in vm.allyOptions">
+                <uib-accordion-heading>
+                    <div>
+                        Option {{ $index + 1 }}:  {{ allyOption.name }}
+                        <div>
+                            <small>
+                                {{ allyOption.dateRange.startDate | mwDisplayYear }}
+                                <span ng-hide="allyOption.dateRange.startDate === allyOption.dateRange.endDate">to {{ allyOption.dateRange.endDate | mwDisplayYear }}</span>
+                            </small>
+                        </div>
+                    </div>
+                </uib-accordion-heading>
+                <div ng-repeat="allyEntry in allyOption.allyEntries">
+                    <h5 ng-hide="allyOption.allyEntries.length === 1">
+                        {{ allyEntry.name }}
+                    </h5>
+                    <table class="table">
+                        <tr>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Restrictions</th>
+                            <th>Troop Types</th>
+                        </tr>
+                        <tbody ng-repeat="troopOption in allyEntry.allyArmyList.troopOptions">
+                        <tr>
+                            <td>{{ troopOption.min }}</td>
+                            <td>{{ troopOption.max }}</td>
+                            <td>
+                                {{ troopOption.dateRange | mwDisplayDateRange }}
+                                <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
+                                {{ troopOption.note }}
+                            </td>
+                            <td>
+                                {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
+                                </br>
+                                <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="empty-table-message" ng-show="allyEntry.allyArmyList.troopOptions.length === 0">No troop options entered</div>
+                </div>
+            </div>
+        </uib-accordion>
+        <div class="empty-table-message" ng-show="vm.allyOptions.length === 0">No ally options available</div>
     </div>
 </div>
 <div class="row">

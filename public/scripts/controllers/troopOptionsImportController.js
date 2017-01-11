@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('TroopOptionsImportController', TroopOptionsImportController);
 
-TroopOptionsImportController.$inject = ['$location', '$scope', '$interval', 'TroopTypeService', 'TroopOptionsImportService'];
+TroopOptionsImportController.$inject = ['$location', '$scope', '$interval', 'AllyArmyListImportService', 'TroopTypeService', 'TroopOptionsImportService'];
 
-function TroopOptionsImportController($location, $scope, $interval, TroopTypeService, TroopOptionsImportService) {
+function TroopOptionsImportController($location, $scope, $interval, AllyArmyListImportService, TroopTypeService, TroopOptionsImportService) {
     var vm = this;
 
     vm.file = null;
@@ -43,13 +43,15 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                     vm.statusMessage1 = '';
                     vm.statusMessage2 = '';
                     vm.parsedData = [];
+                    vm.allyArmyListArray = [];
 
                     if (results.data) {
                         console.log('Read ' + results.data.length + ' rows from file.');
                         // Convert the data to a flat array of troop options
-                        var flatArray = [];
+                        var troopOptionsArray = [];
+                        var allyTroopOptionsArray = [];
                         var armyListArray = [];
-                        var allyArray = [];
+                        var allyOptionsArray = [];
                         var errorRows = 0;
                         results.data.forEach(function(item) {
                             if (item.general && item.general.length > 0) {
@@ -60,6 +62,13 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     troopEntriesForGeneral: [],
                                     status: item.description,
                                     showTroopOptionDescriptions: false
+                                };
+
+                                var allyArmyListData = {
+                                    name: null,
+                                    listId: item.listId,
+                                    sublistId: item.sublistId,
+                                    troopOptions: []
                                 };
 
                                 // Convert troop types
@@ -100,9 +109,25 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 }
 
                                 armyListArray.push(armyListData);
+                                vm.allyArmyListArray.push(allyArmyListData);
                             }
-                            // TBD: z troops are internal ally
-                            else if (item.troopOptionOrder && item.troopOptionOrder !== '0' && item.sublistId !== 'w' && item.sublistId !== 'x' && item.sublistId !== 'y' && item.sublistId !== 'z') {
+                            else if (item.armyName && isInternalAlly(item.sublistId) && !item.troopOptionOrder) {
+                                // Add the internal ally
+                                var allyArmyListData = {
+                                    name: item.armyName,
+                                    listId: item.listId,
+                                    sublistId: item.sublistId,
+                                    troopOptions: []
+                                };
+                                vm.allyArmyListArray.push(allyArmyListData);
+                            }
+                            else if (item.troopOptionOrder && item.troopOptionOrder !== '0')
+                            {
+                                var internalAlly = false;
+                                if (item.sublistId === 'w' || item.sublistId === 'x' || item.sublistId === 'y' || item.sublistId === 'z') {
+                                    internalAlly = true;
+                                }
+
                                 // This row has troop option information
                                 var troopOption = {
                                     listId: item.listId,
@@ -116,6 +141,17 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     core: ''
                                 };
 
+                                var allyTroopOption = {
+                                    listId: item.listId,
+                                    sublistId: item.sublistId,
+                                    min: 0,
+                                    max: 0,
+                                    dateRange: { startDate: item.startDate, endDate: item.endDate },
+                                    troopEntries: [],
+                                    description: item.description,
+                                    note: ''
+                                };
+
                                 // Extract a note from the description
                                 if (item.description.length > 0 && item.description.charAt(0) === '(') {
                                     var end = item.description.indexOf(')');
@@ -125,34 +161,37 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     else {
                                         troopOption.note = item.description.slice(1, end).trim();
                                         troopOption.description = item.description.slice(end + 1).trim();
+
+                                        allyTroopOption.note = troopOption.note;
+                                        allyTroopOption.description = troopOption.description;
                                     }
                                 }
 
                                 // Convert minMax
-                                var minMaxValues = item.minMax.split('-');
-                                if (minMaxValues.length === 1) {
-                                    troopOption.min = minMaxValues[0];
-                                    troopOption.max = minMaxValues[0];
-                                }
-                                else if (minMaxValues.length === 2) {
-                                    troopOption.min = minMaxValues[0];
-                                    troopOption.max = minMaxValues[1];
+                                if (item.minMax) {
+                                    var minMaxValues = item.minMax.split('-');
+                                    if (minMaxValues.length === 1) {
+                                        troopOption.min = minMaxValues[0];
+                                        troopOption.max = minMaxValues[0];
+                                    }
+                                    else if (minMaxValues.length === 2) {
+                                        troopOption.min = minMaxValues[0];
+                                        troopOption.max = minMaxValues[1];
+                                    }
                                 }
 
-/*
                                 // Convert allyMinMax
                                 if (item.allyMinMax) {
                                     var allyMinMaxValues = item.allyMinMax.split('-');
                                     if (allyMinMaxValues.length === 1) {
-                                        troopOption.allyMin = allyMinMaxValues[0];
-                                        troopOption.allyMax = allyMinMaxValues[0];
+                                        allyTroopOption.min = allyMinMaxValues[0];
+                                        allyTroopOption.max = allyMinMaxValues[0];
                                     }
                                     else if (allyMinMaxValues.length === 2) {
-                                        troopOption.allyMin = allyMinMaxValues[0];
-                                        troopOption.allyMax = allyMinMaxValues[1];
+                                        allyTroopOption.min = allyMinMaxValues[0];
+                                        allyTroopOption.max = allyMinMaxValues[1];
                                     }
                                 }
-*/
 
                                 // Convert troop types
                                 var textTroopEntries = item.troopEntries.split(' or ');
@@ -170,6 +209,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     // Save the troop entry
                                     if (result.troopEntry.troopTypeCode) {
                                         troopOption.troopEntries.push(result.troopEntry);
+                                        allyTroopOption.troopEntries.push(result.troopEntry);
                                     }
                                 });
 
@@ -189,25 +229,32 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     if (!troopOption.dateRange.endDate) {
                                         // No end date. Copy the start date.
                                         troopOption.dateRange.endDate = troopOption.dateRange.startDate;
+                                        allyTroopOption.dateRange.endDate = allyTroopOption.dateRange.startDate;
                                     }
                                 }
                                 else {
                                     // No start date. Don't use a dateRange at all.
                                     troopOption.dateRange = null;
+                                    allyTroopOption.dateRange = null;
                                 }
 
                                 // If the troop option is valid, add it to the parsed data
                                 if (troopOption.max > 0 && troopOption.troopEntries.length > 0) {
-                                    flatArray.push(troopOption);
+                                    troopOptionsArray.push(troopOption);
                                 }
-                                else {
+                                else if (!internalAlly) {
                                     var itemString = JSON.stringify(item);
                                     console.log('Unable to convert item: ' + itemString);
 
                                     errorRows = errorRows + 1;
                                 }
+
+                                // If the ally troop options is valid, add it to the parsed data
+                                if (allyTroopOption.max > 0 && allyTroopOption.troopEntries.length > 0) {
+                                    allyTroopOptionsArray.push(allyTroopOption);
+                                }
                             }
-                            else if (item.allyId && item.allyId !== 0) {
+                            else if (item.allyId && item.allyId !== 0 && item.allyId !== '0') {
                                 // This row has ally information
                                 var tempAllyOptions = [];
                                 var allyOptions = [];
@@ -226,7 +273,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 }
 
                                 // First entry (or entries)
-                                if (item.ally1Name && item.ally1Name.length > 0) {
+                                if (item.ally1Name && item.ally1Name.trim().length > 0) {
                                     var allyIds = item.ally1Id.split(' ');
                                     allyIds.forEach(function(allyId) {
                                         allyId = allyId.trim();
@@ -240,9 +287,9 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                         };
 
                                         var allyOption = {
-                                            armyListId: item.listId,
-                                            armyListSublistId: item.sublistId,
-                                            dataRange: optionDateRange,
+                                            listId: item.listId,
+                                            sublistId: item.sublistId,
+                                            dateRange: optionDateRange,
                                             note: null,
                                             allyEntries: [ allyEntry ]
                                         };
@@ -252,8 +299,8 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 }
 
                                 // Second entry (or entries)
-                                if (item.ally2Name && item.ally2Name.length > 0) {
-                                    var allyIds = item.ally2Id.split(' ');
+                                if (item.ally2Name && item.ally2Name.trim().length > 0) {
+                                    allyIds = item.ally2Id.split(' ');
                                     allyIds.forEach(function(allyId) {
                                         allyId = allyId.trim();
                                         var allyListId = allyId.slice(0, allyId.length - 1);
@@ -279,6 +326,7 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                 }
 
                                 allyOptions.forEach(function(allyOption) {
+/*
                                     var text = 'Ally option found. Army list: ' + allyOption.armyListId + allyOption.armyListSublistId;
                                     if (allyOption.dateRange) {
                                         text = text + ' [' + allyOption.dateRange.startDate + ' to ' + allyOption.dateRange.endDate + ']';
@@ -292,14 +340,19 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                                     });
 
                                     console.log(text);
+*/
+
+                                    allyOptionsArray.push(allyOption);
                                 });
                             }
                         });
 
                         console.log('Converted ' + armyListArray.length + ' army rows.');
-                        console.log('Converted ' + flatArray.length + ' troop option rows.');
+                        console.log('Converted ' + troopOptionsArray.length + ' troop option rows.');
                         console.log('Unable to convert ' + errorRows + ' troop option rows.');
-                        console.log('Found ' + allyArray.length + ' allies.');
+                        console.log('Converted ' + allyTroopOptionsArray.length + ' ally troop option rows.');
+                        console.log('Found ' + allyOptionsArray.length + ' ally options.');
+                        console.log('Found ' + vm.allyArmyListArray.length + ' ally army lists.');
 
                         // Convert the flat array of troop options into an array of army lists with troop options
 
@@ -307,11 +360,12 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                         vm.parsedData = [];
                         armyListArray.forEach(function(armyList) {
                             armyList.troopOptions = [];
+                            armyList.allyOptions = [];
                             vm.parsedData.push(armyList);
                         });
 
                         // Second, copy the troop option data to the matching army list
-                        flatArray.forEach(function(troopOption) {
+                        troopOptionsArray.forEach(function(troopOption) {
                             // Terribly inefficient
                             var armyListFound = false;
                             vm.parsedData.forEach(function(armyList) {
@@ -336,7 +390,41 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                             }
                         });
 
-                        vm.statusMessage1 = 'Found ' + flatArray.length + ' troop options in ' + vm.parsedData.length + ' army lists in the file.';
+                        // Third, copy the ally option data to the matching army list
+                        allyOptionsArray.forEach(function(allyOption) {
+                            // Terribly inefficient
+                            var armyListFound = false;
+                            vm.parsedData.forEach(function(armyList) {
+                                if (armyList.listId === allyOption.listId && armyList.sublistId === allyOption.sublistId) {
+                                    armyList.allyOptions.push(allyOption);
+                                    armyListFound = true;
+                                }
+                            });
+
+                            if (!armyListFound) {
+                                console.log('Unable to find army list for ally option ' + allyOption.listId + '/' + allyOption.sublistId);
+
+                            }
+                        });
+
+                        // Fourth, copy the ally troop option data to the matching ally army list
+                        allyTroopOptionsArray.forEach(function(troopOption) {
+                            // Terribly inefficient
+                            var allyArmyListFound = false;
+                            vm.allyArmyListArray.forEach(function(allyArmyList) {
+                                if (allyArmyList.listId === troopOption.listId && allyArmyList.sublistId === troopOption.sublistId) {
+                                    allyArmyList.troopOptions.push(troopOption);
+                                    allyArmyListFound = true;
+                                }
+                            });
+
+                            if (!allyArmyListFound) {
+                                // Corresponding ally army list not found, ignore the troop option
+                                console.log('Unable to find ally army list for troop option ' + troopOption.listId + '/' + troopOption.sublistId);
+                            }
+                        });
+
+                        vm.statusMessage1 = 'Found ' + troopOptionsArray.length + ' troop options in ' + vm.parsedData.length + ' army lists in the file.';
                     }
                     else {
                         vm.statusMessage1 = 'Found 0 troop options in the file.';
@@ -357,7 +445,97 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
             });
     }
 
+    function isInternalAlly(sublistId) {
+        if (sublistId === 'w' || sublistId === 'x' || sublistId === 'y' || sublistId === 'z') {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     function importData() {
+        importAllyArmyListData(function() {
+            importTroopOptionData(function() {
+                // done
+            });
+        });
+    }
+
+    var deleteAllyArmyLists;
+    function importAllyArmyListData(cb) {
+        // Slice the data
+        var slicedData = [];
+        var sliceSize = 50;
+        var index = 0;
+        var done = false;
+        while (!done) {
+            var start = index;
+            var end = index + sliceSize;
+            if (end > vm.allyArmyListArray.length) {
+                end = vm.allyArmyListArray.length;
+                if (end > start) {
+                    var slice = vm.allyArmyListArray.slice(start, end);
+                    slicedData.push(slice);
+                }
+                done = true;
+            }
+            else {
+                var slice = vm.allyArmyListArray.slice(start, end);
+                slicedData.push(slice);
+                index = end;
+            }
+        }
+
+        // Send each slice
+        deleteAllyArmyLists = true;
+        async.mapSeries(slicedData, importAllyArmyListSlice, function (err, sliceSummary) {
+            if (err) {
+                console.log('Unable to import ally army list data');
+                console.log(err);
+            }
+            else {
+                // Sum the summary data from each slice
+                var importSummary = sliceSummary.reduce(function (previous, current) {
+                    return {
+                        imported: previous.imported + current.imported,
+                        failed: previous.failed + current.failed
+                    }
+                });
+
+                // Report the results
+                console.info('Successfully imported ' + importSummary.imported + ' ally army lists.');
+            }
+
+            return cb();
+        });
+    }
+
+    function importAllyArmyListSlice(slice, cb) {
+        var importRequest = {
+            options: {
+                deleteAll: deleteAllyArmyLists
+            },
+            data: slice
+        };
+
+        // Import the army lists
+        AllyArmyListImportService.import(
+            importRequest,
+            function (importSummary) {
+                // Only delete on the first slice
+                deleteAllyArmyLists = false;
+
+                return cb(null, importSummary);
+            },
+            function (response) {
+                console.error(response.data);
+                return cb(response.data);
+            }
+        );
+    }
+
+    function importTroopOptionData(cb) {
         if (vm.parsedData.length) {
 
             // Only send a slice of data in each request
@@ -391,14 +569,12 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
             }
 
             // Send each slice
-            async.mapSeries(slicedData, importSlice, function(err, sliceSummary) {
+            async.mapSeries(slicedData, importTroopOptionSlice, function(err, sliceSummary) {
                 if (err) {
                     vm.statusMessage1 = 'Unable to import troop options.';
                     vm.statusMessage2 = '';
                     vm.file = null;
                     vm.parsedData = [];
-
-                    removeProgressBarAfterDelay();
                 }
                 else {
                     // Sum the summary data from each slice
@@ -417,14 +593,16 @@ function TroopOptionsImportController($location, $scope, $interval, TroopTypeSer
                     vm.statusMessage2 = importSummary.failedArmyLists + ' army lists were not imported due to errors.';
                     vm.file = null;
                     vm.parsedData = [];
-
-                    removeProgressBarAfterDelay();
                 }
+
+                removeProgressBarAfterDelay();
+
+                return cb();
             });
         }
     }
 
-    function importSlice(slice, cb) {
+    function importTroopOptionSlice(slice, cb) {
         var importRequest = {
             data: slice
         };

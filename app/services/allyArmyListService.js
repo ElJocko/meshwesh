@@ -1,7 +1,9 @@
 'use strict';
 
 var AllyArmyList = require('../models/allyArmyListModel');
+var armyListService = require('./armyListService');
 var transform = require('../models/lib/transform');
+var async = require('async');
 var _ = require('lodash');
 
 var errors = {
@@ -156,5 +158,112 @@ exports.deleteById = function(id, callback) {
         var error = new Error(errors.missingParameter);
         error.parameterName = 'id';
         return callback(error);
+    }
+};
+
+exports.import = function(importRequest, callback) {
+    if (importRequest.options && importRequest.options.deleteAll ) {
+        // Delete the existing documents
+        AllyArmyList.remove({}, function (error) {
+            // Import the documents
+            async.mapSeries(
+                importRequest.data,
+                importAllyArmyList,
+                function (err, results) {
+                    if (err) {
+                        // TBD: organize results better
+                        return callback(err);
+                    }
+                    else {
+                        var importSummary = summarizeImport(results);
+                        return callback(null, importSummary);
+                    }
+                }
+            );
+        });
+    }
+    else {
+        // Import the documents without deleting first
+        async.mapSeries(
+            importRequest.data,
+            importAllyArmyList,
+            function (err, results) {
+                if (err) {
+                    // TBD: organize results better
+                    return callback(err);
+                }
+                else {
+                    var importSummary = summarizeImport(results);
+                    return callback(null, importSummary);
+                }
+            }
+        );
+    }
+
+    function importAllyArmyList(allyArmyListData, cb) {
+        // Lookup the army list name (if necessary)
+        lookupArmyListName(allyArmyListData, function(err, updatedData) {
+            if (err) {
+                console.log('Unable to lookup army list name');
+                console.log(err);
+                return cb(null, { allyArmyList: null, error: err });
+            }
+            else {
+                // Create the ally army list document
+                var document = new AllyArmyList(updatedData);
+                if (!document) {
+                    console.log('Unable to create AllyArmyList document for ' + updatedData.name);
+                    return cb(null, { allyArmyList: null, error: 'Unable to create AllyArmyList document' });
+                }
+
+                document.save(function(err, savedDocument) {
+                    if (err) {
+                        return cb(null, { allyArmyList: null, error: err });
+                    }
+                    else {
+                        return cb(null, { allyArmyList: savedDocument.toObject(), error: null });
+                    }
+                });
+            }
+        });
+    }
+
+    function lookupArmyListName(allyArmyListData, cb) {
+        if (allyArmyListData.name) {
+            return cb(null, allyArmyListData);
+        }
+        else {
+            var query = { listId: allyArmyListData.listId, sublistId: allyArmyListData.sublistId };
+            armyListService.retrieveByQueryLean(query, function(err, armyList) {
+                if (err) {
+                    return cb(err, allyArmyListData);
+                }
+                else if (!armyList.length === 0) {
+                    return cb('army list not found', allyArmyListData);
+                }
+                else {
+                    allyArmyListData.name = armyList[0].name;
+                    return cb(null, allyArmyListData);
+                }
+            })
+        }
+    }
+
+    function summarizeImport(results) {
+        var importCount = 0;
+        var errorCount = 0;
+        results.forEach(function(item) {
+            if (item.allyArmyList) {
+                importCount = importCount + 1;
+            }
+            else if (item.error) {
+                errorCount = errorCount + 1;
+            }
+            else {
+                // shouldn't reach here
+            }
+        });
+        var summary = { imported: importCount, failed: errorCount };
+        return summary;
     }
 };

@@ -31,9 +31,9 @@ router.route('/v1/allyArmyLists/:listId')
         validator.validate(schemas.deleteAllyArmyList),
         allyArmyListController.delete);
 
-//router.route('/v1/allyArmyListsImport')
-//    .post(
-//        tokenAuthz.requireAdminRole,
-//        armyListController.import);
+router.route('/v1/allyArmyListsImport')
+    .post(
+        tokenAuthz.requireAdminRole,
+        allyArmyListController.import);
 
 module.exports = router;

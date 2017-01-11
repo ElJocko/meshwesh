@@ -131,11 +131,13 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         var associatedArmyListsPromise = null;
         var enemyArmyListsPromise = null;
         var thematicCategoriesPromise = null;
+        var allyOptionsPromise = null;
         if (listId) {
             armyListPromise = ArmyListService.get({ id: listId }).$promise;
             associatedArmyListsPromise = ArmyListService.associatedArmyLists.list({ id: listId }).$promise;
             enemyArmyListsPromise = ArmyListService.enemyArmyLists.list({ id: listId }).$promise;
             thematicCategoriesPromise = ArmyListService.thematicCategories.list({ id: listId }).$promise;
+            allyOptionsPromise = ArmyListService.allyOptions.list({ id: listId }).$promise;
         }
 
         // Get the grand army lists
@@ -147,7 +149,8 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             associatedArmyLists: associatedArmyListsPromise,
             enemyArmyLists: enemyArmyListsPromise,
             thematicCategories: thematicCategoriesPromise,
-            grandArmyLists: grandArmyListsPromise
+            grandArmyLists: grandArmyListsPromise,
+            allyOptions: allyOptionsPromise
         };
 
         $q
@@ -198,14 +201,27 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                 vm.armyList.statusType = 'status-warning';
             }
 
+            vm.allyOptions = results.allyOptions;
+            vm.allyOptions.forEach(function(option, index) {
+                option.name = '';
+                option.allyEntries.forEach((function(entry, index) {
+                    if (index === 0) {
+                        option.name = option.name + ' ' + entry.name;
+                    }
+                    else {
+                        option.name = option.name + ' plus ' + entry.name;
+                    }
+                }));
+            });
+
             vm.associatedArmyLists = results.associatedArmyLists;
-            console.log(vm.associatedArmyLists);
+//            console.log(vm.associatedArmyLists);
 
             vm.enemyArmyLists = results.enemyArmyLists;
-            console.log(vm.enemyArmyLists);
+//            console.log(vm.enemyArmyLists);
 
             vm.thematicCategories = results.thematicCategories;
-            console.log(vm.thematicCategories);
+//            console.log(vm.thematicCategories);
 
             // Find the grand army list that the army list belongs to
             if (vm.armyList.grandArmyList) {

@@ -129,3 +129,30 @@ exports.delete = function(req, res) {
         }
     });
 };
+
+exports.import = function(req, res) {
+    // Get the data from the request
+    var allyArmyListImportRequest = req.body;
+
+    // Create the troop type
+    allyArmyListService.import(allyArmyListImportRequest, function (err, importSummary) {
+        if (err) {
+            if (err.message === allyArmyListService.errors.duplicateCode) {
+                logger.warn("Duplicate code");
+                return res.status(409).send('Duplicate code');
+            }
+            else if (err.message === allyArmyListService.errors.validationError) {
+                logger.warn('Ally Army list failed validation');
+                return res.status(400).send('Unable to import Ally Army Lists. Ally Army list validation failed.');
+            }
+            else {
+                logger.error("Failed with error: " + err);
+                return res.status(500).send("Unable to import Ally Army Lists. Server error.");
+            }
+        }
+        else {
+            logger.info("Import Ally Army Lists: Imported = " + importSummary.imported + ", Failed = " + importSummary.failed);
+            return res.status(201).send(importSummary);
+        }
+    });
+};

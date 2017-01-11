@@ -45,6 +45,14 @@ function ArmyListService ($resource) {
         }
     );
 
+    armyListRoutes.allyOptions = $resource(
+        'api/v1/armyLists/:id/allyOptions',
+        { id: '@id' },
+        {
+            list: { method: 'GET', isArray: true }
+        }
+    );
+
     return armyListRoutes;
 }
 

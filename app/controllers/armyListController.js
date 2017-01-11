@@ -101,6 +101,24 @@ exports.retrieveThematicCategories = function(req, res) {
     });
 };
 
+exports.retrieveAllyOptions = function(req, res) {
+    armyListService.retrieveAllyOptions(req.params.listId, function(err, allyOptions) {
+        if (err) {
+            if (err.message === armyListService.errors.badlyFormattedParameter) {
+                logger.warn('Badly formatted army list id');
+                return res.status(400).send('Army List id is badly formatted.');
+            }
+            else {
+                logger.error('Failed with error: ' + err);
+                return res.status(500).send('Unable to get ally options. Server error.');
+            }
+        }
+        else {
+            return res.status(200).send(allyOptions);
+        }
+    });
+};
+
 exports.create = function(req, res) {
     // Get the data from the request
     var listData = req.body;
