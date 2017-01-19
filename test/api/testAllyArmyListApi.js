@@ -53,7 +53,46 @@ describe('AllyArmyList API', function() {
             });
     });
 
-    describe('create an ally army list', function () {
+    describe('retrieve all', function () {
+        it('should retrieve an array of ally army lists', function (done) {
+            var apiPath = path.join('/api', apiVersion, 'allyArmyLists');
+            request(serverUrl)
+                .get(apiPath)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        var retrievedAllyArmyLists = res.body;
+                        expect(retrievedAllyArmyLists).toExist();
+                        expect(Array.isArray(retrievedAllyArmyLists)).toBeTruthy();
+
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('create ally army list without credentials', function () {
+        it('should not create an ally army list', function (done) {
+            var apiPath = path.join('/api', apiVersion, 'allyArmyLists');
+            request(serverUrl)
+                .post(apiPath)
+                .send(allyArmyListData)
+                .expect(401)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('create ally army list', function () {
         it('should create an ally army list', function (done) {
             var apiPath = path.join('/api', apiVersion, 'allyArmyLists');
             request(serverUrl)
@@ -75,8 +114,8 @@ describe('AllyArmyList API', function() {
         });
     });
 
-    describe('retrieve an ally army list', function () {
-        it('should retrieve an ally army list', function (done) {
+    describe('retrieve ally army list', function () {
+        it('should retrieve the created ally army list', function (done) {
             var apiPath = path.join('/api', apiVersion, 'allyArmyLists', allyArmyList.id);
             request(serverUrl)
                 .get(apiPath)
@@ -89,6 +128,64 @@ describe('AllyArmyList API', function() {
                         var retrievedAllyArmyList = res.body;
                         expect(retrievedAllyArmyList).toExist();
 
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('delete ally army list without credentials', function () {
+        it('should not delete the created ally army list', function (done) {
+            var apiPath = path.join('/api', apiVersion, 'allyArmyLists', allyArmyList.id);
+            request(serverUrl)
+                .del(apiPath)
+                .expect(401)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        var retrievedAllyArmyList = res.body;
+                        expect(retrievedAllyArmyList).toExist();
+
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('delete ally army list', function () {
+        it('should delete the created ally army list', function (done) {
+            var apiPath = path.join('/api', apiVersion, 'allyArmyLists', allyArmyList.id);
+            request(serverUrl)
+                .del(apiPath)
+                .set('PRIVATE-TOKEN', adminRoleAuthHeader)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        var retrievedAllyArmyList = res.body;
+                        expect(retrievedAllyArmyList).toExist();
+
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('retrieve deleted ally army list', function () {
+        it('should not retrieve the deleted ally army list', function (done) {
+            var apiPath = path.join('/api', apiVersion, 'allyArmyLists', allyArmyList.id);
+            request(serverUrl)
+                .get(apiPath)
+                .expect(404)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
                         done();
                     }
                 });

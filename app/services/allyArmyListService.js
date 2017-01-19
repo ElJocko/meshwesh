@@ -62,26 +62,26 @@ function retrieveByIdLean(id, callback) {
 }
 exports.retrieveByIdLean = retrieveByIdLean;
 
-exports.create = function(data, callback) {
+exports.create = function(data) {
     // Create the document
-    var document = new AllyArmyList(data);
+    const document = new AllyArmyList(data);
 
-    // Save the document in the database
-    document.save(function(err, savedDocument) {
-        if (err) {
-            if (err.name === 'MongoError' && err.code === 11000) {
-                // 11000 = Duplicate index
-                var error = new Error(errors.duplicateName);
-                return callback(error);
-            }
-            else {
-                return callback(err);
-            }
-        }
-        else {
-            return callback(null, savedDocument.toObject());
-        }
+    const promise = new Promise(function(resolve, reject) {
+        // Save the document in the database
+        document.save()
+            .then(savedDocument => resolve(savedDocument.toObject()))
+            .catch(err => {
+                if (err.name === 'MongoError' && err.code === 11000) {
+                    // 11000 = Duplicate index
+                    return reject(new Error(errors.duplicateName));
+                }
+                else {
+                    return reject(err);
+                }
+            });
     });
+
+    return promise;
 };
 
 exports.update = function(id, data, callback) {

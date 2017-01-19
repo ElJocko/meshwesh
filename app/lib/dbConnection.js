@@ -3,10 +3,9 @@
 var config = require('./config');
 var logger = require('./logger');
 var mongoose = require('mongoose');
-//var events = require('events');
 
-// Create the emitter
-//var emitter = new events.EventEmitter;
+// Configure mongoose to use ES6 promises
+mongoose.Promise = global.Promise;
 
 // Bootstrap db connection
 var db = mongoose.connect(config.database.url);
@@ -26,11 +25,9 @@ mongoose.connection.on('error', function (err) {
     logger.warn('Database (mongoose) connection is required. Terminating app.');
 
     // Delay 1 second for output to finish, then terminate
-    //setTimeout(
-    //    function(){
-    //        process.exit(1);
-    //    },
-    //    1000);
+    setTimeout(
+        function(){
+            process.exit(1);
+        },
+        1000);
 });
-
-//module.exports = emitter;

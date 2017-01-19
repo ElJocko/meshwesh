@@ -204,14 +204,25 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             vm.allyOptions = results.allyOptions;
             vm.allyOptions.forEach(function(option, index) {
                 option.name = '';
-                option.allyEntries.forEach((function(entry, index) {
+                option.allyEntries.forEach(function(entry, index) {
+                    // Add the entry name to the option name
                     if (index === 0) {
                         option.name = option.name + ' ' + entry.name;
                     }
                     else {
                         option.name = option.name + ' plus ' + entry.name;
                     }
-                }));
+
+                    // Filter date ranges for the troop options vs the parent army list
+                    var temp = [];
+                    entry.allyArmyList.troopOptions.forEach(function(troopOption) {
+                        troopOption.dateRange = findOverlap(vm.armyList.dateRanges[0], troopOption.dateRange);
+                        if (!troopOption.dateRange.error) {
+                            temp.push(troopOption);
+                        }
+                    });
+                    entry.allyArmyList.troopOptions = temp;
+                });
             });
 
             vm.associatedArmyLists = results.associatedArmyLists;
@@ -260,5 +271,22 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
 
     function performAnalysis() {
         vm.totalMinMax = TroopOptionsAnalysisService.calculateTotalMinMaxPoints(vm.armyList.troopOptions);
+    }
+
+    function findOverlap(dateRange1, dateRange2) {
+        if (!dateRange1 || !dateRange2) {
+            return { empty: true };
+        }
+
+        var start = Math.max(dateRange1.startDate, dateRange2.startDate);
+        var end = Math.min(dateRange1.endDate, dateRange2.endDate);
+//        console.log(start + ' ' + end);
+        if (start > end) {
+            console.log('no overlap: ' + dateRange1.startDate + ' ' + dateRange1.endDate + ' ' + dateRange2.startDate + ' ' + dateRange2.endDate);
+            return { error: true };
+        }
+        else {
+            return { startDate: start, endDate: end };
+        }
     }
 }

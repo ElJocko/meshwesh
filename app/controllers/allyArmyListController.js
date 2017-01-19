@@ -46,11 +46,15 @@ exports.retrieveById = function(req, res) {
 
 exports.create = function(req, res) {
     // Get the data from the request
-    var listData = req.body;
+    const listData = req.body;
 
     // Create the list
-    allyArmyListService.create(listData, function(err, list) {
-        if (err) {
+    allyArmyListService.create(listData)
+        .then(function(list) {
+            logger.info("Success: Created ally army list " + list.name);
+            return res.status(201).send(list);
+        })
+        .catch(function(err) {
             if (err.message === armyListService.errors.duplicateName) {
                 logger.warn("Duplicate name");
                 return res.status(409).send('Duplicate name');
@@ -63,12 +67,7 @@ exports.create = function(req, res) {
                 logger.error("Failed with error: " + err);
                 return res.status(500).send("Unable to create Ally Army List. Server error.");
             }
-        }
-        else {
-            logger.info("Success: Created ally army list " + list.name);
-            return res.status(201).send(list);
-        }
-    });
+        });
 };
 
 exports.update = function(req, res) {

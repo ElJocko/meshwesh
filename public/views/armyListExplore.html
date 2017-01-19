@@ -62,7 +62,7 @@
         </div>
         <div>
             <h2>Troop Options</h2>
-            <table class="table">
+            <table class="table troop-options">
                 <tr>
                     <th>Min</th>
                     <th>Max</th>
@@ -112,7 +112,7 @@
                     <h5 ng-hide="allyOption.allyEntries.length === 1">
                         {{ allyEntry.name }}
                     </h5>
-                    <table class="table">
+                    <table class="table troop-options">
                         <tr>
                             <th>Min</th>
                             <th>Max</th>
@@ -123,11 +123,7 @@
                         <tr>
                             <td>{{ troopOption.min }}</td>
                             <td>{{ troopOption.max }}</td>
-                            <td>
-                                {{ troopOption.dateRange | mwDisplayDateRange }}
-                                <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
-                                {{ troopOption.note }}
-                            </td>
+                            <td>{{ troopOption.dateRange | mwDisplayDateRange }}</td>
                             <td>
                                 {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
                                 </br>

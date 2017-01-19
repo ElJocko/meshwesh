@@ -30,5 +30,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-mocha-test');
 
     // Api and Service Tests
-    grunt.registerTask('test-api', ['env:mochaTest', 'mochaTest:testApi']);
+    grunt.registerTask('test-server', ['env:mochaTest', 'mochaTest:testApi']);
 };
