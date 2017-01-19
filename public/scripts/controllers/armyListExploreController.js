@@ -216,8 +216,13 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                     // Filter date ranges for the troop options vs the parent army list
                     var temp = [];
                     entry.allyArmyList.troopOptions.forEach(function(troopOption) {
-                        troopOption.dateRange = findOverlap(vm.armyList.dateRanges[0], troopOption.dateRange);
-                        if (!troopOption.dateRange.error) {
+                        if (troopOption.dateRange) {
+                            troopOption.dateRange = findOverlap(vm.armyList.dateRanges[0], troopOption.dateRange, option.dateRange);
+                            if (!troopOption.dateRange.error) {
+                                temp.push(troopOption);
+                            }
+                        }
+                        else {
                             temp.push(troopOption);
                         }
                     });
@@ -273,16 +278,25 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         vm.totalMinMax = TroopOptionsAnalysisService.calculateTotalMinMaxPoints(vm.armyList.troopOptions);
     }
 
-    function findOverlap(dateRange1, dateRange2) {
+    function findOverlap(dateRange1, dateRange2, dateRange3) {
+        // Must have at least two date ranges
         if (!dateRange1 || !dateRange2) {
             return { empty: true };
         }
 
-        var start = Math.max(dateRange1.startDate, dateRange2.startDate);
-        var end = Math.min(dateRange1.endDate, dateRange2.endDate);
-//        console.log(start + ' ' + end);
+        let start;
+        let end;
+        if (dateRange3) {
+            start = Math.max(dateRange1.startDate, dateRange2.startDate, dateRange3.startDate);
+            end = Math.min(dateRange1.endDate, dateRange2.endDate, dateRange3.endDate);
+        }
+        else {
+            start = Math.max(dateRange1.startDate, dateRange2.startDate);
+            end = Math.min(dateRange1.endDate, dateRange2.endDate);
+        }
+
         if (start > end) {
-            console.log('no overlap: ' + dateRange1.startDate + ' ' + dateRange1.endDate + ' ' + dateRange2.startDate + ' ' + dateRange2.endDate);
+            console.log('no overlap: ' + start + ' > ' + end);
             return { error: true };
         }
         else {
