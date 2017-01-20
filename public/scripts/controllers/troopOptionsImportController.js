@@ -381,6 +381,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     listId: troopOption.listId,
                                     sublistId: troopOption.sublistId,
                                     troopOptions: [],
+                                    allyOptions: [],
                                     troopEntriesForGeneral: [],
                                     status: 'Unknown'
                                 };

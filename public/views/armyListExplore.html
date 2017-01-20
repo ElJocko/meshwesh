@@ -48,7 +48,7 @@
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="content-subheader">Home Topography</div>
                 <dl class="dl-horizontal-topo">
-                    <div class="content-text" ng-repeat="topography in vm.armyList.homeTopographies">
+                    <div class="content-text-special" ng-repeat="topography in vm.armyList.homeTopographies">
                         <div>{{ topography | mwDisplayTopography }}</div>
                     </div>
                 </dl>
@@ -70,8 +70,8 @@
                     <th>Restrictions</th>
                     <th>Troop Types</th>
                 </tr>
-                <tbody ng-repeat="troopOption in vm.armyList.troopOptions">
-                    <tr>
+                <tbody>
+                    <tr ng-repeat="troopOption in vm.armyList.troopOptions">
                         <td>{{ troopOption.min }}</td>
                         <td>{{ troopOption.max }}</td>
                         <td>{{ troopOption.core | mwDisplayCore }}</td>
@@ -119,17 +119,17 @@
                             <th>Restrictions</th>
                             <th>Troop Types</th>
                         </tr>
-                        <tbody ng-repeat="troopOption in allyEntry.allyArmyList.troopOptions">
-                        <tr>
-                            <td>{{ troopOption.min }}</td>
-                            <td>{{ troopOption.max }}</td>
-                            <td>{{ troopOption.dateRange | mwDisplayDateRange }}</td>
-                            <td>
-                                {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
-                                </br>
-                                <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
-                            </td>
-                        </tr>
+                        <tbody>
+                            <tr ng-repeat="troopOption in allyEntry.allyArmyList.troopOptions" ng-hide="troopOption.dateRange && troopOption.dateRange.invalid">
+                                <td>{{ troopOption.min }}</td>
+                                <td>{{ troopOption.max }}</td>
+                                <td>{{ troopOption.dateRange | mwDisplayDateRange }}</td>
+                                <td>
+                                    {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
+                                    </br>
+                                    <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <div class="empty-table-message" ng-show="allyEntry.allyArmyList.troopOptions.length === 0">No troop options entered</div>

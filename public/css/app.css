@@ -442,12 +442,12 @@ input[readonly] {
 
 .dl-horizontal-rating dt {
     float: left;
-    width: 25px;
     overflow: hidden;
     clear: left;
     text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-left: 15px;
 }
 .dl-horizontal-rating dd {
     margin-left: 45px;

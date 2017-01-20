@@ -214,19 +214,9 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                     }
 
                     // Filter date ranges for the troop options vs the parent army list
-                    var temp = [];
                     entry.allyArmyList.troopOptions.forEach(function(troopOption) {
-                        if (troopOption.dateRange) {
-                            troopOption.dateRange = findOverlap(vm.armyList.dateRanges[0], troopOption.dateRange, option.dateRange);
-                            if (!troopOption.dateRange.error) {
-                                temp.push(troopOption);
-                            }
-                        }
-                        else {
-                            temp.push(troopOption);
-                        }
+                        checkDateRange(troopOption.dateRange, vm.armyList.dateRanges[0], option.dateRange);
                     });
-                    entry.allyArmyList.troopOptions = temp;
                 });
             });
 
@@ -278,29 +268,41 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         vm.totalMinMax = TroopOptionsAnalysisService.calculateTotalMinMaxPoints(vm.armyList.troopOptions);
     }
 
-    function findOverlap(dateRange1, dateRange2, dateRange3) {
-        // Must have at least two date ranges
-        if (!dateRange1 || !dateRange2) {
-            return { empty: true };
+    function checkDateRange(troopOptionDateRange, armyListDateRange, allyOptionDateRange) {
+        if (!troopOptionDateRange) {
+            // Troop option is limited to a specific date range
+            return;
         }
 
-        let start;
-        let end;
-        if (dateRange3) {
-            start = Math.max(dateRange1.startDate, dateRange2.startDate, dateRange3.startDate);
-            end = Math.min(dateRange1.endDate, dateRange2.endDate, dateRange3.endDate);
-        }
-        else {
-            start = Math.max(dateRange1.startDate, dateRange2.startDate);
-            end = Math.min(dateRange1.endDate, dateRange2.endDate);
+        if (armyListDateRange) {
+            const start = Math.max(troopOptionDateRange.startDate, armyListDateRange.startDate);
+            const end = Math.min(troopOptionDateRange.endDate, armyListDateRange.endDate);
+
+            if (start > end) {
+                // No overlap. Date range is not valid.
+                troopOptionDateRange.invalid = true;
+                return;
+            }
+            else {
+                // Change the date range to the overlapping parts of the ranges.
+                troopOptionDateRange.startDate = start;
+                troopOptionDateRange.endDate = end;
+            }
         }
 
-        if (start > end) {
-            console.log('no overlap: ' + start + ' > ' + end);
-            return { error: true };
-        }
-        else {
-            return { startDate: start, endDate: end };
+        if (allyOptionDateRange) {
+            const start = Math.max(troopOptionDateRange.startDate, allyOptionDateRange.startDate);
+            const end = Math.min(troopOptionDateRange.endDate, allyOptionDateRange.endDate);
+
+            if (start > end) {
+                // No overlap. Date range is not valid.
+                troopOptionDateRange.invalid = true;
+            }
+            else {
+                // Change the date range to the overlapping parts of the ranges.
+                troopOptionDateRange.startDate = start;
+                troopOptionDateRange.endDate = end;
+            }
         }
     }
 }
