@@ -17,7 +17,8 @@
     "bootstrap": "^3.3.5",
     "jquery": "^1.11.3",
     "lodash": "^3.10.1",
-    "papaparse": "^4.1.1"
+    "papaparse": "^4.1.1",
+    "to-title-case-gouch": "^2.1.0"
   },
   "private": true,
   "ignore": [

@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var DateRange = require('./subschemas/dateRangeSchema');
 var TroopOption = require('./subschemas/allyTroopOptionSchema');
 var transform = require('./lib/transform');
 
@@ -9,6 +10,7 @@ var AllyArmyListSchema = new mongoose.Schema({
     name: { type: String, required: true },
     listId: { type: Number },
     sublistId: { type: String },
+    dateRange: { type: DateRange },
     troopOptions: [ TroopOption ]
 });
 

@@ -68,6 +68,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     name: null,
                                     listId: item.listId,
                                     sublistId: item.sublistId,
+                                    dateRange: null,
                                     troopOptions: []
                                 };
 
@@ -117,6 +118,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     name: item.armyName,
                                     listId: item.listId,
                                     sublistId: item.sublistId,
+                                    dateRange: makeDateRange(item.startDate, item.endDate),
                                     troopOptions: []
                                 };
                                 vm.allyArmyListArray.push(allyArmyListData);
@@ -134,7 +136,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     sublistId: item.sublistId,
                                     min: 0,
                                     max: 0,
-                                    dateRange: { startDate: item.startDate, endDate: item.endDate },
+                                    dateRange: makeDateRange(item.startDate, item.endDate),
                                     troopEntries: [],
                                     description: item.description,
                                     note: '',
@@ -146,7 +148,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     sublistId: item.sublistId,
                                     min: 0,
                                     max: 0,
-                                    dateRange: { startDate: item.startDate, endDate: item.endDate },
+                                    dateRange: makeDateRange(item.startDate, item.endDate),
                                     troopEntries: [],
                                     description: item.description,
                                     note: ''
@@ -224,20 +226,6 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     console.warn('Core contained unexpected text: ' + item.core);
                                 }
 
-                                // Check date ranges
-                                if (troopOption.dateRange.startDate) {
-                                    if (!troopOption.dateRange.endDate) {
-                                        // No end date. Copy the start date.
-                                        troopOption.dateRange.endDate = troopOption.dateRange.startDate;
-                                        allyTroopOption.dateRange.endDate = allyTroopOption.dateRange.startDate;
-                                    }
-                                }
-                                else {
-                                    // No start date. Don't use a dateRange at all.
-                                    troopOption.dateRange = null;
-                                    allyTroopOption.dateRange = null;
-                                }
-
                                 // If the troop option is valid, add it to the parsed data
                                 if (troopOption.max > 0 && troopOption.troopEntries.length > 0) {
                                     troopOptionsArray.push(troopOption);
@@ -259,21 +247,11 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 var tempAllyOptions = [];
                                 var allyOptions = [];
 
-                                var optionDateRange = { startDate: item.startDate, endDate: item.endDate };
-                                // Check date ranges
-                                if (optionDateRange.startDate) {
-                                    if (!optionDateRange.endDate) {
-                                        // No end date. Copy the start date.
-                                        optionDateRange.endDate = optionDateRange.startDate;
-                                    }
-                                }
-                                else {
-                                    // No start date. Don't use a dateRange at all.
-                                    optionDateRange = null;
-                                }
-
                                 // First entry (or entries)
                                 if (item.ally1Name && item.ally1Name.trim().length > 0) {
+                                    if (item.ally1Id) {
+                                        item.ally1Id = item.ally1Id.trim();
+                                    }
                                     var allyIds = item.ally1Id.split(' ');
                                     allyIds.forEach(function(allyId) {
                                         allyId = allyId.trim();
@@ -289,7 +267,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                         var allyOption = {
                                             listId: item.listId,
                                             sublistId: item.sublistId,
-                                            dateRange: optionDateRange,
+                                            dateRange: makeDateRange(item.startDate, item.endDate),
                                             note: null,
                                             allyEntries: [ allyEntry ]
                                         };
@@ -300,6 +278,9 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
                                 // Second entry (or entries)
                                 if (item.ally2Name && item.ally2Name.trim().length > 0) {
+                                    if (item.ally2Id) {
+                                        item.ally2Id = item.ally2Id.trim();
+                                    }
                                     allyIds = item.ally2Id.split(' ');
                                     allyIds.forEach(function(allyId) {
                                         allyId = allyId.trim();
@@ -359,6 +340,10 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                         // First, convert the data from the army list rows
                         vm.parsedData = [];
                         armyListArray.forEach(function(armyList) {
+                            if (armyList.sublistId === 'z') {
+                                console.log('*** internal ally ***');
+                                console.log(JSON.stringify(armyList));
+                            }
                             armyList.troopOptions = [];
                             armyList.allyOptions = [];
                             vm.parsedData.push(armyList);
@@ -385,6 +370,12 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     troopEntriesForGeneral: [],
                                     status: 'Unknown'
                                 };
+
+                                if (armyList.sublistId === 'z') {
+                                    console.log('*** internal ally ***');
+                                    console.log(JSON.stringify(armyList));
+                                    console.log(JSON.stringify(troopOption));
+                                }
 
                                 armyList.troopOptions.push(troopOption);
                                 vm.parsedData.push(armyList);
@@ -452,6 +443,23 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
         }
         else {
             return false;
+        }
+    }
+
+    function makeDateRange(startDate, endDate) {
+        if (startDate) {
+            if (!endDate) {
+                // No end date. Copy the start date.
+                return { startDate: startDate, endDate: startDate };
+            }
+            else {
+                // Start date and end date are used.
+                return { startDate: startDate, endDate: endDate };
+            }
+        }
+        else {
+            // No start date. DateRange is null.
+            return null;
         }
     }
 

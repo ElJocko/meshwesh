@@ -224,7 +224,7 @@ exports.retrieveAllyOptions = function(id, callback) {
                                             return cb(err);
                                         }
                                         else if (!leanDoc) {
-                                            console.log('unable to find ally army list for army list ' + document.listId + '/' + document.sublistId);
+                                            console.log('unable to find ally army list for army list ' + document.listId + '/' + document.sublistId + '(' + allyEntry.name + ')');
                                             return cb('unable to find ally army list for ally entry');
                                         }
                                         else {
@@ -594,6 +594,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                     }
                     else if (documents.length === 0) {
                         console.log('found no documents for ' + armyListData.listId + '/' + armyListData.sublistId);
+                        console.log(JSON.stringify(armyListData));
                         return cb(null, { armyList: null, error: null });
                     }
                     else {
@@ -629,7 +630,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                                 return cb(err);
                             }
                             else if (leanDocs.length === 0) {
-                                console.log('unable to find ally army list ' + allyEntry.allyListId + '/' + allyEntry.allySublistId + ' for army list ' + armyListData.listId + '/' + armyListData.sublistId);
+                                console.log('unable to find ally army list ' + allyEntry.allyListId + '/' + allyEntry.allySublistId + ' (' + allyEntry.name + ') for army list ' + armyListData.listId + '/' + armyListData.sublistId);
                                 return cb('unable to find ally army list for ally entry');
                             }
                             else {

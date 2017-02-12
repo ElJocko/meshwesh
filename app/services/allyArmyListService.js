@@ -202,9 +202,9 @@ exports.import = function(importRequest, callback) {
 
     function importAllyArmyList(allyArmyListData, cb) {
         // Lookup the army list name (if necessary)
-        lookupArmyListName(allyArmyListData, function(err, updatedData) {
+        lookupArmyListData(allyArmyListData, function(err, updatedData) {
             if (err) {
-                console.log('Unable to lookup army list name');
+                console.log('Unable to lookup army list data for ally army list: ' + allyArmyListData.listId + '/' + allyArmyListData.sublistId);
                 console.log(err);
                 return cb(null, { allyArmyList: null, error: err });
             }
@@ -228,24 +228,36 @@ exports.import = function(importRequest, callback) {
         });
     }
 
-    function lookupArmyListName(allyArmyListData, cb) {
-        if (allyArmyListData.name) {
-            return cb(null, allyArmyListData);
-        }
-        else {
-            var query = { listId: allyArmyListData.listId, sublistId: allyArmyListData.sublistId };
-            armyListService.retrieveByQueryLean(query, function(err, armyList) {
+    function lookupArmyListData(allyArmyListData, cb) {
+        if (!allyArmyListData.name || !allyArmyListData.dateRange) {
+            var query = {listId: allyArmyListData.listId, sublistId: allyArmyListData.sublistId};
+            armyListService.retrieveByQueryLean(query, function (err, armyLists) {
                 if (err) {
                     return cb(err, allyArmyListData);
                 }
-                else if (!armyList.length === 0) {
-                    return cb('army list not found', allyArmyListData);
+                else if (armyLists.length === 0) {
+                    if (allyArmyListData.name) {
+                        // Missing dateRange. Assume that null is ok.
+                        return cb(null, allyArmyListData);
+                    }
+                    else {
+                        // Missing name. This is an error.
+                        return cb('army list not found', allyArmyListData);
+                    }
                 }
                 else {
-                    allyArmyListData.name = armyList[0].name;
+                    if (!allyArmyListData.name) {
+                        allyArmyListData.name = armyLists[0].name;
+                    }
+                    if (!allyArmyListData.dateRange && armyLists[0].dateRanges.length > 0) {
+                        allyArmyListData.dateRange = armyLists[0].dateRanges[0];
+                    }
                     return cb(null, allyArmyListData);
                 }
             })
+        }
+        else {
+            return cb(null, allyArmyListData);
         }
     }
 
