@@ -314,8 +314,21 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             return;
         }
 
-        troopOption.dateRange = overlappingDateRange(troopOption.dateRange, armyListDateRange);
-        troopOption.dateRange = overlappingDateRange(troopOption.dateRange, allyOptionDateRange);
+        let overlap = overlappingDateRange(troopOption.dateRange, armyListDateRange);
+        overlap = overlappingDateRange(overlap, allyOptionDateRange);
+
+        if (!overlap.invalid) {
+            if (allyOptionDateRange && overlap.startDate === allyOptionDateRange.startDate && overlap.endDate === allyOptionDateRange.endDate) {
+                // Overlap is identical to ally option date range. No specific date range required.
+                overlap = null;
+            }
+            else if (overlap.startDate === armyListDateRange.startDate && overlap.endDate === armyListDateRange.endDate) {
+                // No ally option date range and overlap is identical to army list date range. No specific date range required.
+                overlap = null;
+            }
+        }
+
+        troopOption.dateRange = overlap;
     }
 
     function limitAllyOptionDateRange(allyOption, armyListDateRange, allyEntries) {
