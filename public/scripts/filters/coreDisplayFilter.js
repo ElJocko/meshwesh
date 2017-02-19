@@ -6,7 +6,7 @@ function BooleanCoreFilter() {
 
     function booleanCoreFilter(input) {
         if (input === 'all') {
-            return 'X';
+            return 'all';
         }
         else if (input === 'half') {
             return 'half';
