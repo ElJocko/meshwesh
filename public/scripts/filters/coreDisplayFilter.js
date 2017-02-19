@@ -12,7 +12,7 @@ function BooleanCoreFilter() {
             return 'half';
         }
         else {
-            return '';
+            return '\u2013'; // en dash
         }
     }
 

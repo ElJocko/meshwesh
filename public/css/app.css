@@ -251,6 +251,18 @@ td.troop-options-restrictions {
     text-align: left;
 }
 
+td.troop-options-header-xs {
+    padding-left: 10px;
+    width: 95px;
+    text-align: left;
+    vertical-align: top;
+}
+
+td.troop-options-value-xs {
+    text-align: left;
+    vertical-align: top;
+}
+
 .status-warning {
     padding-top: 15px;
     padding-bottom: 15px;
