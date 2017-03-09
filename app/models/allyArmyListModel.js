@@ -1,17 +1,18 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var DateRange = require('./subschemas/dateRangeSchema');
-var TroopOption = require('./subschemas/allyTroopOptionSchema');
-var transform = require('./lib/transform');
+const mongoose = require('mongoose');
+const DateRange = require('./subschemas/dateRangeSchema');
+const TroopOption = require('./subschemas/troopOptionSchema');
+const transform = require('./lib/transform');
 
 // Create the schema
-var AllyArmyListSchema = new mongoose.Schema({
+const AllyArmyListSchema = new mongoose.Schema({
     name: { type: String, required: true },
     listId: { type: Number },
     sublistId: { type: String },
     dateRange: { type: DateRange },
-    troopOptions: [ TroopOption ]
+    troopOptions: [ TroopOption ],
+    internalContingent: { type: Boolean },
 });
 
 AllyArmyListSchema.set('toObject', {
@@ -19,6 +20,6 @@ AllyArmyListSchema.set('toObject', {
 });
 
 // Create the model
-var AllyArmyListModel = mongoose.model('AllyArmyList', AllyArmyListSchema);
+const AllyArmyListModel = mongoose.model('AllyArmyList', AllyArmyListSchema);
 
 module.exports = AllyArmyListModel;

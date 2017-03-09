@@ -1,16 +1,16 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var DateRange = require('./subschemas/dateRangeSchema');
-var TroopOption = require('./subschemas/troopOptionSchema');
-var TroopEntry = require('./subschemas/troopEntrySchema');
-var AnnotatedRating = require('./subschemas/annotatedRatingSchema');
-var AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
-var AllyOption = require('./subschemas/allyOptionSchema');
-var transform = require('./lib/transform');
+const mongoose = require('mongoose');
+const DateRange = require('./subschemas/dateRangeSchema');
+const TroopOption = require('./subschemas/troopOptionSchema');
+const TroopEntry = require('./subschemas/troopEntrySchema');
+const AnnotatedRating = require('./subschemas/annotatedRatingSchema');
+const AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
+const AllyOption = require('./subschemas/allyOptionSchema');
+const transform = require('./lib/transform');
 
 // Create the schema
-var ArmyListSchema = new mongoose.Schema({
+const ArmyListSchema = new mongoose.Schema({
     name: { type: String, required: true },
     listId: { type: Number },
     sublistId: { type: String },
@@ -38,14 +38,14 @@ ArmyListSchema.set('toObject', {
 });
 
 ArmyListSchema.pre('save', function(next) {
-    var self = this;
+    const self = this;
     addDateRangeInfo(self);
 
     next();
 });
 
 // Create the model
-var ArmyListModel = mongoose.model('ArmyList', ArmyListSchema);
+const ArmyListModel = mongoose.model('ArmyList', ArmyListSchema);
 
 module.exports = ArmyListModel;
 
@@ -53,18 +53,18 @@ module.exports = ArmyListModel;
 /////
 
 function addDateRangeInfo(armyList) {
-    var dateRange = calculateArmyListDateRange(armyList);
+    const dateRange = calculateArmyListDateRange(armyList);
     armyList.derivedData = {
         listStartDate: dateRange.startDate,
         listEndDate: dateRange.endDate
     };
 
-    var dateRangeString = dateRangeAsString(dateRange);
+    const dateRangeString = dateRangeAsString(dateRange);
     armyList.derivedData.extendedName = armyList.name + "  " + dateRangeString;
 }
 
 function dateRangeAsString(dateRange) {
-    var dateRangeString = '';
+    let dateRangeString = '';
     if (dateRange.startDate == null || dateRange.endDate == null) {
         //
     }
@@ -83,8 +83,8 @@ function dateRangeAsString(dateRange) {
 
 function calculateArmyListDateRange(armyList) {
     // Find the earliest start and latest end dates
-    var earliestStart = null;
-    var latestEnd = null;
+    let earliestStart = null;
+    let latestEnd = null;
 
     armyList.dateRanges.map(function(dateRange) {
         if (earliestStart) {
@@ -102,7 +102,7 @@ function calculateArmyListDateRange(armyList) {
         }
     });
 
-    var armyListDateRange = {
+    const armyListDateRange = {
         startDate: earliestStart,
         endDate: latestEnd
     };

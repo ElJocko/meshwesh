@@ -45,7 +45,8 @@ exports.createAllyArmyList = {
             name: { type: 'string', required: true },
             listId: { type: 'number' },
             sublistId: { type: 'string' },
-            troopOptions: { type: ['array', 'null'], items: allyTroopOptionSubschema }
+            troopOptions: { type: ['array', 'null'], items: allyTroopOptionSubschema },
+            internalContingent: { type: 'boolean' }
         },
         additionalProperties: false
     },
@@ -65,7 +66,8 @@ exports.updateAllyArmyList = {
             name: { type: 'string' },
             listId: { type: 'number' },
             sublistId: { type: 'string' },
-            troopOptions: { type: ['array', 'null'], items: allyTroopOptionSubschema }
+            troopOptions: { type: ['array', 'null'], items: allyTroopOptionSubschema },
+            internalContingent: { type: 'boolean' }
         },
         additionalProperties: false
     },

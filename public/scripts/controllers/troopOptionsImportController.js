@@ -69,7 +69,8 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     listId: item.listId,
                                     sublistId: item.sublistId,
                                     dateRange: null,
-                                    troopOptions: []
+                                    troopOptions: [],
+                                    internalContingent: false
                                 };
 
                                 // Convert troop types
@@ -113,14 +114,27 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 vm.allyArmyListArray.push(allyArmyListData);
                             }
                             else if (item.armyName && isInternalAlly(item.sublistId) && !item.troopOptionOrder) {
-                                // Add the internal ally
+                                // Create the internal ally
                                 var allyArmyListData = {
                                     name: item.armyName,
                                     listId: item.listId,
                                     sublistId: item.sublistId,
                                     dateRange: makeDateRange(item.startDate, item.endDate),
-                                    troopOptions: []
+                                    troopOptions: [],
+                                    internalContingent: false
                                 };
+
+                                // Check the Contingent Flag
+                                if (item.description === 'Separate Contingent') {
+                                    allyArmyListData.internalContingent = true;
+                                }
+                                else if (item.description === 'Ally') {
+                                    // ok
+                                }
+                                else {
+                                    console.log('Internal ally found with unexpected contingent flag: ' + item.description + ' (' + item.listId + '/' + item.sublistId + ')');
+                                }
+
                                 vm.allyArmyListArray.push(allyArmyListData);
                             }
                             else if (item.troopOptionOrder && item.troopOptionOrder !== '0')
@@ -151,7 +165,8 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     dateRange: makeDateRange(item.startDate, item.endDate),
                                     troopEntries: [],
                                     description: item.description,
-                                    note: ''
+                                    note: '',
+                                    core: ''
                                 };
 
                                 // Extract a note from the description
@@ -218,9 +233,11 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 // Check for core
                                 if (item.core.toLowerCase() === 'core') {
                                     troopOption.core = 'all';
+                                    allyTroopOption.core = 'all';
                                 }
                                 else if (item.core.toLowerCase() === 'half core') {
-                                    troopOption.core = 'half'
+                                    troopOption.core = 'half';
+                                    allyTroopOption.core = 'half';
                                 }
                                 else if (item.core.length > 0) {
                                     console.warn('Core contained unexpected text: ' + item.core);

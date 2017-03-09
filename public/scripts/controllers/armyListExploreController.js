@@ -201,8 +201,11 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                 vm.armyList.statusType = 'status-warning';
             }
 
-            vm.allyOptions = results.allyOptions;
-            vm.allyOptions.forEach(function(option, index) {
+            vm.allyOptions = [];
+            vm.troopContingents = [];
+            results.allyOptions.forEach(function(option, index) {
+                let contingentFlag = false;
+
                 limitAllyOptionDateRange(option, vm.armyList.dateRanges[0], option.allyEntries);
 
                 // Create the name for the ally option
@@ -221,8 +224,24 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                     entry.allyArmyList.troopOptions.forEach(function(troopOption) {
                         limitTroopOptionDateRange(troopOption, vm.armyList.dateRanges[0], option.dateRange);
                     });
+
+                    if (entry.allyArmyList.internalContingent) {
+                        contingentFlag = true;
+
+                        const contingent = {
+                            name: entry.name,
+                            dateRange: option.dateRange,
+                            troopOptions: entry.allyArmyList.troopOptions
+                        };
+
+                        vm.troopContingents.push(contingent);
+                    }
                 });
                 option.name = option.name.toTitleCase();
+
+                if (!contingentFlag) {
+                    vm.allyOptions.push(option);
+                }
             });
 
             vm.associatedArmyLists = results.associatedArmyLists;
