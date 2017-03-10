@@ -69,7 +69,14 @@
             </div>
         </div>
         <div>
-            <h2>Required Troops</h2>
+            <h2 class="collapsible-info" ng-click="showRequiredTroopsInfo = !showRequiredTroopsInfo">Required Troops</h2>
+            <div uib-collapse="!showRequiredTroopsInfo">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        These troops are part of the main army. The minimum and maximum always apply unless overridden by the restrictions.
+                    </div>
+                </div>
+            </div>
             <table class="table troop-options hidden-xs">
                 <tr>
                     <th class="troop-options-type">Troop Types</th>
@@ -135,7 +142,17 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <h2>Optional Contingents</h2>
+        <h2 class="collapsible-info" ng-click="showOptionalContingentsInfo = !showOptionalContingentsInfo">Optional Contingents</h2>
+        <div uib-collapse="!showOptionalContingentsInfo">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    These troops are part of the main army but are in an optional contingent.
+                    The minimum and maximum only apply if the contingent is selected.
+                    In the cases where there is more than one optional contingent, the player may select any or all of the optional contingents.
+                </div>
+            </div>
+        </div>
+
         <div class="panel panel-default" ng-repeat="contingent in vm.troopContingents">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -212,7 +229,18 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <h2>Ally Troop Options</h2>
+        <h2 class="collapsible-info" ng-click="showAllyOptionsInfo = !showAllyOptionsInfo">Ally Troop Options</h2>
+        <div uib-collapse="!showAllyOptionsInfo">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    These troops are not part of the main army.
+                    The minimum and maximum only apply if the ally option is selected.
+                    No more than one ally option may be selected.
+                    Most ally options only include one allied contingent.
+                    Some ally options include two allied contingents.
+                </div>
+            </div>
+        </div>
         <uib-accordion close-others="true">
             <div uib-accordion-group class="panel-default" ng-repeat="allyOption in vm.allyOptions">
                 <uib-accordion-heading>
@@ -228,7 +256,7 @@
                 </uib-accordion-heading>
                 <div ng-repeat="allyEntry in allyOption.allyEntries">
                     <h5 ng-hide="allyOption.allyEntries.length === 1">
-                        {{ allyEntry.name }}
+                        Allied Contingent: {{ allyEntry.name }}
                     </h5>
                     <table class="table troop-options hidden-xs">
                         <tr>
@@ -290,7 +318,7 @@
     <div class="col-xs-12">
         <h2>
             Enemies
-            <div ng-repeat="enemyArmyList in vm.enemyArmyLists | orderBy:['sortId', 'sublistId']">
+            <div ng-repeat="enemyArmyList in vm.enemyArmyLists | orderBy:['name']">
                 <small>
                     <a href ng-click="vm.onClickArmyList(enemyArmyList.id)">{{ enemyArmyList.derivedData.extendedName }}</a>
                 </small>
@@ -303,7 +331,7 @@
     <div class="col-xs-12">
         <h2>
             Related Army Lists
-            <div ng-repeat="associatedArmyList in vm.associatedArmyLists | orderBy:['sortId', 'sublistId']">
+            <div ng-repeat="associatedArmyList in vm.associatedArmyLists | orderBy:['name']">
                 <small>
                     <a href ng-click="vm.onClickArmyList(associatedArmyList.id)">{{ associatedArmyList.derivedData.extendedName }}</a>
                 </small>
