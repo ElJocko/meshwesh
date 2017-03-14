@@ -627,6 +627,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                         var query = { listId: allyEntry.allyListId, sublistId: allyEntry.allySublistId };
                         AllyArmyList.find(query).lean().exec(function(err, leanDocs) {
                             if (err) {
+                                console.log('Error while retrieving ally army list ' + allyEntry.allyListId + '/' + allyEntry.allySublistId + ' (' + allyEntry.name + ') for army list ' + armyListData.listId + '/' + armyListData.sublistId + ' ERROR = ' + err);
                                 return cb(err);
                             }
                             else if (leanDocs.length === 0) {

@@ -28,11 +28,10 @@ angular.module('angular-loading-bar').config(['cfpLoadingBarProvider', function(
 
 app.run(function($rootScope, $window, $location) {
     $rootScope.$on("$routeChangeSuccess", function(event, next, current) {
-//        console.log('new route success: ' + $location.path());
+        // Scroll to the top of the window
+        window.scrollTo(0, 0);
+
+        // Send analytics info
         $window.ga('send', 'pageview', $location.path());
     });
-
-//    $rootScope.$on("$routeChangeStart", function(event, next, current) {
-//        console.log('new route start: ' + $location.path());
-//    });
 });
