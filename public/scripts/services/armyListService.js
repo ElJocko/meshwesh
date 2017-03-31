@@ -14,8 +14,8 @@ function ArmyListService ($resource) {
         { id: '@id' },
         {
             create: { method: 'POST'},
-            list: { method: 'GET', isArray: true },
-            get: { method: 'GET', isArray: false },
+            list: { method: 'GET', cache: true, isArray: true },
+            get: { method: 'GET', cache: true, isArray: false },
             update: { method: 'PUT', isArray: false },
             destroy: { method: 'DELETE', isArray: false }
         }
@@ -25,7 +25,7 @@ function ArmyListService ($resource) {
         'api/v1/armyLists/:id/associatedArmyLists',
         { id: '@id' },
         {
-            list: { method: 'GET', isArray: true }
+            list: { method: 'GET', cache: true, isArray: true }
         }
     );
 
@@ -33,7 +33,7 @@ function ArmyListService ($resource) {
         'api/v1/armyLists/:id/enemyArmyLists',
         { id: '@id' },
         {
-            list: { method: 'GET', isArray: true }
+            list: { method: 'GET', cache: true, isArray: true }
         }
     );
 
@@ -41,7 +41,7 @@ function ArmyListService ($resource) {
         'api/v1/armyLists/:id/thematicCategories',
         { id: '@id' },
         {
-            list: { method: 'GET', isArray: true }
+            list: { method: 'GET', cache: true, isArray: true }
         }
     );
 
@@ -49,7 +49,7 @@ function ArmyListService ($resource) {
         'api/v1/armyLists/:id/allyOptions',
         { id: '@id' },
         {
-            list: { method: 'GET', isArray: true }
+            list: { method: 'GET', cache: true, isArray: true }
         }
     );
 

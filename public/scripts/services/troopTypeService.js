@@ -13,8 +13,8 @@ function TroopTypeService ($resource) {
         { id: '@id' },
         {
             create: { method: 'POST'},
-            list: { method: 'GET', isArray: true },
-            get: { method: 'GET', isArray: false },
+            list: { method: 'GET', cache: true, isArray: true },
+            get: { method: 'GET', cache: true, isArray: false },
             update: { method: 'PUT', isArray: false },
             destroy: { method: 'DELETE', isArray: false }
         }
