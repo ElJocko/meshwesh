@@ -497,6 +497,12 @@ input[readonly] {
     font-style: oblique;
 }
 
+.error-table-message {
+    margin-top: 15px;
+    font-style: oblique;
+    color: red;
+}
+
 .main-progress-bar {
     height: 24px;
 }

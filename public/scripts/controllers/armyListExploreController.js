@@ -9,6 +9,19 @@ ArmyListExploreController.$inject = ['$routeParams', '$location', '$q', '$uibMod
 function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
     var vm = this;
 
+    vm.loading = {
+        armyList: true,
+        enemyArmyLists: true,
+        associatedArmyLists: true,
+        thematicCategories: true
+    };
+    vm.loadFailed = {
+        armyList: false,
+        enemyArmyLists: false,
+        associatedArmyLists: false,
+        thematicCategories: false
+    };
+
     vm.totalMinMax = {
         minPoints: null,
         maxPoints: null
@@ -133,37 +146,61 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         var thematicCategoriesPromise = null;
         var allyOptionsPromise = null;
         if (listId) {
-            armyListPromise = ArmyListService.get({ id: listId }).$promise;
-            associatedArmyListsPromise = ArmyListService.associatedArmyLists.list({ id: listId }).$promise;
-            enemyArmyListsPromise = ArmyListService.enemyArmyLists.list({ id: listId }).$promise;
-            thematicCategoriesPromise = ArmyListService.thematicCategories.list({ id: listId }).$promise;
-            allyOptionsPromise = ArmyListService.allyOptions.list({ id: listId }).$promise;
+            armyListPromise = ArmyListService.get({ id: listId });
+            associatedArmyListsPromise = ArmyListService.associatedArmyLists.list({ id: listId });
+            enemyArmyListsPromise = ArmyListService.enemyArmyLists.list({ id: listId });
+            thematicCategoriesPromise = ArmyListService.thematicCategories.list({ id: listId });
+            allyOptionsPromise = ArmyListService.allyOptions.list({ id: listId });
         }
-
-        // Get the grand army lists
-        var grandArmyListsPromise = GrandArmyListService.list().$promise;
 
         // Handle the response after the services complete
         var servicePromises = {
             armyList: armyListPromise,
-            associatedArmyLists: associatedArmyListsPromise,
-            enemyArmyLists: enemyArmyListsPromise,
-            thematicCategories: thematicCategoriesPromise,
-            grandArmyLists: grandArmyListsPromise,
             allyOptions: allyOptionsPromise
         };
 
         $q
             .all(servicePromises)
-            .then(handleResponse);
+            .then(handleSuccessResponse, handleErrorResponse);
+
+        associatedArmyListsPromise.then(
+            function(results) {
+                vm.associatedArmyLists = results;
+                vm.loading.associatedArmyLists = false;
+            },
+            function(reason) {
+                console.log('Unable to load Associated Army Lists: ' + reason);
+                vm.associatedArmyLists = null;
+                vm.loading.associatedArmyLists = false;
+                vm.loadFailed.associatedArmyLists = true;
+            });
+
+        enemyArmyListsPromise.then(
+            function(results) {
+                vm.enemyArmyLists = results;
+                vm.loading.enemyArmyLists = false;
+            },
+            function(reason) {
+                console.log('Unable to load Enemy Army Lists: ' + reason);
+                vm.enemyArmyLists = null;
+                vm.loading.enemyArmyLists = false;
+                vm.loadFailed.enemyArmyLists = true;
+            });
+
+        thematicCategoriesPromise.then(
+            function(results) {
+                vm.thematicCategories = results;
+                vm.loading.thematicCategories = false;
+            },
+            function(reason) {
+                console.log('Unable to load Thematic Categories: ' + reason);
+                vm.thematicCategories = null;
+                vm.loading.thematicCategories = false;
+                vm.loadFailed.thematicCategories = true;
+            });
     }
 
-    function handleResponse(results) {
-        // Default to no grand army list selected
-        vm.galSelected = null;
-
-        // We should always get an array of grand army lists
-        vm.grandArmyLists = results.grandArmyLists;
+    function handleSuccessResponse(results) {
 
         // Handle new or existing army list
         if (listId) {
@@ -243,26 +280,6 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
                     vm.allyOptions.push(option);
                 }
             });
-
-            vm.associatedArmyLists = results.associatedArmyLists;
-//            console.log(vm.associatedArmyLists);
-
-            vm.enemyArmyLists = results.enemyArmyLists;
-//            console.log(vm.enemyArmyLists);
-
-            vm.thematicCategories = results.thematicCategories;
-//            console.log(vm.thematicCategories);
-
-            // Find the grand army list that the army list belongs to
-            if (vm.armyList.grandArmyList) {
-                var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
-                    return (element.id === vm.armyList.grandArmyList);
-                });
-
-                if (galIndex !== -1) {
-                    vm.galSelected = vm.grandArmyLists[galIndex];
-                }
-            }
         }
         else {
             // New army list
@@ -285,11 +302,13 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         resetGridHeight('maneuver-rating-grid', vm.armyList.maneuverRatings);
         resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
 
-        performAnalysis();
+        vm.loading.armyList = false;
     }
 
-    function performAnalysis() {
-        vm.totalMinMax = TroopOptionsAnalysisService.calculateTotalMinMaxPoints(vm.armyList.troopOptions);
+    function handleErrorResponse(reason) {
+        console.log(reason);
+        vm.loading.armyList = false;
+        vm.loadFailed.armyList = true;
     }
 
     // DateRange

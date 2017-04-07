@@ -9,6 +9,15 @@
                 </small>
             </div>
         </h1>
+        <h1 class="empty-table-message" ng-show="vm.armyListLoading">
+            <span>&nbsp;</span>
+            <div>
+                <small>
+                    &nbsp;
+                </small>
+            </div>
+        </h1>
+        <div class="error-table-message" ng-show="vm.loadFailed.armyList">Unable to retrieve army list data</div>
         <div class="empty-table-message" ng-show="vm.armyList.dateRanges.length === 0">No date ranges entered</div>
     </div>
 </div>
@@ -41,6 +50,7 @@
                         <td class="army-list-rating-note">{{ rating.note }}</td>
                     </tr>
                 </table>
+                <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.invasionRatings.length === 0">No invasion ratings entered</div>
             </div>
             <div class="col-xs-12">
@@ -51,6 +61,7 @@
                         <td class="army-list-rating-note">{{ rating.note }}</td>
                     </tr>
                 </table>
+                <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No maneuver ratings entered</div>
             </div>
             <div class="col-xs-12">
@@ -60,11 +71,13 @@
                         <div>{{ topography | mwDisplayTopography }}</div>
                     </div>
                 </dl>
+                <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No topographies entered</div>
             </div>
             <div class="col-xs-12">
                 <div class="content-subheader">General's Troop Type</div>
                 <span class="content-text-special">{{ vm.armyList.troopEntriesForGeneral | mwDisplayTroopTypeEntriesList }}</span>
+                <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
         </div>
@@ -136,6 +149,7 @@
                     </table></td>
                 </tr>
             </table>
+            <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
             <div class="empty-table-message" ng-show="vm.armyList.troopOptions.length === 0">No troop options entered</div>
         </div>
     </div>
@@ -224,6 +238,7 @@
                 <div class="empty-table-message" ng-show="allyEntry.allyArmyList.troopOptions.length === 0">No troop options entered</div>
             </div>
         </div>
+        <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
         <div class="empty-table-message" ng-show="vm.troopContingents.length === 0">No optional contingents available</div>
     </div>
 </div>
@@ -307,10 +322,14 @@
                             </table></td>
                         </tr>
                     </table>
+                    <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
+                    <div class="error-table-message" ng-show="vm.loadFailed.armyList">Unable to retrieve ally option data</div>
                     <div class="empty-table-message" ng-show="allyEntry.allyArmyList.troopOptions.length === 0">No troop options entered</div>
                 </div>
             </div>
         </uib-accordion>
+        <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
+        <div class="error-table-message" ng-show="vm.loadFailed.armyList">Unable to retrieve ally option data</div>
         <div class="empty-table-message" ng-show="vm.allyOptions.length === 0">No ally options available</div>
     </div>
 </div>
@@ -324,6 +343,8 @@
                 </small>
             </div>
         </h2>
+        <div class="empty-table-message" ng-show="vm.loading.enemyArmyLists">Loading...</div>
+        <div class="error-table-message" ng-show="vm.loadFailed.enemyArmyLists">Unable to retrieve enemy army list data</div>
         <div class="empty-table-message" ng-show="vm.enemyArmyLists.length === 0">No enemies found</div>
     </div>
 </div>
@@ -337,6 +358,8 @@
                 </small>
             </div>
         </h2>
+        <div class="empty-table-message" ng-show="vm.loading.associatedArmyLists">Loading...</div>
+        <div class="error-table-message" ng-show="vm.loadFailed.associatedArmyLists">Unable to retrieve associated army list data</div>
         <div class="empty-table-message" ng-show="vm.associatedArmyLists.length === 0">No related army lists found</div>
     </div>
 </div>
@@ -350,6 +373,8 @@
                 </small>
             </div>
         </h2>
+        <div class="empty-table-message" ng-show="vm.loading.thematicCategories">Loading...</div>
+        <div class="error-table-message" ng-show="vm.loadFailed.thematicCategories">Unable to retrieve thematic category data</div>
         <div class="empty-table-message" ng-show="vm.thematicCategories.length === 0">No thematic categories found</div>
     </div>
 </div>
