@@ -11,6 +11,7 @@ var allyArmyListRoutes = require('./allyArmyListRoutes');
 var troopTypeRoutes = require('./troopTypeRoutes');
 var userRoutes = require('./userRoutes');
 var enemyXrefRoutes = require('./enemyXrefRoutes');
+var logMessageRoutes = require('./logMessageRoutes');
 
 var errorHandler = require('../lib/errorHandler');
 
@@ -29,6 +30,7 @@ router.use('/api', allyArmyListRoutes);
 router.use('/api', troopTypeRoutes);
 router.use('/api', userRoutes);
 router.use('/api', enemyXrefRoutes);
+router.use('/api', logMessageRoutes);
 
 // Handle errors that haven't otherwise been caught
 router.use(errorHandler.bodyParser);

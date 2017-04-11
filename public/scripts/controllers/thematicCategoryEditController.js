@@ -4,12 +4,12 @@ angular
     .module('meshweshControllers')
     .controller('ThematicCategoryEditController', ThematicCategoryEditController);
 
-ThematicCategoryEditController.$inject = ['$routeParams', '$location', 'ThematicCategoryService'];
+ThematicCategoryEditController.$inject = ['$route', '$location', 'ThematicCategoryService'];
 
-function ThematicCategoryEditController($routeParams, $location, ThematicCategoryService) {
+function ThematicCategoryEditController($route, $location, ThematicCategoryService) {
     var vm = this;
 
-    var categoryId = $routeParams.categoryId;
+    var categoryId = $route.current.params.categoryId;
     if (categoryId) {
         // Edit an existing thematic category
         vm.category = ThematicCategoryService.get({ id: categoryId });

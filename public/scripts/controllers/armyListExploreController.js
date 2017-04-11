@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListExploreController', ArmyListExploreController);
 
-ArmyListExploreController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
+ArmyListExploreController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
 
-function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
+function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
     var vm = this;
 
     vm.loading = {
@@ -15,6 +15,7 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
         associatedArmyLists: true,
         thematicCategories: true
     };
+
     vm.loadFailed = {
         armyList: false,
         enemyArmyLists: false,
@@ -32,7 +33,7 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
     initializeManeuverRatingGrid();
     initializeTroopOptionsGrid();
 
-    var listId = $routeParams.listId;
+    var listId = $route.current.params.listId;
     initializeData();
 
     vm.onClickArmyList = onClickArmyList;
@@ -151,6 +152,9 @@ function ArmyListExploreController($routeParams, $location, $q, $uibModal, uiGri
             enemyArmyListsPromise = ArmyListService.enemyArmyLists.list({ id: listId });
             thematicCategoriesPromise = ArmyListService.thematicCategories.list({ id: listId });
             allyOptionsPromise = ArmyListService.allyOptions.list({ id: listId });
+        }
+        else {
+            console.log('List Id not set');
         }
 
         // Handle the response after the services complete

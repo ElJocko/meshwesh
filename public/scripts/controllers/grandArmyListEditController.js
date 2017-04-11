@@ -4,12 +4,12 @@ angular
     .module('meshweshControllers')
     .controller('GrandArmyListEditController', GrandArmyListEditController);
 
-GrandArmyListEditController.$inject = ['$routeParams', '$location', 'GrandArmyListService', 'ArmyListService'];
+GrandArmyListEditController.$inject = ['$route', '$location', 'GrandArmyListService', 'ArmyListService'];
 
-function GrandArmyListEditController($routeParams, $location, GrandArmyListService, ArmyListService) {
+function GrandArmyListEditController($route, $location, GrandArmyListService, ArmyListService) {
     var vm = this;
 
-    var listId = $routeParams.listId;
+    var listId = $route.current.params.listId;
     if (listId) {
         // Edit an existing grand army list
         GrandArmyListService.get({ id: listId }, function(list) {

@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListEditController', ArmyListEditController);
 
-ArmyListEditController.$inject = ['$routeParams', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
+ArmyListEditController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
 
-function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
+function ArmyListEditController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
     var vm = this;
 
     vm.totalMinMax = {
@@ -19,7 +19,7 @@ function ArmyListEditController($routeParams, $location, $q, $uibModal, uiGridCo
     initializeManeuverRatingGrid();
     initializeTroopOptionsGrid();
 
-    var listId = $routeParams.listId;
+    var listId = $route.current.params.listId;
     initializeData();
 
     if (listId) {

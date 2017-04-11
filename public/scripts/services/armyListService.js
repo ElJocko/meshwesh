@@ -17,7 +17,6 @@ function ArmyListService ($resource, $q, $http) {
         {
             create: {method: 'POST'},
             list: {method: 'GET', cache: true, isArray: true},
-            get: {method: 'GET', cache: true, isArray: false},
             update: {method: 'PUT', isArray: false},
             destroy: {method: 'DELETE', isArray: false}
         }

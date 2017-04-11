@@ -4,12 +4,12 @@ angular
     .module('meshweshControllers')
     .controller('ThematicCategoryExploreController', ThematicCategoryExploreController);
 
-ThematicCategoryExploreController.$inject = ['$routeParams', '$location', 'ThematicCategoryService'];
+ThematicCategoryExploreController.$inject = ['$route', '$location', 'ThematicCategoryService'];
 
-function ThematicCategoryExploreController($routeParams, $location, ThematicCategoryService) {
+function ThematicCategoryExploreController($route, $location, ThematicCategoryService) {
     var vm = this;
 
-    var categoryId = $routeParams.categoryId;
+    var categoryId = $route.current.params.categoryId;
 
     vm.category = ThematicCategoryService.get({ id: categoryId });
 
