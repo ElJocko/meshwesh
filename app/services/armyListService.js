@@ -20,6 +20,8 @@ var errors = {
 };
 exports.errors = errors;
 
+var summaryFields = ['id', 'name', 'derivedData'];
+
 exports.retrieveByQueryLean = function(query, callback) {
     ArmyList.find(query).lean().exec(function(err, leanDocs) {
         if (err) {
@@ -30,6 +32,23 @@ exports.retrieveByQueryLean = function(query, callback) {
                 transform.removeDatabaseArtifactsFromObject(o);
             });
             return callback(null, leanDocs);
+        }
+    });
+};
+
+exports.retrieveSummaryByQueryLean = function(query, callback) {
+    ArmyList.find(query).lean().exec(function(err, leanDocs) {
+        if (err) {
+            return callback(err);
+        }
+        else {
+            var summaryDocs = [];
+            leanDocs.forEach(function(o) {
+                transform.removeDatabaseArtifactsFromObject(o);
+                var summary = _.pick(o, summaryFields);
+                summaryDocs.push(summary);
+            });
+            return callback(null, summaryDocs);
         }
     });
 };

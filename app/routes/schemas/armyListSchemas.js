@@ -51,7 +51,8 @@ exports.retrieveArmyListsByQuery = {
     query: {
         type: 'object',
         properties: {
-            name: { type: 'string' }
+            name: { type: 'string' },
+            summary: { type: 'string' }
         },
         additionalProperties: false }
 };

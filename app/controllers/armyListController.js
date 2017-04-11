@@ -5,19 +5,34 @@ var logger = require('../lib/logger');
 var _ = require('lodash');
 
 exports.retrieveByQuery = function(req, res) {
-    var query = { }; // Default is all
-    if (req.query.name) {
-        query.where = { name: { like: req.query.name }};
+    if (req.query.summary && req.query.summary === 'true') {
+        // Just a summary of the army lists
+        armyListService.retrieveSummaryByQueryLean(query, function(err, lists) {
+            if (err) {
+                logger.error('Failed with error: ' + err);
+                return res.status(500).send('Unable to get army list summary. Server error.');
+            }
+            else {
+                return res.status(200).send(lists);
+            }
+        });
     }
-    armyListService.retrieveByQueryLean(query, function(err, lists) {
-        if (err) {
-            logger.error('Failed with error: ' + err);
-            return res.status(500).send('Unable to get army lists. Server error.');
+    else {
+        // Full data for the army lists
+        var query = {}; // Default is all
+        if (req.query.name) {
+            query.where = {name: {like: req.query.name}};
         }
-        else {
-            return res.status(200).send(lists);
-        }
-    });
+        armyListService.retrieveByQueryLean(query, function (err, lists) {
+            if (err) {
+                logger.error('Failed with error: ' + err);
+                return res.status(500).send('Unable to get army lists. Server error.');
+            }
+            else {
+                return res.status(200).send(lists);
+            }
+        });
+    }
 };
 
 exports.retrieveById = function(req, res) {

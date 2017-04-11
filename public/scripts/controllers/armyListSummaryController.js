@@ -20,7 +20,7 @@ function ArmyListSummaryController($location, uiGridConstants, ArmyListService, 
 
     initializeArmyListGrid();
 
-    ArmyListService.list(function(armyLists) {
+    ArmyListService.listSummary(function(armyLists) {
         vm.armyLists = armyLists;
         vm.armyListGridOptions.data = vm.armyLists;
     });
