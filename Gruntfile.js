@@ -12,8 +12,8 @@ module.exports = function(grunt) {
                     reporter: 'spec'
                 },
                 src: [
-                    'test/api/testThematicCategoryApi.js',
-                    'test/api/testAllyArmyListApi.js'
+                    'test/api/testThematicCategoryApi.js'
+//                    'test/api/testAllyArmyListApi.js'
                 ]
             }
         },

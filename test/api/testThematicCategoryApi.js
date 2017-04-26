@@ -1,19 +1,52 @@
 'use strict';
 
-var path = require('path');
-var request = require('supertest');
-var expect = require('expect');
+const path = require('path');
+const request = require('supertest');
+const expect = require('expect');
 
-var serverUrl = process.env.SERVER_URL || "";
-var apiVersion = 'v1';
+const serverUrl = process.env.SERVER_URL || "";
+const apiVersion = 'v1';
 
-var thematicCategory = null;
+const credentials = {
+    emailAddress: process.env.ADMIN_ROLE_EMAIL || "",
+    password: process.env.ADMIN_ROLE_PASSWORD || ""
+};
+
+let adminUserToken = "";
+
+let retrievedThematicCategory = null;
+
+const newThematicCategory = {
+    name: 'Mongol Sky'
+};
+let newThematicCategoryId = null;
+const updateName = 'Mongol Thunder';
+
+const badId = 'FFFFFFFFFFFFFFFFFFFFFFFF';
 
 describe('ThematicCategory API', function() {
+    before(function (done) {
+        // Sign in and get a token
+        const apiPath = path.join('/api', apiVersion, '/userCredentials');
+        request(serverUrl)
+            .post(apiPath)
+            .send(credentials)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) {
+                    done(err);
+                }
+                else {
+                    adminUserToken = res.body.token;
+
+                    done(err);
+                }
+            });
+    });
 
     describe('retrieve the list of thematic categories', function () {
         it('should retrieve all of the thematic categories', function (done) {
-            var apiPath = path.join('/api', apiVersion, 'thematicCategories');
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories');
             request(serverUrl)
                 .get(apiPath)
                 .send()
@@ -23,12 +56,13 @@ describe('ThematicCategory API', function() {
                         done(err);
                     }
                     else {
-                        var thematicCategories = res.body;
+                        const thematicCategories = res.body;
                         expect(thematicCategories).toExist();
                         expect(Array.isArray(thematicCategories)).toBeTruthy();
+                        expect(thematicCategories.length === 6);
 
                         // Save the first category for later tests
-                        thematicCategory = thematicCategories[0];
+                        retrievedThematicCategory = thematicCategories[0];
 
                         done();
                     }
@@ -37,8 +71,40 @@ describe('ThematicCategory API', function() {
     });
 
     describe('retrieve a thematic category', function () {
+        it('should not retrieve a thematic category with a badly formatted id', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', '12345');
+            request(serverUrl)
+                .get(apiPath)
+                .send()
+                .expect(400)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        done();
+                    }
+                });
+        });
+
+        it('should not retrieve a thematic category with a missing id', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', badId);
+            request(serverUrl)
+                .get(apiPath)
+                .send()
+                .expect(404)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        done();
+                    }
+                });
+        });
+
         it('should retrieve a thematic category', function (done) {
-            var apiPath = path.join('/api', apiVersion, 'thematicCategories', thematicCategory.id);
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
             request(serverUrl)
                 .get(apiPath)
                 .send()
@@ -48,9 +114,135 @@ describe('ThematicCategory API', function() {
                         done(err);
                     }
                     else {
-                        var retrievedThematicCategory = res.body;
+                        const retrievedThematicCategory = res.body;
                         expect(retrievedThematicCategory).toExist();
 
+                        done();
+                    }
+                });
+        });
+
+        it('should retrieve a thematic category as admin user', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
+            request(serverUrl)
+                .get(apiPath)
+                .set('PRIVATE-TOKEN', adminUserToken)
+                .send()
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        const retrievedThematicCategory = res.body;
+                        expect(retrievedThematicCategory).toExist();
+
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('create thematic category', function () {
+        it('should create a thematic category', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories');
+            request(serverUrl)
+                .post(apiPath)
+                .set('PRIVATE-TOKEN', adminUserToken)
+                .send(newThematicCategory)
+                .expect(201)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        newThematicCategoryId = res.body.id;
+                        done();
+                    }
+                });
+        });
+
+        it('should find the new thematic category', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
+            request(serverUrl)
+                .get(apiPath)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        expect(res.body.name).toBe(newThematicCategory.name);
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('update thematic category', function () {
+        it('should update a thematic category', function (done) {
+            newThematicCategory.name = updateName;
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
+            request(serverUrl)
+                .put(apiPath)
+                .set('PRIVATE-TOKEN', adminUserToken)
+                .send(newThematicCategory)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        newThematicCategoryId = res.body.id;
+                        done();
+                    }
+                });
+        });
+
+        it('should find the updated thematic category', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
+            request(serverUrl)
+                .get(apiPath)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        expect(res.body.name).toBe(updateName);
+                        done();
+                    }
+                });
+        });
+    });
+
+    describe('delete thematic category', function () {
+        it('should delete a thematic category', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
+            request(serverUrl)
+                .del(apiPath)
+                .set('PRIVATE-TOKEN', adminUserToken)
+                .expect(200)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
+                        done();
+                    }
+                });
+        });
+
+        it('should not find the deleted thematic category', function (done) {
+            const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
+            request(serverUrl)
+                .get(apiPath)
+                .expect(404)
+                .end(function (err, res) {
+                    if (err) {
+                        done(err);
+                    }
+                    else {
                         done();
                     }
                 });
