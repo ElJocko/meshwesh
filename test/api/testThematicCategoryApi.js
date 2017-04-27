@@ -21,9 +21,11 @@ const newThematicCategory = {
 };
 let newThematicCategoryId = null;
 
-const invalidThematicCategory = {
-    themeName: 'Mongol Sky'
-};
+const invalidThematicCategories = [
+    { },
+    { name: '' },
+    { themeName: 'Mongol Sky' }
+];
 
 const updateName = 'Mongol Thunder';
 
@@ -210,22 +212,24 @@ describe('ThematicCategory API', function() {
     });
 
     describe('create thematic category', function () {
-        it('should not create a thematic category with invalid data', function (done) {
-            const apiPath = path.join('/api', apiVersion, 'thematicCategories');
-            request(serverUrl)
-                .post(apiPath)
-                .set('PRIVATE-TOKEN', adminUserToken)
-                .send(invalidThematicCategory)
-                .expect(400)
-                .end(function (err, res) {
-                    if (err) {
-                        done(err);
-                    }
-                    else {
-                        newThematicCategoryId = res.body.id;
-                        done();
-                    }
-                });
+        invalidThematicCategories.forEach(function (invalidData) {
+            it('should not create a thematic category with invalid data', function (done) {
+                const apiPath = path.join('/api', apiVersion, 'thematicCategories');
+                request(serverUrl)
+                    .post(apiPath)
+                    .set('PRIVATE-TOKEN', adminUserToken)
+                    .send(invalidData)
+                    .expect(400)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                        }
+                        else {
+                            newThematicCategoryId = res.body.id;
+                            done();
+                        }
+                    });
+            });
         });
 
         it('should create a thematic category', function (done) {
@@ -264,6 +268,26 @@ describe('ThematicCategory API', function() {
     });
 
     describe('update thematic category', function () {
+        invalidThematicCategories.forEach(function (invalidData) {
+            it('should not update a thematic category with invalid data', function (done) {
+                newThematicCategory.name = updateName;
+                const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
+                request(serverUrl)
+                    .put(apiPath)
+                    .set('PRIVATE-TOKEN', adminUserToken)
+                    .send(invalidData)
+                    .expect(400)
+                    .end(function (err, res) {
+                        if (err) {
+                            done(err);
+                        }
+                        else {
+                            done();
+                        }
+                    });
+            });
+        });
+
         it('should update a thematic category', function (done) {
             newThematicCategory.name = updateName;
             const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
@@ -278,24 +302,6 @@ describe('ThematicCategory API', function() {
                     }
                     else {
                         newThematicCategoryId = res.body.id;
-                        done();
-                    }
-                });
-        });
-
-        it('should not update a thematic category with invalid data', function (done) {
-            newThematicCategory.name = updateName;
-            const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
-            request(serverUrl)
-                .put(apiPath)
-                .set('PRIVATE-TOKEN', adminUserToken)
-                .send(invalidThematicCategory)
-                .expect(400)
-                .end(function (err, res) {
-                    if (err) {
-                        done(err);
-                    }
-                    else {
                         done();
                     }
                 });

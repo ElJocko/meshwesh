@@ -95,6 +95,12 @@ exports.update = function(req, res) {
     // Get the data from the request
     var categoryData = _.pick(req.body, 'name');
 
+    // Validate input
+    if (!categoryData.name) {
+        logger.warn("Request missing one or more required properties.");
+        return res.status(400).send("Unable to create Thematic Category. Request missing one or more required properties.");
+    }
+
     thematicCategoryService.update(req.params.categoryId, categoryData, function(err, category) {
         if (err) {
             if (err.message === thematicCategoryService.errors.badlyFormattedParameter) {
