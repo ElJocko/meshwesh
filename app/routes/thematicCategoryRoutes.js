@@ -1,24 +1,47 @@
 'use strict';
 
-var express = require('express');
-var tokenAuthz = require('../lib/tokenAuthz');
-var thematicCategoryController = require('../controllers/thematicCategoryController');
+const express = require('express');
+const tokenAuthz = require('../lib/tokenAuthz');
+const validator = require('express-jsonschema');
+const thematicCategoryController = require('../controllers/thematicCategoryController');
+const schemas = require('./schemas/thematicCategorySchemas');
 
-var router = express.Router();
+const router = express.Router();
 
 router.route('/v1/thematicCategories')
-    .get(thematicCategoryController.retrieveByQuery)
-    .post(tokenAuthz.requireEditorRole, thematicCategoryController.create);
+    .get(
+        tokenAuthz.allowAll,
+        validator.validate(schemas.retrieveByQuery),
+        thematicCategoryController.retrieveByQuery)
+    .post(
+        tokenAuthz.requireEditorRole,
+        validator.validate(schemas.create),
+        thematicCategoryController.create);
 
 router.route('/v1/thematicCategories/:categoryId')
-    .get(thematicCategoryController.retrieveById)
-    .put(tokenAuthz.requireEditorRole, thematicCategoryController.update)
-    .delete(tokenAuthz.requireEditorRole, thematicCategoryController.delete);
+    .get(
+        tokenAuthz.allowAll,
+        validator.validate(schemas.retrieveById),
+        thematicCategoryController.retrieveById)
+    .put(
+        tokenAuthz.requireEditorRole,
+        validator.validate(schemas.update),
+        thematicCategoryController.update)
+    .delete(
+        tokenAuthz.requireEditorRole,
+        validator.validate(schemas.delete),
+        thematicCategoryController.delete);
 
 router.route('/v1/thematicCategories/:categoryId/armyLists')
-    .get(thematicCategoryController.retrieveArmyLists);
+    .get(
+        tokenAuthz.allowAll,
+        validator.validate(schemas.retrieveById),
+        thematicCategoryController.retrieveArmyLists);
 
 router.route('/v1/thematicCategoriesImport')
-    .post(tokenAuthz.requireAdminRole, thematicCategoryController.import);
+    .post(
+        tokenAuthz.requireAdminRole,
+//        validator.validate(schemas.import),
+        thematicCategoryController.import);
 
 module.exports = router;

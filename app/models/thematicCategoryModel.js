@@ -1,10 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var transform = require('./lib/transform');
+const mongoose = require('mongoose');
+const transform = require('./lib/transform');
 
 // Create the schema
-var ThematicCategorySchema = new mongoose.Schema({
+const ThematicCategorySchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true }
 });
 
@@ -13,6 +13,6 @@ ThematicCategorySchema.set('toObject', {
 });
 
 // Create the model
-var ThematicCategoryModel = mongoose.model('ThematicCategory', ThematicCategorySchema);
+const ThematicCategoryModel = mongoose.model('ThematicCategory', ThematicCategorySchema);
 
 module.exports = ThematicCategoryModel;

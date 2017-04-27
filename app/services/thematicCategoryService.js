@@ -65,27 +65,39 @@ exports.retrieveArmyLists = function(id, callback) {
     if (id) {
         var query = { thematicCategory: id };
         ThematicCategoryToArmyListXref.find(query).lean().exec(function(err, documents) {
-            async.mapSeries(
-                documents,
-                function(xref, cb) {
-                    armyListService.retrieveByIdLean(xref.armyList, function(err, armyList) {
+            if (err) {
+                if (err.name === 'CastError') {
+                    var error = new Error(errors.badlyFormattedParameter);
+                    error.parameterName = 'id';
+                    return callback(error);
+                }
+                else {
+                    return callback(err);
+                }
+            }
+            else {
+                async.mapSeries(
+                    documents,
+                    function(xref, cb) {
+                        armyListService.retrieveByIdLean(xref.armyList, function(err, armyList) {
+                            if (err) {
+                                return cb(err);
+                            }
+                            else {
+                                return cb(null, armyList);
+                            }
+                        })
+                    },
+                    function(err, results) {
                         if (err) {
-                            return cb(err);
+                            return callback(err);
                         }
                         else {
-                            return cb(null, armyList);
+                            return callback(null, results);
                         }
-                    })
-                },
-                function(err, results) {
-                    if (err) {
-                        return callback(err);
                     }
-                    else {
-                        return callback(null, results);
-                    }
-                }
-            );
+                );
+            }
         });
     }
     else {

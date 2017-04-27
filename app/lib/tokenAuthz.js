@@ -1,12 +1,17 @@
 'use strict';
 
-var config = require('./config');
-var logger = require('./logger');
-var jwt = require('jwt-simple');
+const config = require('./config');
+const logger = require('./logger');
+const jwt = require('jwt-simple');
+
+exports.allowAll = function(request, response, next) {
+    // no authorization required
+    return next();
+};
 
 exports.requireAdminToken = function(request, response, next) {
     // request must include the admin token
-    var token = request.get('ADMIN-TOKEN');
+    const token = request.get('ADMIN-TOKEN');
 
     if (!token) {
         logger.warn('tokenAuthz.requireAdminToken: Missing token');
@@ -23,14 +28,14 @@ exports.requireAdminToken = function(request, response, next) {
 
 exports.requireAdminRole = function(request, response, next) {
     // request must include the jwt token
-    var token = request.get('PRIVATE-TOKEN');
+    const token = request.get('PRIVATE-TOKEN');
 
     if (!token) {
         logger.warn('tokenAuthz.requireAdmin: Missing token');
         return response.status(401).send('Not authorized');
     }
 
-    var payload = decodeToken(token);
+    const payload = decodeToken(token);
 
     if (payload.role === 'admin') {
         return next();
@@ -43,14 +48,14 @@ exports.requireAdminRole = function(request, response, next) {
 
 exports.requireEditorRole = function(request, response, next) {
     // request must include the jwt token
-    var token = request.get('PRIVATE-TOKEN');
+    const token = request.get('PRIVATE-TOKEN');
 
     if (!token) {
         logger.warn('tokenAuthz.requireEditor: Missing token');
         return response.status(401).send('Not authorized');
     }
 
-    var payload = decodeToken(token);
+    const payload = decodeToken(token);
 
     if (payload.role === 'admin' || payload.role === 'editor') {
         return next();
@@ -62,6 +67,6 @@ exports.requireEditorRole = function(request, response, next) {
 };
 
 function decodeToken(token) {
-    var plainToken = jwt.decode(token, config.security.jwtSecret);
+    const plainToken = jwt.decode(token, config.security.jwtSecret);
     return plainToken;
 }
