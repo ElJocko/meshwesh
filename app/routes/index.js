@@ -1,21 +1,29 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
+/**
+ * Main routes module.
+ * @module app/routes
+ *
+ * Establishes the application's routes by using each of the resource route modules.
+ *
+ */
 
-var bookRoutes = require('./bookRoutes');
-var thematicCategoryRoutes = require('./thematicCategoryRoutes');
-var grandArmyListRoutes = require('./grandArmyListRoutes');
-var armyListRoutes = require('./armyListRoutes');
-var allyArmyListRoutes = require('./allyArmyListRoutes');
-var troopTypeRoutes = require('./troopTypeRoutes');
-var userRoutes = require('./userRoutes');
-var enemyXrefRoutes = require('./enemyXrefRoutes');
-var logMessageRoutes = require('./logMessageRoutes');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-var errorHandler = require('../lib/errorHandler');
+const bookRoutes = require('./bookRoutes');
+const thematicCategoryRoutes = require('./thematicCategoryRoutes');
+const grandArmyListRoutes = require('./grandArmyListRoutes');
+const armyListRoutes = require('./armyListRoutes');
+const allyArmyListRoutes = require('./allyArmyListRoutes');
+const troopTypeRoutes = require('./troopTypeRoutes');
+const userRoutes = require('./userRoutes');
+const enemyXrefRoutes = require('./enemyXrefRoutes');
+const logMessageRoutes = require('./logMessageRoutes');
 
-var router = express.Router();
+const errorHandler = require('../lib/errorHandler');
+
+const router = express.Router();
 
 // Parse the request body
 router.use('/api', bodyParser.json({limit: '1mb'}));

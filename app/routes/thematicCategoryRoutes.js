@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Thematic Category routes module.
+ * @module app/routes/thematicCategoryRoutes
+ *
+ * Establishes the routes for the Thematic Category resource.
+ *
+ */
+
 const express = require('express');
 const tokenAuthz = require('../lib/tokenAuthz');
 const validator = require('express-jsonschema');

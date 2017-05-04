@@ -39,4 +39,5 @@ npm-debug.log
 # Environment variables
 *.env
 
-
+# Generated Documents
+docs
