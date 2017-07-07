@@ -1,11 +1,19 @@
 'use strict';
 
-var thematicCategoryService = require('../services/thematicCategoryService');
-var logger = require('../lib/logger');
-var _ = require('lodash');
+/**
+ * Thematic Category controller module
+ * @module app/controllers/thematicCategoryController
+ *
+ * Implements the HTTP actions for the Thematic Category resource.
+ *
+ */
+
+const thematicCategoryService = require('../services/thematicCategoryService');
+const logger = require('../lib/logger');
+const _ = require('lodash');
 
 exports.retrieveByQuery = function(req, res) {
-    var query = { }; // Default is all
+    const query = { }; // Default is all
     if (req.query.name) {
         query.name = req.query.name;
     }
@@ -19,6 +27,14 @@ exports.retrieveByQuery = function(req, res) {
         }
     });
 };
+
+/**
+ * Retrieve a single Thematic Category using its id
+ *
+ * @param {Object} req - Middleware request object
+ * @param {Object} res - Middleware result object
+ *
+ */
 
 exports.retrieveById = function(req, res) {
     thematicCategoryService.retrieveById(req.params.categoryId, function(err, category) {
@@ -64,7 +80,7 @@ exports.retrieveArmyLists = function(req, res) {
 
 exports.create = function(req, res) {
     // Get the data from the request
-    var categoryData = _.pick(req.body, 'name');
+    const categoryData = _.pick(req.body, 'name');
 
     // Validate input
     if (!categoryData.name) {
@@ -93,7 +109,7 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     // Get the data from the request
-    var categoryData = _.pick(req.body, 'name');
+    const categoryData = _.pick(req.body, 'name');
 
     // Validate input
     if (!categoryData.name) {
@@ -156,7 +172,7 @@ exports.delete = function(req, res) {
 
 exports.import = function(req, res) {
     // Get the data from the request
-    var thematicCategoryImportRequest = req.body;
+    const thematicCategoryImportRequest = req.body;
 
     thematicCategoryService.import(thematicCategoryImportRequest, function(err, importSummary) {
         if (err) {

@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Main routes module.
+ * Main routes module
  * @module app/routes
  *
  * Establishes the application's routes by using each of the resource route modules.

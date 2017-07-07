@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Thematic Category routes module.
+ * Thematic Category routes module
  * @module app/routes/thematicCategoryRoutes
  *
  * Establishes the routes for the Thematic Category resource.
