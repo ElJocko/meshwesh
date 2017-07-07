@@ -246,12 +246,21 @@ exports.import = function(importRequest, callback) {
                     }
                 }
                 else {
+                    // Add the name
                     if (!allyArmyListData.name) {
                         allyArmyListData.name = armyLists[0].name;
                     }
+
+                    // Add the date range
                     if (!allyArmyListData.dateRange && armyLists[0].dateRanges.length > 0) {
                         allyArmyListData.dateRange = armyLists[0].dateRanges[0];
                     }
+
+                    // Add the object id for the army list
+                    if (!allyArmyListData.armyListId) {
+                        allyArmyListData.armyListId = armyLists[0].id;
+                    }
+
                     return cb(null, allyArmyListData);
                 }
             })

@@ -267,6 +267,10 @@ td.troop-options-value-xs {
     vertical-align: top;
 }
 
+.ally-army-list-link {
+    margin-left: 8px;
+}
+
 .status-warning {
     padding-top: 15px;
     padding-bottom: 15px;

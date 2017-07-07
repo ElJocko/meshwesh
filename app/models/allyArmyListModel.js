@@ -10,6 +10,7 @@ const AllyArmyListSchema = new mongoose.Schema({
     name: { type: String, required: true },
     listId: { type: Number },
     sublistId: { type: String },
+    armyListId: { type: mongoose.Schema.Types.ObjectId, ref: 'ArmyList' },
     dateRange: { type: DateRange },
     troopOptions: [ TroopOption ],
     internalContingent: { type: Boolean },

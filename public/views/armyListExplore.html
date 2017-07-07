@@ -260,7 +260,9 @@
             <div uib-accordion-group class="panel-default" ng-repeat="allyOption in vm.allyOptions">
                 <uib-accordion-heading>
                     <div>
-                        Option {{ $index + 1 }}:  {{ allyOption.name }}
+                        <div>
+                            Option {{ $index + 1 }}:  {{ allyOption.name }}
+                        </div>
                         <div>
                             <small>
                                 {{ allyOption.dateRange.startDate | mwDisplayYear }}
@@ -322,6 +324,13 @@
                             </table></td>
                         </tr>
                     </table>
+                    <hr>
+                    <div class="ally-army-list-link" ng-show="allyEntry.allyArmyList.armyListId">
+                        Full Army List: <a href ng-click="vm.onClickArmyList(allyEntry.allyArmyList.armyListId)">{{ allyEntry.allyArmyList.name }}</a>
+                    </div>
+                    <div class="ally-army-list-link" ng-hide="allyEntry.allyArmyList.armyListId">
+                        Full Army List: not available
+                    </div>
                     <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                     <div class="error-table-message" ng-show="vm.loadFailed.armyList">Unable to retrieve ally option data</div>
                     <div class="empty-table-message" ng-show="allyEntry.allyArmyList.troopOptions.length === 0">No troop options entered</div>
