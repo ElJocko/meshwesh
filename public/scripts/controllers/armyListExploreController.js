@@ -28,6 +28,8 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
         maxPoints: null
     };
 
+    onSelectArmySize('standard');
+
     initializeDateRangeGrid();
     initializeInvasionRatingGrid();
     initializeManeuverRatingGrid();
@@ -44,6 +46,32 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
     vm.onClickThematicCategory = onClickThematicCategory;
     function onClickThematicCategory(id) {
         $location.path('/thematicCategory/' + id + '/explore');
+    }
+
+    vm.onSelectArmySize = onSelectArmySize;
+    function onSelectArmySize(armySizeSelection) {
+        vm.armySizeSelection = armySizeSelection;
+
+        if (armySizeSelection === 'standard') {
+            vm.armySizeSelectionText = 'Standard Triumph';
+            vm.armySize = 'single';
+        }
+        else if (armySizeSelection === 'grand-three') {
+            vm.armySizeSelectionText = 'Grand Triumph (3 Main Army Commands)';
+            vm.armySize = 'triple';
+        }
+        else if (armySizeSelection === 'grand-two') {
+            vm.armySizeSelectionText = 'Grand Triumph (2 Main Army Commands)';
+            vm.armySize = 'double';
+        }
+        else if (armySizeSelection === 'grand-one') {
+            vm.armySizeSelectionText = 'Grand Triumph (1 Main Army Command)';
+            vm.armySize = 'single';
+        }
+        else if (armySizeSelection === 'grand-ally') {
+            vm.armySizeSelectionText = 'Grand Triumph (Ally Army Command)';
+            vm.armySize = 'single';
+        }
     }
 
     function initializeDateRangeGrid() {
@@ -242,6 +270,9 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
                 vm.armyList.statusType = 'status-warning';
             }
 
+            // Create the Grand Triumph min and max
+            addGrandDataToTroopOptions(vm.armyList.troopOptions);
+
             vm.allyOptions = [];
             vm.troopContingents = [];
             results.allyOptions.forEach(function(option, index) {
@@ -266,6 +297,9 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
                     entry.allyArmyList.troopOptions.forEach(function(troopOption) {
                         limitTroopOptionDateRange(troopOption, vm.armyList.dateRanges[0], option.dateRange);
                     });
+
+                    // Add Grand Triumph min max
+                    addGrandDataToTroopOptions(entry.allyArmyList.troopOptions);
 
                     if (entry.allyArmyList.internalContingent) {
                         contingentFlag = true;
@@ -308,6 +342,8 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
         resetGridHeight('troop-option-grid', vm.armyList.troopOptions);
 
         vm.loading.armyList = false;
+
+        vm.ruleSet = 'StandardTriumph';
     }
 
     function handleErrorResponse(reason) {
@@ -320,6 +356,15 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
     //   null: no date range limit
     //   invalid = true: invalid date range
     //   otherwise, startDate to endDate, inclusive
+
+    function addGrandDataToTroopOptions(troopOptions) {
+        troopOptions.forEach(function(troopOption) {
+            troopOption.minDouble = troopOption.min * 2;
+            troopOption.maxDouble = troopOption.max * 2;
+            troopOption.minTriple = troopOption.min * 3;
+            troopOption.maxTriple = troopOption.max * 3;
+        });
+    }
 
     function overlappingDateRange(dateRange1, dateRange2) {
         // Handle if either date range is null

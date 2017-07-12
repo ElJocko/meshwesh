@@ -350,6 +350,14 @@ td.troop-options-value-xs {
     border-color: #d96459;
 }
 
+.rule-selection-btn-group {
+    margin-top: 20px;
+}
+
+.rule-selection-btn {
+    width: 200px;
+}
+
 .army-list-grid {
     width: 520px;
     height: 30px;

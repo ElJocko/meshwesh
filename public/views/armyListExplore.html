@@ -81,6 +81,21 @@
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
         </div>
+
+        <div class="btn-group rule-selection-btn-group" uib-dropdown is-open="status.isopen">
+            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle>
+                {{ vm.armySizeSelectionText }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <li role="menuitem"><a ng-click="vm.onSelectArmySize('standard')">Standard Triumph</a></li>
+                <li class="divider"></li>
+                <li role="menuitem"><a ng-click="vm.onSelectArmySize('grand-three')">Grand Triumph (3 Main Army Commands)</a></li>
+                <li role="menuitem"><a ng-click="vm.onSelectArmySize('grand-two')">Grand Triumph (2 Main Army Commands)</a></li>
+                <li role="menuitem"><a ng-click="vm.onSelectArmySize('grand-one')">Grand Triumph (1 Main Army Command)</a></li>
+                <li role="menuitem"><a ng-click="vm.onSelectArmySize('grand-ally')">Grand Triumph (Ally Command)</a></li>
+            </ul>
+        </div>
+
         <div>
             <h2 class="collapsible-info" ng-click="showRequiredTroopsInfo = !showRequiredTroopsInfo">Required Troops</h2>
             <div uib-collapse="!showRequiredTroopsInfo">
@@ -90,6 +105,7 @@
                     </div>
                 </div>
             </div>
+
             <table class="table troop-options hidden-xs">
                 <tr>
                     <th class="troop-options-type">Troop Types</th>
@@ -105,8 +121,12 @@
                         </br>
                         <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
                     </td>
-                    <td class="troop-options-minmax">{{ troopOption.min }}</td>
-                    <td class="troop-options-minmax">{{ troopOption.max }}</td>
+                    <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                    <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                    <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
+                    <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                    <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                    <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                     <td class="troop-options-battleline">{{ troopOption.core | mwDisplayCore }}</td>
                     <td class="troop-options-restrictions">
                         {{ troopOption.dateRange | mwDisplayDateRange }}
@@ -128,11 +148,15 @@
                         </tr>
                         <tr>
                             <td class="troop-options-header-xs">Min:</td>
-                            <td class="troop-options-value-xs">{{ troopOption.min }}</td>
+                            <td class="troop-options-value-xs" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                            <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                            <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
                         </tr>
                         <tr>
                             <td class="troop-options-header-xs">Max:</td>
-                            <td class="troop-options-value-xs">{{ troopOption.max }}</td>
+                            <td class="troop-options-value-xs" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                            <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                            <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                         </tr>
                         <tr>
                             <td class="troop-options-header-xs">Battle Line:</td>
@@ -195,8 +219,12 @@
                             </br>
                             <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
                         </td>
-                        <td class="troop-options-minmax">{{ troopOption.min }}</td>
-                        <td class="troop-options-minmax">{{ troopOption.max }}</td>
+                        <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                        <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                        <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
+                        <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                        <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                        <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                         <td class="troop-options-battleline">{{ troopOption.core | mwDisplayCore }}</td>
                         <td class="troop-options-restrictions">{{ troopOption.dateRange | mwDisplayDateRange }}</td>
                     </tr>
@@ -214,11 +242,15 @@
                             </tr>
                             <tr>
                                 <td class="troop-options-header-xs">Min:</td>
-                                <td class="troop-options-value-xs">{{ troopOption.min }}</td>
+                                <td class="troop-options-value-xs" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                                <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                                <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
                             </tr>
                             <tr>
                                 <td class="troop-options-header-xs">Max:</td>
-                                <td class="troop-options-value-xs">{{ troopOption.max }}</td>
+                                <td class="troop-options-value-xs" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                                <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                                <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                             </tr>
                             <tr>
                                 <td class="troop-options-header-xs">Battle Line:</td>
@@ -275,7 +307,7 @@
                     <h5 ng-hide="allyOption.allyEntries.length === 1">
                         Allied Contingent: {{ allyEntry.name }}
                     </h5>
-                    <table class="table troop-options hidden-xs">
+                    <table class="table troop-options hidden-xs" ng-show="vm.armySizeSelection === 'standard' || (vm.armySizeSelection !== 'grand-ally' && !allyEntry.allyArmyList.armyListId)">
                         <tr>
                             <th class="troop-options-type">Troop Types</th>
                             <th class="troop-options-minmax">Min</th>
@@ -289,13 +321,20 @@
                                 </br>
                                 <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
                             </td>
-                            <td class="troop-options-minmax">{{ troopOption.min }}</td>
-                            <td class="troop-options-minmax">{{ troopOption.max }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
+                            <td class="troop-options-battleline">{{ troopOption.core | mwDisplayCore }}</td>
+                            <td class="troop-options-restrictions">{{ troopOption.dateRange | mwDisplayDateRange }}</td>
+
                             <td class="troop-options-restrictions">{{ troopOption.dateRange | mwDisplayDateRange }}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <table class="table troop-options visible-xs">
+                    <table class="table troop-options visible-xs"  ng-show="vm.armySizeSelection === 'standard' || (vm.armySizeSelection !== 'grand-ally' && !allyEntry.allyArmyList.armyListId)">
                         <tr ng-repeat="troopOption in allyEntry.allyArmyList.troopOptions" ng-hide="troopOption.dateRange && troopOption.dateRange.invalid">
                             <td><table class="troop-options">
                                 <tr>
@@ -307,11 +346,15 @@
                                 </tr>
                                 <tr>
                                     <td class="troop-options-header-xs">Min:</td>
-                                    <td class="troop-options-value-xs">{{ troopOption.min }}</td>
+                                    <td class="troop-options-value-xs" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                                    <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                                    <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
                                 </tr>
                                 <tr>
                                     <td class="troop-options-header-xs">Max:</td>
-                                    <td class="troop-options-value-xs">{{ troopOption.max }}</td>
+                                    <td class="troop-options-value-xs" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                                    <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                                    <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                                 </tr>
                                 <tr ng-show="troopOption.dateRange || troopOption.note">
                                     <td class="troop-options-header-xs">Restrictions:</td>
