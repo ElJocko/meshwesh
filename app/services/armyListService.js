@@ -102,6 +102,7 @@ exports.retrieveAssociatedArmyLists = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
+                    // An associated army list is any army list with the same listId
                     var query = { listId: document.listId };
                     ArmyList.find(query).lean().exec(function(err, leanDocs) {
                         if (err) {

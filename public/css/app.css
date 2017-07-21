@@ -31,6 +31,30 @@ body {
     position: relative;
 }
 
+.search-results-container {
+    position: absolute;
+    width: 400px;
+    background: #799aa5;
+    opacity: 0.95;
+    border-style: hidden;
+    z-index: 1000;
+    padding-top: 0;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.search-results-container a {
+    color: #ffffff;
+    font-size: 1.1em;
+}
+
+.empty-search-message {
+    color: #ffffff;
+    font-size: 1.1em;
+    font-style: oblique;
+}
+
 .app-banner {
     background: #2b4e69;
     color: #ffffff;
@@ -423,6 +447,10 @@ td.troop-options-value-xs {
     margin-top: 10px;
     margin-bottom: 10px;
     border-color: #2b4e69;
+}
+
+.navbar-search-box {
+
 }
 
 .input-validation-error {

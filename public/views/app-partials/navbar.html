@@ -1,8 +1,39 @@
 <div ng-controller="NavbarController as vm">
 
     <div ng-show="vm.user.role === 'visitor'">
-        <div id="navbarVisitor" class="navbar-bar navbar-collapse collapse">
+        <div id="navbarVisitor" class="navbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div>
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <input type="text" class="form-control table-search-box navbar-search-box" id="inputSearchName" placeholder="Quick Search" ng-model="vm.searchName" ng-change="vm.searchChanged()">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" ng-show="vm.showResults">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="search-results-container">
+                        <div ng-repeat="armyList in vm.armyListResultsList">
+                            <a href ng-click="vm.onClickArmyList(armyList.id)">{{ armyList.name }}</a>
+                        </div>
 
+                        <div class="empty-search-message" ng-show="vm.moreResults">
+                            Too many results...
+                        </div>
+
+                        <div class="empty-search-message" ng-show="vm.armyListResultsList.length === 0">
+                            No matching army lists
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
