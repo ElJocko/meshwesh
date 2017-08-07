@@ -3,8 +3,6 @@
 var ThematicCategory = require('../models/thematicCategoryModel');
 var TroopType = require('../models/troopTypeModel');
 var ArmyList = require('../models/armyListModel');
-var async = require('async');
-var _ = require('lodash');
 
 var errors = {
     missingParameter: 'Missing required parameter',
