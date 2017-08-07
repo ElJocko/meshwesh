@@ -22,6 +22,10 @@ logger.info('Starting express');
 var express = require('express');
 var app = express();
 
+// Compress response bodies
+var compression = require('compression');
+app.use(compression());
+
 // Establish the database connection
 logger.info('Setting up the database connection');
 var dbConnection = require('./app/lib/dbConnection');
