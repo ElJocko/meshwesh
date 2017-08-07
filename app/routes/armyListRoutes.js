@@ -3,8 +3,8 @@
 var express = require('express');
 var tokenAuthz = require('../lib/tokenAuthz');
 var validator = require('express-jsonschema');
-var armyListController = require('../controllers/armyListController');
 var schemas = require('./schemas/armyListSchemas');
+var armyListController = require('../controllers/armyListController');
 
 var router = express.Router();
 

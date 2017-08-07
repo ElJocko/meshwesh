@@ -2,6 +2,8 @@
 
 var express = require('express');
 var tokenAuthz = require('../lib/tokenAuthz');
+var validator = require('express-jsonschema');
+var schemas = require('./schemas/userSchemas');
 var userController = require('../controllers/userController');
 
 var router = express.Router();
@@ -16,6 +18,8 @@ router.route('/v1/users/:userId')
     .delete(tokenAuthz.requireAdminToken, userController.delete);
 
 router.route('/v1/userCredentials')
-    .post(userController.signIn);
+    .post(
+        validator.validate(schemas.signIn),
+        userController.signIn);
 
 module.exports = router;
