@@ -1,5 +1,7 @@
 'use strict';
 
+const titleCase = require('titlecase');
+
 angular
     .module('meshweshControllers')
     .controller('ArmyListExploreController', ArmyListExploreController);
@@ -284,7 +286,7 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
                 option.name = '';
                 option.allyEntries.forEach(function(entry, index) {
                     console.log(JSON.stringify(entry));
-                    entry.name = entry.name.toTitleCase();
+                    entry.name = titleCase(entry.name);
                     // Add the entry name to the option name
                     if (index === 0) {
                         option.name = option.name + ' ' + entry.name;
@@ -313,7 +315,7 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
                         vm.troopContingents.push(contingent);
                     }
                 });
-                option.name = option.name.toTitleCase();
+                option.name = titleCase(option.name);
 
                 if (!contingentFlag) {
                     vm.allyOptions.push(option);

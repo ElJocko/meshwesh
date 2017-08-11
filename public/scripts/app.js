@@ -35,3 +35,9 @@ app.run(function($rootScope, $window, $location) {
         $window.ga('send', 'pageview', $location.path());
     });
 });
+
+require('./controllers');
+require('./directives');
+require('./filters');
+require('./routes');
+require('./services');

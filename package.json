@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "postinstall": "node node_modules/bower/bin/bower install",
+    "postinstall": "webpack",
     "test-server": "grunt test-server",
     "test-karma": "karma start",
     "start-webdriver": "webdriver-manager start",
@@ -33,7 +33,21 @@
     "lodash": "^4.16.1",
     "mongoose": "^4.3.7",
     "morgan": "^1.6.1",
-    "winston": "^1.0.1"
+    "winston": "^1.0.1",
+
+    "angular": "^1.5.7",
+    "angular-animate": "^1.5.7",
+    "angular-ui-bootstrap": "^2.3.1",
+    "angular-loading-bar": "^0.9.0",
+    "angular-messages": "^1.5.7",
+    "angular-mocks": "^1.5.7",
+    "angular-resource": "^1.5.7",
+    "angular-route": "^1.5.7",
+    "angular-ui-grid": "3.1.1",
+    "bootstrap": "^3.3.5",
+    "jquery": "^1.11.3",
+    "papaparse": "^4.1.1",
+    "titlecase": "^1.1.2"
   },
   "devDependencies": {
     "expect": "^1.9.0",
@@ -50,6 +64,8 @@
     "karma-jasmine": "^0.3.6",
     "mocha": "^2.3.0",
     "protractor": "^3.1.1",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "webpack": "^3.5.3"
   }
 }
