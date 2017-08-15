@@ -1,5 +1,3 @@
 #!/bin/bash
 
-export LOAD_ENV=config/local-test.env
-
-node server.js
+node ./bin/start-test.js

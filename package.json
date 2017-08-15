@@ -1,14 +1,14 @@
 {
   "name": "meshwesh",
   "description": "Army List Manager",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "engines": {
     "node": "6.11.2",
     "npm": "3.10.10"
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node ./bin/start-prod.js",
     "postinstall": "webpack",
     "test-server": "grunt test-server",
     "test-karma": "karma start",
