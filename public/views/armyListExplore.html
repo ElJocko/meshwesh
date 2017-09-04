@@ -1,3 +1,6 @@
+<div id="army-list-explore-view">
+
+<!-- Army List Name and Date Range -->
 <div class="row">
     <div class="col-xs-12">
         <h1>
@@ -21,6 +24,8 @@
         <div class="empty-table-message" ng-show="vm.armyList.dateRanges.length === 0">No date ranges entered</div>
     </div>
 </div>
+
+<!-- Status and Description -->
 <div class="row">
     <div class="col-xs-12">
         <div class="hidden-xs">
@@ -41,6 +46,12 @@
                 <span ng-bind="vm.armyList.description"></span>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Ratings, etc. -->
+<div class="row">
+    <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-12">
                 <div class="content-subheader">Invasion Rating</div>
@@ -81,7 +92,16 @@
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
         </div>
+    </div>
+</div>
 
+<!-- Troop Options -->
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Troop Options</h2>
+        <div class="content-text">
+            Showing troop options for:
+        </div>
         <div class="btn-group rule-selection-btn-group" uib-dropdown is-open="status.isopen">
             <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle>
                 {{ vm.armySizeSelectionText }} <span class="caret"></span>
@@ -97,7 +117,7 @@
         </div>
 
         <div>
-            <h2 class="collapsible-info" ng-click="showRequiredTroopsInfo = !showRequiredTroopsInfo">Required Troops</h2>
+            <h3 class="collapsible-info troop-option-header" ng-click="showRequiredTroopsInfo = !showRequiredTroopsInfo">Required Troops</h3>
             <div uib-collapse="!showRequiredTroopsInfo">
                 <div class="panel panel-default">
                     <div class="panel-body">
@@ -178,9 +198,11 @@
         </div>
     </div>
 </div>
-<div class="row">
+
+<!-- Optional Contingents -->
+<div class="row optional-contingents">
     <div class="col-xs-12">
-        <h2 class="collapsible-info" ng-click="showOptionalContingentsInfo = !showOptionalContingentsInfo">Optional Contingents</h2>
+        <h3 class="collapsible-info troop-option-header" ng-click="showOptionalContingentsInfo = !showOptionalContingentsInfo">Optional Contingents</h3>
         <div uib-collapse="!showOptionalContingentsInfo">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -274,9 +296,11 @@
         <div class="empty-table-message" ng-show="vm.troopContingents.length === 0">No optional contingents available</div>
     </div>
 </div>
-<div class="row">
+
+<!-- Ally Options -->
+<div class="row ally-options">
     <div class="col-xs-12">
-        <h2 class="collapsible-info" ng-click="showAllyOptionsInfo = !showAllyOptionsInfo">Ally Troop Options</h2>
+        <h3 class="collapsible-info troop-option-header" ng-click="showAllyOptionsInfo = !showAllyOptionsInfo">Ally Troop Options</h3>
         <div uib-collapse="!showAllyOptionsInfo">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -383,6 +407,69 @@
         <div class="empty-table-message" ng-show="vm.allyOptions.length === 0">No ally options available</div>
     </div>
 </div>
+
+    <!-- Printable Ally Options -->
+    <div class="row ally-options-print">
+        <div class="col-xs-12">
+            <h3>Ally Troop Options</h3>
+            <div ng-repeat="allyOption in vm.allyOptions">
+                <div class="ally-options-header">
+                    Option {{ $index + 1 }}:  {{ allyOption.name }}
+                </div>
+                <div>
+                    <small>
+                        {{ allyOption.dateRange.startDate | mwDisplayYear }}
+                        <span ng-hide="allyOption.dateRange.startDate === allyOption.dateRange.endDate">to {{ allyOption.dateRange.endDate | mwDisplayYear }}</span>
+                    </small>
+                </div>
+                <div ng-repeat="allyEntry in allyOption.allyEntries">
+                    <h5 ng-hide="allyOption.allyEntries.length === 1">
+                        Allied Contingent: {{ allyEntry.name }}
+                    </h5>
+                    <table class="table troop-options" ng-show="vm.armySizeSelection === 'standard' || (vm.armySizeSelection !== 'grand-ally' && !allyEntry.allyArmyList.armyListId)">
+                        <tr>
+                            <th class="troop-options-type">Troop Types</th>
+                            <th class="troop-options-minmax">Min</th>
+                            <th class="troop-options-minmax">Max</th>
+                            <th class="troop-options-restrictions">Restrictions</th>
+                        </tr>
+                        <tbody>
+                        <tr ng-repeat="troopOption in allyEntry.allyArmyList.troopOptions" ng-hide="troopOption.dateRange && troopOption.dateRange.invalid">
+                            <td class="troop-options-type">
+                                {{ troopOption.troopEntries | mwDisplayTroopTypeEntriesList }}
+                                </br>
+                                <span ng-show="vm.armyList.showTroopOptionDescriptions"><em>{{ troopOption.description }}</em></span>
+                            </td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.min }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.minDouble }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.minTriple }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'single'">{{ troopOption.max }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
+                            <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
+
+                            <td class="troop-options-restrictions">{{ troopOption.dateRange | mwDisplayDateRange }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div class="ally-army-list-link" ng-show="allyEntry.allyArmyList.armyListId">
+                        Full Army List: {{ allyEntry.allyArmyList.name }}
+                    </div>
+                    <div class="ally-army-list-link" ng-hide="allyEntry.allyArmyList.armyListId">
+                        Full Army List: not available
+                    </div>
+                    <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
+                    <div class="error-table-message" ng-show="vm.loadFailed.armyList">Unable to retrieve ally option data</div>
+                    <div class="empty-table-message" ng-show="allyEntry.allyArmyList.troopOptions.length === 0">No troop options entered</div>
+                </div>
+            </div>
+            <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
+            <div class="error-table-message" ng-show="vm.loadFailed.armyList">Unable to retrieve ally option data</div>
+            <div class="empty-table-message" ng-show="vm.allyOptions.length === 0">No ally options available</div>
+        </div>
+    </div>
+
+<!-- Enemy Army Lists -->
 <div class="row">
     <div class="col-xs-12">
         <h2>
@@ -398,6 +485,8 @@
         <div class="empty-table-message" ng-show="vm.enemyArmyLists.length === 0">No enemies found</div>
     </div>
 </div>
+
+<!-- Related Army Lists -->
 <div class="row">
     <div class="col-xs-12">
         <h2>
@@ -413,6 +502,8 @@
         <div class="empty-table-message" ng-show="vm.associatedArmyLists.length === 0">No related army lists found</div>
     </div>
 </div>
+
+<!-- Thematic Categories -->
 <div class="row">
     <div class="col-xs-12">
         <h2>
@@ -427,4 +518,5 @@
         <div class="error-table-message" ng-show="vm.loadFailed.thematicCategories">Unable to retrieve thematic category data</div>
         <div class="empty-table-message" ng-show="vm.thematicCategories.length === 0">No thematic categories found</div>
     </div>
+</div>
 </div>

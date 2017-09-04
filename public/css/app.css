@@ -375,7 +375,7 @@ td.troop-options-value-xs {
 }
 
 .rule-selection-btn-group {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .rule-selection-btn {
@@ -617,6 +617,22 @@ dl.dl-horizontal-topo {
     border-bottom: 1px solid #888888;
 }
 
+#army-list-explore-view .ally-options-print {
+    display: none;
+}
+
+.ally-options-print .ally-options-header {
+    margin-top: 10px;
+}
+
+.ally-options-print table.troop-options {
+    margin-top: 10px;
+}
+
+h3.troop-option-header {
+    color: #2b4e69;
+}
+
 @media print {
     header {
         display: none;
@@ -628,5 +644,20 @@ dl.dl-horizontal-topo {
 
     footer {
         display: none;
+    }
+
+    /* Don't show parentheses after a link when printing */
+    a[href]:after {
+        content: none !important;
+    }
+
+    /* Hide ally army lists when printing */
+    #army-list-explore-view .ally-options {
+        display: none;
+    }
+
+    /* Show print-only version of ally army lists when printing */
+    #army-list-explore-view .ally-options-print {
+        display: block;
     }
 }

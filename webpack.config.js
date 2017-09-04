@@ -13,7 +13,6 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
-//        new CopyWebpackPlugin({ from: path.resolve(__dirname, './node_modules/'), to: path.resolve(__dirname, './public/bundle/css') }
         new CopyWebpackPlugin([
             { from: './node_modules/angular-ui-grid/ui-grid.css', to: './css/ui-grid.css' },
             { from: './node_modules/bootstrap/dist/css/bootstrap.css', to: './css/bootstrap.css' },
