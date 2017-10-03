@@ -285,7 +285,6 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
                 // Create the name for the ally option
                 option.name = '';
                 option.allyEntries.forEach(function(entry, index) {
-                    console.log(JSON.stringify(entry));
                     entry.name = titleCase(entry.name);
                     // Add the entry name to the option name
                     if (index === 0) {

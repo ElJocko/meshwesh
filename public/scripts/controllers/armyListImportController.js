@@ -1,5 +1,8 @@
 'use strict';
 
+const Papa = require('../../../node_modules/papaparse/papaparse');
+const async = require ('../../../node_modules/async/dist/async');
+
 angular
     .module('meshweshControllers')
     .controller('ArmyListImportController', ArmyListImportController);

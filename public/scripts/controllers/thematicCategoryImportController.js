@@ -1,5 +1,7 @@
 'use strict';
 
+const Papa = require('../../../node_modules/papaparse/papaparse');
+
 angular
     .module('meshweshControllers')
     .controller('ThematicCategoryImportController', ThematicCategoryImportController);

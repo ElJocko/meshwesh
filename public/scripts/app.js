@@ -36,6 +36,7 @@ app.run(function($rootScope, $window, $location) {
     });
 });
 
+require('./polyfill');
 require('./controllers');
 require('./directives');
 require('./filters');

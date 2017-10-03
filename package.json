@@ -46,11 +46,11 @@
     "angular-ui-grid": "3.1.1",
     "bootstrap": "^3.3.5",
     "jquery": "^1.11.3",
-    "papaparse": "^4.1.1",
+    "papaparse": "^4.3.6",
     "titlecase": "^1.1.2",
 
     "copy-webpack-plugin": "^4.0.1",
-    "webpack": "^3.5.3"
+    "webpack": "^3.6.0"
   },
   "devDependencies": {
     "expect": "^1.9.0",

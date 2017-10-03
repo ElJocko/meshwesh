@@ -1,5 +1,8 @@
 'use strict';
 
+const Papa = require('../../../node_modules/papaparse/papaparse');
+const async = require ('../../../node_modules/async/dist/async');
+
 angular
     .module('meshweshControllers')
     .controller('TroopOptionsImportController', TroopOptionsImportController);
@@ -25,9 +28,9 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
     vm.importData = importData;
 
-    document.getElementById('inputFileInput').addEventListener('change', fileSelected, false);
+    document.getElementById('inputFileInput').addEventListener('change', onFileSelected, false);
 
-    function fileSelected(event) {
+    function onFileSelected(event) {
         vm.file = event.target.files[0];
         parseFile();
     }
@@ -54,6 +57,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                         var allyOptionsArray = [];
                         var errorRows = 0;
                         results.data.forEach(function(item) {
+                            // Determine the category for each row
                             if (item.general && item.general.length > 0) {
                                 // This row has army list information
                                 var armyListData = {
@@ -113,8 +117,15 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 armyListArray.push(armyListData);
                                 vm.allyArmyListArray.push(allyArmyListData);
                             }
+                            else if (item.armyName == 'Battle Cards' && !item.troopOptionOrder) {
+                                // This row has a battle card
+                                const battleCardName = item.troopEntries;
+                                const battleCardDescription = item.description;
+
+                                console.log('Battle Card found: ' + battleCardName + ', ' + battleCardDescription);
+                            }
                             else if (item.armyName && isInternalAlly(item.sublistId) && !item.troopOptionOrder) {
-                                // Create the internal ally
+                                // This row has an internal ally
                                 var allyArmyListData = {
                                     name: item.armyName,
                                     listId: item.listId,
@@ -137,8 +148,8 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
                                 vm.allyArmyListArray.push(allyArmyListData);
                             }
-                            else if (item.troopOptionOrder && item.troopOptionOrder !== '0')
-                            {
+                            else if (item.troopOptionOrder && item.troopOptionOrder !== '0') {
+                                // This row is a troop option
                                 var internalAlly = false;
                                 if (item.sublistId === 'w' || item.sublistId === 'x' || item.sublistId === 'y' || item.sublistId === 'z') {
                                     internalAlly = true;
@@ -455,12 +466,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
     }
 
     function isInternalAlly(sublistId) {
-        if (sublistId === 'w' || sublistId === 'x' || sublistId === 'y' || sublistId === 'z') {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return sublistId === 'w' || sublistId === 'x' || sublistId === 'y' || sublistId === 'z';
     }
 
     function makeDateRange(startDate, endDate) {
