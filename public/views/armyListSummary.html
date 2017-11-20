@@ -3,11 +3,13 @@
         <h1>Army Lists</h1>
     </div>
 </div>
-<div class="content row">
+<div class="content row search-box-container">
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-        <div>
-            <input type="text" class="form-control table-search-box" id="inputSearchName" placeholder="Search by name" ng-model="vm.searchName" ng-change="vm.searchChanged()">
-        </div>
+        <input type="text" class="form-control table-search-box" id="inputSearchName" placeholder="Search by name" ng-model="vm.searchName" ng-change="vm.searchChanged()">
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 search-box-option">
+        <input id="input-include-keywords-checkbox" type="checkbox" ng-model="vm.includeKeywords" ng-change="vm.searchChanged()">
+        Include keywords in search
     </div>
 </div>
 <div class="content row">

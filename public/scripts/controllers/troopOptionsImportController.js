@@ -63,6 +63,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 var armyListData = {
                                     listId: item.listId,
                                     sublistId: item.sublistId,
+                                    keywords: [],
                                     troopEntriesForGeneral: [],
                                     status: item.description,
                                     showTroopOptionDescriptions: false
@@ -112,6 +113,15 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 // Show troop option descriptions?
                                 if (item.troopEntries && item.troopEntries.trim().toUpperCase() === 'S') {
                                     armyListData.showTroopOptionDescriptions = true;
+                                }
+
+                                // Keywords
+                                var keywords = item.ally1Name.trim();
+                                if (keywords && keywords.length > 0) {
+                                    armyListData.keywords = keywords.split(' ');
+                                    armyListData.keywords.forEach(function(keyword) {
+                                        console.log('keyword found for ' + armyListData.listId + '/' + armyListData.sublistId + ': ' + keyword);
+                                    })
                                 }
 
                                 armyListArray.push(armyListData);

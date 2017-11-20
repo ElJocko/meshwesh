@@ -20,7 +20,7 @@ var errors = {
 };
 exports.errors = errors;
 
-var summaryFields = ['id', 'name', 'derivedData'];
+var summaryFields = ['id', 'name', 'keywords', 'derivedData'];
 
 exports.retrieveByQueryLean = function(query, callback) {
     ArmyList.find(query).lean().exec(function(err, leanDocs) {
@@ -593,6 +593,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                     else if (documents.length === 1) {
                         // Update the troop options and save
                         var armyList = documents[0];
+                        armyList.keywords = armyListData.keywords;
                         armyList.troopOptions = armyListData.troopOptions;
                         armyList.troopEntriesForGeneral = armyListData.troopEntriesForGeneral;
                         armyList.showTroopOptionDescriptions = armyListData.showTroopOptionDescriptions;

@@ -449,6 +449,11 @@ td.troop-options-value-xs {
     border-color: #2b4e69;
 }
 
+.search-box-option {
+    margin-top:20px;
+    margin-bottom: 10px;
+}
+
 .navbar-search-box {
 
 }
