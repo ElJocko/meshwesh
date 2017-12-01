@@ -94,27 +94,27 @@ function TroopTypeEntriesListFilter(TroopTypeService) {
 
                 var note = null;
                 if (entry.note) {
-                    note = '[' + entry.note + ']';
+                    note = ' [' + entry.note + ']';
                 }
 
                 if (troopType) {
                     if (firstValue) {
-                        if (note) {
-                            display = display + note + ' ';
-                        }
-
                         display = display + troopType.displayName;
+
+                        if (note) {
+                            display = display + note;
+                        }
 
                         firstValue = false;
                     }
                     else {
                         display = display + ' or ';
 
-                        if (note) {
-                            display = display + note + ' ';
-                        }
-
                         display = display + troopType.displayName;
+
+                        if (note) {
+                            display = display + note;
+                        }
                     }
 
                     if (dismountType) {
