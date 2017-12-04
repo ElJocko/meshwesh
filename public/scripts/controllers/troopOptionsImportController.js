@@ -457,36 +457,101 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
     }
 
     function parseGeneral(item) {
-        var troopEntries = [];
-
         // Split into groups
         var groups = item.general.split('ELSE');
 
         // Split each group into entries
-        var generalEntryList = [];
-        groups.forEach(function(group) {
-            var entries = group.split(',');
-            generalEntryList = generalEntryList.concat(entries);
-        });
+        var generalEntryList = groups.reduce(splitAndAdd, []);
 
-        var conversionResults = _.map(generalEntryList, convertGeneralToTroopEntry);
-        conversionResults.forEach(function(result) {
-            // Issue warnings for unknown names
-            if (!result.troopEntry.troopTypeCode) {
-                console.log('Did not find troop type for general ' + result.mainText + ' (' + item.listId + '/' + item.sublistId + ')');
+        // Parse the entries
+        var parsedEntries = generalEntryList.map(parseGeneralEntryText);
+
+        // Issue warnings for unknown names
+        parsedEntries.forEach(function(result) {
+            if (!result.troopTypeCode) {
+                console.log('Did not find troop type for general ' + result.troopText + ' (' + item.listId + '/' + item.sublistId + ')');
             }
 
-            if (result.dismountText && result.troopEntry.dismountTypeCode === null) {
+            if (result.dismountText && !result.dismountTypeCode) {
                 console.log('Did not find troop type for general dismount entry ' + result.dismountText + ' (' + item.listId + '/' + item.sublistId + ')');
             }
-
-            // Save the troop entry
-            if (result.troopEntry.troopTypeCode) {
-                troopEntries.push(result.troopEntry);
-            }
         });
 
+        // Extract the troop entries
+        var troopEntries = parsedEntries
+            .map(extractTroopEntry)
+            .filter(function(troopEntry) {
+                return troopEntry.troopTypeCode;
+            });
+
         return troopEntries;
+    }
+
+    function splitAndAdd(acc, entry) {
+        var entries = entry.split(',');
+        return acc.concat(entries);
+    }
+
+    function extractTroopEntry(parsedEntry) {
+        return _.pick(parsedEntry, ['troopTypeCode', 'dismountTypeCode', 'note']);
+    }
+
+    function parseGeneralEntryText(entryText) {
+        var result = {
+            troopText: null,
+            troopTypeCode: null,
+            dismountText: null,
+            dismountTypeCode: null,
+            note: null
+        };
+
+        // Check for an annotation: (note)
+        var startBracketIndex = entryText.indexOf('(');
+        if (startBracketIndex >= 0) {
+            var endBracketIndex = entryText.indexOf(')');
+            if (endBracketIndex >= 0) {
+                result.note = entryText
+                    .slice(startBracketIndex + 1, endBracketIndex)
+                    .trim();
+                entryText = entryText
+                    .slice(0, startBracketIndex)
+                    .trim();
+                //console.log('found note: ' + note + ' for general entry ' + entryText);
+            }
+        }
+
+        // Check for dismounting type
+        var dismountIndex = entryText.indexOf('//');
+        if (dismountIndex === -1) {
+            result.troopText = entryText
+                .trim()
+                .replace(/s$/, ''); // remove trailing 's'
+        }
+        else {
+            result.troopText = entryText
+                .slice(0, dismountIndex)
+                .trim()
+                .replace(/s$/, ''); // remove trailing 's'
+            result.dismountText = entryText
+                .slice(dismountIndex + 2)
+                .trim()
+                .replace(/s$/, ''); // remove trailing 's'
+        }
+
+        // Lookup the codes
+        result.troopTypeCode = lookupTypeCode(result.troopText);
+        result.dismountTypeCode = lookupTypeCode(result.dismountText);
+
+        return result;
+    }
+
+    function lookupTypeCode(troopTypeText) {
+        if (troopTypeText) {
+            return troopTypes[troopTypeText.toUpperCase()];
+        }
+        else {
+            return null;
+        }
     }
 
     function isInternalAlly(sublistId) {
@@ -694,60 +759,6 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
             },
             1000,
             1);
-    }
-
-    function convertGeneralToTroopEntry(entryText) {
-        entryText = entryText.trim();
-        // Remove any trailing 's'
-        if (entryText.endsWith('s')) {
-            entryText = entryText.slice(0, -1);
-        }
-
-        // Check for an annotation: (note)
-        var note = null;
-        var startBracketIndex = entryText.indexOf('(');
-        if (startBracketIndex >= 0) {
-            var endBracketIndex = entryText.indexOf(')');
-            if (endBracketIndex >= 0) {
-                note = entryText.slice(startBracketIndex + 1, endBracketIndex);
-                entryText = entryText.slice(0, startBracketIndex);
-                entryText = entryText.trim();
-                //console.log('found note: ' + note + ' for general entry ' + entryText);
-            }
-        }
-
-        // Check for dismounting type
-        var dismountIndex = entryText.indexOf('//');
-        var mainText = null;
-        var dismountText = null;
-        if (dismountIndex === -1) {
-            mainText = entryText;
-        }
-        else {
-            mainText = entryText.slice(0, dismountIndex).trim();
-            dismountText = entryText.slice(dismountIndex + 2).trim();
-        }
-
-        // Lookup the codes
-        var mainCode = troopTypes[mainText.toUpperCase()];
-        var dismountCode = null;
-        if (dismountText) {
-            dismountCode = troopTypes[dismountText.toUpperCase()];
-        }
-
-        var troopEntry = {
-            troopTypeCode: mainCode,
-            dismountTypeCode: dismountCode,
-            note: note
-        };
-
-        var result = {
-            mainText: mainText,
-            dismountText: dismountText,
-            troopEntry: troopEntry
-        };
-
-        return result;
     }
 
     function convertTextToTroopEntry(entryText) {
