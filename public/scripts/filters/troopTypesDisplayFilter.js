@@ -1,10 +1,12 @@
 angular
     .module('meshweshFilters')
     .filter('mwDisplayTroopTypes', TroopTypesFilter)
-    .filter('mwDisplayTroopTypeEntriesList', TroopTypeEntriesListFilter);
+    .filter('mwDisplayTroopTypeEntriesList', TroopTypeEntriesListFilter)
+    .filter('mwDisplayGeneralEntriesList', GeneralEntriesListFilter);
 
 TroopTypesFilter.$inject = ['TroopTypeService'];
 TroopTypeEntriesListFilter.$inject = ['TroopTypeService'];
+GeneralEntriesListFilter.$inject = ['TroopTypeService'];
 
 function TroopTypesFilter(TroopTypeService) {
     var troopTypesData = null;
@@ -130,3 +132,73 @@ function TroopTypeEntriesListFilter(TroopTypeService) {
     return troopTypesListFilter;
 }
 
+function GeneralEntriesListFilter(TroopTypeService) {
+    var troopTypesData = null;
+    var serviceInvoked = false;
+    var placeholder = '';
+
+    troopTypesListFilter.reloadData = function() {
+        troopTypesData = null;
+        serviceInvoked = false;
+    };
+
+    function troopTypesListFilter(input) {
+        if (!input) {
+            return '';
+        }
+
+        if (troopTypesData === null) {
+            if (!serviceInvoked) {
+                serviceInvoked = true;
+                TroopTypeService.list(function(troopTypes) {
+                    troopTypesData = troopTypes;
+                });
+            }
+            return placeholder;
+        }
+        else {
+            var display = troopTypesFilterFunction(input);
+            return display;
+        }
+
+        function troopTypesFilterFunction(input) {
+            var display = '';
+            var firstValue = true;
+            var firstGroup = true;
+
+            input.troopEntries.forEach(function (entry) {
+                var troopType = _.find(troopTypesData, {'permanentCode': entry.troopTypeCode});
+
+                var note = null;
+                if (entry.note) {
+                    note = ' [' + entry.note + ']';
+                }
+
+                if (troopType) {
+                    if (firstValue) {
+                        display = display + troopType.displayName;
+
+                        if (note) {
+                            display = display + note;
+                        }
+
+                        firstValue = false;
+                    }
+                    else {
+                        display = display + ' or ';
+
+                        display = display + troopType.displayName;
+
+                        if (note) {
+                            display = display + note;
+                        }
+                    }
+                }
+            });
+
+            return display;
+        }
+    }
+
+    return troopTypesListFilter;
+}

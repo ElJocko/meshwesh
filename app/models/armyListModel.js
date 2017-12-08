@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const DateRange = require('./subschemas/dateRangeSchema');
 const TroopOption = require('./subschemas/troopOptionSchema');
-const TroopEntry = require('./subschemas/troopEntrySchema');
+const TroopEntryGroup = require('./subschemas/troopEntryGroupSchema');
 const AnnotatedRating = require('./subschemas/annotatedRatingSchema');
 const AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
 const AllyOption = require('./subschemas/allyOptionSchema');
@@ -24,7 +24,7 @@ const ArmyListSchema = new mongoose.Schema({
     description: { type: String },
     troopOptions: [ TroopOption ],
     showTroopOptionDescriptions: { type: Boolean },
-    troopEntriesForGeneral: [ TroopEntry ],
+    troopEntriesForGeneral: [ TroopEntryGroup ],
     status: { type: String },
     allyOptions: [ AllyOption ],
     derivedData: {

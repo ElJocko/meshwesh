@@ -240,6 +240,12 @@ td.army-list-rating-note {
     margin-left: 15px;
 }
 
+.content-text-normal {
+    font-size: 1.2em;
+    font-weight: 300;
+    margin-left: 15px;
+}
+
 table.troop-options {
     table-layout: fixed;
     margin-bottom: 0;

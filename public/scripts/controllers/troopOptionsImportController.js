@@ -458,30 +458,33 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
     function parseGeneral(item) {
         // Split into groups
-        var groups = item.general.split('ELSE');
+        var groupEntries = item.general.split('ELSE');
 
         // Split each group into entries
-        var generalEntryList = groups.reduce(splitAndAdd, []);
+        var generalEntryList = groupEntries.reduce(splitAndAdd, []);
 
         // Parse the entries
-        var parsedEntries = generalEntryList.map(parseGeneralEntryText);
+        var parsedGroups = generalEntryList.map(parseGeneralGroup);
 
         // Issue warnings for unknown names
-        parsedEntries.forEach(function(result) {
-            if (!result.troopTypeCode) {
-                console.log('Did not find troop type for general ' + result.troopText + ' (' + item.listId + '/' + item.sublistId + ')');
-            }
+        parsedGroups.forEach(function(parsedGroup) {
+            parsedGroup.forEach(function (result) {
+                if (!result.troopTypeCode) {
+                    console.log('Did not find troop type for general ' + result.troopText + ' (' + item.listId + '/' + item.sublistId + ')');
+                }
 
-            if (result.dismountText && !result.dismountTypeCode) {
-                console.log('Did not find troop type for general dismount entry ' + result.dismountText + ' (' + item.listId + '/' + item.sublistId + ')');
-            }
+                if (result.dismountText && !result.dismountTypeCode) {
+                    console.log('Did not find troop type for general dismount entry ' + result.dismountText + ' (' + item.listId + '/' + item.sublistId + ')');
+                }
+            });
         });
 
         // Extract the troop entries
-        var troopEntries = parsedEntries
-            .map(extractTroopEntry)
-            .filter(function(troopEntry) {
-                return troopEntry.troopTypeCode;
+        var troopEntries = parsedGroups
+            .map(extractTroopEntries)
+            .map(removeBadTroopEntries)
+            .filter(function(extractedGroup) {
+                return extractedGroup.troopEntries.length;
             });
 
         return troopEntries;
@@ -489,14 +492,35 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
     function splitAndAdd(acc, entry) {
         var entries = entry.split(',');
-        return acc.concat(entries);
+        acc.push(entries);
+        return acc;
+    }
+
+    function extractTroopEntries(parsedGroup) {
+        return parsedGroup.map(extractTroopEntry);
     }
 
     function extractTroopEntry(parsedEntry) {
         return _.pick(parsedEntry, ['troopTypeCode', 'dismountTypeCode', 'note']);
     }
 
+    function removeBadTroopEntries(extractedGroup) {
+        return {
+            troopEntries: extractedGroup.filter(function(troopEntry) {
+                return troopEntry.troopTypeCode;
+            })
+        };
+    }
+
+    function parseGeneralGroup(entryTextGroup) {
+        return entryTextGroup.map(parseGeneralEntryText);
+    }
+
     function parseGeneralEntryText(entryText) {
+//        var re = /([a-z ]*)(\(([a-z ]*)\))?/ig;
+//        var reResult = re.exec(entryText.trim());
+
+        // Format: troop//dismount (note)
         var result = {
             troopText: null,
             troopTypeCode: null,
@@ -516,27 +540,13 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                 entryText = entryText
                     .slice(0, startBracketIndex)
                     .trim();
-                //console.log('found note: ' + note + ' for general entry ' + entryText);
             }
         }
 
-        // Check for dismounting type
-        var dismountIndex = entryText.indexOf('//');
-        if (dismountIndex === -1) {
-            result.troopText = entryText
-                .trim()
-                .replace(/s$/, ''); // remove trailing 's'
-        }
-        else {
-            result.troopText = entryText
-                .slice(0, dismountIndex)
-                .trim()
-                .replace(/s$/, ''); // remove trailing 's'
-            result.dismountText = entryText
-                .slice(dismountIndex + 2)
-                .trim()
-                .replace(/s$/, ''); // remove trailing 's'
-        }
+        // Extract the troop text
+        result.troopText = entryText
+            .trim()
+            .replace(/s$/, ''); // remove trailing 's'
 
         // Lookup the codes
         result.troopTypeCode = lookupTypeCode(result.troopText);
@@ -703,13 +713,16 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                         return {
                             importedTroopOptions: previous.importedTroopOptions + current.importedTroopOptions,
                             importedArmyLists: previous.importedArmyLists + current.importedArmyLists,
-                            failedArmyLists: previous.failedArmyLists + current.failedArmyLists
+                            failedArmyLists: previous.failedArmyLists + current.failedArmyLists,
+                            errors: previous.errors.concat(current.errors)
                         }
                     });
 
                     // Report the results
                     console.info('Successfully imported ' + importSummary.importedTroopOptions + ' troop options for ' + importSummary.importedArmyLists + ' army lists.');
-                    console.warn(importSummary.errors);
+                    importSummary.errors.forEach(function(error) {
+                        console.warn('*** ' + error);
+                    });
                     vm.statusMessage1 = 'Imported ' + importSummary.importedTroopOptions + ' troop options for ' + importSummary.importedArmyLists + ' army lists.';
                     vm.statusMessage2 = importSummary.failedArmyLists + ' army lists were not imported due to errors.';
                     vm.file = null;

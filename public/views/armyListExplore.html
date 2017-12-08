@@ -53,6 +53,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="row">
+            <!-- Invasion Rating -->
             <div class="col-xs-12">
                 <div class="content-subheader">Invasion Rating</div>
                 <table class="army-list-rating">
@@ -64,6 +65,7 @@
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.invasionRatings.length === 0">No invasion ratings entered</div>
             </div>
+            <!-- Maneuver Rating -->
             <div class="col-xs-12">
                 <div class="content-subheader">Maneuver Rating</div>
                 <table class="army-list-rating">
@@ -75,6 +77,7 @@
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No maneuver ratings entered</div>
             </div>
+            <!-- Home Topography -->
             <div class="col-xs-12">
                 <div class="content-subheader">Home Topography</div>
                 <dl class="dl-horizontal-topo">
@@ -85,9 +88,20 @@
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.maneuverRatings.length === 0">No topographies entered</div>
             </div>
+            <!-- General -->
             <div class="col-xs-12">
                 <div class="content-subheader">General's Troop Type</div>
-                <span class="content-text-special">{{ vm.armyList.troopEntriesForGeneral | mwDisplayTroopTypeEntriesList }}</span>
+                <table>
+                    <tr ng-repeat="troopEntry in vm.armyList.troopEntriesForGeneral">
+                        <td>
+                            <span class="content-text-normal" ng-show="$first && vm.armyList.troopEntriesForGeneral.length > 1">If Present</span>
+                            <span class="content-text-normal" ng-hide="$first">Otherwise</span>
+                        </td>
+                        <td>
+                            <span class="content-text-special">{{ troopEntry | mwDisplayGeneralEntriesList }}</span>
+                        </td>
+                    </tr>
+                </table>
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
