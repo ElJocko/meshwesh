@@ -234,16 +234,24 @@ td.army-list-rating-note {
     vertical-align: baseline;
 }
 
-.content-text-special {
+.home-topography {
     font-size: 1.2em;
     font-weight: 600;
-    margin-left: 15px;
+    padding-left: 15px;
 }
 
-.content-text-normal {
+td.general-entry {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding-left: 15px;
+    vertical-align: top;
+}
+
+td.general-priority-entry {
     font-size: 1.2em;
     font-weight: 300;
-    margin-left: 15px;
+    padding-left: 15px;
+    vertical-align: top;
 }
 
 table.troop-options {

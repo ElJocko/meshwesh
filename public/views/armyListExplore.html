@@ -81,7 +81,7 @@
             <div class="col-xs-12">
                 <div class="content-subheader">Home Topography</div>
                 <dl class="dl-horizontal-topo">
-                    <div class="content-text-special" ng-repeat="topography in vm.armyList.homeTopographies">
+                    <div class="home-topography" ng-repeat="topography in vm.armyList.homeTopographies">
                         <div>{{ topography | mwDisplayTopography }}</div>
                     </div>
                 </dl>
@@ -93,12 +93,12 @@
                 <div class="content-subheader">General's Troop Type</div>
                 <table>
                     <tr ng-repeat="troopEntry in vm.armyList.troopEntriesForGeneral">
-                        <td>
-                            <span class="content-text-normal" ng-show="$first && vm.armyList.troopEntriesForGeneral.length > 1">If Present</span>
-                            <span class="content-text-normal" ng-hide="$first">Otherwise</span>
+                        <td class="general-priority-entry"ng-show="vm.armyList.troopEntriesForGeneral.length > 1">
+                            <span ng-show="$first">If Present</span>
+                            <span ng-hide="$first">Otherwise</span>
                         </td>
-                        <td>
-                            <span class="content-text-special">{{ troopEntry | mwDisplayGeneralEntriesList }}</span>
+                        <td class="general-entry">
+                            <span>{{ troopEntry | mwDisplayGeneralEntriesList }}</span>
                         </td>
                     </tr>
                 </table>
