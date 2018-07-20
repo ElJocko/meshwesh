@@ -131,11 +131,11 @@ exports.signIn = function(req, res) {
     userService.signIn(credentials, function(err, jwt) {
         if (err) {
             if (err.message === userService.errors.notFound) {
-                logger.warn('Unable to sign in user: user not found');
+                logger.warn('Unable to sign in user, user not found: ', credentials.emailAddress);
                 return res.status(401).send('Not authorized');
             }
             else if (err.message === userService.errors.incorrectPassword) {
-                logger.warn('Unable to sign in user: incorrect password');
+                logger.warn('Unable to sign in user, incorrect password: ', credentials.emailAddress);
                 return res.status(401).send('Not authorized');
             }
             else {
@@ -145,7 +145,7 @@ exports.signIn = function(req, res) {
         }
         else {
             if (jwt) {
-                logger.info('User sign in successful: ' + credentials.emailAddress);
+                logger.info('User sign in successful: ', credentials.emailAddress);
                 return res.status(200).send(jwt);
             }
             else {
