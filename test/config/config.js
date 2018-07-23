@@ -17,5 +17,5 @@ module.exports = {
     testServer: {
         url: process.env.SERVER_URL || ""
     },
-    testRoles: ['admin', 'editor', 'anonymous']
+    testRoles: ['admin', 'editor', 'visitor']
 };

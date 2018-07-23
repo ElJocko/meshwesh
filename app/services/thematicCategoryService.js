@@ -1,12 +1,12 @@
 'use strict';
 
-var ThematicCategory = require('../models/thematicCategoryModel');
-var ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
-var armyListService = require('./armyListService');
-var async = require('async');
-var _ = require('lodash');
+const ThematicCategory = require('../models/thematicCategoryModel');
+const ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
+const armyListService = require('./armyListService');
+const async = require('async');
+const _ = require('lodash');
 
-var errors = {
+const errors = {
     missingParameter: 'Missing required parameter',
     badlyFormattedParameter: 'Badly formatted parameter',
     duplicateName: 'Duplicate name',
@@ -20,9 +20,9 @@ exports.retrieveByQuery = function(query, callback) {
             return callback(err);
         }
         else {
-            var objects = [];
-            for (var i = 0; i < documents.length; ++i) {
-                var object = documents[i].toObject();
+            const objects = [];
+            for (let i = 0; i < documents.length; ++i) {
+                const object = documents[i].toObject();
                 objects.push(object);
             }
             return callback(null, objects);
@@ -35,7 +35,7 @@ exports.retrieveById = function(id, callback) {
         ThematicCategory.findById(id, function(err, document) {
             if (err) {
                 if (err.name === 'CastError') {
-                    var error = new Error(errors.badlyFormattedParameter);
+                    const error = new Error(errors.badlyFormattedParameter);
                     error.parameterName = 'id';
                     return callback(error);
                 }
@@ -55,7 +55,7 @@ exports.retrieveById = function(id, callback) {
         });
     }
     else {
-        var error = new Error(errors.missingParameter);
+        const error = new Error(errors.missingParameter);
         error.parameterName = 'id';
         return callback(error);
     }
@@ -63,11 +63,11 @@ exports.retrieveById = function(id, callback) {
 
 exports.retrieveArmyLists = function(id, callback) {
     if (id) {
-        var query = { thematicCategory: id };
+        const query = { thematicCategory: id };
         ThematicCategoryToArmyListXref.find(query).lean().exec(function(err, documents) {
             if (err) {
                 if (err.name === 'CastError') {
-                    var error = new Error(errors.badlyFormattedParameter);
+                    const error = new Error(errors.badlyFormattedParameter);
                     error.parameterName = 'id';
                     return callback(error);
                 }
@@ -101,7 +101,7 @@ exports.retrieveArmyLists = function(id, callback) {
         });
     }
     else {
-        var error = new Error(errors.missingParameter);
+        const error = new Error(errors.missingParameter);
         error.parameterName = 'id';
         return callback(error);
     }
@@ -109,14 +109,14 @@ exports.retrieveArmyLists = function(id, callback) {
 
 exports.create = function(data, callback) {
     // Create the document
-    var document = new ThematicCategory(data);
+    const document = new ThematicCategory(data);
 
     // Save the document in the database
     document.save(function(err, savedDocument) {
         if (err) {
             if (err.name === 'MongoError' && err.code === 11000) {
                 // 11000 = Duplicate index
-                var error = new Error(errors.duplicateName);
+                const error = new Error(errors.duplicateName);
                 return callback(error);
             }
             else {
@@ -134,7 +134,7 @@ exports.update = function(id, data, callback) {
         ThematicCategory.findById(id, function(err, document) {
             if (err) {
                 if (err.name === 'CastError') {
-                    var error = new Error(errors.badlyFormattedParameter);
+                    const error = new Error(errors.badlyFormattedParameter);
                     error.parameterName = 'id';
                     return callback(error);
                 }
@@ -153,7 +153,7 @@ exports.update = function(id, data, callback) {
                     if (err) {
                         if (err.name === 'MongoError' && err.code === 11000) {
                             // 11000 = Duplicate index
-                            var error = new Error(errors.duplicateName);
+                            const error = new Error(errors.duplicateName);
                             return callback(error);
                         }
                         else {
@@ -168,7 +168,7 @@ exports.update = function(id, data, callback) {
         });
     }
     else {
-        var error = new Error(errors.missingParameter);
+        const error = new Error(errors.missingParameter);
         error.parameterName = 'id';
         return callback(error);
     }
@@ -179,7 +179,7 @@ exports.deleteById = function(id, callback) {
         ThematicCategory.findByIdAndRemove(id, function(err, document) {
             if (err) {
                 if (err.name === 'CastError') {
-                    var error = new Error(errors.badlyFormattedParameter);
+                    const error = new Error(errors.badlyFormattedParameter);
                     error.parameterName = 'id';
                     return callback(error);
                 }
@@ -199,7 +199,7 @@ exports.deleteById = function(id, callback) {
         });
     }
     else {
-        var error = new Error(errors.missingParameter);
+        const error = new Error(errors.missingParameter);
         error.parameterName = 'id';
         return callback(error);
     }
@@ -218,7 +218,7 @@ exports.import = function(importRequest, callback) {
                     return callback(err);
                 }
                 else {
-                    var importSummary = summarizeImport(results);
+                    const importSummary = summarizeImport(results);
                     return callback(null, importSummary);
                 }
             }
@@ -226,14 +226,14 @@ exports.import = function(importRequest, callback) {
     });
 
     function importThematicCategory(thematicCategoryData, cb) {
-        var document = new ThematicCategory(thematicCategoryData);
+        const document = new ThematicCategory(thematicCategoryData);
 
         // Save the document in the database
         document.save(function(err, savedDocument) {
             if (err) {
                 if (err.name === 'MongoError' && err.code === 11000) {
                     // 11000 = Duplicate index
-                    var error = new Error(errors.duplicateCode);
+                    const error = new Error(errors.duplicateCode);
                     return cb(null, { thematicCategory: null, error: error });
                 }
                 else {
@@ -247,8 +247,8 @@ exports.import = function(importRequest, callback) {
     }
 
     function summarizeImport(results) {
-        var importCount = 0;
-        var errorCount = 0;
+        let importCount = 0;
+        let errorCount = 0;
         results.forEach(function(item) {
             if (item.thematicCategory) {
                 importCount = importCount + 1;
@@ -260,7 +260,7 @@ exports.import = function(importRequest, callback) {
                 // shouldn't reach here
             }
         });
-        var summary = { imported: importCount, failed: errorCount };
+        const summary = { imported: importCount, failed: errorCount };
         return summary;
     }
 };

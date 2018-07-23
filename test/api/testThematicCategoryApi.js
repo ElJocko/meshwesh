@@ -219,7 +219,7 @@ config.testRoles.forEach(function(role) {
                     });
             });
 
-            if (role !== 'anonymous') {
+            if (roleCredentials) {
                 it('should find the new thematic category', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
                     request(serverUrl)
@@ -279,7 +279,7 @@ config.testRoles.forEach(function(role) {
                     });
             });
 
-            if (role !== 'anonymous') {
+            if (roleCredentials) {
                 it('should find the updated thematic category', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
                     request(serverUrl)
@@ -316,7 +316,7 @@ config.testRoles.forEach(function(role) {
                     });
             });
 
-            if (role !== 'anonymous') {
+            if (roleCredentials) {
                 it('should not find the deleted thematic category', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
                     request(serverUrl)
