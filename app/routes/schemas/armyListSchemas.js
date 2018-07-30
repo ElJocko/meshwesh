@@ -1,6 +1,6 @@
 'use strict';
 
-var dateRangeSubschema = {
+const dateRangeSubschema = {
     type: 'object',
     properties: {
         startDate: { type: 'number', requred: true },
@@ -8,7 +8,7 @@ var dateRangeSubschema = {
     }
 };
 
-var troopEntrySubschema = {
+const troopEntrySubschema = {
     type: 'object',
     properties: {
         troopTypeCode: { type: 'string', requred: true },
@@ -16,7 +16,7 @@ var troopEntrySubschema = {
     }
 };
 
-var troopOptionSubschema = {
+const troopOptionSubschema = {
     type: 'object',
     properties: {
         min: { type: 'number', requred: true },
@@ -29,7 +29,7 @@ var troopOptionSubschema = {
     }
 };
 
-var annotatedRatingSchema = {
+const annotatedRatingSchema = {
     type: 'object',
     properties: {
         value: { type: 'number', required: true },
@@ -37,7 +37,7 @@ var annotatedRatingSchema = {
     }
 };
 
-var annotatedTopographySchema = {
+const annotatedTopographySchema = {
     type: 'object',
     properties: {
         value: { type: 'string', required: true },

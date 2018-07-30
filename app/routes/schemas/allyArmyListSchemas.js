@@ -1,6 +1,6 @@
 'use strict';
 
-var dateRangeSubschema = {
+const dateRangeSubschema = {
     type: 'object',
     properties: {
         startDate: { type: 'number', requred: true },
@@ -8,7 +8,7 @@ var dateRangeSubschema = {
     }
 };
 
-var troopEntrySubschema = {
+const troopEntrySubschema = {
     type: 'object',
     properties: {
         troopTypeCode: { type: 'string', requred: true },
@@ -16,7 +16,7 @@ var troopEntrySubschema = {
     }
 };
 
-var allyTroopOptionSubschema = {
+const allyTroopOptionSubschema = {
     type: 'object',
     properties: {
         min: { type: 'number', requred: true },
