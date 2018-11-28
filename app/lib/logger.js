@@ -1,30 +1,25 @@
 'use strict';
 
-var winston = require('winston');
+const winston = require('winston');
 
-var consoleTransport = new (winston.transports.Console) ({
-    timestamp: function() {
-        return new Date().toISOString();
-    },
-    formatter: function(options) {
-        // Return string will be passed to logger.
-        return options.timestamp() + ' [' + options.level.toUpperCase() + '] ' + (undefined !== options.message ? options.message : '') +
-            (options.meta && Object.keys(options.meta).length ? '\n\t' + JSON.stringify(options.meta) : '' );
-    }
-});
+const consoleFormat = winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.printf(info => `${ info.timestamp } [${ info.level.toUpperCase() }] ${ info.message }`)
+);
 
-var logLevels = {
-    debug: 0,
-    verbose: 1,
-    info: 2,
-    http: 3,
-    warn: 4,
-    error: 5
+const logLevels = {
+    error: 0,
+    warn: 1,
+    http: 2,
+    info: 3,
+    verbose: 4,
+    debug: 5
 };
 
-var logger = new winston.Logger ({
+const logger = winston.createLogger({
+    format: consoleFormat,
     transports: [
-        consoleTransport
+        new winston.transports.Console()
     ],
     levels: logLevels
 });
