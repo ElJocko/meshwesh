@@ -51,16 +51,16 @@ exports.create = function(req, res) {
     userService.create(userData, function(err, document) {
         if (err) {
             if (err.message === userService.errors.duplicateCode) {
-                logger.warn("Duplicate code");
+                logger.warn('Duplicate code');
                 return res.status(409).send('Duplicate code');
             }
             else {
-                logger.error("Failed with error: " + err);
+                logger.error('Failed with error: ' + err);
                 return res.status(500).send("Unable to create User. Server error.");
             }
         }
         else {
-            logger.info("Success: Created User " + document.emailAddress);
+            logger.info('Success: Created User ' + document.emailAddress);
             return res.status(201).send(document);
         }
     });
@@ -77,7 +77,7 @@ exports.update = function(req, res) {
                 return res.status(400).send('User id is badly formatted.');
             }
             else if (err.message === userService.errors.duplicateCode) {
-                logger.warn("Duplicate code");
+                logger.warn('Duplicate code');
                 return res.status(409).send('Duplicate code');
             }
             else {
@@ -91,7 +91,7 @@ exports.update = function(req, res) {
                 return res.status(404).send('User not found.');
             }
             else {
-                logger.info("Success: Updated User " + document.emailAddress);
+                logger.info('Success: Updated User ' + document.emailAddress);
                 return res.status(200).send(document);
             }
         }
@@ -116,7 +116,7 @@ exports.delete = function(req, res) {
                 return res.status(404).send('User not found.');
             }
             else {
-                logger.info("Success: Deleted User " + document.emailAddress);
+                logger.info('Success: Deleted User ' + document.emailAddress);
                 return res.status(200).send(document);
             }
         }
@@ -131,11 +131,11 @@ exports.signIn = function(req, res) {
     userService.signIn(credentials, function(err, jwt) {
         if (err) {
             if (err.message === userService.errors.notFound) {
-                logger.warn('Unable to sign in user, user not found: ', credentials.emailAddress);
+                logger.warn('Unable to sign in user, user not found: ' + credentials.emailAddress);
                 return res.status(401).send('Not authorized');
             }
             else if (err.message === userService.errors.incorrectPassword) {
-                logger.warn('Unable to sign in user, incorrect password: ', credentials.emailAddress);
+                logger.warn('Unable to sign in user, incorrect password: ' + credentials.emailAddress);
                 return res.status(401).send('Not authorized');
             }
             else {
@@ -145,7 +145,7 @@ exports.signIn = function(req, res) {
         }
         else {
             if (jwt) {
-                logger.info('User sign in successful: ', credentials.emailAddress);
+                logger.info('User sign in successful: ' + credentials.emailAddress);
                 return res.status(200).send(jwt);
             }
             else {
