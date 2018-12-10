@@ -4,18 +4,19 @@ Army list manager.
 
 ## Globally Installed Packages
 
-The following packages should be installed globally:
-
-* bower
-* grunt-cli
-* karma-cli
-* mocha
-* protractor
-
-TBD: Make sure this list is correct. (bower and mocha are currently installed globally, but are also in the
-package.json. So they can probably be safely removed from one of those locations.)
+npm must be installed globally. All packages are installed locally.
 
 ## Testing
+
+### Server-Side API Tests
+
+To start the server:
+
+    >bash ./start-server-for-test.sh
+
+To run the test:
+
+    >bash ./run-api-test.sh
 
 ### Client-Side Unit Tests
 
