@@ -1,21 +1,23 @@
 describe('ThematicCategorySummaryController', function() {
-    beforeEach(module('meshweshApp'));
+    // Load the module
+    beforeEach(angular.mock.module('meshweshApp'));
 
-    var Service = MockThematicCategoryService();
+    // Get the mock service
+    var mockThematicCategoryService = MockThematicCategoryService();
 
-    // Mock $location
-    var location;
-    beforeEach(inject(function(_$location_) {
-        location = _$location_;
-        spyOn(location, 'path');
+    // Get $location
+    var $location;
+    beforeEach(angular.mock.inject(function(_$location_) {
+        $location = _$location_;
+        spyOn($location, 'path');
     }));
 
-    // Controller to test
+    // Create a controller to test
     var controller;
-    beforeEach(inject(function($controller) {
+    beforeEach(angular.mock.inject(function($controller) {
         controller = $controller(
             'ThematicCategorySummaryController',
-            { $location: location, ThematicCategoryService: Service }
+            { $location: $location, ThematicCategoryService: mockThematicCategoryService, mode: 'edit' }
         );
     }));
 
@@ -27,12 +29,12 @@ describe('ThematicCategorySummaryController', function() {
 
     it('should navigate to the correct path on create()', function() {
         controller.create();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategory/create');
+        expect($location.path).toHaveBeenCalledWith('/thematicCategory/create');
     });
 
     it('should navigate to the correct path on edit()', function() {
         controller.edit(2);
-        expect(location.path).toHaveBeenCalledWith('/thematicCategory/2/edit');
+        expect($location.path).toHaveBeenCalledWith('/thematicCategory/2/edit');
     });
 });
 

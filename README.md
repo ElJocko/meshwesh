@@ -4,7 +4,7 @@ Army list manager.
 
 ## Globally Installed Packages
 
-npm must be installed globally. All packages are installed locally.
+npm must be installed globally. All other packages are installed locally.
 
 ## Testing
 
@@ -20,10 +20,10 @@ To run the test:
 
 ### Client-Side Unit Tests
 
-    >karma start
+    >./node_module/.bin/karma start
 
 ### Client-Side End-to-End Tests
 
-    >protractor protractor.conf.js
+    >./node_module/.bin/protractor protractor.conf.js
 
 (Node 0.12.x requires Protractor 2.5.1)

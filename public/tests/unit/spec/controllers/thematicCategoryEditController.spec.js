@@ -1,28 +1,25 @@
 describe('ThematicCategoryEditController', function() {
+    // Load the module
     beforeEach(module('meshweshApp'));
 
-    var Service = MockThematicCategoryService();
+    // Get the mock service
+    var mockThematicCategoryService = MockThematicCategoryService();
 
-    // Mock $location
-    var location;
-    beforeEach(inject(function($location) {
-        location = $location;
-        spyOn(location, 'path');
+    // Get $location
+    var $location;
+    beforeEach(angular.mock.inject(function(_$location_) {
+        $location = _$location_;
+        spyOn($location, 'path');
     }));
 
-    // Mock $routeParams
-//    var routeParams;
-//    beforeEach(inject(function($routeParams) {
-//        routeParams = $routeParams;
-//    }));
-
-    // Controller to test
+    // Create a controller to test
     var controller;
     function makeController(categoryId) {
+        var mockRoute = { current: { params: { categoryId: categoryId }}};
         inject(function($controller) {
             controller = $controller(
                 'ThematicCategoryEditController',
-                { $routeParams: { categoryId: categoryId }, $location: location, ThematicCategoryService: Service }
+                { $route: mockRoute, $location: $location, ThematicCategoryService: mockThematicCategoryService }
             );
         })
     }
@@ -50,8 +47,8 @@ describe('ThematicCategoryEditController', function() {
         controller.category.name = 'updated name';
         controller.submit();
 
-        expect(Service.update).toHaveBeenCalled();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
+        expect(mockThematicCategoryService.update).toHaveBeenCalled();
+        expect($location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 
     it('should take the correct action on submit() (new category)', function() {
@@ -59,15 +56,15 @@ describe('ThematicCategoryEditController', function() {
         controller.category.name = 'created name';
         controller.submit();
 
-        expect(Service.create).toHaveBeenCalled();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
+        expect(mockThematicCategoryService.create).toHaveBeenCalled();
+        expect($location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 
     it('should take the correct action on delete()', function() {
         makeController(2);
         controller.delete(2);
-        expect(Service.destroy).toHaveBeenCalled();
-        expect(location.path).toHaveBeenCalledWith('/thematicCategory/summary');
+        expect(mockThematicCategoryService.destroy).toHaveBeenCalled();
+        expect($location.path).toHaveBeenCalledWith('/thematicCategory/summary');
     });
 });
 

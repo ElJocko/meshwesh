@@ -15,15 +15,14 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'vendor/angular/angular.js',
-            'vendor/angular-resource/angular-resource.js',
-            'vendor/angular-route/angular-route.js',
-            'vendor/angular-mocks/angular-mocks.js',
-            'vendor/angular-bootstrap/ui-bootstrap.js',
-            'vendor/angular-smart-table/dist/smart-table.js',
-            'vendor/lodash/lodash.js',
+            // Vendor files
+            'bundle/vendor.bundle.js',
+            '../node_modules/angular-mocks/angular-mocks.js',
 
-            'scripts/**/*.js',
+            // App files
+            'bundle/app.bundle.js',
+
+            // Test files
             'tests/unit/mock-services/**/*.js',
             'tests/unit/spec/**/*.js'
         ],
