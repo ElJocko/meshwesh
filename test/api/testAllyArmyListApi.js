@@ -1,5 +1,9 @@
 'use strict';
 
+// Load environment variables
+const dotenv = require('dotenv');
+dotenv.load({ path: './test/config/local-test.env' });
+
 var path = require('path');
 var request = require('supertest');
 var expect = require('expect');

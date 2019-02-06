@@ -1,11 +1,20 @@
 'use strict';
 
+// Load environment variables
+const dotenv = require('dotenv');
+dotenv.load({ path: './test/config/local-test.env' });
+
 const credentials = require('../config/credentials');
 const config = require('../config/config');
+
+const thematicCategoryService = require('../../app/services/thematicCategoryService');
+const testData = require('../data/thematic-categories');
+const dbConnection = require('../../app/lib/dbConnection');
 
 const path = require('path');
 const request = require('supertest');
 const expect = require('expect');
+const assert = require('assert');
 
 const serverUrl = config.testServer.url;
 const apiVersion = 'v1';
@@ -23,7 +32,11 @@ const invalidThematicCategories = [
     { themeName: 'Mongol Sky' }
 ];
 
-const updateName = 'Mongol Thunder';
+let updateName = {
+    admin: 'Mongol Thunder',
+    editor: 'Mongol Lightning',
+    visitor: 'Mongol Light Rain'
+};
 
 config.testRoles.forEach(function(role) {
     const suiteName = 'Test Role ' + role;
@@ -56,6 +69,14 @@ config.testRoles.forEach(function(role) {
             }
         });
 
+        before(function (done) {
+            // Reset the database
+            thematicCategoryService.import(testData, function(err, importSummary) {
+                assert.ifError(err);
+                done();
+            });
+        });
+
         describe('retrieve the list of thematic categories', function () {
             it('should retrieve all of the thematic categories', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories');
@@ -72,7 +93,7 @@ config.testRoles.forEach(function(role) {
                             const thematicCategories = res.body;
                             expect(thematicCategories).toExist();
                             expect(Array.isArray(thematicCategories)).toBeTruthy();
-                            expect(thematicCategories.length === 6);
+                            expect(thematicCategories.length === testData.length);
 
                             // Save the first thematic category for later tests
                             retrievedThematicCategory = thematicCategories[0];
@@ -118,7 +139,7 @@ config.testRoles.forEach(function(role) {
                     });
             });
 
-            it('should retrieve a thematic category as admin user', function (done) {
+            it('should retrieve a thematic category', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
                 request(serverUrl)
                     .get(apiPath)
@@ -157,7 +178,7 @@ config.testRoles.forEach(function(role) {
                     });
             });
 
-            it('should retrieve army lists as admin user', function (done) {
+            it('should retrieve army lists', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id, '/armyLists');
                 request(serverUrl)
                     .get(apiPath)
@@ -242,7 +263,7 @@ config.testRoles.forEach(function(role) {
         describe('update thematic category', function () {
             invalidThematicCategories.forEach(function (invalidData) {
                 it('should not update a thematic category with invalid data', function (done) {
-                    newThematicCategory.name = updateName;
+                    newThematicCategory.name = updateName[role];
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
                     request(serverUrl)
                         .put(apiPath)
@@ -261,7 +282,7 @@ config.testRoles.forEach(function(role) {
             });
 
             it('should update a thematic category', function (done) {
-                newThematicCategory.name = updateName;
+                newThematicCategory.name = updateName[role];
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
                 request(serverUrl)
                     .put(apiPath)
@@ -291,7 +312,7 @@ config.testRoles.forEach(function(role) {
                                 done(err);
                             }
                             else {
-                                expect(res.body.name).toBe(updateName);
+                                expect(res.body.name).toBe(updateName[role]);
                                 done();
                             }
                         });

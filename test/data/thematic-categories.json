@@ -1,18 +1,20 @@
-{
-  "name": "Roman Holiday"
-}
-{
-  "name": "Greek Wind"
-}
-{
-  "name": "Gallic Rain"
-}
-{
-  "name": "Iberian Hills"
-}
-{
-  "name": "Hittite Dreams"
-}
-{
-  "name": "Libyan Sand"
-}
+[
+  {
+    "name": "Roman Holiday"
+  },
+  {
+    "name": "Greek Wind"
+  },
+  {
+    "name": "Gallic Rain"
+  },
+  {
+    "name": "Iberian Hills"
+  },
+  {
+    "name": "Hittite Dreams"
+  },
+  {
+    "name": "Libyan Sand"
+  }
+]

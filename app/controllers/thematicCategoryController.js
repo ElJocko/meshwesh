@@ -174,7 +174,7 @@ exports.import = function(req, res) {
     // Get the data from the request
     const thematicCategoryImportRequest = req.body;
 
-    thematicCategoryService.import(thematicCategoryImportRequest, function(err, importSummary) {
+    thematicCategoryService.import(thematicCategoryImportRequest.data, function(err, importSummary) {
         if (err) {
             if (err.message === thematicCategoryService.errors.duplicateCode) {
                 logger.warn("Duplicate code");

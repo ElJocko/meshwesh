@@ -56,7 +56,7 @@ app.use(function(req, res) {
         var host = server.address().address;
         var port = server.address().port;
 
-        logger.info('Listening at http://%s:%s', host, port);
+        logger.info(`Listening at http://${host}:${port}`);
         logger.info('Invincible Meshwesh start up complete');
     });
 //});

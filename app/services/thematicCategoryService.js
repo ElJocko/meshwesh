@@ -205,12 +205,12 @@ exports.deleteById = function(id, callback) {
     }
 };
 
-exports.import = function(importRequest, callback) {
+exports.import = function(thematicCategories, callback) {
     // Delete the existing documents
     ThematicCategory.remove({}, function(error) {
         // Import the documents
         async.mapSeries(
-            importRequest.data,
+            thematicCategories,
             importThematicCategory,
             function(err, results) {
                 if (err) {
@@ -225,8 +225,8 @@ exports.import = function(importRequest, callback) {
         );
     });
 
-    function importThematicCategory(thematicCategoryData, cb) {
-        const document = new ThematicCategory(thematicCategoryData);
+    function importThematicCategory(thematicCategory, cb) {
+        const document = new ThematicCategory(thematicCategory);
 
         // Save the document in the database
         document.save(function(err, savedDocument) {
