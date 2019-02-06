@@ -53,4 +53,7 @@ router.route('/v1/troopOptionsImport')
         tokenAuthz.requireAdminRole,
         armyListController.importTroopOptions);
 
+router.route('/v1/armyLists/:listId/pdf')
+    .get(armyListController.retrievePdf);
+
 module.exports = router;

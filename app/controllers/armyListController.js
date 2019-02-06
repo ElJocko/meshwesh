@@ -1,12 +1,15 @@
 'use strict';
 
-var armyListService = require('../services/armyListService');
-var logger = require('../lib/logger');
-var _ = require('lodash');
+const armyListService = require('../services/armyListService');
+const pdfService = require('../services/pdfService');
+
+const logger = require('../lib/logger');
+const _ = require('lodash');
 
 exports.retrieveByQuery = function(req, res) {
     if (req.query.summary && req.query.summary === 'true') {
         // Just a summary of the army lists
+        const query = {};
         armyListService.retrieveSummaryByQueryLean(query, function(err, lists) {
             if (err) {
                 logger.error('Failed with error: ' + err);
@@ -19,7 +22,7 @@ exports.retrieveByQuery = function(req, res) {
     }
     else {
         // Full data for the army lists
-        var query = {}; // Default is all
+        const query = {}; // Default is all
         if (req.query.name) {
             query.where = {name: {like: req.query.name}};
         }
@@ -136,7 +139,7 @@ exports.retrieveAllyOptions = function(req, res) {
 
 exports.create = function(req, res) {
     // Get the data from the request
-    var listData = req.body;
+    const listData = req.body;
 
     // Create the list
     armyListService.create(listData, function(err, list) {
@@ -163,7 +166,7 @@ exports.create = function(req, res) {
 
 exports.update = function(req, res) {
     // Get the data from the request
-    var listData = req.body;
+    const listData = req.body;
 
     armyListService.update(req.params.listId, listData, function(err, list) {
         if (err) {
@@ -222,7 +225,7 @@ exports.delete = function(req, res) {
 
 exports.import = function(req, res) {
     // Get the data from the request
-    var armyListImportRequest = req.body;
+    const armyListImportRequest = req.body;
 
     // Create the troop type
     armyListService.import(armyListImportRequest, function (err, importSummary) {
@@ -249,7 +252,7 @@ exports.import = function(req, res) {
 
 exports.importTroopOptions = function (req, res) {
     // Get the data from the request
-    var troopOptionsImportRequest = req.body;
+    const troopOptionsImportRequest = req.body;
 
     // Create the troop type
     armyListService.importTroopOptions(troopOptionsImportRequest, function (err, importSummary) {
@@ -273,3 +276,29 @@ exports.importTroopOptions = function (req, res) {
         }
     });
 };
+
+exports.retrievePdf = function(req, res) {
+    pdfService.retrieveArmyListPdf(req.params.listId, function(err, armyList, pdf) {
+        if (err) {
+            if (err.message === armyListService.errors.badlyFormattedParameter) {
+                logger.warn('Badly formatted army list id');
+                return res.status(400).send('Army List id is badly formatted.');
+            }
+            else {
+                logger.error('Failed with error: ' + err);
+                return res.status(500).send('Unable to get army list pdf. Server error.');
+            }
+        }
+        else {
+            const filename = armyList.name + '.pdf';
+            res.writeHead(200, {
+                "Content-Type": "application/pdf",
+                "Content-Disposition": "attachment; filename=" + filename
+            });
+
+            pdf.pipe(res);
+            pdf.end();
+        }
+    });
+};
+
