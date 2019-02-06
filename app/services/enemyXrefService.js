@@ -14,6 +14,25 @@ var errors = {
 };
 exports.errors = errors;
 
+exports.getEnemies = function(armyListId, callback) {
+    const enemyList = [];
+    EnemyXref.find({ armyList1: armyListId }).lean().exec(function(err, enemyXrefs) {
+        enemyXrefs.forEach(function(enemy) {
+            enemyList.push(enemy.armyList2);
+        });
+
+        EnemyXref.find({ armyList2: armyListId }).lean().exec(function(err, enemyXrefs) {
+            enemyXrefs.forEach(function(enemy) {
+                if (enemy.armyList1 !== armyListId) {
+                    enemyList.push(enemy.armyList1);
+                }
+            });
+
+            return callback(null, enemyList);
+        });
+    });
+};
+
 exports.import = function(importRequest, callback) {
 
     if (importRequest.options && importRequest.options.deleteAll ) {
