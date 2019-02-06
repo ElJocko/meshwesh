@@ -12,7 +12,17 @@ var TroopTypeSchema = new mongoose.Schema({
     category: { type: String },
     cost: { type: Number },
     description: { type: String },
-    order: { type: String }
+    order: { type: String },
+    combatFactors: {
+        rangedCombat: {
+            shooting: { type: Number },
+            shotAt: { type: Number }
+        },
+        closeCombat: {
+            vsFoot: { type: Number },
+            vsMounted: { type: Number }
+        }
+    }
 });
 
 TroopTypeSchema.set('toObject', {

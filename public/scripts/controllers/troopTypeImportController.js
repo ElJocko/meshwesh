@@ -42,7 +42,30 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
                     vm.statusMessage2 = '';
 
                     if (results.data) {
-                        vm.importTroopTypes = results.data;
+                        results.data.forEach(function(item) {
+                            const troopType = {
+                                permanentCode: item.permanentCode,
+                                displayName: item.displayName,
+                                displayCode: item.displayCode,
+                                cost: item.cost,
+                                category: item.category,
+                                order: item.order,
+                                description: item.description,
+                                importName: item.importName,
+                                combatFactors: {
+                                    rangedCombat: {
+                                        shooting: item.shootingFactor,
+                                        shotAt: item.shotAtFactor
+                                    },
+                                    closeCombat : {
+                                        vsFoot: item.vsFootFactor,
+                                        vsMounted: item.vsMountedFactor
+                                    }
+                                }
+                            };
+                            vm.importTroopTypes.push(troopType);
+                        });
+
                         vm.statusMessage1 = 'Found ' + vm.importTroopTypes.length + ' troop types in the file.';
                     }
                     else {
