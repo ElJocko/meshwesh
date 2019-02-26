@@ -15,8 +15,7 @@ const expect = require('expect');
 const assert = require('assert');
 
 //const serverUrl = config.testServer.url;
-const serverUrl = 'http://localhost:3000';
-
+const serverUrl = config.testServer.url;
 const apiVersion = 'v1';
 
 let retrievedArmyList = null;
