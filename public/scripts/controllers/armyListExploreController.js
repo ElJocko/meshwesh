@@ -253,8 +253,8 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
             }
             else if (vm.armyList.status.toUpperCase() === 'REVISED') {
                 vm.armyList.statusDisplayText = 'Status: Ready';
-                vm.armyList.statusDisplaySubtext = '(Final Review Pending)';
-                vm.armyList.statusType = 'status-warning';
+                vm.armyList.statusDisplaySubtext = '';
+                vm.armyList.statusType = 'status-ready';
             }
             else if (vm.armyList.status.toUpperCase() === 'READY') {
                 vm.armyList.statusDisplayText = 'Status: Ready';
