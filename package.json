@@ -12,7 +12,7 @@
     "postinstall": "webpack",
     "server-api-test": "mocha test/api",
     "client-unit-test": "karma start",
-    "start-webdriver": "webdriver-manager start",
+    "start-webdriver": "./node_modules/.bin/webdriver-manager start",
     "client-ui-test": "protractor"
   },
   "repository": {
@@ -60,7 +60,7 @@
     "karma-firefox-launcher": "^0.1.7",
     "karma-jasmine": "^0.3.6",
     "mocha": "^2.3.0",
-    "protractor": "^3.1.1",
+    "protractor": "^5.4.2",
     "supertest": "^1.1.0"
   }
 }

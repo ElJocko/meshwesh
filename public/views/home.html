@@ -19,19 +19,19 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-4" ng-click="vm.showThematicCategorySummary()">
+    <div id="thematic-category-summary-link" class="col-sm-4" ng-click="vm.showThematicCategorySummary()">
         <div class="summary">
             <div class="summary-number">{{ vm.book.thematicCategoryCount }}</div>
             <div class="summary-text">Thematic Categories</div>
         </div>
     </div>
-    <div class="col-sm-4" ng-click="vm.showTroopTypeSummary()">
+    <div id="troop-type-summary-link" class="col-sm-4" ng-click="vm.showTroopTypeSummary()">
         <div class="summary">
             <div class="summary-number" ng-bind="vm.book.troopTypeCount"></div>
             <div class="summary-text">Troop Types</div>
         </div>
     </div>
-    <div class="col-sm-4" ng-click="vm.showArmyListSummary()">
+    <div id="army-list-summary-link" class="col-sm-4" ng-click="vm.showArmyListSummary()">
         <div class="summary">
             <div class="summary-number" ng-bind="vm.book.armyListCount"></div>
             <div class="summary-text">Army Lists</div>

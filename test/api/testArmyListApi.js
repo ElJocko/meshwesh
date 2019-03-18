@@ -14,7 +14,6 @@ const request = require('supertest');
 const expect = require('expect');
 const assert = require('assert');
 
-//const serverUrl = config.testServer.url;
 const serverUrl = config.testServer.url;
 const apiVersion = 'v1';
 
@@ -66,9 +65,10 @@ config.testRoles.forEach(function(role) {
                         else {
                             const armyLists = res.body;
                             expect(armyLists).toExist();
-                            expect(Array.isArray(armyLists)).toBeTruthy();
+                            expect(Array.isArray(armyLists)).toBe(true);
 
                             // Save the first thematic category for later tests
+                            expect(armyLists.length > 0).toBe(true);
                             retrievedArmyList = armyLists[0];
 
                             done();
