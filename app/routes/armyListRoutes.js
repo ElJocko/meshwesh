@@ -1,12 +1,12 @@
 'use strict';
 
-var express = require('express');
-var tokenAuthz = require('../lib/tokenAuthz');
-var validator = require('express-jsonschema');
-var schemas = require('./schemas/armyListSchemas');
-var armyListController = require('../controllers/armyListController');
+const express = require('express');
+const tokenAuthz = require('../lib/tokenAuthz');
+const validator = require('express-jsonschema');
+const schemas = require('./schemas/armyListSchemas');
+const armyListController = require('../controllers/armyListController');
 
-var router = express.Router();
+const router = express.Router();
 
 // Routes
 router.route('/v1/armyLists')

@@ -1,16 +1,17 @@
 'use strict';
 
-var express = require('express');
-var tokenAuthz = require('../lib/tokenAuthz');
-var validator = require('express-jsonschema');
-var allyArmyListController = require('../controllers/allyArmyListController');
-var schemas = require('./schemas/allyArmyListSchemas');
+const express = require('express');
+const tokenAuthz = require('../lib/tokenAuthz');
+const validator = require('express-jsonschema');
+const allyArmyListController = require('../controllers/allyArmyListController');
+const schemas = require('./schemas/allyArmyListSchemas');
 
-var router = express.Router();
+const router = express.Router();
 
 // Routes
 router.route('/v1/allyArmyLists')
     .get(
+        tokenAuthz.allowAll,
         validator.validate(schemas.retrieveAllyArmyListsByQuery),
         allyArmyListController.retrieveByQuery)
     .post(
@@ -20,6 +21,7 @@ router.route('/v1/allyArmyLists')
 
 router.route('/v1/allyArmyLists/:listId')
     .get(
+        tokenAuthz.allowAll,
         validator.validate(schemas.retrieveAllyArmyListById),
         allyArmyListController.retrieveById)
     .put(

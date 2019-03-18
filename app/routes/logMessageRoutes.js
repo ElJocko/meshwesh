@@ -1,9 +1,9 @@
 'use strict';
 
-var express = require('express');
-var logMessageController = require('../controllers/logMessageController');
+const express = require('express');
+const logMessageController = require('../controllers/logMessageController');
 
-var router = express.Router();
+const router = express.Router();
 
 //router.route('/v1/logMessages')
 //    .post(logMessageController.create);

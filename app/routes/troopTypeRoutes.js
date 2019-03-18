@@ -1,21 +1,33 @@
 'use strict';
 
-var express = require('express');
-var tokenAuthz = require('../lib/tokenAuthz');
-var troopTypeController = require('../controllers/troopTypeController');
+const express = require('express');
+const tokenAuthz = require('../lib/tokenAuthz');
+const troopTypeController = require('../controllers/troopTypeController');
 
-var router = express.Router();
+const router = express.Router();
 
 router.route('/v1/troopTypes')
-    .get(troopTypeController.retrieveByQuery)
-    .post(tokenAuthz.requireEditorRole, troopTypeController.create);
+    .get(
+        tokenAuthz.allowAll,
+        troopTypeController.retrieveByQuery)
+    .post(
+        tokenAuthz.requireEditorRole,
+        troopTypeController.create);
 
 router.route('/v1/troopTypes/:troopTypeId')
-    .get(troopTypeController.retrieveById)
-    .put(tokenAuthz.requireEditorRole, troopTypeController.update)
-    .delete(tokenAuthz.requireEditorRole, troopTypeController.delete);
+    .get(
+        troopTypeController.retrieveById)
+    .put(
+        tokenAuthz.requireEditorRole,
+        troopTypeController.update)
+    .delete(
+        tokenAuthz.requireEditorRole,
+        troopTypeController.delete);
 
 router.route('/v1/troopTypesImport')
-    .post(tokenAuthz.requireAdminRole, troopTypeController.import);
+    .post(
+        tokenAuthz.allowAll,
+        tokenAuthz.requireAdminRole,
+        troopTypeController.import);
 
 module.exports = router;
