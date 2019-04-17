@@ -15,7 +15,7 @@ exports.bodyParser = function(err, req, res, next) {
 exports.requestValidation = function(err, req, res, next) {
     if (err.name === 'JsonSchemaValidation') {
         logger.warn('Request failed validation');
-        logger.warn(err.validations);
+        logger.warn(JSON.stringify(err.validations));
         res.status(400).send('Invalid request.');
     }
     else {

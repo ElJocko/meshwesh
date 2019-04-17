@@ -14,6 +14,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const PdfPrinter = require('pdfmake');
 
+// Initialize troop types
 const troopTypes = {};
 TroopType.find().lean().exec(function(err, retrievedTroopTypes) {
     if (err) {
@@ -29,6 +30,10 @@ TroopType.find().lean().exec(function(err, retrievedTroopTypes) {
         })
     }
 });
+
+function troopTypeCodeValid(code) {
+    return troopTypes[code];
+}
 
 function displayName(code, note) {
     if (note) {
@@ -184,6 +189,11 @@ exports.retrieveArmyListPdf = function(id, callback) {
 
                         for (let i = 0; i < option.troopEntries.length; ++i) {
                             const entry = option.troopEntries[i];
+
+                            if (!troopTypeCodeValid(entry.troopTypeCode)) {
+                                console.warn(`Unable to process troop entry, troop type code ${ entry.troopTypeCode } not found.`);
+                                continue;
+                            }
 
                             if (i === option.troopEntries.length - 1) {
                                 lastRow = true;

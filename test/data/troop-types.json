@@ -1,0 +1,42 @@
+[
+  {
+    "permanentCode": "BAD",
+    "displayCode": "BH",
+    "displayName": "Bad Horse",
+    "importName": "Bad Horse",
+    "category": "mounted",
+    "cost": 3,
+    "description": "Mounted missile troops with very slow reload rates and unwilling or incapable of sustained melee fighting, or other examples of poor or ineffective horse primarily useful for their mobility, not their striking power (against anything). Examples are Medieval mounted crossbow, Assyrian pethalle paired mounted archers, Anglo-Dane huscarles attempting to fight while mounted, late Byzantine poor-quality Stratiotai, Roman Equites Cohortales, poor Chinese cavalry, etc.",
+    "order": "Open",
+    "combatFactors": {
+      "rangedCombat": {
+        "shooting": 0,
+        "shotAt": 2
+      },
+      "closeCombat": {
+        "vsFoot": 2,
+        "vsMounted": 2
+      }
+    }
+  },
+  {
+    "permanentCode": "SKM",
+    "displayCode": "SK",
+    "displayName": "Skirmishers",
+    "importName": "Skirmisher",
+    "category": "foot",
+    "cost": 3,
+    "description": "Loose order troops with long-range missile weapons, but used as individuals (not volley fire) and at short ranges (as close as can be done without personal risk), and with relatively limited ammo supplies. Effective irritants against enemy heavy foot and similar melee-focused infantry where their response of fleeing when overmatched and then regrouping and returning makes for a frustrating battle without good result for the heavy foot. Examples are Balearic slingers, Cretan archers, Medieval handgunners, and so on.",
+    "order": "Open",
+    "combatFactors": {
+      "rangedCombat": {
+        "shooting": 0,
+        "shotAt": 3
+      },
+      "closeCombat": {
+        "vsFoot": 2,
+        "vsMounted": 1
+      }
+    }
+  }
+]

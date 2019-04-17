@@ -2,7 +2,7 @@
 
 module.exports = {
     data: {
-        badId: 'FFFFFFFFFFFFFFFFFFFFFFFF'
+        nonexistentId: 'FFFFFFFFFFFFFFFFFFFFFFFF'
     },
     credentials: {
         admin: {

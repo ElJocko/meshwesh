@@ -40,7 +40,7 @@ exports.retrieveById = function(req, res) {
     thematicCategoryService.retrieveById(req.params.categoryId, function(err, category) {
         if (err) {
             if (err.message === thematicCategoryService.errors.badlyFormattedParameter) {
-                logger.warn('Badly formatted category id');
+                logger.warn('Badly formatted category id: ' + req.params.categoryId);
                 return res.status(400).send('Category id is badly formatted.');
             }
             else {

@@ -1,7 +1,16 @@
 'use strict';
 
+const categoryIdSubschema = {
+    type: 'string',
+    format: 'alphanumeric',
+    minLength: 24,
+    maxLength: 24,
+    required: true
+};
+
 // Schemas for validating requests
 exports.retrieveByQuery = {
+    params: { additionalProperties: false },
     body: { additionalProperties: false },
     query: {
         type: 'object',
@@ -12,6 +21,7 @@ exports.retrieveByQuery = {
 };
 
 exports.create = {
+    params: { additionalProperties: false },
     body: {
         type:'object',
         properties: {
@@ -23,11 +33,25 @@ exports.create = {
 };
 
 exports.retrieveById = {
+    params: {
+        type: 'object',
+        properties: {
+            categoryId: categoryIdSubschema
+        },
+        additionalProperties: false
+    },
     body: { additionalProperties: false },
     query: { additionalProperties: false }
 };
 
 exports.update = {
+    params: {
+        type: 'object',
+        properties: {
+            categoryId: categoryIdSubschema
+        },
+        additionalProperties: false
+    },
     body: {
         type: 'object',
         properties: {
@@ -40,6 +64,13 @@ exports.update = {
 };
 
 exports.delete = {
+    params: {
+        type: 'object',
+        properties: {
+            categoryId: categoryIdSubschema
+        },
+        additionalProperties: false
+    },
     body: { additionalProperties: false },
     query: { additionalProperties: false }
 };

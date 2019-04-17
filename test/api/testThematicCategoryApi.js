@@ -26,10 +26,16 @@ const newThematicCategory = {
 };
 let newThematicCategoryId = null;
 
+const invalidIds = [
+    '12345',
+    encodeURIComponent("{'$gte': '' }")
+];
+
 const invalidThematicCategories = [
     { },
     { name: '' },
-    { themeName: 'Mongol Sky' }
+    { themeName: 'Mongol Sky' },
+    { name: { '$gte': '' }}
 ];
 
 let updateName = {
@@ -105,25 +111,26 @@ config.testRoles.forEach(function(role) {
         });
 
         describe('retrieve a thematic category', function () {
-            it('should not retrieve a thematic category with a badly formatted id', function (done) {
-                const apiPath = path.join('/api', apiVersion, 'thematicCategories', '12345');
-                request(serverUrl)
-                    .get(apiPath)
-                    .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
-                    .send()
-                    .expect(400)
-                    .end(function (err, res) {
-                        if (err) {
-                            done(err);
-                        }
-                        else {
-                            done();
-                        }
-                    });
+            invalidIds.forEach(function(invalidId) {
+                it('should not retrieve a thematic category with a badly formatted id', function (done) {
+                    const apiPath = path.join('/api', apiVersion, 'thematicCategories', invalidId);
+                    request(serverUrl)
+                        .get(apiPath)
+                        .set(userToken ? {'PRIVATE-TOKEN': userToken} : {})
+                        .send()
+                        .expect(400)
+                        .end(function (err, res) {
+                            if (err) {
+                                done(err);
+                            } else {
+                                done();
+                            }
+                        });
+                });
             });
 
             it('should not retrieve a thematic category with a non-existent id', function (done) {
-                const apiPath = path.join('/api', apiVersion, 'thematicCategories', config.data.badId);
+                const apiPath = path.join('/api', apiVersion, 'thematicCategories', config.data.nonexistentId);
                 request(serverUrl)
                     .get(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
@@ -161,21 +168,23 @@ config.testRoles.forEach(function(role) {
         });
 
         describe('retrieve the army lists associated with a thematic category', function () {
-            it('should not retrieve army lists with a badly formatted id', function (done) {
-                const apiPath = path.join('/api', apiVersion, 'thematicCategories', '12345', '/armyLists');
-                request(serverUrl)
-                    .get(apiPath)
-                    .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
-                    .send()
-                    .expect(400)
-                    .end(function (err, res) {
-                        if (err) {
-                            done(err);
-                        }
-                        else {
-                            done();
-                        }
-                    });
+            invalidIds.forEach(function(invalidId) {
+                it('should not retrieve army lists with a badly formatted id', function (done) {
+                    const apiPath = path.join('/api', apiVersion, 'thematicCategories', invalidId, '/armyLists');
+                    request(serverUrl)
+                        .get(apiPath)
+                        .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
+                        .send()
+                        .expect(400)
+                        .end(function (err, res) {
+                            if (err) {
+                                done(err);
+                            }
+                            else {
+                                done();
+                            }
+                        });
+                });
             });
 
             it('should retrieve army lists', function (done) {

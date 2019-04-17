@@ -8,6 +8,10 @@ const credentials = require('../config/credentials');
 const config = require('../config/config');
 
 const armyListService = require('../../app/services/armyListService');
+const testData = require('../data/army-lists');
+
+const troopTypeService = require('../../app/services/troopTypeService');
+const troopTypeTestData = require('../data/troop-types');
 
 const path = require('path');
 const request = require('supertest');
@@ -48,6 +52,22 @@ config.testRoles.forEach(function(role) {
                 // Don't need to sign in if we don't have credentials for this role
                 return done();
             }
+        });
+
+        before(function (done) {
+            // Reset the database (army lists)
+            armyListService.import({ data: testData }, function(err, importSummary) {
+                assert.ifError(err);
+                done();
+            });
+        });
+
+        before(function (done) {
+            // Reset the database (troop types)
+            troopTypeService.import({ data: troopTypeTestData }, function(err, importSummary) {
+                assert.ifError(err);
+                done();
+            });
         });
 
         describe('retrieve the list of army lists', function () {
@@ -96,7 +116,7 @@ config.testRoles.forEach(function(role) {
             });
 
             it('should not retrieve an army list with a non-existent id', function (done) {
-                const apiPath = path.join('/api', apiVersion, 'armyLists', config.data.badId);
+                const apiPath = path.join('/api', apiVersion, 'armyLists', config.data.nonexistentId);
                 request(serverUrl)
                     .get(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
