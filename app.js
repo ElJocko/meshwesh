@@ -26,6 +26,10 @@ var app = express();
 var compression = require('compression');
 app.use(compression());
 
+// Set HTTP response headers
+const helmet = require("helmet");
+app.use(helmet());
+
 // Establish the database connection
 logger.info('Setting up the database connection');
 var dbConnection = require('./app/lib/dbConnection');
