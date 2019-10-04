@@ -4,7 +4,6 @@ const thematicCategoryService = require('./thematicCategoryService');
 const ArmyList = require('../models/armyListModel');
 const AllyArmyList = require('../models/allyArmyListModel');
 const ThematicCategory = require('../models/thematicCategoryModel');
-const GrandArmyList = require('../models/grandArmyListModel');
 const EnemyXref = require('../models/enemyXrefModel');
 const ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
 const TroopType = require('../models/troopTypeModel');

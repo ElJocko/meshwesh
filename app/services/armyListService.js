@@ -4,7 +4,6 @@ var thematicCategoryService = require('./thematicCategoryService');
 var ArmyList = require('../models/armyListModel');
 var AllyArmyList = require('../models/allyArmyListModel');
 var ThematicCategory = require('../models/thematicCategoryModel');
-var GrandArmyList = require('../models/grandArmyListModel');
 var EnemyXref = require('../models/enemyXrefModel');
 var ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
 var transform = require('../models/lib/transform');
@@ -435,14 +434,13 @@ exports.import = function(importRequest, callback) {
             return cb(null, { armyList: null, error: 'Unable to create ArmyList document' });
         }
 
-        // Add thematic categories and grand army list and save
+        // Add thematic categories and save
         async.waterfall([
             function(cb) {
                 // initialize the waterfall
                 return cb(null, document, armyListData.thematicCategories);
             },
             setThematicCategories,
-            setGrandArmyList,
             saveDocument
         ],
         function(err, result) {
@@ -504,22 +502,6 @@ exports.import = function(importRequest, callback) {
             function(err) {
                 cb(err, armyList);
             });
-    }
-
-    function setGrandArmyList(document, cb) {
-        var query = { listId: document.listId };
-        GrandArmyList.find(query, function(err, documents) {
-            if (err) {
-                return cb(err);
-            }
-            else {
-                if (documents.length > 0) {
-                    var grandArmyList = documents[0];
-                    document.grandArmyList = grandArmyList._id;
-                }
-                return cb(null, document);
-            }
-        });
     }
 
     function saveDocument(document, cb) {

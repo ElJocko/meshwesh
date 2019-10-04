@@ -13,7 +13,6 @@ const bodyParser = require('body-parser');
 
 const bookRoutes = require('./bookRoutes');
 const thematicCategoryRoutes = require('./thematicCategoryRoutes');
-const grandArmyListRoutes = require('./grandArmyListRoutes');
 const armyListRoutes = require('./armyListRoutes');
 const allyArmyListRoutes = require('./allyArmyListRoutes');
 const troopTypeRoutes = require('./troopTypeRoutes');
@@ -32,7 +31,6 @@ router.use('/api', bodyParser.urlencoded({ limit: '1mb', extended: true }));
 // Set up the routes
 router.use('/api', bookRoutes);
 router.use('/api', thematicCategoryRoutes);
-router.use('/api', grandArmyListRoutes);
 router.use('/api', armyListRoutes);
 router.use('/api', allyArmyListRoutes);
 router.use('/api', troopTypeRoutes);

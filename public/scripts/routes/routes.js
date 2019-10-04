@@ -45,21 +45,6 @@ function router($routeProvider, $locationProvider) {
             controller:'ThematicCategoryEditController',
             controllerAs: 'vm'
         })
-        .when('/grandArmyList/summary', {
-            templateUrl:'/views/grandArmyListSummary.html',
-            controller:'GrandArmyListSummaryController',
-            controllerAs: 'vm'
-        })
-        .when('/grandArmyList/:listId/edit', {
-            templateUrl:'/views/grandArmyListEdit.html',
-            controller:'GrandArmyListEditController',
-            controllerAs: 'vm'
-        })
-        .when('/grandArmyList/create', {
-            templateUrl:'/views/grandArmyListEdit.html',
-            controller:'GrandArmyListEditController',
-            controllerAs: 'vm'
-        })
         .when('/armyList/summary', {
             templateUrl:'/views/armyListSummary.html',
             controller:'ArmyListSummaryController',
@@ -122,11 +107,6 @@ function router($routeProvider, $locationProvider) {
         .when('/armyList/import', {
             templateUrl:'/views/armyListImport.html',
             controller:'ArmyListImportController',
-            controllerAs: 'vm'
-        })
-        .when('/grandArmyList/import', {
-            templateUrl:'/views/grandArmyListImport.html',
-            controller:'GrandArmyListImportController',
             controllerAs: 'vm'
         })
         .when('/troopOptions/import', {

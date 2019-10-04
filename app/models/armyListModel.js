@@ -16,7 +16,6 @@ const ArmyListSchema = new mongoose.Schema({
     sublistId: { type: String },
     sortId: { type: Number },
     keywords: [ String ],
-    grandArmyList: { type: mongoose.Schema.Types.ObjectId, ref: 'GrandArmyList' },
     invasionRatings: [ AnnotatedRating ],
     maneuverRatings: [ AnnotatedRating ],
     homeTopographies: [ AnnotatedTopography ],

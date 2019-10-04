@@ -6,9 +6,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListExploreController', ArmyListExploreController);
 
-ArmyListExploreController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
+ArmyListExploreController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'TroopOptionsAnalysisService'];
 
-function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
+function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, TroopOptionsAnalysisService) {
     var vm = this;
 
     vm.loading = {
@@ -325,7 +325,6 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
             // New army list
             vm.armyList = {
                 name: "",
-                grandArmyList: null,
                 dateRanges: [],
                 invasionRating: [],
                 maneuverRating: []

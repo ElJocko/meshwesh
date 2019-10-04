@@ -4,9 +4,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListEditController', ArmyListEditController);
 
-ArmyListEditController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'GrandArmyListService', 'TroopOptionsAnalysisService'];
+ArmyListEditController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'TroopOptionsAnalysisService'];
 
-function ArmyListEditController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, GrandArmyListService, TroopOptionsAnalysisService) {
+function ArmyListEditController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, TroopOptionsAnalysisService) {
     var vm = this;
 
     vm.totalMinMax = {
@@ -169,13 +169,9 @@ function ArmyListEditController($route, $location, $q, $uibModal, uiGridConstant
             armyListPromise = ArmyListService.get({ id: listId }).$promise;
         }
 
-        // Get the grand army lists
-        var grandArmyListsPromise = GrandArmyListService.list().$promise;
-
         // Handle the response after the services complete
         var servicePromises = {
-            armyList: armyListPromise,
-            grandArmyLists: grandArmyListsPromise
+            armyList: armyListPromise
         };
 
         $q
@@ -184,27 +180,11 @@ function ArmyListEditController($route, $location, $q, $uibModal, uiGridConstant
     }
 
     function handleResponse(results) {
-        // Default to no grand army list selected
-        vm.galSelected = null;
-
-        // We should always get an array of grand army lists
-        vm.grandArmyLists = results.grandArmyLists;
 
         // Handle new or existing army list
         if (listId) {
             // Existing army list
             vm.armyList = results.armyList;
-
-            // Find the grand army list that the army list belongs to
-            if (vm.armyList.grandArmyList) {
-                var galIndex = _.findIndex(vm.grandArmyLists, function (element) {
-                    return (element.id === vm.armyList.grandArmyList);
-                });
-
-                if (galIndex !== -1) {
-                    vm.galSelected = vm.grandArmyLists[galIndex];
-                }
-            }
         }
         else {
             // New army list
