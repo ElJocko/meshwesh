@@ -1,19 +1,20 @@
 {
   "name": "meshwesh",
   "description": "Army List Manager",
-  "version": "0.5.12",
+  "version": "0.5.13",
   "engines": {
-    "node": "10.15.3"
+    "node": "10.16.3"
   },
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/start-prod-server.js",
     "postinstall": "webpack",
-    "server-api-test": "mocha test/api",
-    "client-unit-test": "karma start",
+    "test:server-api": "mocha test/api",
+    "test:client-unit": "karma start",
     "start-webdriver": "./node_modules/.bin/webdriver-manager start",
-    "client-ui-test": "protractor",
-    "vulnerability-check": "./node_modules/.bin/snyk test --insecure"
+    "test:client-ui": "protractor",
+    "check:openApi": "swagger-cli validate ./app/routes/openApiSpecs/api.yaml",
+    "check:vulnerability": "./node_modules/.bin/snyk test --insecure"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,7 @@
     "dotenv": "^1.2.0",
     "express": "^4.17.1",
     "express-jsonschema": "^1.1.0",
-    "helmet": "^3.20.1",
+    "helmet": "^3.21.1",
     "jquery": "^3.4.1",
     "jwt-simple": "^0.5.6",
     "lodash": "^4.17.15",
@@ -63,6 +64,7 @@
     "protractor": "^5.4.2",
     "snyk": "^1.221.1",
     "supertest": "^1.1.0",
+    "swagger-cli": "^2.3.1",
     "webpack": "^3.12.0"
   }
 }
