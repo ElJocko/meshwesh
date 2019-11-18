@@ -28,18 +28,6 @@
 <!-- Status and Description -->
 <div class="row">
     <div class="col-xs-12">
-        <div class="hidden-xs">
-            <h2 ng-class="vm.armyList.statusType">
-                <span ng-bind="vm.armyList.statusDisplayText"></span>
-                <span class="h4" ng-bind="vm.armyList.statusDisplaySubtext"></span>
-            </h2>
-        </div>
-        <div class="visible-xs">
-            <h2 ng-class="vm.armyList.statusType">
-                <span ng-bind="vm.armyList.statusDisplayText"></span></br>
-                <span class="h4" ng-bind="vm.armyList.statusDisplaySubtext"></span>
-            </h2>
-        </div>
         <div ng-hide="!vm.armyList.description">
             <div class="content-subheader">Description</div>
             <div>
