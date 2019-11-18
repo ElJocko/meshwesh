@@ -7,6 +7,7 @@ const TroopEntryGroup = require('./subschemas/troopEntryGroupSchema');
 const AnnotatedRating = require('./subschemas/annotatedRatingSchema');
 const AnnotatedTopography = require('./subschemas/annotatedTopographySchema');
 const AllyOption = require('./subschemas/allyOptionSchema');
+const ArmyBattleCardEntry = require('./subschemas/armyBattleCardEntrySchema');
 const transform = require('./lib/transform');
 
 // Create the schema
@@ -26,6 +27,7 @@ const ArmyListSchema = new mongoose.Schema({
     troopEntriesForGeneral: [ TroopEntryGroup ],
     status: { type: String },
     allyOptions: [ AllyOption ],
+    armyBattleCardEntries: [ ArmyBattleCardEntry ],
     derivedData: {
         extendedName: { type: String },
         listStartDate: { type: Number },
