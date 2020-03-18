@@ -93,6 +93,20 @@
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
+
+            <!-- Army Battle Cards -->
+            <div class="col-xs-12">
+                <div class="content-subheader">Army Battle Cards</div>
+                <table>
+                    <tr ng-repeat="battleCardEntry in vm.armyList.armyBattleCardEntries">
+                        <td class="battle-card-entry">
+                            <span>{{ battleCardEntry | mwDisplayBattleCardEntriesList }}</span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
+                <div class="battle-card-none-entry" ng-show="vm.armyList.armyBattleCardEntries.length === 0">None</div>
+            </div>
         </div>
     </div>
 </div>

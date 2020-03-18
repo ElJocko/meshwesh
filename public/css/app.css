@@ -254,6 +254,20 @@ td.general-priority-entry {
     vertical-align: top;
 }
 
+td.battle-card-entry {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding-left: 15px;
+    vertical-align: top;
+}
+
+.battle-card-none-entry {
+    font-size: 1.2em;
+    padding-left: 15px;
+    vertical-align: top;
+    font-style: oblique;
+}
+
 table.troop-options {
     table-layout: fixed;
     margin-bottom: 0;

@@ -581,6 +581,7 @@ exports.importTroopOptions = function(importRequest, callback) {
                         armyList.showTroopOptionDescriptions = armyListData.showTroopOptionDescriptions;
                         armyList.status = armyListData.status;
                         armyList.allyOptions = armyListData.allyOptions;
+                        armyList.armyBattleCardEntries = armyListData.armyBattleCardEntries;
                         armyList.save(function(err, savedArmyList) {
                             if (err) {
                                 console.log('failed to update ' + armyList.name);
