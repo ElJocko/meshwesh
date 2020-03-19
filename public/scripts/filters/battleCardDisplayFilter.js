@@ -37,18 +37,8 @@ function BattleCardEntriesListFilter(BattleCardService) {
             var display = '';
 
             var battleCardType = _.find(battleCardData, { 'permanentCode': input.battleCardCode });
-
-            var note = null;
-            if (input.note) {
-                note = ' (' + input.note + ')';
-            }
-
             if (battleCardType) {
-                display = display + battleCardType.displayName;
-
-                if (note) {
-                    display = display + note;
-                }
+                display = battleCardType.displayName;
             }
 
             return display;

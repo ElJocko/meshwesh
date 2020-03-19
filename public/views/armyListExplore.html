@@ -93,19 +93,20 @@
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
                 <div class="empty-table-message" ng-show="vm.armyList.troopEntriesForGeneral.length === 0">General not entered</div>
             </div>
-
             <!-- Army Battle Cards -->
             <div class="col-xs-12">
                 <div class="content-subheader">Army Battle Cards</div>
                 <table>
                     <tr ng-repeat="battleCardEntry in vm.armyList.armyBattleCardEntries">
+                        <td class="battle-card-minmax">0-1</td>
                         <td class="battle-card-entry">
                             <span>{{ battleCardEntry | mwDisplayBattleCardEntriesList }}</span>
                         </td>
+                        <td class="battle-card-note">{{ battleCardEntry.note }}</td>
                     </tr>
                 </table>
                 <div class="empty-table-message" ng-show="vm.loading.armyList">Loading...</div>
-                <div class="battle-card-none-entry" ng-show="vm.armyList.armyBattleCardEntries.length === 0">None</div>
+                <div class="battle-card-none" ng-show="vm.armyList.armyBattleCardEntries.length === 0">None</div>
             </div>
         </div>
     </div>
@@ -148,6 +149,7 @@
                     <th class="troop-options-minmax">Min</th>
                     <th class="troop-options-minmax">Max</th>
                     <th class="troop-options-battleline">Battle Line</th>
+                    <th class="troop-options-battlecard">Battle Cards</th>
                     <th class="troop-options-restrictions">Restrictions</th>
                 </tr>
                 <tbody>
@@ -164,6 +166,11 @@
                     <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
                     <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                     <td class="troop-options-battleline">{{ troopOption.core | mwDisplayCore }}</td>
+                    <td class="troop-options-battlecard">
+                        {{ troopOption.battleCardEntry | mwDisplayBattleCardEntriesList }}
+                        </br>
+                        <span><em>{{ troopOption.battleCardEntry.note }}</em></span>
+                    </td>
                     <td class="troop-options-restrictions">
                         {{ troopOption.dateRange | mwDisplayDateRange }}
                         <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
@@ -197,6 +204,14 @@
                         <tr>
                             <td class="troop-options-header-xs">Battle Line:</td>
                             <td class="troop-options-value-xs">{{ troopOption.core | mwDisplayCore }}</td>
+                        </tr>
+                        <tr ng-show="troopOption.battleCardEntry">
+                            <td class="troop-options-header-xs">Battle Cards:</td>
+                            <td class="troop-options-value-xs">
+                                {{ troopOption.battleCardEntry | mwDisplayBattleCardEntriesList }}
+                                </br>
+                                <span><em>{{ troopOption.battleCardEntry.note }}</em></span>
+                            </td>
                         </tr>
                         <tr ng-show="troopOption.dateRange || troopOption.note">
                             <td class="troop-options-header-xs">Restrictions:</td>

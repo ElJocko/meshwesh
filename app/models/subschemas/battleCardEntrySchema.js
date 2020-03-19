@@ -3,16 +3,18 @@
 var mongoose = require('mongoose');
 
 // Create the schema
-var ArmyBattleCardEntrySchema = new mongoose.Schema({
+var BattleCardEntrySchema = new mongoose.Schema({
+    min: { type: Number },
+    max: { type: Number },
     battleCardCode: { type: String, required: true },
     note: { type: String }
 });
 
-ArmyBattleCardEntrySchema.set('toObject', {
+BattleCardEntrySchema.set('toObject', {
     transform: function (doc, ret, options) {
         ret.id = ret._id.toHexString();
         delete ret._id;
     }
 });
 
-module.exports = ArmyBattleCardEntrySchema;
+module.exports = BattleCardEntrySchema;

@@ -254,14 +254,26 @@ td.general-priority-entry {
     vertical-align: top;
 }
 
+td.battle-card-minmax {
+    font-size: 1.1em;
+    padding-left: 15px;
+    vertical-align: baseline;
+}
+
 td.battle-card-entry {
     font-size: 1.2em;
     font-weight: 600;
-    padding-left: 15px;
-    vertical-align: top;
+    padding-left: 8px;
+    vertical-align: baseline;
 }
 
-.battle-card-none-entry {
+td.battle-card-note {
+    font-size: 1.1em;
+    padding-left: 15px;
+    vertical-align: baseline;
+}
+
+.battle-card-none {
     font-size: 1.2em;
     padding-left: 15px;
     vertical-align: top;
@@ -287,6 +299,11 @@ th.troop-options-battleline {
     text-align: center;
 }
 
+th.troop-options-battlecard {
+    width: 150px;
+    text-align: left;
+}
+
 th.troop-options-restrictions {
     min-width: 80px;
     text-align: left;
@@ -300,6 +317,11 @@ td.troop-options-minmax {
 td.troop-options-battleline {
     width: 120px;
     text-align: center;
+}
+
+td.troop-options-battlecard {
+    width: 150px;
+    text-align: left;
 }
 
 td.troop-options-restrictions {

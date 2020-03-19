@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var DateRange = require('./dateRangeSchema');
 var TroopEntry = require('./troopEntrySchema');
+var BattleCardEntry = require('./battleCardEntrySchema');
 
 // Create the schema
 var TroopOptionSchema = new mongoose.Schema({
@@ -12,7 +13,8 @@ var TroopOptionSchema = new mongoose.Schema({
     troopEntries: [ TroopEntry ],
     description: { type: String },
     note: { type: String },
-    core: { type: String }
+    core: { type: String },
+    battleCardEntry: { type: BattleCardEntry },
 });
 
 TroopOptionSchema.set('toObject', {

@@ -94,7 +94,8 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     console.log('No general found: ' + item.general + ' in list ' + item.listId + '/' + item.sublistId );
                                 }
 
-                                armyListData.armyBattleCardEntries = parseBattleCards(item.armyBattleCards, item.armyName);
+                                // Parse the first set of army battle cards
+                                armyListData.battleCardEntries = parseBattleCards(item.armyBattleCards, item.armyName);
 
                                 // Status defaults to 'Draft'
                                 if (!armyListData.status) {
@@ -120,8 +121,9 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 // This row has a battle card
                                 const battleCardName = item.troopEntries;
                                 const battleCardDescription = item.description;
+                                const battleCardRange = item.minMax;
 
-                                //console.log('Battle Card found: ' + battleCardName + ', ' + battleCardDescription);
+                                console.log(`Army Battle Card found: ${ battleCardRange } ${ battleCardName } (${ battleCardDescription })`);
                             }
                             else if (item.armyName && isInternalAlly(item.sublistId) && !item.troopOptionOrder) {
                                 // This row has an internal ally
@@ -164,7 +166,8 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     troopEntries: [],
                                     description: item.description,
                                     note: '',
-                                    core: ''
+                                    core: '',
+                                    battleCardEntry: null
                                 };
 
                                 var allyTroopOption = {
@@ -251,6 +254,18 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 }
                                 else if (item.core.length > 0) {
                                     console.warn('Core contained unexpected text: ' + item.core);
+                                }
+
+                                // Check for a battle card
+                                if (item.armyBattleCards) {
+                                    var battleCardList = parseBattleCards(item.armyBattleCards, item.armyName);
+
+                                    if (battleCardList.length === 1) {
+                                        troopOption.battleCardEntry = battleCardList[0];
+                                    }
+                                    else if (battleCardList.length > 1) {
+                                        console.log(`Found more than one battle card for troop option!!!`);
+                                    }
                                 }
 
                                 // If the troop option is valid, add it to the parsed data
