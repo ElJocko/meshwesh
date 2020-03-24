@@ -300,12 +300,12 @@ th.troop-options-battleline {
 }
 
 th.troop-options-battlecard {
-    width: 150px;
+    min-width: 160px;
     text-align: left;
 }
 
 th.troop-options-restrictions {
-    min-width: 80px;
+    min-width: 180px;
     text-align: left;
 }
 
@@ -320,12 +320,12 @@ td.troop-options-battleline {
 }
 
 td.troop-options-battlecard {
-    width: 150px;
+    min-width: 160px;
     text-align: left;
 }
 
 td.troop-options-restrictions {
-    min-width: 80px;
+    min-width: 180px;
     text-align: left;
 }
 

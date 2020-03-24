@@ -14,7 +14,7 @@ var TroopOptionSchema = new mongoose.Schema({
     description: { type: String },
     note: { type: String },
     core: { type: String },
-    battleCardEntry: { type: BattleCardEntry },
+    battleCardEntries: [ BattleCardEntry ],
 });
 
 TroopOptionSchema.set('toObject', {

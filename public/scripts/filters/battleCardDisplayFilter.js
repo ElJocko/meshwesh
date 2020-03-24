@@ -1,6 +1,7 @@
 angular
     .module('meshweshFilters')
-    .filter('mwDisplayBattleCardEntriesList', BattleCardEntriesListFilter);
+    .filter('mwDisplayBattleCardEntriesList', BattleCardEntriesListFilter)
+    .filter('mwDisplayBattleCardMinMax', BattleCardMinMaxFilter);
 
 BattleCardEntriesListFilter.$inject = ['BattleCardService'];
 
@@ -46,4 +47,36 @@ function BattleCardEntriesListFilter(BattleCardService) {
     }
 
     return battleCardsListFilter;
+}
+
+function BattleCardMinMaxFilter() {
+    var placeholder = '';
+
+    function BattleCardMinMaxFilter(input) {
+        if (!input) {
+            return '';
+        }
+
+        var display = battleCardsMinMaxFilterFunction(input);
+        return display;
+
+        function battleCardsMinMaxFilterFunction(input) {
+            var display = '';
+
+            if (input.min === 0) {
+                display = '0';
+            }
+            else if (input.min) {
+                display = display + input.min;
+            }
+
+            if (input.max) {
+                display = display + '-' + input.max;
+            }
+
+            return display;
+        }
+    }
+
+    return BattleCardMinMaxFilter;
 }

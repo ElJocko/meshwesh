@@ -58,14 +58,18 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                         var allyTroopOptionsArray = [];
                         var armyListArray = [];
                         var allyOptionsArray = [];
+                        var armyBattleCardsArray = [];
                         var errorRows = 0;
+
+                        var lastArmyName;
+
                         results.data.forEach(function(item) {
                             // Determine the category for each row
                             if (item.general && item.general.length > 0) {
                                 // This row has army list information
-                                if (item.armyBattleCards) {
-                                    //console.log(`Army: ${ item.armyName }, Battle Cards: ${ item.armyBattleCards }`);
-                                }
+
+                                // Save this for error messages
+                                lastArmyName = item.armyName;
 
                                 // Initialize the army list
                                 var armyListData = {
@@ -94,7 +98,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     console.log('No general found: ' + item.general + ' in list ' + item.listId + '/' + item.sublistId );
                                 }
 
-                                // Parse the first set of army battle cards
+                                // Parse the army battle cards I
                                 armyListData.battleCardEntries = parseBattleCards(item.armyBattleCards, item.armyName);
 
                                 // Status defaults to 'Draft'
@@ -117,13 +121,38 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                 armyListArray.push(armyListData);
                                 vm.allyArmyListArray.push(allyArmyListData);
                             }
-                            else if (item.armyName == 'Battle Cards' && !item.troopOptionOrder) {
-                                // This row has a battle card
+                            else if (item.armyName === 'Battle Cards' && !item.troopOptionOrder) {
+                                // This row has an army battle card II
+                                const battleCardRange = item.minMax;
                                 const battleCardName = item.troopEntries;
                                 const battleCardDescription = item.description;
-                                const battleCardRange = item.minMax;
 
-                                console.log(`Army Battle Card found: ${ battleCardRange } ${ battleCardName } (${ battleCardDescription })`);
+                                const battleCardEntry = {
+                                    battleCardCode: lookupBattleCardCode(battleCardName),
+                                    note: battleCardDescription,
+                                    listId: item.listId,
+                                    sublistId: item.sublistId
+                                };
+
+                                // Convert minMax
+                                if (item.minMax) {
+                                    var battleCardMinMaxValues = item.minMax.split('-');
+                                    if (battleCardMinMaxValues.length === 1) {
+                                        battleCardEntry.min = battleCardMinMaxValues[0];
+                                        battleCardEntry.max = battleCardMinMaxValues[0];
+                                    }
+                                    else if (battleCardMinMaxValues.length === 2) {
+                                        battleCardEntry.min = battleCardMinMaxValues[0];
+                                        battleCardEntry.max = battleCardMinMaxValues[1];
+                                    }
+                                }
+
+                                if (battleCardEntry.battleCardCode) {
+                                    armyBattleCardsArray.push(battleCardEntry);
+                                }
+                                else {
+                                    console.log(`Did not find battle card (II) for ${ battleCardName } in ${ lastArmyName }`);
+                                }
                             }
                             else if (item.armyName && isInternalAlly(item.sublistId) && !item.troopOptionOrder) {
                                 // This row has an internal ally
@@ -167,7 +196,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     description: item.description,
                                     note: '',
                                     core: '',
-                                    battleCardEntry: null
+                                    battleCardEntries: []
                                 };
 
                                 var allyTroopOption = {
@@ -256,16 +285,9 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     console.warn('Core contained unexpected text: ' + item.core);
                                 }
 
-                                // Check for a battle card
+                                // Check for troop option battle cards
                                 if (item.armyBattleCards) {
-                                    var battleCardList = parseBattleCards(item.armyBattleCards, item.armyName);
-
-                                    if (battleCardList.length === 1) {
-                                        troopOption.battleCardEntry = battleCardList[0];
-                                    }
-                                    else if (battleCardList.length > 1) {
-                                        console.log(`Found more than one battle card for troop option!!!`);
-                                    }
+                                    troopOption.battleCardEntries = parseBattleCards(item.armyBattleCards, lastArmyName, ';,');
                                 }
 
                                 // If the troop option is valid, add it to the parsed data
@@ -376,6 +398,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                         console.log('Converted ' + allyTroopOptionsArray.length + ' ally troop option rows.');
                         console.log('Found ' + allyOptionsArray.length + ' ally options.');
                         console.log('Found ' + vm.allyArmyListArray.length + ' ally army lists.');
+                        console.log('Found ' + armyBattleCardsArray.length + ' army battle cards II rows.');
 
                         // Convert the flat array of troop options into an array of army lists with troop options
 
@@ -458,6 +481,25 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                             }
                         });
 
+                        // Fifth, copy the army battle cards II to the matching army list
+                        armyBattleCardsArray.forEach(function(battleCardEntry) {
+                            var armyListFound = false;
+                            vm.parsedData.forEach(function(armyList) {
+                                if (armyList.listId === battleCardEntry.listId && armyList.sublistId === battleCardEntry.sublistId) {
+                                    // Make sure the array exists
+                                    if (!armyList.battleCardEntries) {
+                                        armyList.battleCardEntries = [];
+                                    }
+                                    armyList.battleCardEntries.push(battleCardEntry);
+                                    armyListFound = true;
+                                }
+                            });
+
+                            if (!armyListFound) {
+                                console.log('Unable to find army list for battle card entry ' + battleCardEntry.listId + '/' + battleCardEntry.sublistId);
+                            }
+                        });
+
                         vm.statusMessage1 = 'Found ' + troopOptionsArray.length + ' troop options in ' + vm.parsedData.length + ' army lists in the file.';
                     }
                     else {
@@ -513,13 +555,16 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
         return troopEntries;
     }
 
-    function parseBattleCards(battleCardText, armyName) {
-        // Modify the text, changing commas to bars unless they are inside parentheses
+    function parseBattleCards(battleCardText, armyName, separator) {
+        if (!separator) {
+            separator = ',';
+        }
+        // Modify the text, changing separators to bars unless they are inside parentheses
         var parenFlag = false;
         var modifiedTextArray = [...battleCardText];
         var modifiedText = modifiedTextArray.reduce((acc, val) => {
-            if (val === ',' && !parenFlag) {
-                // Replace the comma with a bar
+            if (separator.indexOf(val) !== -1 && !parenFlag) {
+                // Replace the separator with a bar
                 return acc + '|';
             }
             else {
@@ -539,17 +584,18 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
         // Split each entry into battle card entries
         var battleCardList = modifiedText.split('|');
 
-        // The note is contained in parantheses
+        // Clean and parse the entry text for each battle card
         var parsedBattleCards = battleCardList
             .map(s => s.trim())  // Trim the whitespace
             .filter(Boolean) // Remove empty strings
             .map(parseBattleCardEntryText); // And parse
 
         // Issue warnings for unknown names
-        var warning = [];
+        var warnings = [];
         parsedBattleCards.forEach(function (parsedBattleCard) {
             if (!parsedBattleCard.battleCardCode) {
-                warning.push(`Did not find battle card for ${ parsedBattleCard.battleCardText }`);
+                warnings.push(`Did not find battle card for ${ parsedBattleCard.battleCardText } in ${ armyName }`);
+                console.log(`Original battle card text = ${ battleCardText }`);
             }
         });
 
@@ -558,13 +604,10 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
             .map(extractBattleCardEntry)
             .filter(bc => bc.battleCardCode);
 
-        if (warning.length > 0) {
-            console.log(`Error while parsing battle card for army: ${ armyName }`);
-            console.log(`Battle card text: ${ battleCardText }`);
-            for (const message of warning) {
+        if (warnings.length > 0) {
+            for (const message of warnings) {
                 console.log(message);
             }
-            console.log();
         }
 
         return battleCardEntries;
@@ -641,6 +684,8 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
         // Format: troop//dismount (note)
         var result = {
+            min: null,
+            max: null,
             battleCardText: null,
             battleCardCode: null,
             note: null
@@ -660,6 +705,22 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
             }
         }
 
+        // Check for min-max
+        const regex = /^\d+-\d+/;
+        const minMaxText = entryText.match(regex);
+        if (minMaxText) {
+            var minMaxValues = minMaxText[0].split('-');
+            if (minMaxValues.length === 1) {
+                result.min = minMaxValues[0];
+                result.max = minMaxValues[0];
+            }
+            else if (minMaxValues.length === 2) {
+                result.min = minMaxValues[0];
+                result.max = minMaxValues[1];
+            }
+            entryText = entryText.slice(minMaxText[0].length).trim();
+        }
+
         // Extract the battle card text
         result.battleCardText = entryText.trim();
 
@@ -670,7 +731,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
     }
 
     function extractBattleCardEntry(parsedEntry) {
-        return _.pick(parsedEntry, ['battleCardCode', 'note']);
+        return _.pick(parsedEntry, ['min', 'max', 'battleCardCode', 'note']);
     }
 
     function lookupTypeCode(troopTypeText) {
