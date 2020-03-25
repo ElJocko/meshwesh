@@ -100,7 +100,9 @@
                     <tr ng-repeat="battleCardEntry in vm.armyList.battleCardEntries">
                         <td class="battle-card-minmax">{{ battleCardEntry | mwDisplayBattleCardMinMax }}</td>
                         <td class="battle-card-entry">
-                            <span>{{ battleCardEntry | mwDisplayBattleCardEntriesList }}</span>
+                            <a href="" ng-click="vm.showBattleCardRule(battleCardEntry.battleCardCode)">
+                                {{ battleCardEntry | mwDisplayBattleCardEntriesList }}
+                            </a>
                         </td>
                         <td class="battle-card-note">{{ battleCardEntry.note }}</td>
                     </tr>
@@ -174,7 +176,9 @@
                     <td class="troop-options-battlecard">
                         <div ng-repeat="battleCardEntry in troopOption.battleCardEntries">
                             {{ battleCardEntry | mwDisplayBattleCardMinMax }}
-                            {{ battleCardEntry | mwDisplayBattleCardEntriesList }}
+                            <a href="" ng-click="vm.showBattleCardRule(battleCardEntry.battleCardCode)">
+                                {{ battleCardEntry | mwDisplayBattleCardEntriesList }}
+                            </a>
                             <span ng-if="battleCardEntry.note">
                                 (&#x202F;{{ battleCardEntry.note }}&#x202F;)
                             </span>
@@ -222,7 +226,9 @@
                             <td class="troop-options-battlecard">
                                 <div ng-repeat="battleCardEntry in troopOption.battleCardEntries">
                                     {{ battleCardEntry | mwDisplayBattleCardMinMax }}
-                                    {{ battleCardEntry | mwDisplayBattleCardEntriesList }}
+                                    <a href="" ng-click="vm.showBattleCardRule(battleCardEntry.battleCardCode)">
+                                        {{ battleCardEntry | mwDisplayBattleCardEntriesList }}
+                                    </a>
                                     <span ng-if="battleCardEntry.note">
                                 (&#x202F;{{ battleCardEntry.note }}&#x202F;)
                             </span>

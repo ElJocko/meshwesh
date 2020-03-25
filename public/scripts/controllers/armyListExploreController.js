@@ -432,4 +432,21 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
 
         allyOption.dateRange = overlap;
     }
+
+    vm.showBattleCardRule = showBattleCardRule;
+    function showBattleCardRule(battleCardCode) {
+        console.log(`will show battle card rule for ${ battleCardCode }`);
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: `views/battleCardRules/${ battleCardCode }.html`,
+            controller: 'BattleCardDisplayController',
+            controllerAs: 'vm',
+            resolve: {
+                battleCardCode: function () {
+                    return battleCardCode;
+                }
+            }
+        });
+
+    }
 }

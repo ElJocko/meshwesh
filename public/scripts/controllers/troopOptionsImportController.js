@@ -744,6 +744,11 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
     }
 
     function lookupBattleCardCode(text) {
+        // Fix a data inconsistency
+        if (text && text.toUpperCase() === 'SWORD-ARMED CAVALRY') {
+            text = 'Sword-fighting Cavalry';
+        }
+
         if (text) {
             return battleCards[text.toUpperCase()];
         }
