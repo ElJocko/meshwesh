@@ -1,0 +1,17 @@
+<div class="content row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-8">
+        <div class="content-header">Battle Cards</div>
+        <div>
+            <p>
+                Battle cards provide special rules that can be used when playing with designated armies.
+                They capture some of the unique characteristics of these armies without burdening the main rules with lots of exceptions and special cases.
+                The army lists designate which armies and troops can use battle cards.
+            </p>
+        </div>
+        <div ng-repeat="battleCard in vm.battleCards | orderBy:'displayName'">
+            <div class="content-link">
+                <a href ng-click="vm.showBattleCardRule(battleCard.permanentCode)">{{ battleCard.displayName }}</a>
+            </div>
+        </div>
+    </div>
+</div>

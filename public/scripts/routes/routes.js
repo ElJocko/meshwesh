@@ -129,6 +129,11 @@ function router($routeProvider, $locationProvider) {
             controller:'BattleCardImportController',
             controllerAs: 'vm'
         })
+        .when('/battleCard/summary', {
+            templateUrl:'/views/battleCardSummary.html',
+            controller:'BattleCardSummaryController',
+            controllerAs: 'vm'
+        })
         .when('/export', {
             templateUrl:'/export.html',
             controller:'ExportCtrl'

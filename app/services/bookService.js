@@ -1,10 +1,11 @@
 'use strict';
 
-var ThematicCategory = require('../models/thematicCategoryModel');
-var TroopType = require('../models/troopTypeModel');
-var ArmyList = require('../models/armyListModel');
+const ThematicCategory = require('../models/thematicCategoryModel');
+const TroopType = require('../models/troopTypeModel');
+const ArmyList = require('../models/armyListModel');
+const BattleCard = require('../models/battleCardModel');
 
-var errors = {
+const errors = {
     missingParameter: 'Missing required parameter',
     badlyFormattedParameter: 'Badly formatted parameter',
     duplicateCode: 'Duplicate code',
@@ -13,21 +14,24 @@ var errors = {
 exports.errors = errors;
 
 exports.retrieveByQuery = function(query, callback) {
-    var books = [];
+    const books = [];
 
-    var book = {
+    const book = {
         name: 'Triumph!'
     };
 
-    ThematicCategory.count({ }, function(err, count) {
+    ThematicCategory.count({ }, (err, count) => {
         book.thematicCategoryCount = count;
-        TroopType.count({ }, function(err, count) {
+        TroopType.count({ }, (err, count) => {
             book.troopTypeCount = count;
-            ArmyList.count({ }, function(err, count) {
+            ArmyList.count({ }, (err, count) => {
                 book.armyListCount = count;
-                books.push(book);
+                BattleCard.count({ }, (err, count) => {
+                    book.battleCardCount = count;
+                    books.push(book);
 
-                return callback(null, books);
+                    return callback(null, books);
+                });
             });
         });
     });

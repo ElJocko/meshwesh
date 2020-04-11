@@ -29,5 +29,10 @@ function HomeController($location, BookService) {
     function showArmyListSummary () {
         $location.path('/armyList/summary');
     }
+
+    vm.showBattleCardSummary = showBattleCardSummary;
+    function showBattleCardSummary() {
+        $location.path('/battleCard/summary');
+    }
 }
 
