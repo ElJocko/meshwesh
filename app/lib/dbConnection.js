@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // Bootstrap db connection
-var db = mongoose.connect(config.database.url, { useMongoClient: true });
+mongoose.connect(config.database.url, { useNewUrlParser: true });
 logger.info('Mongoose attempting to connect to ' + config.database.url);
 
 mongoose.connection.on('connected', function () {

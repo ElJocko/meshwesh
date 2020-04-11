@@ -1,5 +1,7 @@
 'use strict';
 
+const uriFormat = require('mongodb-uri');
+
 var crypto = require('crypto');
 
 module.exports = {
@@ -8,7 +10,7 @@ module.exports = {
         hostname: process.env.HOSTNAME
     },
     database: {
-        url: process.env.MONGOLAB_URI || process.env.MONGODB_URL
+        url: encodeMongoURI(process.env.MONGOLAB_URI || process.env.MONGODB_URL)
     },
     app: {
         name: 'meshwesh',
@@ -19,3 +21,11 @@ module.exports = {
         jwtSecret: crypto.randomBytes(40).toString('base64')
     }
 };
+
+function encodeMongoURI (urlString) {
+    if (urlString) {
+        let parsed = uriFormat.parse(urlString);
+        urlString = uriFormat.format(parsed);
+    }
+    return urlString;
+}
