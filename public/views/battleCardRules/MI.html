@@ -1,17 +1,19 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>MOBILE INFANTRY</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Certain troop types are marked in the army lists as being foot troops who begin the battle mounted on carts, mules, camels, or horses.  The troop stands so marked do not gain the ability to fight mounted, but they gain mobility while they are mounted.
-    </p>
-    <p>
-        Such troops must deploy based on a square stand appropriately (with a cart or horses as appropriate) if they wish to start as mobile infantry in this battle; they may also deploy with their normal infantry bases at their commanders’ option.
-    </p>
-    <p>
-        While in mobile form stands function as follows:
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>MOBILE INFANTRY</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Certain troop types are marked in the army lists as being foot troops who begin the battle mounted on carts, mules, camels, or horses.  The troop stands so marked do not gain the ability to fight mounted, but they gain mobility while they are mounted.
+        </p>
+        <p>
+            Such troops must deploy based on a square stand appropriately (with a cart or horses as appropriate) if they wish to start as mobile infantry in this battle; they may also deploy with their normal infantry bases at their commanders’ option.
+        </p>
+        <p>
+            While in mobile form stands function as follows:
         <ul>
             <li>Movement is 6mu in open terrain and 3mu in difficult terrain.
             <li>Archers and Pavises may not engage in missile combat (except as targets)
@@ -20,16 +22,17 @@
             <li>Dismounting mobile infantry replace their square base with their normal infantry stand.  They may not remount in that game.  They may engage in missile combat that turn if an enemy target is close enough.
             <li>If attacked while still in mobile mode the stand fights as its infantry type, but with a -1 combat modifier.  If it loses the subsequent combat then it is converted to the normal foot stand if it survives the combat, after all required results (e.g. fall back) are completed.
         </ul>
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made at deployment.  The choice to dismount is made during movement.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        ½ point per stand (rounded up).
-    </p>
-    <p>
-        This is an “all or none” ability – if a given line in the army list allows the ability, it must be purchased for all such stands or for none of them.  If different lines in the same army list allow this battle card, the choice may be made separately for each line.
-    </p>
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made at deployment.  The choice to dismount is made during movement.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            ½ point per stand (rounded up).
+        </p>
+        <p>
+            This is an “all or none” ability – if a given line in the army list allows the ability, it must be purchased for all such stands or for none of them.  If different lines in the same army list allow this battle card, the choice may be made separately for each line.
+        </p>
+    </div>
 </div>

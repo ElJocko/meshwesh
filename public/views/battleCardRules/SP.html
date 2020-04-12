@@ -1,36 +1,39 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>SUPPORTING BOWMEN</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Certain troop types are marked in the army lists as being “Supportable”, and other stands of bowmen (stands of Skirmishers, Bow Levy, or in rare cases Archers) in the army lists are marked as being capable of being “Supporting Bowmen.”
-    </p>
-    <p>
-        To use this ability it is necessary to remove a minimum number of stands of Supporting Bowmen from the game.  Such stands do not count as lost.
-    </p>
-    <p>
-        Stands that are supported by supporting bowmen fight with a +1 combat modifier in frontal close combat against enemy Warband, Warrior, and any mounted troop types.  There is no benefit if the stand is not in frontal close combat.
-    </p>
-    <p>
-        To gain the benefit, all troops of the Supportable type must have Supporting Bowmen.  Either all troops of the protected type gain protection or none of them; it is not possible to have some protected by supporting bowmen some not protected.  If insufficient stands of Supporting Bowmen exist to provide support for all Supportable stands, none receive support.  For example, two Skirmishers removed would provide support for up to six Supportable Heavy Foot.  If the army had seven stands of Supportable Heavy Foot and only six points of Supporting Bowmen, none of the Heavy Foot could be supported.
-    </p>
-    <p>
-        One stand marked as Supporting Bowmen may protect (support) as many stands of Supportable troops as the point value of the removed stands.  So one stand of Skirmishers removed would support up to three Supportable stands; one stand of Bow Levy would support up to two Supportable stands; and one stand of Archers would support up to four Supportable stands.
-    </p>
-    <p>
-        Any points left over beyond what are needed to provide support for all Supportable stands are lost (cannot be reassigned to any other purpose for that game).
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made at deployment.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        None.
-    </p>
-    <p>
-        This is a free army ability, so long as the other conditions are met.
-    </p>
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>SUPPORTING BOWMEN</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Certain troop types are marked in the army lists as being “Supportable”, and other stands of bowmen (stands of Skirmishers, Bow Levy, or in rare cases Archers) in the army lists are marked as being capable of being “Supporting Bowmen.”
+        </p>
+        <p>
+            To use this ability it is necessary to remove a minimum number of stands of Supporting Bowmen from the game.  Such stands do not count as lost.
+        </p>
+        <p>
+            Stands that are supported by supporting bowmen fight with a +1 combat modifier in frontal close combat against enemy Warband, Warrior, and any mounted troop types.  There is no benefit if the stand is not in frontal close combat.
+        </p>
+        <p>
+            To gain the benefit, all troops of the Supportable type must have Supporting Bowmen.  Either all troops of the protected type gain protection or none of them; it is not possible to have some protected by supporting bowmen some not protected.  If insufficient stands of Supporting Bowmen exist to provide support for all Supportable stands, none receive support.  For example, two Skirmishers removed would provide support for up to six Supportable Heavy Foot.  If the army had seven stands of Supportable Heavy Foot and only six points of Supporting Bowmen, none of the Heavy Foot could be supported.
+        </p>
+        <p>
+            One stand marked as Supporting Bowmen may protect (support) as many stands of Supportable troops as the point value of the removed stands.  So one stand of Skirmishers removed would support up to three Supportable stands; one stand of Bow Levy would support up to two Supportable stands; and one stand of Archers would support up to four Supportable stands.
+        </p>
+        <p>
+            Any points left over beyond what are needed to provide support for all Supportable stands are lost (cannot be reassigned to any other purpose for that game).
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made at deployment.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            None.
+        </p>
+        <p>
+            This is a free army ability, so long as the other conditions are met.
+        </p>
+    </div>
 </div>

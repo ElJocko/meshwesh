@@ -1,27 +1,30 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>PREPARED DEFENSES</h3>
-    <h4>Rules Change</h4>
-    <p>
-        This battle card allows the player to deploy straight linear obstacles, 2mu x 1mu, that count as difficult terrain in all respects.  Such obstacles must be deployed as follows:
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>PREPARED DEFENSES</h3>
+        <h4>Rules Change</h4>
+        <p>
+            This battle card allows the player to deploy straight linear obstacles, 2mu x 1mu, that count as difficult terrain in all respects.  Such obstacles must be deployed as follows:
         <ul>
             <li>They are deployed as part of the Center Deployment (rule 26), with the same restrictions as any Center Deployment troop stands.
             <li>They must be deployed in open terrain
             <li>Obstacles may be deployed in side edge and front corner contact with other obstacles.  If gaps exist between obstacles, such gaps must be at least 4mu.  This is intended to prevent artificially extending the line of obstacles by leaving small gaps between obstacles.
             <li>They are fixed in place and cannot be moved during the battle.  In essence, they are strips of player-placed difficult terrain.
         </ul>
-    </p>
-    <p>
-        Numbers of individual obstacles allowed are described in the army list for each army.
-    </p>
-    <h4>Timing</h4>
-    <p>
-        This battle card is used when Center Deployment troops are placed.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        ½ point per obstacle (round fractions up).
-    </p>
+        </p>
+        <p>
+            Numbers of individual obstacles allowed are described in the army list for each army.
+        </p>
+        <h4>Timing</h4>
+        <p>
+            This battle card is used when Center Deployment troops are placed.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            ½ point per obstacle (round fractions up).
+        </p>
+    </div>
 </div>

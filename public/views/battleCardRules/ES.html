@@ -1,36 +1,39 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>ELEPHANT SCREEN</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Elephant stands in the army list are marked as “Elephant Screen”, and certain troop types are marked in the army lists as being “Screenable.”
-    </p>
-    <p>
-        Stands that are supported by elephant screen fight with a +1 combat modifier in frontal close combat against enemy foot (all types).  There is no benefit if the stand is not in frontal close combat.
-    </p>
-    <p>
-        To gain the benefit, all troops of the Screenable type must have Elephant Screen.  Either all troops of the protected type gain protection or none of them; it is not possible to have some protected by elephant screen and some not protected.  If insufficient stands of Elephants exist to provide support for all Screenable stands, no support is possible.
-    </p>
-    <p>
-        To use this ability it is necessary to remove a minimum number of stands of Elephants from the game.  Such stands do not count as lost.
-    </p>
-    <p>
-        One Elephant stand marked as Elephant Screen may protect (support) up to four stands of Screenable troops. For example, if the army had five stands of Heavy Foot marked as Screenable, two stands of elephants would be required to give the stands the Elephant Screen ability.
-    </p>
-    <p>
-        Any points left over beyond what are needed to provide support for all Supportable stands are lost (cannot be reassigned to any other purpose for that game).
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made at deployment.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        None.
-    </p>
-    <p>
-        This is a free army ability, so long as the other conditions are met.
-    </p>
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>ELEPHANT SCREEN</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Elephant stands in the army list are marked as “Elephant Screen”, and certain troop types are marked in the army lists as being “Screenable.”
+        </p>
+        <p>
+            Stands that are supported by elephant screen fight with a +1 combat modifier in frontal close combat against enemy foot (all types).  There is no benefit if the stand is not in frontal close combat.
+        </p>
+        <p>
+            To gain the benefit, all troops of the Screenable type must have Elephant Screen.  Either all troops of the protected type gain protection or none of them; it is not possible to have some protected by elephant screen and some not protected.  If insufficient stands of Elephants exist to provide support for all Screenable stands, no support is possible.
+        </p>
+        <p>
+            To use this ability it is necessary to remove a minimum number of stands of Elephants from the game.  Such stands do not count as lost.
+        </p>
+        <p>
+            One Elephant stand marked as Elephant Screen may protect (support) up to four stands of Screenable troops. For example, if the army had five stands of Heavy Foot marked as Screenable, two stands of elephants would be required to give the stands the Elephant Screen ability.
+        </p>
+        <p>
+            Any points left over beyond what are needed to provide support for all Supportable stands are lost (cannot be reassigned to any other purpose for that game).
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made at deployment.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            None.
+        </p>
+        <p>
+            This is a free army ability, so long as the other conditions are met.
+        </p>
+    </div>
 </div>

@@ -1,26 +1,29 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-<h3>CHARGING CAMELRY</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Certain troop types in some armies used camels, rather than horses, as a mount of war.  Such fighting camelry stands gain the following:
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>CHARGING CAMELRY</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Certain troop types in some armies used camels, rather than horses, as a mount of war.  Such fighting camelry stands gain the following:
         <ul>
             <li>Fight as their base type (Knights for charging camelry; Cataphracts for armored camelry) with a -1 combat factor in melee (no modifier defending against missiles).
             <li>Dunes and Oasis terrain are treated as open terrain for such stands for all purposes.  Group moves across such terrain are possible only if all stands in the group can group move across Dunes and Oasis (either have this battle card, have the Light Camelry battle card, or are Skirmishers or Rabble).
             <li>Stands with this battle card are not Shattered by enemy Elephants.
         </ul>
-    </p>
-    <h4>Timing</h4>
-    <p>
-        This battle card has a continuous effect throughout the battle.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        -1 point per stand.  For building armies, deployment, and victory conditions these stands count as 3pt stands.
-    </p>
-    <p>
-        This is an “all or none” ability.
-    </p>
+        </p>
+        <h4>Timing</h4>
+        <p>
+            This battle card has a continuous effect throughout the battle.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            -1 point per stand.  For building armies, deployment, and victory conditions these stands count as 3pt stands.
+        </p>
+        <p>
+            This is an “all or none” ability.
+        </p>
+    </div>
 </div>

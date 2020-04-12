@@ -1,19 +1,21 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>CHAINED TOGETHER</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Bad Horse stands with this battle card gain the ability to attack enemy stands in ranged combat as follows:
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>CHAINED TOGETHER</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Bad Horse stands with this battle card gain the ability to attack enemy stands in ranged combat as follows:
         <ul>
             <li>They have an offensive missile combat factor of +2.
             <li>They may not attack using distant shooting if they moved that turn.  They may attack in the enemy’s turn, or if they did not move on their own turn.
             <li>All ranged combat rules apply as normal.
         </ul>
-    </p>
-    <p>
-        In addition to the above (identical to the Shower Shooting battle card), they suffer the following penalties and gain the following abilities as a result of their chained formation:
+        </p>
+        <p>
+            In addition to the above (identical to the Shower Shooting battle card), they suffer the following penalties and gain the following abilities as a result of their chained formation:
         <ul>
             <li>Movement rate of 5mu (-1mu reduction from normal Bad Horse).
             <li>+1 command point to move (as rule 29.3.a).
@@ -22,16 +24,17 @@
             <li>-1 combat factor modification against Rabble or Skirmishers.
             <li>Do not follow up if the enemy is doubled in close combat (like War Wagons, rule 74.2)
         </ul>
-    </p>
-    <h4>Timing</h4>
-    <p>
-        This battle card has a continuous effect throughout the battle.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        +0 point per stand.
-    </p>
-    <p>
-        This is an “all or none” ability.
-    </p>
+        </p>
+        <h4>Timing</h4>
+        <p>
+            This battle card has a continuous effect throughout the battle.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            +0 point per stand.
+        </p>
+        <p>
+            This is an “all or none” ability.
+        </p>
+    </div>
 </div>

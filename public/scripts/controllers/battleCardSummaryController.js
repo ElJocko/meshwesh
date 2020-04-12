@@ -13,7 +13,6 @@ function BattleCardSummaryController($location, $uibModal, BattleCardService) {
 
     vm.showBattleCardRule = showBattleCardRule;
     function showBattleCardRule(battleCardCode) {
-        console.log(`will show battle card rule for ${ battleCardCode }`);
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: `views/battleCardRules/${ battleCardCode }.html`,

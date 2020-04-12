@@ -1,20 +1,22 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>STANDARD WAGON</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Instead of having a camp, armies with this battle card may deploy a Standard Wagon.  Standard here is used in the sense of flag or banner, not in the sense of normal or usual.  The Standard Wagon acts as, and replaces, the camp.  In many ways it acts exactly as a camp:
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>STANDARD WAGON</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Instead of having a camp, armies with this battle card may deploy a Standard Wagon.  Standard here is used in the sense of flag or banner, not in the sense of normal or usual.  The Standard Wagon acts as, and replaces, the camp.  In many ways it acts exactly as a camp:
         <ul>
             <li>It may not move once deployed.
             <li>It fights exactly as a camp.
             <li>It may be garrisoned like a camp.
             <li>If defeated in combat it counts as 8pts lost in addition to any garrison, exactly as a camp.
         </ul>
-    </p>
-    <p>
-        The differences between Standard Wagons and camps are as follows:
+        </p>
+        <p>
+            The differences between Standard Wagons and camps are as follows:
         <ul>
             <li>A Standard Wagon is depicted as a rectangular base 2mu in depth and between 4 and 6 mu wide with a Carroccio or other standard wagon modeled on the base.  The long axis should be positioned parallel to the player’s base edge.
             <li>It is deployed as part of the Central Deployment (i.e., not when camps are normally deployed).
@@ -26,16 +28,17 @@
                 </ul>
             <li>Note that friendly troops cannot pass through a camp.  This means that the camp will block friendly troops falling back, to their possible detriment.
         </ul>
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made when a camp would normally be deployed.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        None.
-    </p>
-    <p>
-        This is a free army ability, so long as the other conditions are met.
-    </p>
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made when a camp would normally be deployed.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            None.
+        </p>
+        <p>
+            This is a free army ability, so long as the other conditions are met.
+        </p>
+    </div>
 </div>

@@ -1,23 +1,26 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>PACK TRAINS AND HERDS</h3>
-    <h4>Rules Change</h4>
-    <p>
-        The camp need not be placed in the center third of the game board.  It must still be placed in contact with the player’s base edge and must still be placed in open terrain.
-    </p>
-    <p>
-        In addition, the army’s camp is deployed when its last troops are deployed (27.2.d or 27.2.e, depending upon whether the player is the disadvantaged player or not), not at the usual time (27.2.a or 27.2.b).
-    </p>
-    <p>
-        Note that such camps still may not move during the battle.
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made at deployment.
-    </p>
-    <h4>Cost</h4>
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>PACK TRAINS AND HERDS</h3>
+        <h4>Rules Change</h4>
+        <p>
+            The camp need not be placed in the center third of the game board.  It must still be placed in contact with the player’s base edge and must still be placed in open terrain.
+        </p>
+        <p>
+            In addition, the army’s camp is deployed when its last troops are deployed (27.2.d or 27.2.e, depending upon whether the player is the disadvantaged player or not), not at the usual time (27.2.a or 27.2.b).
+        </p>
+        <p>
+            Note that such camps still may not move during the battle.
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made at deployment.
+        </p>
+        <h4>Cost</h4>
         1 point.
-    </p>
+        </p>
+    </div>
 </div>

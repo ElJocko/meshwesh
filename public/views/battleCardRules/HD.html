@@ -1,21 +1,24 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>HOPLITE DEEP FORMATION</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Stands marked with this ability in the army lists gain the Rear Support ability per rule 66, as if those stands (only – including other stands of that type not so noted in the army lists) were listed in 66.3.  All other parts of rule 66 are still valid.
-    </p>
-    <h4>Timing</h4>
-    <p>
-        This rule is continuous; stands so marked may use the ability throughout the game without restriction.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        None.
-    </p>
-    <p>
-        This is a free army ability, so long as the other conditions are met.
-    </p>
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>HOPLITE DEEP FORMATION</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Stands marked with this ability in the army lists gain the Rear Support ability per rule 66, as if those stands (only – including other stands of that type not so noted in the army lists) were listed in 66.3.  All other parts of rule 66 are still valid.
+        </p>
+        <h4>Timing</h4>
+        <p>
+            This rule is continuous; stands so marked may use the ability throughout the game without restriction.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            None.
+        </p>
+        <p>
+            This is a free army ability, so long as the other conditions are met.
+        </p>
+    </div>
 </div>

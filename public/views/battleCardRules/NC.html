@@ -1,18 +1,21 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>NO CAMP</h3>
-    <h4>Rules Change</h4>
-    <p>
-        This army has no camp.  Its camp cannot be sacked, and never counts as lost.
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made at deployment.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        3 points.
-    </p>
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>NO CAMP</h3>
+        <h4>Rules Change</h4>
+        <p>
+            This army has no camp.  Its camp cannot be sacked, and never counts as lost.
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made at deployment.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            3 points.
+        </p>
+    </div>
 </div>

@@ -10,7 +10,6 @@ function BattleCardDisplayController($uibModalInstance, battleCardCode) {
     vm.viewHeading = 'Battle Card (DRAFT)';
 
     vm.cancel = function () {
-        console.log('cancelling modal!');
         $uibModalInstance.dismiss('cancel');
     };
 }

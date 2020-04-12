@@ -1,40 +1,43 @@
-<div class="modal-header">
-    <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
-</div>
-<div class="battle-card-body modal-body">
-    <h3>SCYTHED CHARIOTS AND STAMPEDES</h3>
-    <h4>Rules Change</h4>
-    <p>
-        Marked stands of enemy infantry suffer degraded defenses against enemy cavalry in some situations.
-    </p>
-    <p>
-        Open-order foot fight normally (they suffer no ill effect).  Close order foot with an active Supporting Bowmen or Elephant Screen battle card also fight normally.  Close-order foot without such support fight as follows for this turn only:
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>SCYTHED CHARIOTS AND STAMPEDES</h3>
+        <h4>Rules Change</h4>
+        <p>
+            Marked stands of enemy infantry suffer degraded defenses against enemy cavalry in some situations.
+        </p>
+        <p>
+            Open-order foot fight normally (they suffer no ill effect).  Close order foot with an active Supporting Bowmen or Elephant Screen battle card also fight normally.  Close-order foot without such support fight as follows for this turn only:
         <ul>
             <li>They are shattered by Javelin Cavalry or Elite Cavalry.
             <li>They fight at -1 against Horsebow, Knights, or Cataphracts.
         </ul>
-    </p>
-    <h4>Timing</h4>
-    <p>
-        The choice to use this ability is made during the friendly movement phase after command dice are rolled, before any movement begins.
-    </p>
-    <p>
-        Place a marker (usually a 2mu x 2mu square stand showing scythed chariots, stampeding cattle, or whatever type of sacrificial attack is appropriate for that army) such that it clearly marks one stand of close-order foot (or two adjacent stands of close-order foot who are in side edge contact) as being the stands “attacked” by the scythed chariots or the livestock stampede.
-    </p>
-    <p>
-        Remove the marker once the combat phase is complete.
-    </p>
-    <p>
-        This is an event card and is expended when used; flip the card upside down to mark that it is no longer available for use in the current battle.
-    </p>
-    <p>
-        It is not appropriate for a player to change their mind about using this card while moving their stands – timing these attacks was a difficult tactical problem.  Once it is used, it is used.
-    </p>
-    <h4>Cost</h4>
-    <p>
-        2 points.
-    </p>
-    <p>
-        In Grand Triumph one battle card may be purchased for each General that has the option of the battle card in the army lists; the battle card will only modify combats in which that General’s troops are involved.
-    </p>
+        </p>
+        <h4>Timing</h4>
+        <p>
+            The choice to use this ability is made during the friendly movement phase after command dice are rolled, before any movement begins.
+        </p>
+        <p>
+            Place a marker (usually a 2mu x 2mu square stand showing scythed chariots, stampeding cattle, or whatever type of sacrificial attack is appropriate for that army) such that it clearly marks one stand of close-order foot (or two adjacent stands of close-order foot who are in side edge contact) as being the stands “attacked” by the scythed chariots or the livestock stampede.
+        </p>
+        <p>
+            Remove the marker once the combat phase is complete.
+        </p>
+        <p>
+            This is an event card and is expended when used; flip the card upside down to mark that it is no longer available for use in the current battle.
+        </p>
+        <p>
+            It is not appropriate for a player to change their mind about using this card while moving their stands – timing these attacks was a difficult tactical problem.  Once it is used, it is used.
+        </p>
+        <h4>Cost</h4>
+        <p>
+            2 points.
+        </p>
+        <p>
+            In Grand Triumph one battle card may be purchased for each General that has the option of the battle card in the army lists; the battle card will only modify combats in which that General’s troops are involved.
+        </p>
+    </div>
 </div>
