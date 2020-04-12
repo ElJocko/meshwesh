@@ -688,8 +688,23 @@ h3.troop-option-header {
     color: #2b4e69;
 }
 
+.battle-card-modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.battle-card-header {
+    display: flex;
+}
+
 .battle-card-title {
     text-align: center;
+    flex-grow: 1;
+}
+
+.battle-card-close {
+    float: right;
+    margin-left: auto;
 }
 
 .battle-card-body {
