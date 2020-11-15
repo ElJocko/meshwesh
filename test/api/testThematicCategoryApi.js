@@ -7,16 +7,17 @@ dotenv.load({ path: './test/config/local-test.env' });
 const credentials = require('../config/credentials');
 const config = require('../config/config');
 
+const userService = require('../../app/services/userService');
 const thematicCategoryService = require('../../app/services/thematicCategoryService');
 const testData = require('../data/thematic-categories');
-const dbConnection = require('../../app/lib/dbConnection');
+
+const database = require('../../app/lib/database-in-memory')
 
 const path = require('path');
 const request = require('supertest');
 const expect = require('expect');
 const assert = require('assert');
 
-const serverUrl = config.testServer.url;
 const apiVersion = 'v1';
 
 let retrievedThematicCategory = null;
@@ -50,11 +51,39 @@ config.testRoles.forEach(function(role) {
     let userToken = null;
 
     describe('ThematicCategory API (' + role + ')', function () {
+        let app;
+        before(async function() {
+            // Establish the database connection
+            // Use an in-memory database that we spin up for the test
+            await database.initializeConnection();
+
+            // Create the app
+            app = await require('../../app').initializeApp();
+        });
+
+        before(function (done) {
+            // Add the test user to the database
+            if (roleCredentials) {
+                const testUser = {
+                    role: role,
+                    emailAddress: roleCredentials.emailAddress,
+                    password: roleCredentials.password
+                }
+                userService.create(testUser, function (err, user) {
+                    assert.ifError(err);
+                    return done();
+                });
+            }
+            else {
+                return done();
+            }
+        });
+
         before(function (done) {
             // Sign in and get a token
             if (roleCredentials) {
                 const apiPath = path.join('/api', apiVersion, '/userCredentials');
-                request(serverUrl)
+                request(app)
                     .post(apiPath)
                     .send(roleCredentials)
                     .expect(200)
@@ -86,7 +115,7 @@ config.testRoles.forEach(function(role) {
         describe('retrieve the list of thematic categories', function () {
             it('should retrieve all of the thematic categories', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories');
-                request(serverUrl)
+                request(app)
                     .get(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .send()
@@ -114,7 +143,7 @@ config.testRoles.forEach(function(role) {
             invalidIds.forEach(function(invalidId) {
                 it('should not retrieve a thematic category with a badly formatted id', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', invalidId);
-                    request(serverUrl)
+                    request(app)
                         .get(apiPath)
                         .set(userToken ? {'PRIVATE-TOKEN': userToken} : {})
                         .send()
@@ -131,7 +160,7 @@ config.testRoles.forEach(function(role) {
 
             it('should not retrieve a thematic category with a non-existent id', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', config.data.nonexistentId);
-                request(serverUrl)
+                request(app)
                     .get(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .send()
@@ -148,7 +177,7 @@ config.testRoles.forEach(function(role) {
 
             it('should retrieve a thematic category', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
-                request(serverUrl)
+                request(app)
                     .get(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .send()
@@ -171,7 +200,7 @@ config.testRoles.forEach(function(role) {
             invalidIds.forEach(function(invalidId) {
                 it('should not retrieve army lists with a badly formatted id', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', invalidId, '/armyLists');
-                    request(serverUrl)
+                    request(app)
                         .get(apiPath)
                         .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                         .send()
@@ -189,7 +218,7 @@ config.testRoles.forEach(function(role) {
 
             it('should retrieve army lists', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id, '/armyLists');
-                request(serverUrl)
+                request(app)
                     .get(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .send()
@@ -214,7 +243,7 @@ config.testRoles.forEach(function(role) {
             invalidThematicCategories.forEach(function (invalidData) {
                 it('should not create a thematic category with invalid data', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories');
-                    request(serverUrl)
+                    request(app)
                         .post(apiPath)
                         .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                         .send(invalidData)
@@ -233,7 +262,7 @@ config.testRoles.forEach(function(role) {
 
             it('should create a thematic category', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories');
-                request(serverUrl)
+                request(app)
                     .post(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .send(newThematicCategory)
@@ -252,7 +281,7 @@ config.testRoles.forEach(function(role) {
             if (roleCredentials) {
                 it('should find the new thematic category', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', newThematicCategoryId);
-                    request(serverUrl)
+                    request(app)
                         .get(apiPath)
                         .set(userToken ? {'PRIVATE-TOKEN': userToken} : {})
                         .expect(200)
@@ -274,7 +303,7 @@ config.testRoles.forEach(function(role) {
                 it('should not update a thematic category with invalid data', function (done) {
                     newThematicCategory.name = updateName[role];
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
-                    request(serverUrl)
+                    request(app)
                         .put(apiPath)
                         .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                         .send(invalidData)
@@ -293,7 +322,7 @@ config.testRoles.forEach(function(role) {
             it('should update a thematic category', function (done) {
                 newThematicCategory.name = updateName[role];
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
-                request(serverUrl)
+                request(app)
                     .put(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .send(newThematicCategory)
@@ -312,7 +341,7 @@ config.testRoles.forEach(function(role) {
             if (roleCredentials) {
                 it('should find the updated thematic category', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
-                    request(serverUrl)
+                    request(app)
                         .get(apiPath)
                         .set(userToken ? {'PRIVATE-TOKEN': userToken} : {})
                         .expect(200)
@@ -332,7 +361,7 @@ config.testRoles.forEach(function(role) {
         describe('delete thematic category', function () {
             it('should delete a thematic category', function (done) {
                 const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
-                request(serverUrl)
+                request(app)
                     .del(apiPath)
                     .set(userToken ? { 'PRIVATE-TOKEN': userToken } : {})
                     .expect(userToken ? 200 : 401)
@@ -349,7 +378,7 @@ config.testRoles.forEach(function(role) {
             if (roleCredentials) {
                 it('should not find the deleted thematic category', function (done) {
                     const apiPath = path.join('/api', apiVersion, 'thematicCategories', retrievedThematicCategory.id);
-                    request(serverUrl)
+                    request(app)
                         .get(apiPath)
                         .set(userToken ? {'PRIVATE-TOKEN': userToken} : {})
                         .expect(404)
@@ -363,6 +392,10 @@ config.testRoles.forEach(function(role) {
                         });
                 });
             }
+        });
+
+        after(async function() {
+            await database.closeConnection();
         });
     });
 });
