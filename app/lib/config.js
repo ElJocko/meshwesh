@@ -10,7 +10,7 @@ module.exports = {
         hostname: process.env.HOSTNAME
     },
     database: {
-        url: encodeMongoURI(process.env.MONGOLAB_URI || process.env.MONGODB_URL)
+        url: encodeMongoURI(process.env.MONGOATLAS_URI || process.env.MONGOLAB_URI || process.env.MONGODB_URL)
     },
     app: {
         name: 'meshwesh',
