@@ -104,7 +104,7 @@ exports.import = function(importRequest, callback) {
             }
             else {
                 if (!armyList1) {
-                    console.log('Army list 1 not found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' at row ' + enemyXrefData.index);
+                    console.log('Error: Army list 1 not found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' at row ' + enemyXrefData.index);
                     return cb(null, { enemyXref: null, error: 'Army List 1 Not found' });
                 }
                 query = {
@@ -116,7 +116,7 @@ exports.import = function(importRequest, callback) {
                         return cb(err);
                     }
                     else if (!armyList2) {
-                        console.log('Army list 2 not found: ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                        console.log('Error: Army list 2 not found: ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
                         return cb(null, { enemyXref: null, error: 'Army List 2 Not found' });
                     }
                     else {
@@ -130,7 +130,7 @@ exports.import = function(importRequest, callback) {
                                 return cb(err);
                             }
                             else if (xref1) {
-                                console.log('Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                                console.log('Error: Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
                                 return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
                             }
                             else {
@@ -143,13 +143,13 @@ exports.import = function(importRequest, callback) {
                                         return cb(err);
                                     }
                                     else if (xref1) {
-                                        console.log('Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                                        console.log('Error: Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
                                         return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
                                     }
                                     else {
                                         // Issue a warning if the army lists don't overlap in time
                                         if (!dateRangesOverlap(armyList1.dateRanges, armyList2.dateRanges)) {
-                                            console.log('Enemies do not overlap in time: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
+                                            console.log('Warning: Enemies do not overlap in time: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
                                         }
 
                                         // Everything is set. Create the enemyXref...
