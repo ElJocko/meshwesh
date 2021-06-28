@@ -1,27 +1,28 @@
-permanentCode|displayName|importName|category
-FC|Fortified Camp|Fortified Camp|army
-PD|Prepared Defenses|Prepared Defenses|army
-AM|Ambush|Ambush|army
-SW|Standard Wagon|Standard Wagon|army
-NC|No Camp|No Camp|army
-PT|Pack Train and Herds|Pack Train and Herds|army
-SC|Scythed Chariots and Stampedes|Sacrificial|army
-SB|Supporting Bowmen|Supporting Bowmen|troop
-SP|Supportable|Supportable|troop
-LC|Light Camelry|Light Camelry|troop
-DD|Deployment Dismounting|Deployment Dismounting|troop
-HL|Hold the Line|Hold the Line|troop
-HD|Hoplite Deep Formation|Hoplite Deep Formation|troop
-MI|Mobile Infantry|Mobile Infantry|troop
-ES|Elephant Screen|Elephant Screen|troop
-ET|Screenable|Screenable|troop
-PL|Plaustrella|Plaustrella|troop
-AC|Armored Camelry|Armored Camelry|troop
-CC|Charging Camelry|Charging Camelry|troop
-SS|Shower Shooting|Shower Shooting|troop
-CT|Charge Through|Charge Through|troop
-MD|Mid-Battle Dismounting|Mid-battle Dismounting|troop
-SV|Separated Valets|Separated Valets|troop
-SF|Sword-Fighting Cavalry|Sword-Fighting Cavalry|troop
-CH|Chained Together|Chained Together|troop
-CF|Camel Protected Infantry|Camel Protected Infantry|troop
+permanentCode|displayName|importName|category|showInList
+FC|Fortified Camp|Fortified Camp|army|true
+PD|Prepared Defenses|Prepared Defenses|army|true
+AM|Ambush|Ambush|army|true
+SW|Standard Wagon|Standard Wagon|army|true
+NC|No Camp|No Camp|army|true
+PT|Pack Train and Herds|Pack Train and Herds|army|true
+SC|Scythed Chariots and Stampedes|Sacrificial|army|true
+SB|Supporting Bowmen|Supporting Bowmen|troop|true
+SP|Supportable|Supportable|troop|false
+LC|Light Camelry|Light Camelry|troop|true
+DD|Deployment Dismounting|Deployment Dismounting|troop|true
+HL|Hold the Line|Hold the Line|troop|true
+HD|Hoplite Deep Formation|Hoplite Deep Formation|troop|true
+MI|Mobile Infantry|Mobile Infantry|troop|true
+ES|Elephant Screen|Elephant Screen|troop|true
+ET|Screenable|Screenable|troop|false
+PL|Plaustrella|Plaustrella|troop|true
+AC|Armored Camelry|Armored Camelry|troop|true
+CC|Charging Camelry|Charging Camelry|troop|true
+SS|Shower Shooting|Shower Shooting|troop|true
+CT|Charge Through|Charge Through|troop|true
+MD|Mid-Battle Dismounting|Mid-battle Dismounting|troop|true
+SV|Separated Valets|Separated Valets|troop|true
+SF|Sword-Fighting Cavalry|Sword-Fighting Cavalry|troop|true
+CH|Chained Together|Chained Together|troop|true
+CF|Camel Protected Infantry|Camel Protected Infantry|troop|true
+DC|Deceptive Deployment|Deceptive Deployment|troop|true

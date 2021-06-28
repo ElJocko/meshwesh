@@ -10,20 +10,19 @@ function BattleCardSummaryController($location, $uibModal, BattleCardService) {
     var vm = this;
 
     vm.battleCards = BattleCardService.list();
-
     vm.showBattleCardRule = showBattleCardRule;
     function showBattleCardRule(battleCardCode) {
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: `views/battleCardRules/${ battleCardCode }.html`,
+            templateUrl: `views/modals/battleCardDisplay.html`,
             controller: 'BattleCardDisplayController',
             controllerAs: 'vm',
             resolve: {
-                battleCardCode: function () {
-                    return battleCardCode;
+                battleCard: function () {
+                    var battleCard = vm.battleCards.find(card => card.permanentCode === battleCardCode);
+                    return battleCard;
                 }
             }
         });
-
     }
 }

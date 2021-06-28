@@ -1,0 +1,10 @@
+<div class="battle-card-modal">
+    <div class="battle-card-header modal-header">
+        <h3 class="battle-card-title modal-title">{{ vm.viewHeading }}</h3>
+        <button type="button" class="battle-card-close close" ng-click="vm.cancel()" aria-label="Close">&times;</button>
+    </div>
+    <div class="battle-card-body modal-body">
+        <h3>{{vm.title}}</h3>
+        <div ng-bind-html="vm.battleCardText"></div>
+    </div>
+</div>

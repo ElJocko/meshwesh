@@ -8,7 +8,9 @@ var BattleCardSchema = new mongoose.Schema({
     permanentCode: { type: String, required: true, unique: true },
     displayName: { type: String },
     importName: { type: String },
-    category: { type: String }  // army or troop
+    category: { type: String },  // army or troop
+    mdText: { type: String }, // markdown format
+    showInList: { type: Boolean },
 });
 
 BattleCardSchema.set('toObject', {

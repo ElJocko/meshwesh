@@ -3,6 +3,8 @@
 const BattleCard = require('../models/battleCardModel');
 const async = require('async');
 const _ = require('lodash');
+const markd = require('marked');
+const fs = require('fs');
 
 const errors = {
     missingParameter: 'Missing required parameter',
@@ -13,6 +15,17 @@ const errors = {
 };
 exports.errors = errors;
 
+markd.setOptions({
+    breaks: true,
+    gfm: true,
+    headerIds: false
+});
+function addHtmlText(battleCard) {
+    if (battleCard.mdText) {
+        battleCard.htmlText = markd(battleCard.mdText);
+    }
+}
+
 exports.retrieveByQuery = function(query, callback) {
     BattleCard.find(query, function(err, documents) {
         if (err) {
@@ -22,6 +35,7 @@ exports.retrieveByQuery = function(query, callback) {
             const objects = [];
             for (let i = 0; i < documents.length; ++i) {
                 const object = documents[i].toObject();
+                addHtmlText(object);
                 objects.push(object);
             }
             return callback(null, objects);
@@ -45,7 +59,9 @@ exports.retrieveById = function(id, callback) {
             else {
                 // Note: document is null if not found
                 if (document) {
-                    return callback(null, document.toObject());
+                    const object = document.toObject();
+                    addHtmlText(object);
+                    return callback(null, object);
                 }
                 else {
                     return callback();
@@ -179,23 +195,28 @@ exports.import = function(importRequest, callback) {
     });
 
     function importBattleCard(battleCardData, cb) {
-        const document = new BattleCard(battleCardData);
+        // Get the battle card text
+        const path = './standardImportData/battleCards/' + battleCardData.permanentCode + '.md';
+        fs.readFile(path, 'utf-8', function(err, data) {
+            battleCardData.mdText = data;
 
-        // Save the document in the database
-        document.save(function(err, savedDocument) {
-            if (err) {
-                if (err.name === 'MongoError' && err.code === 11000) {
-                    // 11000 = Duplicate index
-                    const error = new Error(errors.duplicateCode);
-                    return cb(null, { battleCard: null, error: error });
+            // Save the document in the database
+            const document = new BattleCard(battleCardData);
+            document.save(function(err, savedDocument) {
+                if (err) {
+                    if (err.name === 'MongoError' && err.code === 11000) {
+                        // 11000 = Duplicate index
+                        const error = new Error(errors.duplicateCode);
+                        return cb(null, { battleCard: null, error: error });
+                    }
+                    else {
+                        return cb(null, { battleCard: null, error: err });
+                    }
                 }
                 else {
-                    return cb(null, { battleCard: null, error: err });
+                    return cb(null, { battleCard: savedDocument.toObject(), error: null });
                 }
-            }
-            else {
-                return cb(null, { battleCard: savedDocument.toObject(), error: null });
-            }
+            });
         });
     }
 

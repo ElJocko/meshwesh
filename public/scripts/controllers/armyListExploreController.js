@@ -6,9 +6,9 @@ angular
     .module('meshweshControllers')
     .controller('ArmyListExploreController', ArmyListExploreController);
 
-ArmyListExploreController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'TroopOptionsAnalysisService'];
+ArmyListExploreController.$inject = ['$route', '$location', '$q', '$uibModal', 'uiGridConstants', 'ArmyListService', 'TroopOptionsAnalysisService', 'BattleCardService'];
 
-function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, TroopOptionsAnalysisService) {
+function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConstants, ArmyListService, TroopOptionsAnalysisService, BattleCardService) {
     var vm = this;
 
     vm.loading = {
@@ -433,20 +433,20 @@ function ArmyListExploreController($route, $location, $q, $uibModal, uiGridConst
         allyOption.dateRange = overlap;
     }
 
+    vm.battleCards = BattleCardService.list();
     vm.showBattleCardRule = showBattleCardRule;
     function showBattleCardRule(battleCardCode) {
-        console.log(`will show battle card rule for ${ battleCardCode }`);
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: `views/battleCardRules/${ battleCardCode }.html`,
+            templateUrl: `views/modals/battleCardDisplay.html`,
             controller: 'BattleCardDisplayController',
             controllerAs: 'vm',
             resolve: {
-                battleCardCode: function () {
-                    return battleCardCode;
+                battleCard: function () {
+                    var battleCard = vm.battleCards.find(card => card.permanentCode === battleCardCode);
+                    return battleCard;
                 }
             }
         });
-
     }
 }

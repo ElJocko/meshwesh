@@ -47,7 +47,8 @@ function BattleCardImportController($location, $scope, BattleCardImportService) 
                                 permanentCode: item.permanentCode,
                                 displayName: item.displayName,
                                 importName: item.importName,
-                                category: item.category
+                                category: item.category,
+                                showInList: item.showInList
                             };
                             vm.importBattleCards.push(battleCard);
                         });
