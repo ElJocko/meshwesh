@@ -17,7 +17,7 @@ An army with the Ambush battle may deploy one or more stands beyond 8 MU of the 
 The army must still satisfy the other deployment rules, including the center deployment rules.
 
 #### Game Play
-There are no changes to the game play rules.
+There are no changes to the game play rules. 
 
 #### Historical Background
 This battle card is designed to provide more historical flavor for armies who were notorious for attacking from favorable terrain and getting an advantage from its use.
