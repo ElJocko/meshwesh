@@ -19,6 +19,7 @@ A Mobile Infantry stand representing the infantry and its transports must be mou
 
 #### Game Play
 *Tactical Movement*
+
 A Mobile Infantry stand on its transport  is an open order stand, regardless of whether it is open order or close order without its transport.  It has a tactical move
 distance of 6 MU, reduced to 3 MU if any part of their move is in or through difficult terrain.
 
