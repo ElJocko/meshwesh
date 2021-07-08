@@ -1,4 +1,4 @@
-Troops with the Charging Camelry battle card fought on camels but charged fiercely. Troops with the Armored Camelry battle card fought on armored camels.
+Troops with the Charging Camelry battle card fought on camels but charged fiercely. Troops with the Armored Camelry battle card fought on armored camels. 
 
 #### Selecting this Battle Card
 The army list indicates which troops may have a Charging Camelry or Armored Camelry battle card applied to them.
