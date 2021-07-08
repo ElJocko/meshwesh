@@ -1,4 +1,4 @@
-Armies with this battle card may disperse bow-armed troops in support of other troops.
+Armies with this battle card be supported by disperse bow-armed troops from another stand.
 
 #### Selecting this Battle Card
 The army list indicates which troops may have the Supporting Bowmen battle card applied to them. The army list indicates which bow-armed troops may be used to support other
