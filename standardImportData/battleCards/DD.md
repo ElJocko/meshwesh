@@ -22,6 +22,6 @@ If the general’s stand dismounts using this battle card, the stand that replac
 
 Note that stands with the Deployment Dismounting ability may not dismount (change to the foot troop type) or remount (switch to the mounted troop type) during game play (after they are deployed).
 #### Historical Background
-This battle card represents the most common historical model for troops that were known to have fought either mounted or dismounted.
+This battle card represents the most common historical model for troops that were known to have fought either mounted or dismounted. 
 
 Some examples of armies from history that used this ability were the Hundred Years War English, Medieval French after the battle of Crecy, Medieval Germans in several battles, Mongol Conquest in a few rare battles, and many other examples from history.
