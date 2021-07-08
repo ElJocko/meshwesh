@@ -1,5 +1,5 @@
 Instead of having a camp, armies with this battle card may deploy a Standard Wagon.
-Note that Standard is used here in the sense of flag or banner, not normal or usual.
+Note that Standard is used here in the sense of *flag* or *banner*, not *normal* or *usual*.
 
 #### Selecting this Battle Card
 The army list indicates if the Standard Wagon battle card is available to an army.
