@@ -20,7 +20,7 @@ A group move composed entirely of Charging Camelry, Armored Camelry, or Light Ca
 In close combat, stands which have the Charging Camelry or Armored Camelry battle card receive a -1 tactical factor. If beaten but not doubled by Elephants, they must fall back rather than being shattered.
 
 #### Victory Conditions
-A stand that has the Charging Camelry or Armored Camelry battle card counts as 3 points when destroyed.
+A stand that has the Charging Camelry or Armored Camelry battle card counts as 3 points when destroyed. 
 
 #### Historical Background
 Tuaregs used hard charging camelry (classed as Knights); they appear in large numbers in the Tuareg army and in a few other armies as mercenaries or small contingents. The Arabo-Aramaean city-state of Emesa may have used armored camelry (rated as Cataphracts). Parthia may have used them at the battle of Nisibis (217 AD).
