@@ -10,8 +10,7 @@ The army list indicates if the Scythed Chariots and Stampedes battle card is ava
 All standard deployment rules apply without change.
 
 #### Game Play
-A Scythed Chariots and Stampede battle card may be played as the first action of a player’s turn, before dicing for command points. When played, the player 
-should mark one or two enemy close order foot stands. These stands will suffer a disadvantage in close combat.
+A Scythed Chariots and Stampede battle card may be played as the first action of a player’s turn, before dicing for command points. When played, the player should mark one or two enemy close order foot stands. These stands will suffer a disadvantage in close combat.
 
 Any one enemy stand may be marked, or two enemy stands that are in edge-to-edge and corner-to-corner contact.
 
@@ -25,17 +24,13 @@ During the following close combat phase, a marked enemy stand:
 
 The disadvantage ends once the close combat phase is complete.
 
-The Scythed Chariots and Stampede battle card is expended when used and may not be used again. It should be turned upside-down or otherwise marked to indicate that it has 
-been expended.
+The Scythed Chariots and Stampede battle card is expended when used and may not be used again. It should be turned upside-down or otherwise marked to indicate that it has been expended.
 
 
 #### Modeling
-A 2 MU x 2 MU base with a scythed chariot or other model (stampeding cattle or whatever is appropriate) makes a convenient and colorful marker. However, it isn’t 
-necessary for a physical marker to be placed in contact with or remain in contact with the marked stands, as long as it is clear which stands are marked.
+A 2 MU x 2 MU base with a scythed chariot or other model (stampeding cattle or whatever is appropriate) makes a convenient and colorful marker. However, it isn’t necessary for a physical marker to be placed in contact with or remain in contact with the marked stands, as long as it is clear which stands are marked.
 
 #### Historical Background
-Scythed chariots and livestock stampedes (whether cattle, horses, camels, or even elephants) were used as one-shot sacrificial weapons designed to disorder enemy 
-close order foot formations to make them vulnerable to an immediate cavalry attack.
+Scythed chariots and livestock stampedes (whether cattle, horses, camels, or even elephants) were used as one-shot sacrificial weapons designed to disorder enemy close order foot formations to make them vulnerable to an immediate cavalry attack.
 
-Representing this tactic as a troop stand is a major historical inaccuracy – scythed chariot drivers would usually leap from their chariots before impact, and any 
-stampede would disperse into and beyond the enemy formation, making it impossible to reform for another attempt until days afterward.
+Representing this tactic as a troop stand is a major historical inaccuracy – scythed chariot drivers would usually leap from their chariots before impact, and any stampede would disperse into and beyond the enemy formation, making it impossible to reform for another attempt until days afterward.
