@@ -43,11 +43,6 @@ In close combat, a stand which has the Chained Together battle card applied to i
 - Does not pursue if it doubles its opponent in close combat 
 
 #### Historical Background
-This battle card reflects the 5,000 cavalrymen in the Murong Xianbei army (mentioned as the “best archers”) who are described as chained together.  It may be that
-this description is a literary convention (as with the later Jurchen “guaizi ma” formation which wasn’t actually chained but was sometimes described that way), but
-in the case of the Murong Xianbei there is a reasonable possibility that they were actually physically chained together.  Such a restriction would prevent individual
-horsemen from breaking formation to engage in heroic individual combat; it would also force them to fight solely using massed archery, and it would give some resistance
-to enemy shock cavalry as well.
+This battle card reflects the 5,000 cavalrymen in the Murong Xianbei army (mentioned as the “best archers”) who are described as chained together.  It may be that this description is a literary convention (as with the later Jurchen “guaizi ma” formation which wasn’t actually chained but was sometimes described that way), but in the case of the Murong Xianbei there is a reasonable possibility that they were actually physically chained together.  Such a restriction would prevent individual horsemen from breaking formation to engage in heroic individual combat; it would also force them to fight solely using massed archery, and it would give some resistance to enemy shock cavalry as well.
 
-On the downside, chaining such a formation would make it awkward to move, slow it down, and reduce its effectiveness against foot skirmishers equipped with 
-missile weapons used at close range.
+On the downside, chaining such a formation would make it awkward to move, slow it down, and reduce its effectiveness against foot skirmishers equipped with missile weapons used at close range.
