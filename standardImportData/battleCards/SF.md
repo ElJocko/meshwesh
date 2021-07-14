@@ -24,11 +24,8 @@ All other rules for Bad Horse apply, including:
 A stand that has the Sword-fighting Cavalry battle card counts as 3 ½  points of lost troops when destroyed.
 
 #### Historical Background
-This battle card simulates cavalry whose preferred weapons were swords.  Although they may have also used spears or lances, they did not use them as thrown weapons against enemy
-close-order foot, and they did not attempt to draw enemy knights into ill-timed charges, so rating them as Javelin Cavalry is not an accurate simulation of how they fought.
+This battle card simulates cavalry whose preferred weapons were swords.  Although they may have also used spears or lances, they did not use them as thrown weapons against enemy close-order foot, and they did not attempt to draw enemy knights into ill-timed charges, so rating them as Javelin Cavalry is not an accurate simulation of how they fought.
 
-Although they attempted to close with the enemy and engage them in melee, they did not have the shock impact of Knights, nor the full armor of Cataphracts, so those 
-troop types are also an inaccurate simulation of how sword-armed cavalry fought.
+Although they attempted to close with the enemy and engage them in melee, they did not have the shock impact of Knights, nor the full armor of Cataphracts, so those troop types are also an inaccurate simulation of how sword-armed cavalry fought.
 
-Examples of mounted troops for whom this rule is appropriate include Kurdish cavalry in the Middle East, (fighting for themselves or as mercenaries in other armies), 
-Swabian cavalry in the late Dark Ages and early Medieval Germany, and others.
+Examples of mounted troops for whom this rule is appropriate include Kurdish cavalry in the Middle East, (fighting for themselves or as mercenaries in other armies), Swabian cavalry in the late Dark Ages and early Medieval Germany, and others.
