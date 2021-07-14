@@ -20,7 +20,6 @@ All other camp rules still apply:
 - A sacked camp counts as 8 points of lost troops, in addition to the point cost of any stand that was garrisoning the camp, but with no addition for the Fortified Camp battle card.
 
 #### Historical Background
-Historically some armies put a lot of time and effort into creating very well-defended camps, and others did not.  The best-known examples of fortified camps are Roman armies
-from Marius on, but the Medieval Germans, Ancient British, and many others also fortified their camps.
+Historically some armies put a lot of time and effort into creating very well-defended camps, and others did not.  The best-known examples of fortified camps are Roman armies from Marius on, but the Medieval Germans, Ancient British, and many others also fortified their camps.
 
 The cost of this battle card is deliberately cheaper than using a 2 point stand as a garrison, since points spent on fortifying the camp cannot be used in the field.
