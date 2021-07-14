@@ -14,8 +14,7 @@ A maximum of 3 Hold the Line battle cards may be purchased for an army.
 All standard deployment rules apply without change.
 
 #### Game Play
-A Hold the Line battle card may be played to nullify a pursuit outcome move. Instead of pursuing, the stand remains in place. The battle card must be played
-immediately after the combat result has been determined and before any other actions take place.
+A Hold the Line battle card may be played to nullify a pursuit outcome move. Instead of pursuing, the stand remains in place. The battle card must be played immediately after the combat result has been determined and before any other actions take place.
 
 A Hold the Line battle card may only be played on a stand from the eligible troop entry. It may not be played on an enemy stand.
 
