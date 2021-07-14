@@ -22,7 +22,6 @@ Other camp placement rules still apply:
 All standard camp rules apply without change.
 
 #### Historical Background
-This battle card represents cases where the logistic element of an army is made up of a pack train of mules, ponies, camels, or horses; or cases where the army has
-a camp with a large proportion of livestock, flocks, horse herds, or other non-static troops.
+This battle card represents cases where the logistic element of an army is made up of a pack train of mules, ponies, camels, or horses; or cases where the army has a camp with a large proportion of livestock, flocks, horse herds, or other non-static troops.
 
 Camps of this type should be portrayed in an appropriate way.
