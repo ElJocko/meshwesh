@@ -24,18 +24,11 @@ A stand which has the Shower Shooting battle card applied to it may shoot in ran
 All other standard ranged combat and close combat rules apply.
 
 #### Victory Conditions
-A stand which has the Shower Shooting battle card applied to it counts as  1 additional point  of lost troops when destroyed.
-For example,  a stand of Elite Cavalry with the Shower Shooting battle card would count as 5 points of lost troops when destroyed (the normal 4 points for a stand
-of Elite Cavalry plus 1 additional point for the Shower Shooting battle card).
+A stand which has the Shower Shooting battle card applied to it counts as  1 additional point  of lost troops when destroyed.  For example,  a stand of Elite Cavalry with the Shower Shooting battle card would count as 5 points of lost troops when destroyed (the normal 4 points for a stand of Elite Cavalry plus 1 additional point for the Shower Shooting battle card).
 
 #### Historical Background
-Shower shooting is a well-attested technique where tight blocks of stationary bow-armed cavalry fire a steady arching stream of missiles at a distant target.  
-It required special training and large ammo supplies to be effective.  Many bow-armed cavalry were not trained or capable of shower shooting, even if skilled 
-bowmen in other respects.
+Shower shooting is a well-attested technique where tight blocks of stationary bow-armed cavalry fire a steady arching stream of missiles at a distant target.  It required special training and large ammo supplies to be effective.  Many bow-armed cavalry were not trained or capable of shower shooting, even if skilled bowmen in other respects.
 
 Horse bow fought as dispersed skirmishing bowmen firing at short range, and so are never allowed to use this battle card.
 
-The Mamluks used shower shooting at the battle of Ain Jalut in 1260 AD.  Ain Jalut also provides evidence that the Mongols and Ilkhanids did not use the shower shooting
-technique.  The Byzantines used shower shooting early on, but they seem to have lost the ability after the 7th or 8th centuries, during the Byzantine Dark Ages.  Other
-armies noted for using this tactic include the Sassanid Persians, Turkish Ghulams in Abbasid employ from the 9th century onward, some Cataphracts equipped with bows, 
-and other armies.
+The Mamluks used shower shooting at the battle of Ain Jalut in 1260 AD.  Ain Jalut also provides evidence that the Mongols and Ilkhanids did not use the shower shooting technique.  The Byzantines used shower shooting early on, but they seem to have lost the ability after the 7th or 8th centuries, during the Byzantine Dark Ages.  Other armies noted for using this tactic include the Sassanid Persians, Turkish Ghulams in Abbasid employ from the 9th century onward, some Cataphracts equipped with bows, and other armies.
