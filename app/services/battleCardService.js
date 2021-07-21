@@ -16,7 +16,7 @@ const errors = {
 exports.errors = errors;
 
 markd.setOptions({
-    breaks: true,
+    breaks: false,
     gfm: true,
     headerIds: false
 });

@@ -21,4 +21,5 @@ There are no changes to the game play rules.
 
 #### Historical Background
 This battle card is designed to provide more historical flavor for armies who were notorious for attacking from favorable terrain and getting an advantage from its use.
+
 Armies known for this ability include the Ancient Spanish, Dacians, Wallachians, Estonians, and many others.

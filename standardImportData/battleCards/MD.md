@@ -3,8 +3,7 @@ Armies with this battle card may deploy eligible troops as a mounted troop type 
 #### Selecting this Battle Card
 The army list indicates which troops may have the Mid-Battle Dismounting ability. The army list specifies the troop type that those troops dismount as.
 
-This is a battle card that is an army ability; buying this battle card gives the player the ability to use Mid- Battle Dismounting with all eligible troop entries in the
-army list. For example, the Later Low Countries army list has Mid-battle Dismounting available for both its burghers (Knights or Bad Horse) and its mercenary men-at-arms (Knights) troop entries. Purchasing this battle card for a Later Low Countries army allows stands in both troop entries to use Mid-battle Dismounting.
+This is a battle card that is an army ability; buying this battle card gives the player the ability to use Mid- Battle Dismounting with all eligible troop entries in the army list. For example, the Later Low Countries army list has Mid-battle Dismounting available for both its burghers (Knights or Bad Horse) and its mercenary men-at-arms (Knights) troop entries. Purchasing this battle card for a Later Low Countries army allows stands in both troop entries to use Mid-battle Dismounting.
 
 #### Cost
 2 points
@@ -29,7 +28,7 @@ If the general’s stand dismounts using this battle card, the stand that replac
 
 During the tactical movement phase, if a Mid-Battle Dismounting card has been purchased for an army, any mounted stand which is eligible for Mid-Battle Dismounting may dismount as a single stand tactical move. To dismount, the mounted stand is exchanged for a stand of its foot troop type, placing the foot stand such that its front edge is in the same location and orientation as the front edge of the mounted stand. No other movement takes place during this tactical move.
 
-Any exchange of a mounted stand for its dismounted stand places the foot stand so the front edge is unchanged. If the dismounting stand is part of a column or group, this exchange does not modify the position of any other stands in the column or group, even if this creates gaps in the column or group. 
+Any exchange of a mounted stand for its dismounted stand places the foot stand so the front edge is unchanged. If the dismounting stand is part of a column or group, this exchange does not modify the position of any other stands in the column or group, even if this creates gaps in the column or group.
 
 A stand may not dismount if it is in contact with an enemy stand (including corner-to-corner contact).
 
