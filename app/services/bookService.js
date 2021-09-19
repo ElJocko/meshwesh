@@ -26,7 +26,7 @@ exports.retrieveByQuery = function(query, callback) {
             book.troopTypeCount = count;
             ArmyList.count({ }, (err, count) => {
                 book.armyListCount = count;
-                BattleCard.count({ }, (err, count) => {
+                BattleCard.count({ showInList: true }, (err, count) => {
                     book.battleCardCount = count;
                     books.push(book);
 

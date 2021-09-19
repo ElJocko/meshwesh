@@ -9,7 +9,7 @@ BattleCardDisplayController.$inject = ['$uibModalInstance', '$sce', 'battleCard'
 function BattleCardDisplayController($uibModalInstance, $sce, battleCard) {
     var vm = this;
 
-    vm.viewHeading = 'Battle Card (DRAFT)';
+    vm.viewHeading = 'Battle Card';
     vm.title = battleCard.displayName;
     vm.battleCardText = $sce.trustAsHtml(battleCard.htmlText);
 

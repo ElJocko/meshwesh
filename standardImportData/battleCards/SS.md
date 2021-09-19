@@ -11,8 +11,6 @@ The Shower Shooting battle card must be purchased for all of the stands in a tro
 #### Deployment
 All standard deployment rules apply without change.
 
-#### Modeling
-
 #### Game Play
 A stand which has the Shower Shooting battle card applied to it may shoot in ranged combat:
 - It uses a +2 combat factor when shooting
