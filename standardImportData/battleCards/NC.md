@@ -1,4 +1,4 @@
-The army list indicates if the No Camp battle card is available to an army.
+Armies with this battle card do not have a camp on the game board.
 
 #### Selecting this Battle Card
 The army list indicates if the No Camp battle card is available to an army.
