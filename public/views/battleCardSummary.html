@@ -12,7 +12,7 @@
                 </p>
                 <div ng-repeat="battleCard in vm.battleCards | orderBy:'displayName'">
                     <div class="content-link" ng-show="battleCard.showInList">
-                        <a href ng-click="vm.showBattleCardRule(battleCard.permanentCode)">{{ battleCard.displayName }}</a>
+                        <a href ng-click="vm.showBattleCardRule(battleCard.permanentCode)">{{ battleCard.listName }}</a>
                     </div>
                 </div>
             </div>

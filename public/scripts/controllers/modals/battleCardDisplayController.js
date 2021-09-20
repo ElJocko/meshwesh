@@ -10,7 +10,7 @@ function BattleCardDisplayController($uibModalInstance, $sce, battleCard) {
     var vm = this;
 
     vm.viewHeading = 'Battle Card';
-    vm.title = battleCard.displayName;
+    vm.title = battleCard.listName;
     vm.battleCardText = $sce.trustAsHtml(battleCard.htmlText);
 
     vm.cancel = function () {

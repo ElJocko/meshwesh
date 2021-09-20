@@ -11,6 +11,7 @@ var BattleCardSchema = new mongoose.Schema({
     category: { type: String },  // army or troop
     mdText: { type: String }, // markdown format
     showInList: { type: Boolean },
+    listName: { type: String },
 });
 
 BattleCardSchema.set('toObject', {

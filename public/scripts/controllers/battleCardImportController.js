@@ -36,6 +36,7 @@ function BattleCardImportController($location, $scope, BattleCardImportService) 
             {
                 delimiter: '|',
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     console.log(results);
                     vm.statusMessage1 = '';
@@ -48,11 +49,11 @@ function BattleCardImportController($location, $scope, BattleCardImportService) 
                                 displayName: item.displayName,
                                 importName: item.importName,
                                 category: item.category,
-                                showInList: item.showInList
+                                showInList: item.showInList,
+                                listName: item.listName || item.displayName
                             };
                             vm.importBattleCards.push(battleCard);
                         });
-
                         vm.statusMessage1 = 'Found ' + vm.importBattleCards.length + ' battle cards in the file.';
                     }
                     else {
