@@ -39,6 +39,7 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
             {
                 delimiter: ',',
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     vm.statusMessage1 = '';
                     vm.statusMessage2 = '';
@@ -49,6 +50,9 @@ function ArmyListImportController($location, $scope, $interval, ArmyListImportSe
                             // sortId,sublistId,name,uniqueId,startDate,endDate,invasionRatings,maneuverRatings,category1,category2,category3,category4,category5
 
                             // Add listIds
+                            if (!item.uniqueId) {
+                                console.log(JSON.stringify(item));
+                            }
                             var uniqueIdLength = item.uniqueId.length;
                             if (uniqueIdLength > 0 && item.uniqueId[uniqueIdLength - 1] === item.sublistId) {
                                 // Last character of uniqueId is the sublistId

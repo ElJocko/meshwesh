@@ -36,6 +36,7 @@ function TroopTypeImportController($location, $scope, TroopTypeImportService) {
             {
                 delimiter: '|',
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     console.log(results);
                     vm.statusMessage1 = '';

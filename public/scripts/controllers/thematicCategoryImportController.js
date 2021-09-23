@@ -31,6 +31,7 @@ function ThematicCategoryImportController($location, $scope, ThematicCategoryImp
             {
                 delimiter: ',',
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     console.log(results);
                     vm.statusMessage1 = '';

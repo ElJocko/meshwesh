@@ -37,6 +37,7 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
             {
                 delimiter: ',',
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     vm.statusMessage1 = '';
                     vm.statusMessage2 = '';

@@ -44,6 +44,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
             {
                 delimiter: ',',
                 header: true,
+                skipEmptyLines: true,
                 complete: function(results) {
                     //console.log(results);
                     vm.statusMessage1 = '';
@@ -151,7 +152,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     armyBattleCardsArray.push(battleCardEntry);
                                 }
                                 else {
-                                    console.log(`Did not find battle card (II) for ${ battleCardName } in ${ lastArmyName }`);
+                                    console.log(`Did not find battle card (II) for ${ battleCardName } in army: ${ lastArmyName }`);
                                 }
                             }
                             else if (item.armyName && isInternalAlly(item.sublistId) && !item.troopOptionOrder) {
@@ -460,7 +461,6 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
                             if (!armyListFound) {
                                 console.log('Unable to find army list for ally option ' + allyOption.listId + '/' + allyOption.sublistId);
-
                             }
                         });
 
@@ -477,7 +477,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
 
                             if (!allyArmyListFound) {
                                 // Corresponding ally army list not found, ignore the troop option
-                                console.log('Unable to find ally army list for troop option ' + troopOption.listId + '/' + troopOption.sublistId);
+                                console.info(`Warning: Troop option ${ troopOption.description } in army list ${ troopOption.listId }/${ troopOption.sublistId } has an ally min-max, but ${ troopOption.listId }/${ troopOption.sublistId } is not listed as an ally for any other army`);
                             }
                         });
 
@@ -591,11 +591,10 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
             .map(parseBattleCardEntryText); // And parse
 
         // Issue warnings for unknown names
-        var warnings = [];
         parsedBattleCards.forEach(function (parsedBattleCard) {
             if (!parsedBattleCard.battleCardCode) {
-                warnings.push(`Did not find battle card for ${ parsedBattleCard.battleCardText } in ${ armyName }`);
-                console.log(`Original battle card text = ${ battleCardText }`);
+                console.info(`ERROR: Could not find battle card matching "${ parsedBattleCard.battleCardText }" in army list: ${ armyName }`);
+                console.info(`Unparsed battle card text = "${ battleCardText }"`);
             }
         });
 
@@ -603,12 +602,6 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
         var battleCardEntries = parsedBattleCards
             .map(extractBattleCardEntry)
             .filter(bc => bc.battleCardCode);
-
-        if (warnings.length > 0) {
-            for (const message of warnings) {
-                console.log(message);
-            }
-        }
 
         return battleCardEntries;
     }
