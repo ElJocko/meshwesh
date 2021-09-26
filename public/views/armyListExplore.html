@@ -168,11 +168,15 @@
                     <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
                     <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                     <td class="troop-options-battleline">{{ troopOption.core | mwDisplayCore }}</td>
+
                     <td class="troop-options-restrictions">
-                        {{ troopOption.dateRange | mwDisplayDateRange }}
-                        <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
+                        <div ng-repeat="dateRange in troopOption.dateRanges">
+                                {{ dateRange.startDate | mwDisplayYear }}
+                                <span ng-hide="dateRange.startDate === dateRange.endDate">to {{ dateRange.endDate | mwDisplayYear }}</span>
+                        </div>
                         {{ troopOption.note }}
                     </td>
+
                     <td class="troop-options-battlecard">
                         <div ng-repeat="battleCardEntry in troopOption.battleCardEntries">
                             {{ battleCardEntry | mwDisplayBattleCardMinMax }}
@@ -213,11 +217,12 @@
                             <td class="troop-options-header-xs">Battle Line:</td>
                             <td class="troop-options-value-xs">{{ troopOption.core | mwDisplayCore }}</td>
                         </tr>
-                        <tr ng-show="troopOption.dateRange || troopOption.note">
+                        <tr ng-show="troopOption.dateRanges.length > 0 || troopOption.note">
                             <td class="troop-options-header-xs">Restrictions:</td>
                             <td>
-                                {{ troopOption.dateRange | mwDisplayDateRange }}
-                                <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
+                                <div ng-repeat="dateRange in troopOption.dateRanges">
+                                    {{ dateRange | mwDisplayDateRange }}
+                                </div>
                                 {{ troopOption.note }}
                             </td>
                         </tr>
@@ -293,7 +298,12 @@
                         <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
                         <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                         <td class="troop-options-battleline">{{ troopOption.core | mwDisplayCore }}</td>
-                        <td class="troop-options-restrictions">{{ troopOption.dateRange | mwDisplayDateRange }}</td>
+                        <td class="troop-options-restrictions">
+                            <div ng-repeat="dateRange in troopOption.dateRanges">
+                                {{ dateRange | mwDisplayDateRange }}
+                            </div>
+                            {{ troopOption.note }}
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -323,11 +333,12 @@
                                 <td class="troop-options-header-xs">Battle Line:</td>
                                 <td class="troop-options-value-xs">{{ troopOption.core | mwDisplayCore }}</td>
                             </tr>
-                            <tr ng-show="troopOption.dateRange || troopOption.note">
+                            <tr ng-show="troopOption.dateRanges.length > 0 || troopOption.note">
                                 <td class="troop-options-header-xs">Restrictions:</td>
                                 <td>
-                                    {{ troopOption.dateRange | mwDisplayDateRange }}
-                                    <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
+                                    <div ng-repeat="dateRange in troopOption.dateRanges">
+                                        {{ dateRange | mwDisplayDateRange }}
+                                    </div>
                                     {{ troopOption.note }}
                                 </td>
                             </tr>
@@ -397,7 +408,14 @@
                             <td class="troop-options-minmax" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
                             <td class="troop-options-minmax" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
 
-                            <td class="troop-options-restrictions">{{ troopOption.dateRange | mwDisplayDateRange }}</td>
+                            <td class="troop-options-restrictions">
+                                <div ng-repeat="dateRange in troopOption.dateRanges">
+                                    {{ dateRange.startDate | mwDisplayYear }}
+                                    <span ng-hide="dateRange.startDate === dateRange.endDate">to {{ dateRange.endDate | mwDisplayYear }}</span>
+                                </div>
+                                <span ng-if="troopOption.dateRanges.length > 0 && troopOption.note"></br></span>
+                                {{ troopOption.note }}
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -423,11 +441,13 @@
                                     <td class="troop-options-value-xs" ng-show="vm.armySize === 'double'">{{ troopOption.maxDouble }}</td>
                                     <td class="troop-options-value-xs" ng-show="vm.armySize === 'triple'">{{ troopOption.maxTriple }}</td>
                                 </tr>
-                                <tr ng-show="troopOption.dateRange || troopOption.note">
+                                <tr ng-show="troopOption.dateRanges.length > 0 || troopOption.note">
                                     <td class="troop-options-header-xs">Restrictions:</td>
                                     <td>
-                                        {{ troopOption.dateRange | mwDisplayDateRange }}
-                                        <span ng-if="troopOption.dateRange && troopOption.note"></br></span>
+                                        <div ng-repeat="dateRange in troopOption.dateRanges">
+                                            {{ dateRange | mwDisplayDateRange }}
+                                        </div>
+                                        <span ng-if="troopOption.dateRanges.length > 0 && troopOption.note"></br></span>
                                         {{ troopOption.note }}
                                     </td>
                                 </tr>

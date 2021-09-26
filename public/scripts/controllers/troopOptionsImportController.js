@@ -161,7 +161,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     name: item.armyName,
                                     listId: item.listId,
                                     sublistId: item.sublistId,
-                                    dateRange: makeDateRange(item.startDate, item.endDate),
+                                    dateRange: makeDateRange(item.startDate1, item.endDate1),
                                     troopOptions: [],
                                     internalContingent: false
                                 };
@@ -192,7 +192,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     sublistId: item.sublistId,
                                     min: 0,
                                     max: 0,
-                                    dateRange: makeDateRange(item.startDate, item.endDate),
+                                    dateRanges: [],
                                     troopEntries: [],
                                     description: item.description,
                                     note: '',
@@ -205,12 +205,23 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                     sublistId: item.sublistId,
                                     min: 0,
                                     max: 0,
-                                    dateRange: makeDateRange(item.startDate, item.endDate),
+                                    dateRanges: [],
                                     troopEntries: [],
                                     description: item.description,
                                     note: '',
                                     core: ''
                                 };
+
+                                var dateRange1 = makeDateRange(item.startDate1, item.endDate1);
+                                var dateRange2 = makeDateRange(item.startDate2, item.endDate2);
+                                if (dateRange1) {
+                                    troopOption.dateRanges.push(dateRange1);
+                                    allyTroopOption.dateRanges.push(dateRange1);
+                                }
+                                if (dateRange2) {
+                                    troopOption.dateRanges.push(dateRange2);
+                                    allyTroopOption.dateRanges.push(dateRange2);
+                                }
 
                                 // Extract a note from the description
                                 if (item.description.length > 0 && item.description.charAt(0) === '(') {
@@ -332,7 +343,7 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
                                         var allyOption = {
                                             listId: item.listId,
                                             sublistId: item.sublistId,
-                                            dateRange: makeDateRange(item.startDate, item.endDate),
+                                            dateRange: makeDateRange(item.startDate1, item.endDate1),
                                             note: null,
                                             allyEntries: [ allyEntry ]
                                         };

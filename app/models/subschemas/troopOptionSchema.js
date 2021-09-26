@@ -9,7 +9,7 @@ var BattleCardEntry = require('./battleCardEntrySchema');
 var TroopOptionSchema = new mongoose.Schema({
     min: { type: Number, required: true },
     max: { type: Number, required: true },
-    dateRange: { type: DateRange },
+    dateRanges: [ DateRange ],
     troopEntries: [ TroopEntry ],
     description: { type: String },
     note: { type: String },

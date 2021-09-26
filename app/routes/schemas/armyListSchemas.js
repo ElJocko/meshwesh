@@ -21,7 +21,7 @@ const troopOptionSubschema = {
     properties: {
         min: { type: 'number', requred: true },
         max: { type: 'number', requred: true },
-        dateRange: dateRangeSubschema,
+        dateRanges: { type: ['array', 'null'], items: dateRangeSubschema },
         troopEntries: { type: ['array', null], items: troopEntrySubschema },
         description: { type: 'string' },
         general: { type: 'boolean' },
