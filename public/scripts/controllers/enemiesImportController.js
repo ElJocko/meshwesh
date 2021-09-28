@@ -139,7 +139,9 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
                     var importSummary = sliceSummary.reduce(function (previous, current) {
                         return {
                             imported: previous.imported + current.imported,
-                            failed: previous.failed + current.failed
+                            failed: previous.failed + current.failed,
+                            duplicateCount: previous.duplicateCount + current.duplicateCount,
+                            overlapCount: previous.overlapCount + current.overlapCount
                         }
                     });
 
@@ -147,6 +149,15 @@ function EnemiesImportController($location, $scope, $interval, ArmyListEnemiesIm
                     console.info('Successfully imported ' + importSummary.imported + ' enemy pairs.');
                     vm.statusMessage1 = 'Imported ' + importSummary.imported + ' enemy pairs.';
                     vm.statusMessage2 = importSummary.failed + ' enemy pairs were not imported due to errors.';
+
+                    if (importSummary.duplicateCount) {
+                        vm.duplicateCountMessage = 'Found ' + importSummary.duplicateCount + ' duplicate enemy combinations.'
+                    }
+
+                    if (importSummary.overlapCount) {
+                        vm.overlapCountMessage = 'Found ' + importSummary.overlapCount + ' enemy combinations that do not overlap in time.'
+                    }
+
                     vm.file = null;
                     vm.parsedData = [];
 

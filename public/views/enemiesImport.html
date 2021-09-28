@@ -1,6 +1,6 @@
 <div class="content row">
     <div class="col-md-12">
-        <div class="content-header">Import Troop Types</div>
+        <div class="content-header">Import Army List Enemies</div>
         <div>
             Use this page to import army list enemy data.
             The data should be in a csv file, using a vertical bar as a delimiter.
@@ -8,7 +8,7 @@
             The first row should be a header row in the following format:
             <div class="sample-import">
                 <code>
-                    x1,x2,y1,y2
+                    a,x1,x2,b,y1,y2
                 </code>
             </div>
             Imported enemies list will replace the current data.
@@ -33,6 +33,12 @@
                 <label for="statusMessage1">Import Status</label>
                 <div>
                     <span id="statusMessage1" ng-bind="vm.statusMessage1"></span>
+                </div>
+                <div ng-show="vm.duplicateCountMessage">
+                    <span id="duplicateCountMessage" ng-bind="vm.duplicateCountMessage"></span>
+                </div>
+                <div ng-show="vm.overlapCountMessage">
+                    <span id="overlapCountMessage" ng-bind="vm.overlapCountMessage"></span>
                 </div>
                 <div>
                     <span id="statusMessage2" ng-bind="vm.statusMessage2"></span>

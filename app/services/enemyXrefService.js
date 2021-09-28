@@ -87,6 +87,8 @@ exports.import = function(importRequest, callback) {
         );
     }
 
+    const duplicateCombination = 'Duplicate enemy combination found';
+
     function importEnemyXref(enemyXrefData, cb) {
         // 1. Lookup army list 1 from list id and sublist id to get object id
         // 2. Lookup army list 2
@@ -131,7 +133,7 @@ exports.import = function(importRequest, callback) {
                             }
                             else if (xref1) {
                                 console.log('Error: Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
-                                return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
+                                return cb(null, { enemyXref: null, error: duplicateCombination });
                             }
                             else {
                                 query = {
@@ -144,11 +146,12 @@ exports.import = function(importRequest, callback) {
                                     }
                                     else if (xref1) {
                                         console.log('Error: Duplicate enemy combination found: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
-                                        return cb(null, { enemyXref: null, error: 'Duplicate enemy combination found' });
+                                        return cb(null, { enemyXref: null, error: duplicateCombination });
                                     }
                                     else {
                                         // Issue a warning if the army lists don't overlap in time
-                                        if (!dateRangesOverlap(armyList1.dateRanges, armyList2.dateRanges)) {
+                                        const noOverlap = !dateRangesOverlap(armyList1.dateRanges, armyList2.dateRanges);
+                                        if (noOverlap) {
                                             console.log('Warning: Enemies do not overlap in time: ' + enemyXrefData.armyList1.listId + enemyXrefData.armyList1.sublistId + ' ' + enemyXrefData.armyList2.listId + enemyXrefData.armyList2.sublistId + ' at row ' + enemyXrefData.index);
                                         }
 
@@ -160,10 +163,10 @@ exports.import = function(importRequest, callback) {
                                             if (err) {
                                                 console.log('save error');
                                                 console.log(err);
-                                                return cb(null, { enemyXref: null, error: err });
+                                                return cb(null, { enemyXref: null, error: err, noOverlap });
                                             }
                                             else {
-                                                return cb(null, { enemyXref: savedDocument.toObject(), error: null });
+                                                return cb(null, { enemyXref: savedDocument.toObject(), error: null, noOverlap });
                                             }
                                         });
                                     }
@@ -179,20 +182,31 @@ exports.import = function(importRequest, callback) {
     }
 
     function summarizeImport(results) {
-        var importCount = 0;
-        var errorCount = 0;
+        let importCount = 0;
+        let errorCount = 0;
+        let overlapCount = 0;
+        let duplicateCount = 0;
         results.forEach(function(item) {
+            if (item.noOverlap) {
+                overlapCount = overlapCount + 1;
+            }
+
             if (item.enemyXref) {
                 importCount = importCount + 1;
             }
             else if (item.error) {
-                errorCount = errorCount + 1;
+                if (item.error === duplicateCombination) {
+                    duplicateCount = duplicateCount + 1;
+                }
+                else {
+                    errorCount = errorCount + 1;
+                }
             }
             else {
                 // shouldn't reach here
             }
         });
-        var summary = { imported: importCount, failed: errorCount };
+        var summary = { imported: importCount, failed: errorCount, duplicateCount, overlapCount };
         return summary;
     }
 
