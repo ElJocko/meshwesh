@@ -6,6 +6,7 @@ var AllyArmyList = require('../models/allyArmyListModel');
 var ThematicCategory = require('../models/thematicCategoryModel');
 var EnemyXref = require('../models/enemyXrefModel');
 var ThematicCategoryToArmyListXref = require('../models/thematicCategoryToArmyListXrefModel');
+var ArmyListIdMap = require('../models/armyListIdMapModel');
 var transform = require('../models/lib/transform');
 var async = require('async');
 var _ = require('lodash');
@@ -436,19 +437,39 @@ exports.import = function(importRequest, callback) {
 
         // Add thematic categories and save
         async.waterfall([
-            function(cb) {
-                // initialize the waterfall
-                return cb(null, document, armyListData.thematicCategories);
-            },
-            setThematicCategories,
-            saveDocument
-        ],
+              function(cb) {
+                  // initialize the waterfall
+                  return cb(null, document, armyListData.thematicCategories);
+              },
+              patchArmyListId,
+              setThematicCategories,
+              saveDocument
+          ],
         function(err, result) {
             if (err) {
                 return cb(null, { armyList: null, error: err });
             }
             else {
                 return cb(null, { armyList: result.toObject(), error: null });
+            }
+        });
+    }
+
+    function patchArmyListId(armyList, thematicCategories, cb) {
+        // Find the canonical id for the army list
+        const patchQuery = { listId: armyList.listId, sublistId: armyList.sublistId };
+        ArmyListIdMap.findOne(patchQuery, function(err, armyListIdMap) {
+            if (err) {
+                return cb(err);
+            }
+            else {
+                if (armyListIdMap) {
+                    armyList._id = armyListIdMap.databaseId;
+                }
+                else {
+                    console.log('No army list id map for ' + armyList.listId + ' ' + armyList.sublistId);
+                }
+                return cb(null, armyList, thematicCategories);
             }
         });
     }
