@@ -5,7 +5,8 @@ angular
 function YearFilter() {
     return function(input) {
         if (input === 0) {
-            return 'invalid value';
+            console.log('invalid value, year may not be 0')
+            return '';
         }
         else if (!input) {
             return '';

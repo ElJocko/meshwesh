@@ -766,6 +766,14 @@ function TroopOptionsImportController($location, $scope, $interval, AllyArmyList
     }
 
     function makeDateRange(startDate, endDate) {
+        // Make sure we don't process a string with just whitespace
+        if (typeof startDate === 'string') {
+            startDate = startDate.trim();
+        }
+        if (typeof endDate === 'string') {
+            endDate = endDate.trim();
+        }
+
         if (startDate) {
             if (!endDate) {
                 // No end date. Copy the start date.
