@@ -8,7 +8,7 @@ An army which purchases this battle card may not include any elephant stands whe
 For example, the Hindu Indian army normally requires 2-3 stands of Elephants; if the Elephant Screen battle card is purchased, no elephant stands are taken. 
 
 #### Cost
-2 points
+None.
 
 #### Deployment
 During deployment, the player places an elephant screen marker in front of each stand which is being screened.  This shows that the stand is “Screened” and receives the combat advantage described below.
